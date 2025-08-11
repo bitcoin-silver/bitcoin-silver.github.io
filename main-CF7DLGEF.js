@@ -1,8 +1,13248 @@
-var Gg=Object.defineProperty,Wg=Object.defineProperties;var qg=Object.getOwnPropertyDescriptors;var go=Object.getOwnPropertySymbols;var lu=Object.prototype.hasOwnProperty,uu=Object.prototype.propertyIsEnumerable;var cu=(e,n,t)=>n in e?Gg(e,n,{enumerable:!0,configurable:!0,writable:!0,value:t}):e[n]=t,D=(e,n)=>{for(var t in n||={})lu.call(n,t)&&cu(e,t,n[t]);if(go)for(var t of go(n))uu.call(n,t)&&cu(e,t,n[t]);return e},K=(e,n)=>Wg(e,qg(n));var du=(e,n)=>{var t={};for(var r in e)lu.call(e,r)&&n.indexOf(r)<0&&(t[r]=e[r]);if(e!=null&&go)for(var r of go(e))n.indexOf(r)<0&&uu.call(e,r)&&(t[r]=e[r]);return t};var Fs=null;var ks=1,fu=Symbol("SIGNAL");function j(e){let n=Fs;return Fs=e,n}function hu(){return Fs}var Ls={version:0,lastCleanEpoch:0,dirty:!1,producerNode:void 0,producerLastReadVersion:void 0,producerIndexOfThis:void 0,nextProducerIndex:0,liveConsumerNode:void 0,liveConsumerIndexOfThis:void 0,consumerAllowSignalWrites:!1,consumerIsAlwaysLive:!1,producerMustRecompute:()=>!1,producerRecomputeValue:()=>{},consumerMarkedDirty:()=>{},consumerOnSignalRead:()=>{}};function Zg(e){if(!($s(e)&&!e.dirty)&&!(!e.dirty&&e.lastCleanEpoch===ks)){if(!e.producerMustRecompute(e)&&!Vs(e)){e.dirty=!1,e.lastCleanEpoch=ks;return}e.producerRecomputeValue(e),e.dirty=!1,e.lastCleanEpoch=ks}}function js(e){return e&&(e.nextProducerIndex=0),j(e)}function pu(e,n){if(j(n),!(!e||e.producerNode===void 0||e.producerIndexOfThis===void 0||e.producerLastReadVersion===void 0)){if($s(e))for(let t=e.nextProducerIndex;t<e.producerNode.length;t++)Us(e.producerNode[t],e.producerIndexOfThis[t]);for(;e.producerNode.length>e.nextProducerIndex;)e.producerNode.pop(),e.producerLastReadVersion.pop(),e.producerIndexOfThis.pop()}}function Vs(e){Hs(e);for(let n=0;n<e.producerNode.length;n++){let t=e.producerNode[n],r=e.producerLastReadVersion[n];if(r!==t.version||(Zg(t),r!==t.version))return!0}return!1}function Bs(e){if(Hs(e),$s(e))for(let n=0;n<e.producerNode.length;n++)Us(e.producerNode[n],e.producerIndexOfThis[n]);e.producerNode.length=e.producerLastReadVersion.length=e.producerIndexOfThis.length=0,e.liveConsumerNode&&(e.liveConsumerNode.length=e.liveConsumerIndexOfThis.length=0)}function Us(e,n){if(Qg(e),e.liveConsumerNode.length===1&&Yg(e))for(let r=0;r<e.producerNode.length;r++)Us(e.producerNode[r],e.producerIndexOfThis[r]);let t=e.liveConsumerNode.length-1;if(e.liveConsumerNode[n]=e.liveConsumerNode[t],e.liveConsumerIndexOfThis[n]=e.liveConsumerIndexOfThis[t],e.liveConsumerNode.length--,e.liveConsumerIndexOfThis.length--,n<e.liveConsumerNode.length){let r=e.liveConsumerIndexOfThis[n],o=e.liveConsumerNode[n];Hs(o),o.producerIndexOfThis[r]=n}}function $s(e){return e.consumerIsAlwaysLive||(e?.liveConsumerNode?.length??0)>0}function Hs(e){e.producerNode??=[],e.producerIndexOfThis??=[],e.producerLastReadVersion??=[]}function Qg(e){e.liveConsumerNode??=[],e.liveConsumerIndexOfThis??=[]}function Yg(e){return e.producerNode!==void 0}function Kg(){throw new Error}var Jg=Kg;function gu(e){Jg=e}function S(e){return typeof e=="function"}function pn(e){let t=e(r=>{Error.call(r),r.stack=new Error().stack});return t.prototype=Object.create(Error.prototype),t.prototype.constructor=t,t}var mo=pn(e=>function(t){e(this),this.message=t?`${t.length} errors occurred during unsubscription:
+var Gg = Object.defineProperty,
+    Wg = Object.defineProperties;
+var qg = Object.getOwnPropertyDescriptors;
+var go = Object.getOwnPropertySymbols;
+var lu = Object.prototype.hasOwnProperty,
+    uu = Object.prototype.propertyIsEnumerable;
+var cu = (e, n, t) => n in e ? Gg(e, n, {
+        enumerable: !0,
+        configurable: !0,
+        writable: !0,
+        value: t
+    }) : e[n] = t,
+    D = (e, n) => {
+        for (var t in n ||= {}) lu.call(n, t) && cu(e, t, n[t]);
+        if (go)
+            for (var t of go(n)) uu.call(n, t) && cu(e, t, n[t]);
+        return e
+    },
+    K = (e, n) => Wg(e, qg(n));
+var du = (e, n) => {
+    var t = {};
+    for (var r in e) lu.call(e, r) && n.indexOf(r) < 0 && (t[r] = e[r]);
+    if (e != null && go)
+        for (var r of go(e)) n.indexOf(r) < 0 && uu.call(e, r) && (t[r] = e[r]);
+    return t
+};
+var Fs = null;
+var ks = 1,
+    fu = Symbol("SIGNAL");
+
+function j(e) {
+    let n = Fs;
+    return Fs = e, n
+}
+
+function hu() {
+    return Fs
+}
+var Ls = {
+    version: 0,
+    lastCleanEpoch: 0,
+    dirty: !1,
+    producerNode: void 0,
+    producerLastReadVersion: void 0,
+    producerIndexOfThis: void 0,
+    nextProducerIndex: 0,
+    liveConsumerNode: void 0,
+    liveConsumerIndexOfThis: void 0,
+    consumerAllowSignalWrites: !1,
+    consumerIsAlwaysLive: !1,
+    producerMustRecompute: () => !1,
+    producerRecomputeValue: () => {},
+    consumerMarkedDirty: () => {},
+    consumerOnSignalRead: () => {}
+};
+
+function Zg(e) {
+    if (!($s(e) && !e.dirty) && !(!e.dirty && e.lastCleanEpoch === ks)) {
+        if (!e.producerMustRecompute(e) && !Vs(e)) {
+            e.dirty = !1, e.lastCleanEpoch = ks;
+            return
+        }
+        e.producerRecomputeValue(e), e.dirty = !1, e.lastCleanEpoch = ks
+    }
+}
+
+function js(e) {
+    return e && (e.nextProducerIndex = 0), j(e)
+}
+
+function pu(e, n) {
+    if (j(n), !(!e || e.producerNode === void 0 || e.producerIndexOfThis === void 0 || e.producerLastReadVersion === void 0)) {
+        if ($s(e))
+            for (let t = e.nextProducerIndex; t < e.producerNode.length; t++) Us(e.producerNode[t], e.producerIndexOfThis[t]);
+        for (; e.producerNode.length > e.nextProducerIndex;) e.producerNode.pop(), e.producerLastReadVersion.pop(), e.producerIndexOfThis.pop()
+    }
+}
+
+function Vs(e) {
+    Hs(e);
+    for (let n = 0; n < e.producerNode.length; n++) {
+        let t = e.producerNode[n],
+            r = e.producerLastReadVersion[n];
+        if (r !== t.version || (Zg(t), r !== t.version)) return !0
+    }
+    return !1
+}
+
+function Bs(e) {
+    if (Hs(e), $s(e))
+        for (let n = 0; n < e.producerNode.length; n++) Us(e.producerNode[n], e.producerIndexOfThis[n]);
+    e.producerNode.length = e.producerLastReadVersion.length = e.producerIndexOfThis.length = 0, e.liveConsumerNode && (e.liveConsumerNode.length = e.liveConsumerIndexOfThis.length = 0)
+}
+
+function Us(e, n) {
+    if (Qg(e), e.liveConsumerNode.length === 1 && Yg(e))
+        for (let r = 0; r < e.producerNode.length; r++) Us(e.producerNode[r], e.producerIndexOfThis[r]);
+    let t = e.liveConsumerNode.length - 1;
+    if (e.liveConsumerNode[n] = e.liveConsumerNode[t], e.liveConsumerIndexOfThis[n] = e.liveConsumerIndexOfThis[t], e.liveConsumerNode.length--, e.liveConsumerIndexOfThis.length--, n < e.liveConsumerNode.length) {
+        let r = e.liveConsumerIndexOfThis[n],
+            o = e.liveConsumerNode[n];
+        Hs(o), o.producerIndexOfThis[r] = n
+    }
+}
+
+function $s(e) {
+    return e.consumerIsAlwaysLive || (e?.liveConsumerNode?.length ?? 0) > 0
+}
+
+function Hs(e) {
+    e.producerNode ??= [], e.producerIndexOfThis ??= [], e.producerLastReadVersion ??= []
+}
+
+function Qg(e) {
+    e.liveConsumerNode ??= [], e.liveConsumerIndexOfThis ??= []
+}
+
+function Yg(e) {
+    return e.producerNode !== void 0
+}
+
+function Kg() {
+    throw new Error
+}
+var Jg = Kg;
+
+function gu(e) {
+    Jg = e
+}
+
+function S(e) {
+    return typeof e == "function"
+}
+
+function pn(e) {
+    let t = e(r => {
+        Error.call(r), r.stack = new Error().stack
+    });
+    return t.prototype = Object.create(Error.prototype), t.prototype.constructor = t, t
+}
+var mo = pn(e => function(t) {
+    e(this), this.message = t ? `${t.length} errors occurred during unsubscription:
 ${t.map((r,o)=>`${o+1}) ${r.toString()}`).join(`
-  `)}`:"",this.name="UnsubscriptionError",this.errors=t});function fr(e,n){if(e){let t=e.indexOf(n);0<=t&&e.splice(t,1)}}var X=class e{constructor(n){this.initialTeardown=n,this.closed=!1,this._parentage=null,this._finalizers=null}unsubscribe(){let n;if(!this.closed){this.closed=!0;let{_parentage:t}=this;if(t)if(this._parentage=null,Array.isArray(t))for(let i of t)i.remove(this);else t.remove(this);let{initialTeardown:r}=this;if(S(r))try{r()}catch(i){n=i instanceof mo?i.errors:[i]}let{_finalizers:o}=this;if(o){this._finalizers=null;for(let i of o)try{mu(i)}catch(s){n=n??[],s instanceof mo?n=[...n,...s.errors]:n.push(s)}}if(n)throw new mo(n)}}add(n){var t;if(n&&n!==this)if(this.closed)mu(n);else{if(n instanceof e){if(n.closed||n._hasParent(this))return;n._addParent(this)}(this._finalizers=(t=this._finalizers)!==null&&t!==void 0?t:[]).push(n)}}_hasParent(n){let{_parentage:t}=this;return t===n||Array.isArray(t)&&t.includes(n)}_addParent(n){let{_parentage:t}=this;this._parentage=Array.isArray(t)?(t.push(n),t):t?[t,n]:n}_removeParent(n){let{_parentage:t}=this;t===n?this._parentage=null:Array.isArray(t)&&fr(t,n)}remove(n){let{_finalizers:t}=this;t&&fr(t,n),n instanceof e&&n._removeParent(this)}};X.EMPTY=(()=>{let e=new X;return e.closed=!0,e})();var zs=X.EMPTY;function vo(e){return e instanceof X||e&&"closed"in e&&S(e.remove)&&S(e.add)&&S(e.unsubscribe)}function mu(e){S(e)?e():e.unsubscribe()}var Ge={onUnhandledError:null,onStoppedNotification:null,Promise:void 0,useDeprecatedSynchronousErrorHandling:!1,useDeprecatedNextContext:!1};var gn={setTimeout(e,n,...t){let{delegate:r}=gn;return r?.setTimeout?r.setTimeout(e,n,...t):setTimeout(e,n,...t)},clearTimeout(e){let{delegate:n}=gn;return(n?.clearTimeout||clearTimeout)(e)},delegate:void 0};function yo(e){gn.setTimeout(()=>{let{onUnhandledError:n}=Ge;if(n)n(e);else throw e})}function hr(){}var vu=Gs("C",void 0,void 0);function yu(e){return Gs("E",void 0,e)}function Cu(e){return Gs("N",e,void 0)}function Gs(e,n,t){return{kind:e,value:n,error:t}}var Qt=null;function mn(e){if(Ge.useDeprecatedSynchronousErrorHandling){let n=!Qt;if(n&&(Qt={errorThrown:!1,error:null}),e(),n){let{errorThrown:t,error:r}=Qt;if(Qt=null,t)throw r}}else e()}function Du(e){Ge.useDeprecatedSynchronousErrorHandling&&Qt&&(Qt.errorThrown=!0,Qt.error=e)}var Yt=class extends X{constructor(n){super(),this.isStopped=!1,n?(this.destination=n,vo(n)&&n.add(this)):this.destination=tm}static create(n,t,r){return new vn(n,t,r)}next(n){this.isStopped?qs(Cu(n),this):this._next(n)}error(n){this.isStopped?qs(yu(n),this):(this.isStopped=!0,this._error(n))}complete(){this.isStopped?qs(vu,this):(this.isStopped=!0,this._complete())}unsubscribe(){this.closed||(this.isStopped=!0,super.unsubscribe(),this.destination=null)}_next(n){this.destination.next(n)}_error(n){try{this.destination.error(n)}finally{this.unsubscribe()}}_complete(){try{this.destination.complete()}finally{this.unsubscribe()}}},Xg=Function.prototype.bind;function Ws(e,n){return Xg.call(e,n)}var Zs=class{constructor(n){this.partialObserver=n}next(n){let{partialObserver:t}=this;if(t.next)try{t.next(n)}catch(r){Co(r)}}error(n){let{partialObserver:t}=this;if(t.error)try{t.error(n)}catch(r){Co(r)}else Co(n)}complete(){let{partialObserver:n}=this;if(n.complete)try{n.complete()}catch(t){Co(t)}}},vn=class extends Yt{constructor(n,t,r){super();let o;if(S(n)||!n)o={next:n??void 0,error:t??void 0,complete:r??void 0};else{let i;this&&Ge.useDeprecatedNextContext?(i=Object.create(n),i.unsubscribe=()=>this.unsubscribe(),o={next:n.next&&Ws(n.next,i),error:n.error&&Ws(n.error,i),complete:n.complete&&Ws(n.complete,i)}):o=n}this.destination=new Zs(o)}};function Co(e){Ge.useDeprecatedSynchronousErrorHandling?Du(e):yo(e)}function em(e){throw e}function qs(e,n){let{onStoppedNotification:t}=Ge;t&&gn.setTimeout(()=>t(e,n))}var tm={closed:!0,next:hr,error:em,complete:hr};var yn=typeof Symbol=="function"&&Symbol.observable||"@@observable";function be(e){return e}function Qs(...e){return Ys(e)}function Ys(e){return e.length===0?be:e.length===1?e[0]:function(t){return e.reduce((r,o)=>o(r),t)}}var U=(()=>{class e{constructor(t){t&&(this._subscribe=t)}lift(t){let r=new e;return r.source=this,r.operator=t,r}subscribe(t,r,o){let i=rm(t)?t:new vn(t,r,o);return mn(()=>{let{operator:s,source:a}=this;i.add(s?s.call(i,a):a?this._subscribe(i):this._trySubscribe(i))}),i}_trySubscribe(t){try{return this._subscribe(t)}catch(r){t.error(r)}}forEach(t,r){return r=wu(r),new r((o,i)=>{let s=new vn({next:a=>{try{t(a)}catch(c){i(c),s.unsubscribe()}},error:i,complete:o});this.subscribe(s)})}_subscribe(t){var r;return(r=this.source)===null||r===void 0?void 0:r.subscribe(t)}[yn](){return this}pipe(...t){return Ys(t)(this)}toPromise(t){return t=wu(t),new t((r,o)=>{let i;this.subscribe(s=>i=s,s=>o(s),()=>r(i))})}}return e.create=n=>new e(n),e})();function wu(e){var n;return(n=e??Ge.Promise)!==null&&n!==void 0?n:Promise}function nm(e){return e&&S(e.next)&&S(e.error)&&S(e.complete)}function rm(e){return e&&e instanceof Yt||nm(e)&&vo(e)}function Ks(e){return S(e?.lift)}function F(e){return n=>{if(Ks(n))return n.lift(function(t){try{return e(t,this)}catch(r){this.error(r)}});throw new TypeError("Unable to lift unknown Observable type")}}function L(e,n,t,r,o){return new Js(e,n,t,r,o)}var Js=class extends Yt{constructor(n,t,r,o,i,s){super(n),this.onFinalize=i,this.shouldUnsubscribe=s,this._next=t?function(a){try{t(a)}catch(c){n.error(c)}}:super._next,this._error=o?function(a){try{o(a)}catch(c){n.error(c)}finally{this.unsubscribe()}}:super._error,this._complete=r?function(){try{r()}catch(a){n.error(a)}finally{this.unsubscribe()}}:super._complete}unsubscribe(){var n;if(!this.shouldUnsubscribe||this.shouldUnsubscribe()){let{closed:t}=this;super.unsubscribe(),!t&&((n=this.onFinalize)===null||n===void 0||n.call(this))}}};function Cn(){return F((e,n)=>{let t=null;e._refCount++;let r=L(n,void 0,void 0,void 0,()=>{if(!e||e._refCount<=0||0<--e._refCount){t=null;return}let o=e._connection,i=t;t=null,o&&(!i||o===i)&&o.unsubscribe(),n.unsubscribe()});e.subscribe(r),r.closed||(t=e.connect())})}var Dn=class extends U{constructor(n,t){super(),this.source=n,this.subjectFactory=t,this._subject=null,this._refCount=0,this._connection=null,Ks(n)&&(this.lift=n.lift)}_subscribe(n){return this.getSubject().subscribe(n)}getSubject(){let n=this._subject;return(!n||n.isStopped)&&(this._subject=this.subjectFactory()),this._subject}_teardown(){this._refCount=0;let{_connection:n}=this;this._subject=this._connection=null,n?.unsubscribe()}connect(){let n=this._connection;if(!n){n=this._connection=new X;let t=this.getSubject();n.add(this.source.subscribe(L(t,void 0,()=>{this._teardown(),t.complete()},r=>{this._teardown(),t.error(r)},()=>this._teardown()))),n.closed&&(this._connection=null,n=X.EMPTY)}return n}refCount(){return Cn()(this)}};var Eu=pn(e=>function(){e(this),this.name="ObjectUnsubscribedError",this.message="object unsubscribed"});var he=(()=>{class e extends U{constructor(){super(),this.closed=!1,this.currentObservers=null,this.observers=[],this.isStopped=!1,this.hasError=!1,this.thrownError=null}lift(t){let r=new Do(this,this);return r.operator=t,r}_throwIfClosed(){if(this.closed)throw new Eu}next(t){mn(()=>{if(this._throwIfClosed(),!this.isStopped){this.currentObservers||(this.currentObservers=Array.from(this.observers));for(let r of this.currentObservers)r.next(t)}})}error(t){mn(()=>{if(this._throwIfClosed(),!this.isStopped){this.hasError=this.isStopped=!0,this.thrownError=t;let{observers:r}=this;for(;r.length;)r.shift().error(t)}})}complete(){mn(()=>{if(this._throwIfClosed(),!this.isStopped){this.isStopped=!0;let{observers:t}=this;for(;t.length;)t.shift().complete()}})}unsubscribe(){this.isStopped=this.closed=!0,this.observers=this.currentObservers=null}get observed(){var t;return((t=this.observers)===null||t===void 0?void 0:t.length)>0}_trySubscribe(t){return this._throwIfClosed(),super._trySubscribe(t)}_subscribe(t){return this._throwIfClosed(),this._checkFinalizedStatuses(t),this._innerSubscribe(t)}_innerSubscribe(t){let{hasError:r,isStopped:o,observers:i}=this;return r||o?zs:(this.currentObservers=null,i.push(t),new X(()=>{this.currentObservers=null,fr(i,t)}))}_checkFinalizedStatuses(t){let{hasError:r,thrownError:o,isStopped:i}=this;r?t.error(o):i&&t.complete()}asObservable(){let t=new U;return t.source=this,t}}return e.create=(n,t)=>new Do(n,t),e})(),Do=class extends he{constructor(n,t){super(),this.destination=n,this.source=t}next(n){var t,r;(r=(t=this.destination)===null||t===void 0?void 0:t.next)===null||r===void 0||r.call(t,n)}error(n){var t,r;(r=(t=this.destination)===null||t===void 0?void 0:t.error)===null||r===void 0||r.call(t,n)}complete(){var n,t;(t=(n=this.destination)===null||n===void 0?void 0:n.complete)===null||t===void 0||t.call(n)}_subscribe(n){var t,r;return(r=(t=this.source)===null||t===void 0?void 0:t.subscribe(n))!==null&&r!==void 0?r:zs}};var ce=class extends he{constructor(n){super(),this._value=n}get value(){return this.getValue()}_subscribe(n){let t=super._subscribe(n);return!t.closed&&n.next(this._value),t}getValue(){let{hasError:n,thrownError:t,_value:r}=this;if(n)throw t;return this._throwIfClosed(),r}next(n){super.next(this._value=n)}};var _e=new U(e=>e.complete());function Iu(e){return e&&S(e.schedule)}function bu(e){return e[e.length-1]}function _u(e){return S(bu(e))?e.pop():void 0}function St(e){return Iu(bu(e))?e.pop():void 0}function Su(e,n,t,r){function o(i){return i instanceof t?i:new t(function(s){s(i)})}return new(t||(t=Promise))(function(i,s){function a(u){try{l(r.next(u))}catch(d){s(d)}}function c(u){try{l(r.throw(u))}catch(d){s(d)}}function l(u){u.done?i(u.value):o(u.value).then(a,c)}l((r=r.apply(e,n||[])).next())})}function Mu(e){var n=typeof Symbol=="function"&&Symbol.iterator,t=n&&e[n],r=0;if(t)return t.call(e);if(e&&typeof e.length=="number")return{next:function(){return e&&r>=e.length&&(e=void 0),{value:e&&e[r++],done:!e}}};throw new TypeError(n?"Object is not iterable.":"Symbol.iterator is not defined.")}function Kt(e){return this instanceof Kt?(this.v=e,this):new Kt(e)}function xu(e,n,t){if(!Symbol.asyncIterator)throw new TypeError("Symbol.asyncIterator is not defined.");var r=t.apply(e,n||[]),o,i=[];return o=Object.create((typeof AsyncIterator=="function"?AsyncIterator:Object).prototype),a("next"),a("throw"),a("return",s),o[Symbol.asyncIterator]=function(){return this},o;function s(m){return function(C){return Promise.resolve(C).then(m,d)}}function a(m,C){r[m]&&(o[m]=function(P){return new Promise(function($,z){i.push([m,P,$,z])>1||c(m,P)})},C&&(o[m]=C(o[m])))}function c(m,C){try{l(r[m](C))}catch(P){v(i[0][3],P)}}function l(m){m.value instanceof Kt?Promise.resolve(m.value.v).then(u,d):v(i[0][2],m)}function u(m){c("next",m)}function d(m){c("throw",m)}function v(m,C){m(C),i.shift(),i.length&&c(i[0][0],i[0][1])}}function Tu(e){if(!Symbol.asyncIterator)throw new TypeError("Symbol.asyncIterator is not defined.");var n=e[Symbol.asyncIterator],t;return n?n.call(e):(e=typeof Mu=="function"?Mu(e):e[Symbol.iterator](),t={},r("next"),r("throw"),r("return"),t[Symbol.asyncIterator]=function(){return this},t);function r(i){t[i]=e[i]&&function(s){return new Promise(function(a,c){s=e[i](s),o(a,c,s.done,s.value)})}}function o(i,s,a,c){Promise.resolve(c).then(function(l){i({value:l,done:a})},s)}}var wo=e=>e&&typeof e.length=="number"&&typeof e!="function";function Eo(e){return S(e?.then)}function Io(e){return S(e[yn])}function bo(e){return Symbol.asyncIterator&&S(e?.[Symbol.asyncIterator])}function _o(e){return new TypeError(`You provided ${e!==null&&typeof e=="object"?"an invalid object":`'${e}'`} where a stream was expected. You can provide an Observable, Promise, ReadableStream, Array, AsyncIterable, or Iterable.`)}function om(){return typeof Symbol!="function"||!Symbol.iterator?"@@iterator":Symbol.iterator}var Mo=om();function So(e){return S(e?.[Mo])}function xo(e){return xu(this,arguments,function*(){let t=e.getReader();try{for(;;){let{value:r,done:o}=yield Kt(t.read());if(o)return yield Kt(void 0);yield yield Kt(r)}}finally{t.releaseLock()}})}function To(e){return S(e?.getReader)}function ie(e){if(e instanceof U)return e;if(e!=null){if(Io(e))return im(e);if(wo(e))return sm(e);if(Eo(e))return am(e);if(bo(e))return Ou(e);if(So(e))return cm(e);if(To(e))return lm(e)}throw _o(e)}function im(e){return new U(n=>{let t=e[yn]();if(S(t.subscribe))return t.subscribe(n);throw new TypeError("Provided object does not correctly implement Symbol.observable")})}function sm(e){return new U(n=>{for(let t=0;t<e.length&&!n.closed;t++)n.next(e[t]);n.complete()})}function am(e){return new U(n=>{e.then(t=>{n.closed||(n.next(t),n.complete())},t=>n.error(t)).then(null,yo)})}function cm(e){return new U(n=>{for(let t of e)if(n.next(t),n.closed)return;n.complete()})}function Ou(e){return new U(n=>{um(e,n).catch(t=>n.error(t))})}function lm(e){return Ou(xo(e))}function um(e,n){var t,r,o,i;return Su(this,void 0,void 0,function*(){try{for(t=Tu(e);r=yield t.next(),!r.done;){let s=r.value;if(n.next(s),n.closed)return}}catch(s){o={error:s}}finally{try{r&&!r.done&&(i=t.return)&&(yield i.call(t))}finally{if(o)throw o.error}}n.complete()})}function Ce(e,n,t,r=0,o=!1){let i=n.schedule(function(){t(),o?e.add(this.schedule(null,r)):this.unsubscribe()},r);if(e.add(i),!o)return i}function Oo(e,n=0){return F((t,r)=>{t.subscribe(L(r,o=>Ce(r,e,()=>r.next(o),n),()=>Ce(r,e,()=>r.complete(),n),o=>Ce(r,e,()=>r.error(o),n)))})}function No(e,n=0){return F((t,r)=>{r.add(e.schedule(()=>t.subscribe(r),n))})}function Nu(e,n){return ie(e).pipe(No(n),Oo(n))}function Au(e,n){return ie(e).pipe(No(n),Oo(n))}function Pu(e,n){return new U(t=>{let r=0;return n.schedule(function(){r===e.length?t.complete():(t.next(e[r++]),t.closed||this.schedule())})})}function Ru(e,n){return new U(t=>{let r;return Ce(t,n,()=>{r=e[Mo](),Ce(t,n,()=>{let o,i;try{({value:o,done:i}=r.next())}catch(s){t.error(s);return}i?t.complete():t.next(o)},0,!0)}),()=>S(r?.return)&&r.return()})}function Ao(e,n){if(!e)throw new Error("Iterable cannot be null");return new U(t=>{Ce(t,n,()=>{let r=e[Symbol.asyncIterator]();Ce(t,n,()=>{r.next().then(o=>{o.done?t.complete():t.next(o.value)})},0,!0)})})}function ku(e,n){return Ao(xo(e),n)}function Fu(e,n){if(e!=null){if(Io(e))return Nu(e,n);if(wo(e))return Pu(e,n);if(Eo(e))return Au(e,n);if(bo(e))return Ao(e,n);if(So(e))return Ru(e,n);if(To(e))return ku(e,n)}throw _o(e)}function J(e,n){return n?Fu(e,n):ie(e)}function _(...e){let n=St(e);return J(e,n)}function wn(e,n){let t=S(e)?e:()=>e,r=o=>o.error(t());return new U(n?o=>n.schedule(r,0,o):r)}function Xs(e){return!!e&&(e instanceof U||S(e.lift)&&S(e.subscribe))}var pt=pn(e=>function(){e(this),this.name="EmptyError",this.message="no elements in sequence"});function k(e,n){return F((t,r)=>{let o=0;t.subscribe(L(r,i=>{r.next(e.call(n,i,o++))}))})}var{isArray:dm}=Array;function fm(e,n){return dm(n)?e(...n):e(n)}function Lu(e){return k(n=>fm(e,n))}var{isArray:hm}=Array,{getPrototypeOf:pm,prototype:gm,keys:mm}=Object;function ju(e){if(e.length===1){let n=e[0];if(hm(n))return{args:n,keys:null};if(vm(n)){let t=mm(n);return{args:t.map(r=>n[r]),keys:t}}}return{args:e,keys:null}}function vm(e){return e&&typeof e=="object"&&pm(e)===gm}function Vu(e,n){return e.reduce((t,r,o)=>(t[r]=n[o],t),{})}function pr(...e){let n=St(e),t=_u(e),{args:r,keys:o}=ju(e);if(r.length===0)return J([],n);let i=new U(ym(r,n,o?s=>Vu(o,s):be));return t?i.pipe(Lu(t)):i}function ym(e,n,t=be){return r=>{Bu(n,()=>{let{length:o}=e,i=new Array(o),s=o,a=o;for(let c=0;c<o;c++)Bu(n,()=>{let l=J(e[c],n),u=!1;l.subscribe(L(r,d=>{i[c]=d,u||(u=!0,a--),a||r.next(t(i.slice()))},()=>{--s||r.complete()}))},r)},r)}}function Bu(e,n,t){e?Ce(t,e,n):n()}function Uu(e,n,t,r,o,i,s,a){let c=[],l=0,u=0,d=!1,v=()=>{d&&!c.length&&!l&&n.complete()},m=P=>l<r?C(P):c.push(P),C=P=>{i&&n.next(P),l++;let $=!1;ie(t(P,u++)).subscribe(L(n,z=>{o?.(z),i?m(z):n.next(z)},()=>{$=!0},void 0,()=>{if($)try{for(l--;c.length&&l<r;){let z=c.shift();s?Ce(n,s,()=>C(z)):C(z)}v()}catch(z){n.error(z)}}))};return e.subscribe(L(n,m,()=>{d=!0,v()})),()=>{a?.()}}function ee(e,n,t=1/0){return S(n)?ee((r,o)=>k((i,s)=>n(r,i,o,s))(ie(e(r,o))),t):(typeof n=="number"&&(t=n),F((r,o)=>Uu(r,o,e,t)))}function En(e=1/0){return ee(be,e)}function $u(){return En(1)}function In(...e){return $u()(J(e,St(e)))}function Po(e){return new U(n=>{ie(e()).subscribe(n)})}function Me(e,n){return F((t,r)=>{let o=0;t.subscribe(L(r,i=>e.call(n,i,o++)&&r.next(i)))})}function xt(e){return F((n,t)=>{let r=null,o=!1,i;r=n.subscribe(L(t,void 0,void 0,s=>{i=ie(e(s,xt(e)(n))),r?(r.unsubscribe(),r=null,i.subscribe(t)):o=!0})),o&&(r.unsubscribe(),r=null,i.subscribe(t))})}function Hu(e,n,t,r,o){return(i,s)=>{let a=t,c=n,l=0;i.subscribe(L(s,u=>{let d=l++;c=a?e(c,u,d):(a=!0,u),r&&s.next(c)},o&&(()=>{a&&s.next(c),s.complete()})))}}function Tt(e,n){return S(n)?ee(e,n,1):ee(e,1)}function Ot(e){return F((n,t)=>{let r=!1;n.subscribe(L(t,o=>{r=!0,t.next(o)},()=>{r||t.next(e),t.complete()}))})}function gt(e){return e<=0?()=>_e:F((n,t)=>{let r=0;n.subscribe(L(t,o=>{++r<=e&&(t.next(o),e<=r&&t.complete())}))})}function ea(e){return k(()=>e)}function Ro(e=Cm){return F((n,t)=>{let r=!1;n.subscribe(L(t,o=>{r=!0,t.next(o)},()=>r?t.complete():t.error(e())))})}function Cm(){return new pt}function bn(e){return F((n,t)=>{try{n.subscribe(t)}finally{t.add(e)}})}function We(e,n){let t=arguments.length>=2;return r=>r.pipe(e?Me((o,i)=>e(o,i,r)):be,gt(1),t?Ot(n):Ro(()=>new pt))}function _n(e){return e<=0?()=>_e:F((n,t)=>{let r=[];n.subscribe(L(t,o=>{r.push(o),e<r.length&&r.shift()},()=>{for(let o of r)t.next(o);t.complete()},void 0,()=>{r=null}))})}function ta(e,n){let t=arguments.length>=2;return r=>r.pipe(e?Me((o,i)=>e(o,i,r)):be,_n(1),t?Ot(n):Ro(()=>new pt))}function na(e,n){return F(Hu(e,n,arguments.length>=2,!0))}function ra(...e){let n=St(e);return F((t,r)=>{(n?In(e,t,n):In(e,t)).subscribe(r)})}function Se(e,n){return F((t,r)=>{let o=null,i=0,s=!1,a=()=>s&&!o&&r.complete();t.subscribe(L(r,c=>{o?.unsubscribe();let l=0,u=i++;ie(e(c,u)).subscribe(o=L(r,d=>r.next(n?n(c,d,u,l++):d),()=>{o=null,a()}))},()=>{s=!0,a()}))})}function oa(e){return F((n,t)=>{ie(e).subscribe(L(t,()=>t.complete(),hr)),!t.closed&&n.subscribe(t)})}function oe(e,n,t){let r=S(e)||n||t?{next:e,error:n,complete:t}:e;return r?F((o,i)=>{var s;(s=r.subscribe)===null||s===void 0||s.call(r);let a=!0;o.subscribe(L(i,c=>{var l;(l=r.next)===null||l===void 0||l.call(r,c),i.next(c)},()=>{var c;a=!1,(c=r.complete)===null||c===void 0||c.call(r),i.complete()},c=>{var l;a=!1,(l=r.error)===null||l===void 0||l.call(r,c),i.error(c)},()=>{var c,l;a&&((c=r.unsubscribe)===null||c===void 0||c.call(r)),(l=r.finalize)===null||l===void 0||l.call(r)}))}):be}var xd="https://g.co/ng/security#xss",E=class extends Error{constructor(n,t){super(yi(n,t)),this.code=n}};function yi(e,n){return`${`NG0${Math.abs(e)}`}${n?": "+n:""}`}function Sr(e){return{toString:e}.toString()}var ko="__parameters__";function Dm(e){return function(...t){if(e){let r=e(...t);for(let o in r)this[o]=r[o]}}}function Td(e,n,t){return Sr(()=>{let r=Dm(n);function o(...i){if(this instanceof o)return r.apply(this,i),this;let s=new o(...i);return a.annotation=s,a;function a(c,l,u){let d=c.hasOwnProperty(ko)?c[ko]:Object.defineProperty(c,ko,{value:[]})[ko];for(;d.length<=u;)d.push(null);return(d[u]=d[u]||[]).push(s),c}}return t&&(o.prototype=Object.create(t.prototype)),o.prototype.ngMetadataName=e,o.annotationCls=o,o})}var ya=globalThis;function G(e){for(let n in e)if(e[n]===G)return n;throw Error("Could not find renamed property on target object.")}function ve(e){if(typeof e=="string")return e;if(Array.isArray(e))return"["+e.map(ve).join(", ")+"]";if(e==null)return""+e;if(e.overriddenName)return`${e.overriddenName}`;if(e.name)return`${e.name}`;let n=e.toString();if(n==null)return""+n;let t=n.indexOf(`
-`);return t===-1?n:n.substring(0,t)}function zu(e,n){return e==null||e===""?n===null?"":n:n==null||n===""?e:e+" "+n}var wm=G({__forward_ref__:G});function Od(e){return e.__forward_ref__=Od,e.toString=function(){return ve(this())},e}function Fe(e){return Nd(e)?e():e}function Nd(e){return typeof e=="function"&&e.hasOwnProperty(wm)&&e.__forward_ref__===Od}function I(e){return{token:e.token,providedIn:e.providedIn||null,factory:e.factory,value:void 0}}function xr(e){return{providers:e.providers||[],imports:e.imports||[]}}function Ci(e){return Gu(e,Pd)||Gu(e,Rd)}function Ad(e){return Ci(e)!==null}function Gu(e,n){return e.hasOwnProperty(n)?e[n]:null}function Em(e){let n=e&&(e[Pd]||e[Rd]);return n||null}function Wu(e){return e&&(e.hasOwnProperty(qu)||e.hasOwnProperty(Im))?e[qu]:null}var Pd=G({\u0275prov:G}),qu=G({\u0275inj:G}),Rd=G({ngInjectableDef:G}),Im=G({ngInjectorDef:G}),b=class{constructor(n,t){this._desc=n,this.ngMetadataName="InjectionToken",this.\u0275prov=void 0,typeof t=="number"?this.__NG_ELEMENT_ID__=t:t!==void 0&&(this.\u0275prov=I({token:this,providedIn:t.providedIn||"root",factory:t.factory}))}get multi(){return this}toString(){return`InjectionToken ${this._desc}`}};function kd(e){return e&&!!e.\u0275providers}var bm=G({\u0275cmp:G}),_m=G({\u0275dir:G}),Mm=G({\u0275pipe:G}),Sm=G({\u0275mod:G}),Wo=G({\u0275fac:G}),vr=G({__NG_ELEMENT_ID__:G}),Zu=G({__NG_ENV_ID__:G});function Di(e){return typeof e=="string"?e:e==null?"":String(e)}function xm(e){return typeof e=="function"?e.name||e.toString():typeof e=="object"&&e!=null&&typeof e.type=="function"?e.type.name||e.type.toString():Di(e)}function Tm(e,n){let t=n?`. Dependency path: ${n.join(" > ")} > ${e}`:"";throw new E(-200,e)}function ac(e,n){throw new E(-201,!1)}var N=function(e){return e[e.Default=0]="Default",e[e.Host=1]="Host",e[e.Self=2]="Self",e[e.SkipSelf=4]="SkipSelf",e[e.Optional=8]="Optional",e}(N||{}),Ca;function Fd(){return Ca}function ke(e){let n=Ca;return Ca=e,n}function Ld(e,n,t){let r=Ci(e);if(r&&r.providedIn=="root")return r.value===void 0?r.value=r.factory():r.value;if(t&N.Optional)return null;if(n!==void 0)return n;ac(e,"Injector")}var Om={},yr=Om,Da="__NG_DI_FLAG__",qo="ngTempTokenPath",Nm="ngTokenPath",Am=/\n/gm,Pm="\u0275",Qu="__source",On;function Rm(){return On}function Nt(e){let n=On;return On=e,n}function km(e,n=N.Default){if(On===void 0)throw new E(-203,!1);return On===null?Ld(e,void 0,n):On.get(e,n&N.Optional?null:void 0,n)}function x(e,n=N.Default){return(Fd()||km)(Fe(e),n)}function g(e,n=N.Default){return x(e,wi(n))}function wi(e){return typeof e>"u"||typeof e=="number"?e:0|(e.optional&&8)|(e.host&&1)|(e.self&&2)|(e.skipSelf&&4)}function wa(e){let n=[];for(let t=0;t<e.length;t++){let r=Fe(e[t]);if(Array.isArray(r)){if(r.length===0)throw new E(900,!1);let o,i=N.Default;for(let s=0;s<r.length;s++){let a=r[s],c=Fm(a);typeof c=="number"?c===-1?o=a.token:i|=c:o=a}n.push(x(o,i))}else n.push(x(r))}return n}function jd(e,n){return e[Da]=n,e.prototype[Da]=n,e}function Fm(e){return e[Da]}function Lm(e,n,t,r){let o=e[qo];throw n[Qu]&&o.unshift(n[Qu]),e.message=jm(`
-`+e.message,o,t,r),e[Nm]=o,e[qo]=null,e}function jm(e,n,t,r=null){e=e&&e.charAt(0)===`
-`&&e.charAt(1)==Pm?e.slice(2):e;let o=ve(n);if(Array.isArray(n))o=n.map(ve).join(" -> ");else if(typeof n=="object"){let i=[];for(let s in n)if(n.hasOwnProperty(s)){let a=n[s];i.push(s+":"+(typeof a=="string"?JSON.stringify(a):ve(a)))}o=`{${i.join(", ")}}`}return`${t}${r?"("+r+")":""}[${o}]: ${e.replace(Am,`
-  `)}`}var Ei=jd(Td("Optional"),8);var cc=jd(Td("SkipSelf"),4);function An(e,n){let t=e.hasOwnProperty(Wo);return t?e[Wo]:null}function lc(e,n){e.forEach(t=>Array.isArray(t)?lc(t,n):n(t))}function Vd(e,n,t){n>=e.length?e.push(t):e.splice(n,0,t)}function Zo(e,n){return n>=e.length-1?e.pop():e.splice(n,1)[0]}function Vm(e,n,t,r){let o=e.length;if(o==n)e.push(t,r);else if(o===1)e.push(r,e[0]),e[0]=t;else{for(o--,e.push(e[o-1],e[o]);o>n;){let i=o-2;e[o]=e[i],o--}e[n]=t,e[n+1]=r}}function Bm(e,n,t){let r=Tr(e,n);return r>=0?e[r|1]=t:(r=~r,Vm(e,r,n,t)),r}function ia(e,n){let t=Tr(e,n);if(t>=0)return e[t|1]}function Tr(e,n){return Um(e,n,1)}function Um(e,n,t){let r=0,o=e.length>>t;for(;o!==r;){let i=r+(o-r>>1),s=e[i<<t];if(n===s)return i<<t;s>n?o=i:r=i+1}return~(o<<t)}var Cr={},Le=[],Xt=new b(""),Bd=new b("",-1),Ud=new b(""),Qo=class{get(n,t=yr){if(t===yr){let r=new Error(`NullInjectorError: No provider for ${ve(n)}!`);throw r.name="NullInjectorError",r}return t}},$d=function(e){return e[e.OnPush=0]="OnPush",e[e.Default=1]="Default",e}($d||{}),ot=function(e){return e[e.Emulated=0]="Emulated",e[e.None=2]="None",e[e.ShadowDom=3]="ShadowDom",e}(ot||{}),Pt=function(e){return e[e.None=0]="None",e[e.SignalBased=1]="SignalBased",e[e.HasDecoratorInputTransform=2]="HasDecoratorInputTransform",e}(Pt||{});function $m(e,n,t){let r=e.length;for(;;){let o=e.indexOf(n,t);if(o===-1)return o;if(o===0||e.charCodeAt(o-1)<=32){let i=n.length;if(o+i===r||e.charCodeAt(o+i)<=32)return o}t=o+1}}function Ea(e,n,t){let r=0;for(;r<t.length;){let o=t[r];if(typeof o=="number"){if(o!==0)break;r++;let i=t[r++],s=t[r++],a=t[r++];e.setAttribute(n,s,a,i)}else{let i=o,s=t[++r];Hm(i)?e.setProperty(n,i,s):e.setAttribute(n,i,s),r++}}return r}function Hd(e){return e===3||e===4||e===6}function Hm(e){return e.charCodeAt(0)===64}function uc(e,n){if(!(n===null||n.length===0))if(e===null||e.length===0)e=n.slice();else{let t=-1;for(let r=0;r<n.length;r++){let o=n[r];typeof o=="number"?t=o:t===0||(t===-1||t===2?Yu(e,t,o,null,n[++r]):Yu(e,t,o,null,null))}}return e}function Yu(e,n,t,r,o){let i=0,s=e.length;if(n===-1)s=-1;else for(;i<e.length;){let a=e[i++];if(typeof a=="number"){if(a===n){s=-1;break}else if(a>n){s=i-1;break}}}for(;i<e.length;){let a=e[i];if(typeof a=="number")break;if(a===t){if(r===null){o!==null&&(e[i+1]=o);return}else if(r===e[i+1]){e[i+2]=o;return}}i++,r!==null&&i++,o!==null&&i++}s!==-1&&(e.splice(s,0,n),i=s+1),e.splice(i++,0,t),r!==null&&e.splice(i++,0,r),o!==null&&e.splice(i++,0,o)}var zd="ng-template";function zm(e,n,t,r){let o=0;if(r){for(;o<n.length&&typeof n[o]=="string";o+=2)if(n[o]==="class"&&$m(n[o+1].toLowerCase(),t,0)!==-1)return!0}else if(dc(e))return!1;if(o=n.indexOf(1,o),o>-1){let i;for(;++o<n.length&&typeof(i=n[o])=="string";)if(i.toLowerCase()===t)return!0}return!1}function dc(e){return e.type===4&&e.value!==zd}function Gm(e,n,t){let r=e.type===4&&!t?zd:e.value;return n===r}function Wm(e,n,t){let r=4,o=e.attrs,i=o!==null?Qm(o):0,s=!1;for(let a=0;a<n.length;a++){let c=n[a];if(typeof c=="number"){if(!s&&!qe(r)&&!qe(c))return!1;if(s&&qe(c))continue;s=!1,r=c|r&1;continue}if(!s)if(r&4){if(r=2|r&1,c!==""&&!Gm(e,c,t)||c===""&&n.length===1){if(qe(r))return!1;s=!0}}else if(r&8){if(o===null||!zm(e,o,c,t)){if(qe(r))return!1;s=!0}}else{let l=n[++a],u=qm(c,o,dc(e),t);if(u===-1){if(qe(r))return!1;s=!0;continue}if(l!==""){let d;if(u>i?d="":d=o[u+1].toLowerCase(),r&2&&l!==d){if(qe(r))return!1;s=!0}}}}return qe(r)||s}function qe(e){return(e&1)===0}function qm(e,n,t,r){if(n===null)return-1;let o=0;if(r||!t){let i=!1;for(;o<n.length;){let s=n[o];if(s===e)return o;if(s===3||s===6)i=!0;else if(s===1||s===2){let a=n[++o];for(;typeof a=="string";)a=n[++o];continue}else{if(s===4)break;if(s===0){o+=4;continue}}o+=i?1:2}return-1}else return Ym(n,e)}function Zm(e,n,t=!1){for(let r=0;r<n.length;r++)if(Wm(e,n[r],t))return!0;return!1}function Qm(e){for(let n=0;n<e.length;n++){let t=e[n];if(Hd(t))return n}return e.length}function Ym(e,n){let t=e.indexOf(4);if(t>-1)for(t++;t<e.length;){let r=e[t];if(typeof r=="number")return-1;if(r===n)return t;t++}return-1}function Ku(e,n){return e?":not("+n.trim()+")":n}function Km(e){let n=e[0],t=1,r=2,o="",i=!1;for(;t<e.length;){let s=e[t];if(typeof s=="string")if(r&2){let a=e[++t];o+="["+s+(a.length>0?'="'+a+'"':"")+"]"}else r&8?o+="."+s:r&4&&(o+=" "+s);else o!==""&&!qe(s)&&(n+=Ku(i,o),o=""),r=s,i=i||!qe(r);t++}return o!==""&&(n+=Ku(i,o)),n}function Jm(e){return e.map(Km).join(",")}function Xm(e){let n=[],t=[],r=1,o=2;for(;r<e.length;){let i=e[r];if(typeof i=="string")o===2?i!==""&&n.push(i,e[++r]):o===8&&t.push(i);else{if(!qe(o))break;o=i}r++}return{attrs:n,classes:t}}function te(e){return Sr(()=>{let n=Qd(e),t=K(D({},n),{decls:e.decls,vars:e.vars,template:e.template,consts:e.consts||null,ngContentSelectors:e.ngContentSelectors,onPush:e.changeDetection===$d.OnPush,directiveDefs:null,pipeDefs:null,dependencies:n.standalone&&e.dependencies||null,getStandaloneInjector:null,signals:e.signals??!1,data:e.data||{},encapsulation:e.encapsulation||ot.Emulated,styles:e.styles||Le,_:null,schemas:e.schemas||null,tView:null,id:""});Yd(t);let r=e.dependencies;return t.directiveDefs=Xu(r,!1),t.pipeDefs=Xu(r,!0),t.id=nv(t),t})}function ev(e){return Rt(e)||Gd(e)}function tv(e){return e!==null}function Or(e){return Sr(()=>({type:e.type,bootstrap:e.bootstrap||Le,declarations:e.declarations||Le,imports:e.imports||Le,exports:e.exports||Le,transitiveCompileScopes:null,schemas:e.schemas||null,id:e.id||null}))}function Ju(e,n){if(e==null)return Cr;let t={};for(let r in e)if(e.hasOwnProperty(r)){let o=e[r],i,s,a=Pt.None;Array.isArray(o)?(a=o[0],i=o[1],s=o[2]??i):(i=o,s=o),n?(t[i]=a!==Pt.None?[r,a]:r,n[i]=s):t[i]=r}return t}function jt(e){return Sr(()=>{let n=Qd(e);return Yd(n),n})}function Rt(e){return e[bm]||null}function Gd(e){return e[_m]||null}function Wd(e){return e[Mm]||null}function qd(e){let n=Rt(e)||Gd(e)||Wd(e);return n!==null?n.standalone:!1}function Zd(e,n){let t=e[Sm]||null;if(!t&&n===!0)throw new Error(`Type ${ve(e)} does not have '\u0275mod' property.`);return t}function Qd(e){let n={};return{type:e.type,providersResolver:null,factory:null,hostBindings:e.hostBindings||null,hostVars:e.hostVars||0,hostAttrs:e.hostAttrs||null,contentQueries:e.contentQueries||null,declaredInputs:n,inputTransforms:null,inputConfig:e.inputs||Cr,exportAs:e.exportAs||null,standalone:e.standalone===!0,signals:e.signals===!0,selectors:e.selectors||Le,viewQuery:e.viewQuery||null,features:e.features||null,setInput:null,findHostDirectiveDefs:null,hostDirectives:null,inputs:Ju(e.inputs,n),outputs:Ju(e.outputs),debugInfo:null}}function Yd(e){e.features?.forEach(n=>n(e))}function Xu(e,n){if(!e)return null;let t=n?Wd:ev;return()=>(typeof e=="function"?e():e).map(r=>t(r)).filter(tv)}function nv(e){let n=0,t=[e.selectors,e.ngContentSelectors,e.hostVars,e.hostAttrs,e.consts,e.vars,e.decls,e.encapsulation,e.standalone,e.signals,e.exportAs,JSON.stringify(e.inputs),JSON.stringify(e.outputs),Object.getOwnPropertyNames(e.type.prototype),!!e.contentQueries,!!e.viewQuery].join("|");for(let o of t)n=Math.imul(31,n)+o.charCodeAt(0)<<0;return n+=2147483648,"c"+n}function on(e){return{\u0275providers:e}}function rv(...e){return{\u0275providers:Kd(!0,e),\u0275fromNgModule:!0}}function Kd(e,...n){let t=[],r=new Set,o,i=s=>{t.push(s)};return lc(n,s=>{let a=s;Ia(a,i,[],r)&&(o||=[],o.push(a))}),o!==void 0&&Jd(o,i),t}function Jd(e,n){for(let t=0;t<e.length;t++){let{ngModule:r,providers:o}=e[t];fc(o,i=>{n(i,r)})}}function Ia(e,n,t,r){if(e=Fe(e),!e)return!1;let o=null,i=Wu(e),s=!i&&Rt(e);if(!i&&!s){let c=e.ngModule;if(i=Wu(c),i)o=c;else return!1}else{if(s&&!s.standalone)return!1;o=e}let a=r.has(o);if(s){if(a)return!1;if(r.add(o),s.dependencies){let c=typeof s.dependencies=="function"?s.dependencies():s.dependencies;for(let l of c)Ia(l,n,t,r)}}else if(i){if(i.imports!=null&&!a){r.add(o);let l;try{lc(i.imports,u=>{Ia(u,n,t,r)&&(l||=[],l.push(u))})}finally{}l!==void 0&&Jd(l,n)}if(!a){let l=An(o)||(()=>new o);n({provide:o,useFactory:l,deps:Le},o),n({provide:Ud,useValue:o,multi:!0},o),n({provide:Xt,useValue:()=>x(o),multi:!0},o)}let c=i.providers;if(c!=null&&!a){let l=e;fc(c,u=>{n(u,l)})}}else return!1;return o!==e&&e.providers!==void 0}function fc(e,n){for(let t of e)kd(t)&&(t=t.\u0275providers),Array.isArray(t)?fc(t,n):n(t)}var ov=G({provide:String,useValue:G});function Xd(e){return e!==null&&typeof e=="object"&&ov in e}function iv(e){return!!(e&&e.useExisting)}function sv(e){return!!(e&&e.useFactory)}function ba(e){return typeof e=="function"}var Ii=new b(""),Uo={},av={},sa;function hc(){return sa===void 0&&(sa=new Qo),sa}var xe=class{},Dr=class extends xe{get destroyed(){return this._destroyed}constructor(n,t,r,o){super(),this.parent=t,this.source=r,this.scopes=o,this.records=new Map,this._ngOnDestroyHooks=new Set,this._onDestroyHooks=[],this._destroyed=!1,Ma(n,s=>this.processProvider(s)),this.records.set(Bd,Mn(void 0,this)),o.has("environment")&&this.records.set(xe,Mn(void 0,this));let i=this.records.get(Ii);i!=null&&typeof i.value=="string"&&this.scopes.add(i.value),this.injectorDefTypes=new Set(this.get(Ud,Le,N.Self))}destroy(){this.assertNotDestroyed(),this._destroyed=!0;let n=j(null);try{for(let r of this._ngOnDestroyHooks)r.ngOnDestroy();let t=this._onDestroyHooks;this._onDestroyHooks=[];for(let r of t)r()}finally{this.records.clear(),this._ngOnDestroyHooks.clear(),this.injectorDefTypes.clear(),j(n)}}onDestroy(n){return this.assertNotDestroyed(),this._onDestroyHooks.push(n),()=>this.removeOnDestroy(n)}runInContext(n){this.assertNotDestroyed();let t=Nt(this),r=ke(void 0),o;try{return n()}finally{Nt(t),ke(r)}}get(n,t=yr,r=N.Default){if(this.assertNotDestroyed(),n.hasOwnProperty(Zu))return n[Zu](this);r=wi(r);let o,i=Nt(this),s=ke(void 0);try{if(!(r&N.SkipSelf)){let c=this.records.get(n);if(c===void 0){let l=hv(n)&&Ci(n);l&&this.injectableDefInScope(l)?c=Mn(_a(n),Uo):c=null,this.records.set(n,c)}if(c!=null)return this.hydrate(n,c)}let a=r&N.Self?hc():this.parent;return t=r&N.Optional&&t===yr?null:t,a.get(n,t)}catch(a){if(a.name==="NullInjectorError"){if((a[qo]=a[qo]||[]).unshift(ve(n)),i)throw a;return Lm(a,n,"R3InjectorError",this.source)}else throw a}finally{ke(s),Nt(i)}}resolveInjectorInitializers(){let n=j(null),t=Nt(this),r=ke(void 0),o;try{let i=this.get(Xt,Le,N.Self);for(let s of i)s()}finally{Nt(t),ke(r),j(n)}}toString(){let n=[],t=this.records;for(let r of t.keys())n.push(ve(r));return`R3Injector[${n.join(", ")}]`}assertNotDestroyed(){if(this._destroyed)throw new E(205,!1)}processProvider(n){n=Fe(n);let t=ba(n)?n:Fe(n&&n.provide),r=lv(n);if(!ba(n)&&n.multi===!0){let o=this.records.get(t);o||(o=Mn(void 0,Uo,!0),o.factory=()=>wa(o.multi),this.records.set(t,o)),t=n,o.multi.push(n)}this.records.set(t,r)}hydrate(n,t){let r=j(null);try{return t.value===Uo&&(t.value=av,t.value=t.factory()),typeof t.value=="object"&&t.value&&fv(t.value)&&this._ngOnDestroyHooks.add(t.value),t.value}finally{j(r)}}injectableDefInScope(n){if(!n.providedIn)return!1;let t=Fe(n.providedIn);return typeof t=="string"?t==="any"||this.scopes.has(t):this.injectorDefTypes.has(t)}removeOnDestroy(n){let t=this._onDestroyHooks.indexOf(n);t!==-1&&this._onDestroyHooks.splice(t,1)}};function _a(e){let n=Ci(e),t=n!==null?n.factory:An(e);if(t!==null)return t;if(e instanceof b)throw new E(204,!1);if(e instanceof Function)return cv(e);throw new E(204,!1)}function cv(e){if(e.length>0)throw new E(204,!1);let t=Em(e);return t!==null?()=>t.factory(e):()=>new e}function lv(e){if(Xd(e))return Mn(void 0,e.useValue);{let n=uv(e);return Mn(n,Uo)}}function uv(e,n,t){let r;if(ba(e)){let o=Fe(e);return An(o)||_a(o)}else if(Xd(e))r=()=>Fe(e.useValue);else if(sv(e))r=()=>e.useFactory(...wa(e.deps||[]));else if(iv(e))r=()=>x(Fe(e.useExisting));else{let o=Fe(e&&(e.useClass||e.provide));if(dv(e))r=()=>new o(...wa(e.deps));else return An(o)||_a(o)}return r}function Mn(e,n,t=!1){return{factory:e,value:n,multi:t?[]:void 0}}function dv(e){return!!e.deps}function fv(e){return e!==null&&typeof e=="object"&&typeof e.ngOnDestroy=="function"}function hv(e){return typeof e=="function"||typeof e=="object"&&e instanceof b}function Ma(e,n){for(let t of e)Array.isArray(t)?Ma(t,n):t&&kd(t)?Ma(t.\u0275providers,n):n(t)}function Je(e,n){e instanceof Dr&&e.assertNotDestroyed();let t,r=Nt(e),o=ke(void 0);try{return n()}finally{Nt(r),ke(o)}}function ef(){return Fd()!==void 0||Rm()!=null}function pv(e){if(!ef())throw new E(-203,!1)}function gv(e){return typeof e=="function"}var Te=0,A=1,M=2,pe=3,Ze=4,Xe=5,it=6,Yo=7,Ve=8,Pn=9,st=10,Z=11,wr=12,ed=13,$n=14,Be=15,Rn=16,Sn=17,kn=18,bi=19,tf=20,At=21,aa=22,je=23,se=25,nf=1,Er=6,mt=7,Ko=8,Jo=9,De=10,Xo=function(e){return e[e.None=0]="None",e[e.HasTransplantedViews=2]="HasTransplantedViews",e}(Xo||{});function Qe(e){return Array.isArray(e)&&typeof e[nf]=="object"}function ct(e){return Array.isArray(e)&&e[nf]===!0}function pc(e){return(e.flags&4)!==0}function Nr(e){return e.componentOffset>-1}function _i(e){return(e.flags&1)===1}function Ar(e){return!!e.template}function ei(e){return(e[M]&512)!==0}var Sa=class{constructor(n,t,r){this.previousValue=n,this.currentValue=t,this.firstChange=r}isFirstChange(){return this.firstChange}};function rf(e,n,t,r){n!==null?n.applyValueToInputSignal(n,r):e[t]=r}function Hn(){return of}function of(e){return e.type.prototype.ngOnChanges&&(e.setInput=vv),mv}Hn.ngInherit=!0;function mv(){let e=af(this),n=e?.current;if(n){let t=e.previous;if(t===Cr)e.previous=n;else for(let r in n)t[r]=n[r];e.current=null,this.ngOnChanges(n)}}function vv(e,n,t,r,o){let i=this.declaredInputs[r],s=af(e)||yv(e,{previous:Cr,current:null}),a=s.current||(s.current={}),c=s.previous,l=c[i];a[i]=new Sa(l&&l.currentValue,t,c===Cr),rf(e,n,o,t)}var sf="__ngSimpleChanges__";function af(e){return e[sf]||null}function yv(e,n){return e[sf]=n}var td=null;var nt=function(e,n,t){td?.(e,n,t)},cf="svg",Cv="math";function Ye(e){for(;Array.isArray(e);)e=e[Te];return e}function lf(e,n){return Ye(n[e])}function Oe(e,n){return Ye(n[e.index])}function gc(e,n){return e.data[n]}function Dv(e,n){return e[n]}function Vt(e,n){let t=n[e];return Qe(t)?t:t[Te]}function mc(e){return(e[M]&128)===128}function wv(e){return ct(e[pe])}function Fn(e,n){return n==null?null:e[n]}function uf(e){e[Sn]=0}function df(e){e[M]&1024||(e[M]|=1024,mc(e)&&Si(e))}function Ev(e,n){for(;e>0;)n=n[$n],e--;return n}function Mi(e){return!!(e[M]&9216||e[je]?.dirty)}function xa(e){e[st].changeDetectionScheduler?.notify(8),e[M]&64&&(e[M]|=1024),Mi(e)&&Si(e)}function Si(e){e[st].changeDetectionScheduler?.notify(0);let n=en(e);for(;n!==null&&!(n[M]&8192||(n[M]|=8192,!mc(n)));)n=en(n)}function ff(e,n){if((e[M]&256)===256)throw new E(911,!1);e[At]===null&&(e[At]=[]),e[At].push(n)}function Iv(e,n){if(e[At]===null)return;let t=e[At].indexOf(n);t!==-1&&e[At].splice(t,1)}function en(e){let n=e[pe];return ct(n)?n[pe]:n}var T={lFrame:wf(null),bindingsEnabled:!0,skipHydrationRootTNode:null};var hf=!1;function bv(){return T.lFrame.elementDepthCount}function _v(){T.lFrame.elementDepthCount++}function Mv(){T.lFrame.elementDepthCount--}function pf(){return T.bindingsEnabled}function Pr(){return T.skipHydrationRootTNode!==null}function Sv(e){return T.skipHydrationRootTNode===e}function xv(e){T.skipHydrationRootTNode=e}function Tv(){T.skipHydrationRootTNode=null}function H(){return T.lFrame.lView}function Ue(){return T.lFrame.tView}function le(e){return T.lFrame.contextLView=e,e[Ve]}function ue(e){return T.lFrame.contextLView=null,e}function we(){let e=gf();for(;e!==null&&e.type===64;)e=e.parent;return e}function gf(){return T.lFrame.currentTNode}function Ov(){let e=T.lFrame,n=e.currentTNode;return e.isParent?n:n.parent}function sn(e,n){let t=T.lFrame;t.currentTNode=e,t.isParent=n}function vc(){return T.lFrame.isParent}function mf(){T.lFrame.isParent=!1}function Nv(){return T.lFrame.contextLView}function vf(){return hf}function nd(e){hf=e}function yc(){let e=T.lFrame,n=e.bindingRootIndex;return n===-1&&(n=e.bindingRootIndex=e.tView.bindingStartIndex),n}function Av(e){return T.lFrame.bindingIndex=e}function xi(){return T.lFrame.bindingIndex++}function Pv(e){let n=T.lFrame,t=n.bindingIndex;return n.bindingIndex=n.bindingIndex+e,t}function Rv(){return T.lFrame.inI18n}function kv(e,n){let t=T.lFrame;t.bindingIndex=t.bindingRootIndex=e,Ta(n)}function Fv(){return T.lFrame.currentDirectiveIndex}function Ta(e){T.lFrame.currentDirectiveIndex=e}function Lv(e){let n=T.lFrame.currentDirectiveIndex;return n===-1?null:e[n]}function yf(e){T.lFrame.currentQueryIndex=e}function jv(e){let n=e[A];return n.type===2?n.declTNode:n.type===1?e[Xe]:null}function Cf(e,n,t){if(t&N.SkipSelf){let o=n,i=e;for(;o=o.parent,o===null&&!(t&N.Host);)if(o=jv(i),o===null||(i=i[$n],o.type&10))break;if(o===null)return!1;n=o,e=i}let r=T.lFrame=Df();return r.currentTNode=n,r.lView=e,!0}function Cc(e){let n=Df(),t=e[A];T.lFrame=n,n.currentTNode=t.firstChild,n.lView=e,n.tView=t,n.contextLView=e,n.bindingIndex=t.bindingStartIndex,n.inI18n=!1}function Df(){let e=T.lFrame,n=e===null?null:e.child;return n===null?wf(e):n}function wf(e){let n={currentTNode:null,isParent:!0,lView:null,tView:null,selectedIndex:-1,contextLView:null,elementDepthCount:0,currentNamespace:null,currentDirectiveIndex:-1,bindingRootIndex:-1,bindingIndex:-1,currentQueryIndex:0,parent:e,child:null,inI18n:!1};return e!==null&&(e.child=n),n}function Ef(){let e=T.lFrame;return T.lFrame=e.parent,e.currentTNode=null,e.lView=null,e}var If=Ef;function Dc(){let e=Ef();e.isParent=!0,e.tView=null,e.selectedIndex=-1,e.contextLView=null,e.elementDepthCount=0,e.currentDirectiveIndex=-1,e.currentNamespace=null,e.bindingRootIndex=-1,e.bindingIndex=-1,e.currentQueryIndex=0}function Vv(e){return(T.lFrame.contextLView=Ev(e,T.lFrame.contextLView))[Ve]}function zn(){return T.lFrame.selectedIndex}function tn(e){T.lFrame.selectedIndex=e}function wc(){let e=T.lFrame;return gc(e.tView,e.selectedIndex)}function Rr(){T.lFrame.currentNamespace=cf}function Ti(){Bv()}function Bv(){T.lFrame.currentNamespace=null}function bf(){return T.lFrame.currentNamespace}var _f=!0;function Oi(){return _f}function Bt(e){_f=e}function Uv(e,n,t){let{ngOnChanges:r,ngOnInit:o,ngDoCheck:i}=n.type.prototype;if(r){let s=of(n);(t.preOrderHooks??=[]).push(e,s),(t.preOrderCheckHooks??=[]).push(e,s)}o&&(t.preOrderHooks??=[]).push(0-e,o),i&&((t.preOrderHooks??=[]).push(e,i),(t.preOrderCheckHooks??=[]).push(e,i))}function Ni(e,n){for(let t=n.directiveStart,r=n.directiveEnd;t<r;t++){let i=e.data[t].type.prototype,{ngAfterContentInit:s,ngAfterContentChecked:a,ngAfterViewInit:c,ngAfterViewChecked:l,ngOnDestroy:u}=i;s&&(e.contentHooks??=[]).push(-t,s),a&&((e.contentHooks??=[]).push(t,a),(e.contentCheckHooks??=[]).push(t,a)),c&&(e.viewHooks??=[]).push(-t,c),l&&((e.viewHooks??=[]).push(t,l),(e.viewCheckHooks??=[]).push(t,l)),u!=null&&(e.destroyHooks??=[]).push(t,u)}}function $o(e,n,t){Mf(e,n,3,t)}function Ho(e,n,t,r){(e[M]&3)===t&&Mf(e,n,t,r)}function ca(e,n){let t=e[M];(t&3)===n&&(t&=16383,t+=1,e[M]=t)}function Mf(e,n,t,r){let o=r!==void 0?e[Sn]&65535:0,i=r??-1,s=n.length-1,a=0;for(let c=o;c<s;c++)if(typeof n[c+1]=="number"){if(a=n[c],r!=null&&a>=r)break}else n[c]<0&&(e[Sn]+=65536),(a<i||i==-1)&&($v(e,t,n,c),e[Sn]=(e[Sn]&4294901760)+c+2),c++}function rd(e,n){nt(4,e,n);let t=j(null);try{n.call(e)}finally{j(t),nt(5,e,n)}}function $v(e,n,t,r){let o=t[r]<0,i=t[r+1],s=o?-t[r]:t[r],a=e[s];o?e[M]>>14<e[Sn]>>16&&(e[M]&3)===n&&(e[M]+=16384,rd(a,i)):rd(a,i)}var Nn=-1,Ir=class{constructor(n,t,r){this.factory=n,this.resolving=!1,this.canSeeViewProviders=t,this.injectImpl=r}};function Hv(e){return e instanceof Ir}function zv(e){return(e.flags&8)!==0}function Gv(e){return(e.flags&16)!==0}var la={},Oa=class{constructor(n,t){this.injector=n,this.parentInjector=t}get(n,t,r){r=wi(r);let o=this.injector.get(n,la,r);return o!==la||t===la?o:this.parentInjector.get(n,t,r)}};function Sf(e){return e!==Nn}function ti(e){return e&32767}function Wv(e){return e>>16}function ni(e,n){let t=Wv(e),r=n;for(;t>0;)r=r[$n],t--;return r}var Na=!0;function od(e){let n=Na;return Na=e,n}var qv=256,xf=qv-1,Tf=5,Zv=0,rt={};function Qv(e,n,t){let r;typeof t=="string"?r=t.charCodeAt(0)||0:t.hasOwnProperty(vr)&&(r=t[vr]),r==null&&(r=t[vr]=Zv++);let o=r&xf,i=1<<o;n.data[e+(o>>Tf)]|=i}function Of(e,n){let t=Nf(e,n);if(t!==-1)return t;let r=n[A];r.firstCreatePass&&(e.injectorIndex=n.length,ua(r.data,e),ua(n,null),ua(r.blueprint,null));let o=Ec(e,n),i=e.injectorIndex;if(Sf(o)){let s=ti(o),a=ni(o,n),c=a[A].data;for(let l=0;l<8;l++)n[i+l]=a[s+l]|c[s+l]}return n[i+8]=o,i}function ua(e,n){e.push(0,0,0,0,0,0,0,0,n)}function Nf(e,n){return e.injectorIndex===-1||e.parent&&e.parent.injectorIndex===e.injectorIndex||n[e.injectorIndex+8]===null?-1:e.injectorIndex}function Ec(e,n){if(e.parent&&e.parent.injectorIndex!==-1)return e.parent.injectorIndex;let t=0,r=null,o=n;for(;o!==null;){if(r=Ff(o),r===null)return Nn;if(t++,o=o[$n],r.injectorIndex!==-1)return r.injectorIndex|t<<16}return Nn}function Yv(e,n,t){Qv(e,n,t)}function Kv(e,n){if(n==="class")return e.classes;if(n==="style")return e.styles;let t=e.attrs;if(t){let r=t.length,o=0;for(;o<r;){let i=t[o];if(Hd(i))break;if(i===0)o=o+2;else if(typeof i=="number")for(o++;o<r&&typeof t[o]=="string";)o++;else{if(i===n)return t[o+1];o=o+2}}}return null}function Af(e,n,t){if(t&N.Optional||e!==void 0)return e;ac(n,"NodeInjector")}function Pf(e,n,t,r){if(t&N.Optional&&r===void 0&&(r=null),!(t&(N.Self|N.Host))){let o=e[Pn],i=ke(void 0);try{return o?o.get(n,r,t&N.Optional):Ld(n,r,t&N.Optional)}finally{ke(i)}}return Af(r,n,t)}function Rf(e,n,t,r=N.Default,o){if(e!==null){if(n[M]&2048&&!(r&N.Self)){let s=ny(e,n,t,r,rt);if(s!==rt)return s}let i=kf(e,n,t,r,rt);if(i!==rt)return i}return Pf(n,t,r,o)}function kf(e,n,t,r,o){let i=ey(t);if(typeof i=="function"){if(!Cf(n,e,r))return r&N.Host?Af(o,t,r):Pf(n,t,r,o);try{let s;if(s=i(r),s==null&&!(r&N.Optional))ac(t);else return s}finally{If()}}else if(typeof i=="number"){let s=null,a=Nf(e,n),c=Nn,l=r&N.Host?n[Be][Xe]:null;for((a===-1||r&N.SkipSelf)&&(c=a===-1?Ec(e,n):n[a+8],c===Nn||!sd(r,!1)?a=-1:(s=n[A],a=ti(c),n=ni(c,n)));a!==-1;){let u=n[A];if(id(i,a,u.data)){let d=Jv(a,n,t,s,r,l);if(d!==rt)return d}c=n[a+8],c!==Nn&&sd(r,n[A].data[a+8]===l)&&id(i,a,n)?(s=u,a=ti(c),n=ni(c,n)):a=-1}}return o}function Jv(e,n,t,r,o,i){let s=n[A],a=s.data[e+8],c=r==null?Nr(a)&&Na:r!=s&&(a.type&3)!==0,l=o&N.Host&&i===a,u=Xv(a,s,t,c,l);return u!==null?br(n,s,u,a):rt}function Xv(e,n,t,r,o){let i=e.providerIndexes,s=n.data,a=i&1048575,c=e.directiveStart,l=e.directiveEnd,u=i>>20,d=r?a:a+u,v=o?a+u:l;for(let m=d;m<v;m++){let C=s[m];if(m<c&&t===C||m>=c&&C.type===t)return m}if(o){let m=s[c];if(m&&Ar(m)&&m.type===t)return c}return null}function br(e,n,t,r){let o=e[t],i=n.data;if(Hv(o)){let s=o;s.resolving&&Tm(xm(i[t]));let a=od(s.canSeeViewProviders);s.resolving=!0;let c,l=s.injectImpl?ke(s.injectImpl):null,u=Cf(e,r,N.Default);try{o=e[t]=s.factory(void 0,i,e,r),n.firstCreatePass&&t>=r.directiveStart&&Uv(t,i[t],n)}finally{l!==null&&ke(l),od(a),s.resolving=!1,If()}}return o}function ey(e){if(typeof e=="string")return e.charCodeAt(0)||0;let n=e.hasOwnProperty(vr)?e[vr]:void 0;return typeof n=="number"?n>=0?n&xf:ty:n}function id(e,n,t){let r=1<<e;return!!(t[n+(e>>Tf)]&r)}function sd(e,n){return!(e&N.Self)&&!(e&N.Host&&n)}var Jt=class{constructor(n,t){this._tNode=n,this._lView=t}get(n,t,r){return Rf(this._tNode,this._lView,n,wi(r),t)}};function ty(){return new Jt(we(),H())}function Ic(e){return Sr(()=>{let n=e.prototype.constructor,t=n[Wo]||Aa(n),r=Object.prototype,o=Object.getPrototypeOf(e.prototype).constructor;for(;o&&o!==r;){let i=o[Wo]||Aa(o);if(i&&i!==t)return i;o=Object.getPrototypeOf(o)}return i=>new i})}function Aa(e){return Nd(e)?()=>{let n=Aa(Fe(e));return n&&n()}:An(e)}function ny(e,n,t,r,o){let i=e,s=n;for(;i!==null&&s!==null&&s[M]&2048&&!(s[M]&512);){let a=kf(i,s,t,r|N.Self,rt);if(a!==rt)return a;let c=i.parent;if(!c){let l=s[tf];if(l){let u=l.get(t,rt,r);if(u!==rt)return u}c=Ff(s),s=s[$n]}i=c}return o}function Ff(e){let n=e[A],t=n.type;return t===2?n.declTNode:t===1?e[Xe]:null}function bc(e){return Kv(we(),e)}function ad(e,n=null,t=null,r){let o=Lf(e,n,t,r);return o.resolveInjectorInitializers(),o}function Lf(e,n=null,t=null,r,o=new Set){let i=[t||Le,rv(e)];return r=r||(typeof e=="object"?void 0:ve(e)),new Dr(i,n||hc(),r||null,o)}var Ke=class e{static{this.THROW_IF_NOT_FOUND=yr}static{this.NULL=new Qo}static create(n,t){if(Array.isArray(n))return ad({name:""},t,n,"");{let r=n.name??"";return ad({name:r},n.parent,n.providers,r)}}static{this.\u0275prov=I({token:e,providedIn:"any",factory:()=>x(Bd)})}static{this.__NG_ELEMENT_ID__=-1}};var ry=new b("");ry.__NG_ELEMENT_ID__=e=>{let n=we();if(n===null)throw new E(204,!1);if(n.type&2)return n.value;if(e&N.Optional)return null;throw new E(204,!1)};var oy="ngOriginalError";function da(e){return e[oy]}var jf=!0,_c=(()=>{class e{static{this.__NG_ELEMENT_ID__=iy}static{this.__NG_ENV_ID__=t=>t}}return e})(),Pa=class extends _c{constructor(n){super(),this._lView=n}onDestroy(n){return ff(this._lView,n),()=>Iv(this._lView,n)}};function iy(){return new Pa(H())}var an=(()=>{class e{constructor(){this.taskId=0,this.pendingTasks=new Set,this.hasPendingTasks=new ce(!1)}get _hasPendingTasks(){return this.hasPendingTasks.value}add(){this._hasPendingTasks||this.hasPendingTasks.next(!0);let t=this.taskId++;return this.pendingTasks.add(t),t}remove(t){this.pendingTasks.delete(t),this.pendingTasks.size===0&&this._hasPendingTasks&&this.hasPendingTasks.next(!1)}ngOnDestroy(){this.pendingTasks.clear(),this._hasPendingTasks&&this.hasPendingTasks.next(!1)}static{this.\u0275prov=I({token:e,providedIn:"root",factory:()=>new e})}}return e})();var Ra=class extends he{constructor(n=!1){super(),this.destroyRef=void 0,this.pendingTasks=void 0,this.__isAsync=n,ef()&&(this.destroyRef=g(_c,{optional:!0})??void 0,this.pendingTasks=g(an,{optional:!0})??void 0)}emit(n){let t=j(null);try{super.next(n)}finally{j(t)}}subscribe(n,t,r){let o=n,i=t||(()=>null),s=r;if(n&&typeof n=="object"){let c=n;o=c.next?.bind(c),i=c.error?.bind(c),s=c.complete?.bind(c)}this.__isAsync&&(i=this.wrapInTimeout(i),o&&(o=this.wrapInTimeout(o)),s&&(s=this.wrapInTimeout(s)));let a=super.subscribe({next:o,error:i,complete:s});return n instanceof X&&n.add(a),a}wrapInTimeout(n){return t=>{let r=this.pendingTasks?.add();setTimeout(()=>{n(t),r!==void 0&&this.pendingTasks?.remove(r)})}}},me=Ra;function ri(...e){}function Vf(e){let n,t;function r(){e=ri;try{t!==void 0&&typeof cancelAnimationFrame=="function"&&cancelAnimationFrame(t),n!==void 0&&clearTimeout(n)}catch{}}return n=setTimeout(()=>{e(),r()}),typeof requestAnimationFrame=="function"&&(t=requestAnimationFrame(()=>{e(),r()})),()=>r()}function cd(e){return queueMicrotask(()=>e()),()=>{e=ri}}var Mc="isAngularZone",oi=Mc+"_ID",sy=0,W=class e{constructor(n){this.hasPendingMacrotasks=!1,this.hasPendingMicrotasks=!1,this.isStable=!0,this.onUnstable=new me(!1),this.onMicrotaskEmpty=new me(!1),this.onStable=new me(!1),this.onError=new me(!1);let{enableLongStackTrace:t=!1,shouldCoalesceEventChangeDetection:r=!1,shouldCoalesceRunChangeDetection:o=!1,scheduleInRootZone:i=jf}=n;if(typeof Zone>"u")throw new E(908,!1);Zone.assertZonePatched();let s=this;s._nesting=0,s._outer=s._inner=Zone.current,Zone.TaskTrackingZoneSpec&&(s._inner=s._inner.fork(new Zone.TaskTrackingZoneSpec)),t&&Zone.longStackTraceZoneSpec&&(s._inner=s._inner.fork(Zone.longStackTraceZoneSpec)),s.shouldCoalesceEventChangeDetection=!o&&r,s.shouldCoalesceRunChangeDetection=o,s.callbackScheduled=!1,s.scheduleInRootZone=i,ly(s)}static isInAngularZone(){return typeof Zone<"u"&&Zone.current.get(Mc)===!0}static assertInAngularZone(){if(!e.isInAngularZone())throw new E(909,!1)}static assertNotInAngularZone(){if(e.isInAngularZone())throw new E(909,!1)}run(n,t,r){return this._inner.run(n,t,r)}runTask(n,t,r,o){let i=this._inner,s=i.scheduleEventTask("NgZoneEvent: "+o,n,ay,ri,ri);try{return i.runTask(s,t,r)}finally{i.cancelTask(s)}}runGuarded(n,t,r){return this._inner.runGuarded(n,t,r)}runOutsideAngular(n){return this._outer.run(n)}},ay={};function Sc(e){if(e._nesting==0&&!e.hasPendingMicrotasks&&!e.isStable)try{e._nesting++,e.onMicrotaskEmpty.emit(null)}finally{if(e._nesting--,!e.hasPendingMicrotasks)try{e.runOutsideAngular(()=>e.onStable.emit(null))}finally{e.isStable=!0}}}function cy(e){if(e.isCheckStableRunning||e.callbackScheduled)return;e.callbackScheduled=!0;function n(){Vf(()=>{e.callbackScheduled=!1,ka(e),e.isCheckStableRunning=!0,Sc(e),e.isCheckStableRunning=!1})}e.scheduleInRootZone?Zone.root.run(()=>{n()}):e._outer.run(()=>{n()}),ka(e)}function ly(e){let n=()=>{cy(e)},t=sy++;e._inner=e._inner.fork({name:"angular",properties:{[Mc]:!0,[oi]:t,[oi+t]:!0},onInvokeTask:(r,o,i,s,a,c)=>{if(uy(c))return r.invokeTask(i,s,a,c);try{return ld(e),r.invokeTask(i,s,a,c)}finally{(e.shouldCoalesceEventChangeDetection&&s.type==="eventTask"||e.shouldCoalesceRunChangeDetection)&&n(),ud(e)}},onInvoke:(r,o,i,s,a,c,l)=>{try{return ld(e),r.invoke(i,s,a,c,l)}finally{e.shouldCoalesceRunChangeDetection&&!e.callbackScheduled&&!dy(c)&&n(),ud(e)}},onHasTask:(r,o,i,s)=>{r.hasTask(i,s),o===i&&(s.change=="microTask"?(e._hasPendingMicrotasks=s.microTask,ka(e),Sc(e)):s.change=="macroTask"&&(e.hasPendingMacrotasks=s.macroTask))},onHandleError:(r,o,i,s)=>(r.handleError(i,s),e.runOutsideAngular(()=>e.onError.emit(s)),!1)})}function ka(e){e._hasPendingMicrotasks||(e.shouldCoalesceEventChangeDetection||e.shouldCoalesceRunChangeDetection)&&e.callbackScheduled===!0?e.hasPendingMicrotasks=!0:e.hasPendingMicrotasks=!1}function ld(e){e._nesting++,e.isStable&&(e.isStable=!1,e.onUnstable.emit(null))}function ud(e){e._nesting--,Sc(e)}var Fa=class{constructor(){this.hasPendingMicrotasks=!1,this.hasPendingMacrotasks=!1,this.isStable=!0,this.onUnstable=new me,this.onMicrotaskEmpty=new me,this.onStable=new me,this.onError=new me}run(n,t,r){return n.apply(t,r)}runGuarded(n,t,r){return n.apply(t,r)}runOutsideAngular(n){return n()}runTask(n,t,r,o){return n.apply(t,r)}};function uy(e){return Bf(e,"__ignore_ng_zone__")}function dy(e){return Bf(e,"__scheduler_tick__")}function Bf(e,n){return!Array.isArray(e)||e.length!==1?!1:e[0]?.data?.[n]===!0}var vt=class{constructor(){this._console=console}handleError(n){let t=this._findOriginalError(n);this._console.error("ERROR",n),t&&this._console.error("ORIGINAL ERROR",t)}_findOriginalError(n){let t=n&&da(n);for(;t&&da(t);)t=da(t);return t||null}},fy=new b("",{providedIn:"root",factory:()=>{let e=g(W),n=g(vt);return t=>e.runOutsideAngular(()=>n.handleError(t))}});function hy(){return Ai(we(),H())}function Ai(e,n){return new cn(Oe(e,n))}var cn=(()=>{class e{constructor(t){this.nativeElement=t}static{this.__NG_ELEMENT_ID__=hy}}return e})();var py="ngSkipHydration",gy="ngskiphydration";function Uf(e){let n=e.mergedAttrs;if(n===null)return!1;for(let t=0;t<n.length;t+=2){let r=n[t];if(typeof r=="number")return!1;if(typeof r=="string"&&r.toLowerCase()===gy)return!0}return!1}function $f(e){return e.hasAttribute(py)}function ii(e){return(e.flags&128)===128}function my(e){if(ii(e))return!0;let n=e.parent;for(;n;){if(ii(e)||Uf(n))return!0;n=n.parent}return!1}var Hf=new Map,vy=0;function yy(){return vy++}function Cy(e){Hf.set(e[bi],e)}function La(e){Hf.delete(e[bi])}var dd="__ngContext__";function kt(e,n){Qe(n)?(e[dd]=n[bi],Cy(n)):e[dd]=n}function zf(e){return Wf(e[wr])}function Gf(e){return Wf(e[Ze])}function Wf(e){for(;e!==null&&!ct(e);)e=e[Ze];return e}var ja;function qf(e){ja=e}function Pi(){if(ja!==void 0)return ja;if(typeof document<"u")return document;throw new E(210,!1)}var Ri=new b("",{providedIn:"root",factory:()=>Dy}),Dy="ng",xc=new b(""),Ne=new b("",{providedIn:"platform",factory:()=>"unknown"});var Tc=new b("",{providedIn:"root",factory:()=>Pi().body?.querySelector("[ngCspNonce]")?.getAttribute("ngCspNonce")||null});function wy(){let e=new Gn;return g(Ne)==="browser"&&(e.store=Ey(Pi(),g(Ri))),e}var Gn=(()=>{class e{constructor(){this.store={},this.onSerializeCallbacks={}}static{this.\u0275prov=I({token:e,providedIn:"root",factory:wy})}get(t,r){return this.store[t]!==void 0?this.store[t]:r}set(t,r){this.store[t]=r}remove(t){delete this.store[t]}hasKey(t){return this.store.hasOwnProperty(t)}get isEmpty(){return Object.keys(this.store).length===0}onSerialize(t,r){this.onSerializeCallbacks[t]=r}toJson(){for(let t in this.onSerializeCallbacks)if(this.onSerializeCallbacks.hasOwnProperty(t))try{this.store[t]=this.onSerializeCallbacks[t]()}catch(r){console.warn("Exception in onSerialize callback: ",r)}return JSON.stringify(this.store).replace(/</g,"\\u003C")}}return e})();function Ey(e,n){let t=e.getElementById(n+"-state");if(t?.textContent)try{return JSON.parse(t.textContent)}catch(r){console.warn("Exception while restoring TransferState for app "+n,r)}return{}}var Zf="h",Qf="b",Va=function(e){return e.FirstChild="f",e.NextSibling="n",e}(Va||{}),Iy="e",by="t",Oc="c",Yf="x",si="r",_y="i",My="n",Kf="d";var Sy="__nghData__",Jf=Sy,fa="ngh",xy="nghm",Xf=()=>null;function Ty(e,n,t=!1){let r=e.getAttribute(fa);if(r==null)return null;let[o,i]=r.split("|");if(r=t?i:o,!r)return null;let s=i?`|${i}`:"",a=t?o:s,c={};if(r!==""){let u=n.get(Gn,null,{optional:!0});u!==null&&(c=u.get(Jf,[])[Number(r)])}let l={data:c,firstChild:e.firstChild??null};return t&&(l.firstChild=e,ki(l,0,e.nextSibling)),a?e.setAttribute(fa,a):e.removeAttribute(fa),l}function Oy(){Xf=Ty}function Nc(e,n,t=!1){return Xf(e,n,t)}function Ny(e){let n=e._lView;return n[A].type===2?null:(ei(n)&&(n=n[se]),n)}function Ay(e){return e.textContent?.replace(/\s/gm,"")}function Py(e){let n=Pi(),t=n.createNodeIterator(e,NodeFilter.SHOW_COMMENT,{acceptNode(i){let s=Ay(i);return s==="ngetn"||s==="ngtns"?NodeFilter.FILTER_ACCEPT:NodeFilter.FILTER_REJECT}}),r,o=[];for(;r=t.nextNode();)o.push(r);for(let i of o)i.textContent==="ngetn"?i.replaceWith(n.createTextNode("")):i.remove()}function ki(e,n,t){e.segmentHeads??={},e.segmentHeads[n]=t}function Ba(e,n){return e.segmentHeads?.[n]??null}function Ry(e,n){let t=e.data,r=t[Iy]?.[n]??null;return r===null&&t[Oc]?.[n]&&(r=Ac(e,n)),r}function eh(e,n){return e.data[Oc]?.[n]??null}function Ac(e,n){let t=eh(e,n)??[],r=0;for(let o of t)r+=o[si]*(o[Yf]??1);return r}function ky(e){if(typeof e.disconnectedNodes>"u"){let n=e.data[Kf];e.disconnectedNodes=n?new Set(n):null}return e.disconnectedNodes}function kr(e,n){if(typeof e.disconnectedNodes>"u"){let t=e.data[Kf];e.disconnectedNodes=t?new Set(t):null}return!!ky(e)?.has(n)}var Fo=new b(""),th=!1,nh=new b("",{providedIn:"root",factory:()=>th});var Lo;function Fy(){if(Lo===void 0&&(Lo=null,ya.trustedTypes))try{Lo=ya.trustedTypes.createPolicy("angular#unsafe-bypass",{createHTML:e=>e,createScript:e=>e,createScriptURL:e=>e})}catch{}return Lo}function fd(e){return Fy()?.createScriptURL(e)||e}var ai=class{constructor(n){this.changingThisBreaksApplicationSecurity=n}toString(){return`SafeValue must use [property]=binding: ${this.changingThisBreaksApplicationSecurity} (see ${xd})`}};function Fr(e){return e instanceof ai?e.changingThisBreaksApplicationSecurity:e}function Pc(e,n){let t=Ly(e);if(t!=null&&t!==n){if(t==="ResourceURL"&&n==="URL")return!0;throw new Error(`Required a safe ${n}, got a ${t} (see ${xd})`)}return t===n}function Ly(e){return e instanceof ai&&e.getTypeName()||null}var jy=/^(?!javascript:)(?:[a-z0-9+.-]+:|[^&:\/?#]*(?:[\/?#]|$))/i;function rh(e){return e=String(e),e.match(jy)?e:"unsafe:"+e}var Fi=function(e){return e[e.NONE=0]="NONE",e[e.HTML=1]="HTML",e[e.STYLE=2]="STYLE",e[e.SCRIPT=3]="SCRIPT",e[e.URL=4]="URL",e[e.RESOURCE_URL=5]="RESOURCE_URL",e}(Fi||{});function yt(e){let n=ih();return n?n.sanitize(Fi.URL,e)||"":Pc(e,"URL")?Fr(e):rh(Di(e))}function Vy(e){let n=ih();if(n)return fd(n.sanitize(Fi.RESOURCE_URL,e)||"");if(Pc(e,"ResourceURL"))return fd(Fr(e));throw new E(904,!1)}function By(e,n){return n==="src"&&(e==="embed"||e==="frame"||e==="iframe"||e==="media"||e==="script")||n==="href"&&(e==="base"||e==="link")?Vy:yt}function oh(e,n,t){return By(n,t)(e)}function ih(){let e=H();return e&&e[st].sanitizer}var Uy=/^>|^->|<!--|-->|--!>|<!-$/g,$y=/(<|>)/g,Hy="\u200B$1\u200B";function zy(e){return e.replace(Uy,n=>n.replace($y,Hy))}function Li(e){return e.ownerDocument.defaultView}function Gy(e){return e.ownerDocument.body}function sh(e){return e instanceof Function?e():e}function gr(e){return(e??g(Ke)).get(Ne)==="browser"}var at=function(e){return e[e.Important=1]="Important",e[e.DashCase=2]="DashCase",e}(at||{}),Wy;function Rc(e,n){return Wy(e,n)}function xn(e,n,t,r,o){if(r!=null){let i,s=!1;ct(r)?i=r:Qe(r)&&(s=!0,r=r[Te]);let a=Ye(r);e===0&&t!==null?o==null?dh(n,t,a):li(n,t,a,o||null,!0):e===1&&t!==null?li(n,t,a,o||null,!0):e===2?jc(n,a,s):e===3&&n.destroyNode(a),i!=null&&a0(n,e,i,t,o)}}function ah(e,n){return e.createText(n)}function qy(e,n,t){e.setValue(n,t)}function ch(e,n){return e.createComment(zy(n))}function kc(e,n,t){return e.createElement(n,t)}function Zy(e,n){lh(e,n),n[Te]=null,n[Xe]=null}function Qy(e,n,t,r,o,i){r[Te]=o,r[Xe]=n,Vi(e,r,t,1,o,i)}function lh(e,n){n[st].changeDetectionScheduler?.notify(9),Vi(e,n,n[Z],2,null,null)}function Yy(e){let n=e[wr];if(!n)return ha(e[A],e);for(;n;){let t=null;if(Qe(n))t=n[wr];else{let r=n[De];r&&(t=r)}if(!t){for(;n&&!n[Ze]&&n!==e;)Qe(n)&&ha(n[A],n),n=n[pe];n===null&&(n=e),Qe(n)&&ha(n[A],n),t=n&&n[Ze]}n=t}}function Ky(e,n,t,r){let o=De+r,i=t.length;r>0&&(t[o-1][Ze]=n),r<i-De?(n[Ze]=t[o],Vd(t,De+r,n)):(t.push(n),n[Ze]=null),n[pe]=t;let s=n[Rn];s!==null&&t!==s&&uh(s,n);let a=n[kn];a!==null&&a.insertView(e),xa(n),n[M]|=128}function uh(e,n){let t=e[Jo],r=n[pe];if(Qe(r))e[M]|=Xo.HasTransplantedViews;else{let o=r[pe][Be];n[Be]!==o&&(e[M]|=Xo.HasTransplantedViews)}t===null?e[Jo]=[n]:t.push(n)}function Fc(e,n){let t=e[Jo],r=t.indexOf(n);t.splice(r,1)}function ci(e,n){if(e.length<=De)return;let t=De+n,r=e[t];if(r){let o=r[Rn];o!==null&&o!==e&&Fc(o,r),n>0&&(e[t-1][Ze]=r[Ze]);let i=Zo(e,De+n);Zy(r[A],r);let s=i[kn];s!==null&&s.detachView(i[A]),r[pe]=null,r[Ze]=null,r[M]&=-129}return r}function Lc(e,n){if(!(n[M]&256)){let t=n[Z];t.destroyNode&&Vi(e,n,t,3,null,null),Yy(n)}}function ha(e,n){if(n[M]&256)return;let t=j(null);try{n[M]&=-129,n[M]|=256,n[je]&&Bs(n[je]),Xy(e,n),Jy(e,n),n[A].type===1&&n[Z].destroy();let r=n[Rn];if(r!==null&&ct(n[pe])){r!==n[pe]&&Fc(r,n);let o=n[kn];o!==null&&o.detachView(e)}La(n)}finally{j(t)}}function Jy(e,n){let t=e.cleanup,r=n[Yo];if(t!==null)for(let i=0;i<t.length-1;i+=2)if(typeof t[i]=="string"){let s=t[i+3];s>=0?r[s]():r[-s].unsubscribe(),i+=2}else{let s=r[t[i+1]];t[i].call(s)}r!==null&&(n[Yo]=null);let o=n[At];if(o!==null){n[At]=null;for(let i=0;i<o.length;i++){let s=o[i];s()}}}function Xy(e,n){let t;if(e!=null&&(t=e.destroyHooks)!=null)for(let r=0;r<t.length;r+=2){let o=n[t[r]];if(!(o instanceof Ir)){let i=t[r+1];if(Array.isArray(i))for(let s=0;s<i.length;s+=2){let a=o[i[s]],c=i[s+1];nt(4,a,c);try{c.call(a)}finally{nt(5,a,c)}}else{nt(4,o,i);try{i.call(o)}finally{nt(5,o,i)}}}}}function e0(e,n,t){return t0(e,n.parent,t)}function t0(e,n,t){let r=n;for(;r!==null&&r.type&168;)n=r,r=n.parent;if(r===null)return t[Te];{let{componentOffset:o}=r;if(o>-1){let{encapsulation:i}=e.data[r.directiveStart+o];if(i===ot.None||i===ot.Emulated)return null}return Oe(r,t)}}function li(e,n,t,r,o){e.insertBefore(n,t,r,o)}function dh(e,n,t){e.appendChild(n,t)}function hd(e,n,t,r,o){r!==null?li(e,n,t,r,o):dh(e,n,t)}function fh(e,n){return e.parentNode(n)}function n0(e,n){return e.nextSibling(n)}function r0(e,n,t){return i0(e,n,t)}function o0(e,n,t){return e.type&40?Oe(e,t):null}var i0=o0,pd;function ji(e,n,t,r){let o=e0(e,r,n),i=n[Z],s=r.parent||n[Xe],a=r0(s,r,n);if(o!=null)if(Array.isArray(t))for(let c=0;c<t.length;c++)hd(i,o,t[c],a,!1);else hd(i,o,t,a,!1);pd!==void 0&&pd(i,r,n,t,o)}function mr(e,n){if(n!==null){let t=n.type;if(t&3)return Oe(n,e);if(t&4)return Ua(-1,e[n.index]);if(t&8){let r=n.child;if(r!==null)return mr(e,r);{let o=e[n.index];return ct(o)?Ua(-1,o):Ye(o)}}else{if(t&128)return mr(e,n.next);if(t&32)return Rc(n,e)()||Ye(e[n.index]);{let r=hh(e,n);if(r!==null){if(Array.isArray(r))return r[0];let o=en(e[Be]);return mr(o,r)}else return mr(e,n.next)}}}return null}function hh(e,n){if(n!==null){let r=e[Be][Xe],o=n.projection;return r.projection[o]}return null}function Ua(e,n){let t=De+e+1;if(t<n.length){let r=n[t],o=r[A].firstChild;if(o!==null)return mr(r,o)}return n[mt]}function jc(e,n,t){e.removeChild(null,n,t)}function ph(e){e.textContent=""}function Vc(e,n,t,r,o,i,s){for(;t!=null;){if(t.type===128){t=t.next;continue}let a=r[t.index],c=t.type;if(s&&n===0&&(a&&kt(Ye(a),r),t.flags|=2),(t.flags&32)!==32)if(c&8)Vc(e,n,t.child,r,o,i,!1),xn(n,e,o,a,i);else if(c&32){let l=Rc(t,r),u;for(;u=l();)xn(n,e,o,u,i);xn(n,e,o,a,i)}else c&16?s0(e,n,r,t,o,i):xn(n,e,o,a,i);t=s?t.projectionNext:t.next}}function Vi(e,n,t,r,o,i){Vc(t,r,e.firstChild,n,o,i,!1)}function s0(e,n,t,r,o,i){let s=t[Be],c=s[Xe].projection[r.projection];if(Array.isArray(c))for(let l=0;l<c.length;l++){let u=c[l];xn(n,e,o,u,i)}else{let l=c,u=s[pe];ii(r)&&(l.flags|=128),Vc(e,n,l,u,o,i,!0)}}function a0(e,n,t,r,o){let i=t[mt],s=Ye(t);i!==s&&xn(n,e,r,i,o);for(let a=De;a<t.length;a++){let c=t[a];Vi(c[A],c,e,n,r,i)}}function c0(e,n,t,r,o){if(n)o?e.addClass(t,r):e.removeClass(t,r);else{let i=r.indexOf("-")===-1?void 0:at.DashCase;o==null?e.removeStyle(t,r,i):(typeof o=="string"&&o.endsWith("!important")&&(o=o.slice(0,-10),i|=at.Important),e.setStyle(t,r,o,i))}}function l0(e,n,t){e.setAttribute(n,"style",t)}function gh(e,n,t){t===""?e.removeAttribute(n,"class"):e.setAttribute(n,"class",t)}function mh(e,n,t){let{mergedAttrs:r,classes:o,styles:i}=t;r!==null&&Ea(e,n,r),o!==null&&gh(e,n,o),i!==null&&l0(e,n,i)}var lt={};function y(e=1){vh(Ue(),H(),zn()+e,!1)}function vh(e,n,t,r){if(!r)if((n[M]&3)===3){let i=e.preOrderCheckHooks;i!==null&&$o(n,i,t)}else{let i=e.preOrderHooks;i!==null&&Ho(n,i,0,t)}tn(t)}function q(e,n=N.Default){let t=H();if(t===null)return x(e,n);let r=we();return Rf(r,t,Fe(e),n)}function yh(){let e="invalid";throw new Error(e)}function Ch(e,n,t,r,o,i){let s=j(null);try{let a=null;o&Pt.SignalBased&&(a=n[r][fu]),a!==null&&a.transformFn!==void 0&&(i=a.transformFn(i)),o&Pt.HasDecoratorInputTransform&&(i=e.inputTransforms[r].call(n,i)),e.setInput!==null?e.setInput(n,a,i,t,r):rf(n,a,r,i)}finally{j(s)}}function u0(e,n){let t=e.hostBindingOpCodes;if(t!==null)try{for(let r=0;r<t.length;r++){let o=t[r];if(o<0)tn(~o);else{let i=o,s=t[++r],a=t[++r];kv(s,i);let c=n[i];a(2,c)}}}finally{tn(-1)}}function Bi(e,n,t,r,o,i,s,a,c,l,u){let d=n.blueprint.slice();return d[Te]=o,d[M]=r|4|128|8|64,(l!==null||e&&e[M]&2048)&&(d[M]|=2048),uf(d),d[pe]=d[$n]=e,d[Ve]=t,d[st]=s||e&&e[st],d[Z]=a||e&&e[Z],d[Pn]=c||e&&e[Pn]||null,d[Xe]=i,d[bi]=yy(),d[it]=u,d[tf]=l,d[Be]=n.type==2?e[Be]:d,d}function Lr(e,n,t,r,o){let i=e.data[n];if(i===null)i=d0(e,n,t,r,o),Rv()&&(i.flags|=32);else if(i.type&64){i.type=t,i.value=r,i.attrs=o;let s=Ov();i.injectorIndex=s===null?-1:s.injectorIndex}return sn(i,!0),i}function d0(e,n,t,r,o){let i=gf(),s=vc(),a=s?i:i&&i.parent,c=e.data[n]=v0(e,a,t,n,r,o);return e.firstChild===null&&(e.firstChild=c),i!==null&&(s?i.child==null&&c.parent!==null&&(i.child=c):i.next===null&&(i.next=c,c.prev=i)),c}function Dh(e,n,t,r){if(t===0)return-1;let o=n.length;for(let i=0;i<t;i++)n.push(r),e.blueprint.push(r),e.data.push(null);return o}function wh(e,n,t,r,o){let i=zn(),s=r&2;try{tn(-1),s&&n.length>se&&vh(e,n,se,!1),nt(s?2:0,o),t(r,o)}finally{tn(i),nt(s?3:1,o)}}function Bc(e,n,t){if(pc(n)){let r=j(null);try{let o=n.directiveStart,i=n.directiveEnd;for(let s=o;s<i;s++){let a=e.data[s];if(a.contentQueries){let c=t[s];a.contentQueries(1,c,s)}}}finally{j(r)}}}function Uc(e,n,t){pf()&&(I0(e,n,t,Oe(t,n)),(t.flags&64)===64&&Mh(e,n,t))}function $c(e,n,t=Oe){let r=n.localNames;if(r!==null){let o=n.index+1;for(let i=0;i<r.length;i+=2){let s=r[i+1],a=s===-1?t(n,e):e[s];e[o++]=a}}}function Eh(e){let n=e.tView;return n===null||n.incompleteFirstPass?e.tView=Hc(1,null,e.template,e.decls,e.vars,e.directiveDefs,e.pipeDefs,e.viewQuery,e.schemas,e.consts,e.id):n}function Hc(e,n,t,r,o,i,s,a,c,l,u){let d=se+r,v=d+o,m=f0(d,v),C=typeof l=="function"?l():l;return m[A]={type:e,blueprint:m,template:t,queries:null,viewQuery:a,declTNode:n,data:m.slice().fill(null,d),bindingStartIndex:d,expandoStartIndex:v,hostBindingOpCodes:null,firstCreatePass:!0,firstUpdatePass:!0,staticViewQueries:!1,staticContentQueries:!1,preOrderHooks:null,preOrderCheckHooks:null,contentHooks:null,contentCheckHooks:null,viewHooks:null,viewCheckHooks:null,destroyHooks:null,cleanup:null,contentQueries:null,components:null,directiveRegistry:typeof i=="function"?i():i,pipeRegistry:typeof s=="function"?s():s,firstChild:null,schemas:c,consts:C,incompleteFirstPass:!1,ssrId:u}}function f0(e,n){let t=[];for(let r=0;r<n;r++)t.push(r<e?null:lt);return t}function h0(e,n,t,r){let i=r.get(nh,th)||t===ot.ShadowDom,s=e.selectRootElement(n,i);return p0(s),s}function p0(e){Ih(e)}var Ih=()=>null;function g0(e){$f(e)?ph(e):Py(e)}function m0(){Ih=g0}function v0(e,n,t,r,o,i){let s=n?n.injectorIndex:-1,a=0;return Pr()&&(a|=128),{type:t,index:r,insertBeforeIndex:null,injectorIndex:s,directiveStart:-1,directiveEnd:-1,directiveStylingLast:-1,componentOffset:-1,propertyBindings:null,flags:a,providerIndexes:0,value:o,attrs:i,mergedAttrs:null,localNames:null,initialInputs:void 0,inputs:null,outputs:null,tView:null,next:null,prev:null,projectionNext:null,child:null,parent:n,projection:null,styles:null,stylesWithoutHost:null,residualStyles:void 0,classes:null,classesWithoutHost:null,residualClasses:void 0,classBindings:0,styleBindings:0}}function gd(e,n,t,r,o){for(let i in n){if(!n.hasOwnProperty(i))continue;let s=n[i];if(s===void 0)continue;r??={};let a,c=Pt.None;Array.isArray(s)?(a=s[0],c=s[1]):a=s;let l=i;if(o!==null){if(!o.hasOwnProperty(i))continue;l=o[i]}e===0?md(r,t,l,a,c):md(r,t,l,a)}return r}function md(e,n,t,r,o){let i;e.hasOwnProperty(t)?(i=e[t]).push(n,r):i=e[t]=[n,r],o!==void 0&&i.push(o)}function y0(e,n,t){let r=n.directiveStart,o=n.directiveEnd,i=e.data,s=n.attrs,a=[],c=null,l=null;for(let u=r;u<o;u++){let d=i[u],v=t?t.get(d):null,m=v?v.inputs:null,C=v?v.outputs:null;c=gd(0,d.inputs,u,c,m),l=gd(1,d.outputs,u,l,C);let P=c!==null&&s!==null&&!dc(n)?R0(c,u,s):null;a.push(P)}c!==null&&(c.hasOwnProperty("class")&&(n.flags|=8),c.hasOwnProperty("style")&&(n.flags|=16)),n.initialInputs=a,n.inputs=c,n.outputs=l}function C0(e){return e==="class"?"className":e==="for"?"htmlFor":e==="formaction"?"formAction":e==="innerHtml"?"innerHTML":e==="readonly"?"readOnly":e==="tabindex"?"tabIndex":e}function bh(e,n,t,r,o,i,s,a){let c=Oe(n,t),l=n.inputs,u;!a&&l!=null&&(u=l[r])?(Gc(e,t,u,r,o),Nr(n)&&D0(t,n.index)):n.type&3?(r=C0(r),o=s!=null?s(o,n.value||"",r):o,i.setProperty(c,r,o)):n.type&12}function D0(e,n){let t=Vt(n,e);t[M]&16||(t[M]|=64)}function zc(e,n,t,r){if(pf()){let o=r===null?null:{"":-1},i=_0(e,t),s,a;i===null?s=a=null:[s,a]=i,s!==null&&_h(e,n,t,s,o,a),o&&M0(t,r,o)}t.mergedAttrs=uc(t.mergedAttrs,t.attrs)}function _h(e,n,t,r,o,i){for(let l=0;l<r.length;l++)Yv(Of(t,n),e,r[l].type);x0(t,e.data.length,r.length);for(let l=0;l<r.length;l++){let u=r[l];u.providersResolver&&u.providersResolver(u)}let s=!1,a=!1,c=Dh(e,n,r.length,null);for(let l=0;l<r.length;l++){let u=r[l];t.mergedAttrs=uc(t.mergedAttrs,u.hostAttrs),T0(e,t,n,c,u),S0(c,u,o),u.contentQueries!==null&&(t.flags|=4),(u.hostBindings!==null||u.hostAttrs!==null||u.hostVars!==0)&&(t.flags|=64);let d=u.type.prototype;!s&&(d.ngOnChanges||d.ngOnInit||d.ngDoCheck)&&((e.preOrderHooks??=[]).push(t.index),s=!0),!a&&(d.ngOnChanges||d.ngDoCheck)&&((e.preOrderCheckHooks??=[]).push(t.index),a=!0),c++}y0(e,t,i)}function w0(e,n,t,r,o){let i=o.hostBindings;if(i){let s=e.hostBindingOpCodes;s===null&&(s=e.hostBindingOpCodes=[]);let a=~n.index;E0(s)!=a&&s.push(a),s.push(t,r,i)}}function E0(e){let n=e.length;for(;n>0;){let t=e[--n];if(typeof t=="number"&&t<0)return t}return 0}function I0(e,n,t,r){let o=t.directiveStart,i=t.directiveEnd;Nr(t)&&O0(n,t,e.data[o+t.componentOffset]),e.firstCreatePass||Of(t,n),kt(r,n);let s=t.initialInputs;for(let a=o;a<i;a++){let c=e.data[a],l=br(n,e,a,t);if(kt(l,n),s!==null&&P0(n,a-o,l,c,t,s),Ar(c)){let u=Vt(t.index,n);u[Ve]=br(n,e,a,t)}}}function Mh(e,n,t){let r=t.directiveStart,o=t.directiveEnd,i=t.index,s=Fv();try{tn(i);for(let a=r;a<o;a++){let c=e.data[a],l=n[a];Ta(a),(c.hostBindings!==null||c.hostVars!==0||c.hostAttrs!==null)&&b0(c,l)}}finally{tn(-1),Ta(s)}}function b0(e,n){e.hostBindings!==null&&e.hostBindings(1,n)}function _0(e,n){let t=e.directiveRegistry,r=null,o=null;if(t)for(let i=0;i<t.length;i++){let s=t[i];if(Zm(n,s.selectors,!1))if(r||(r=[]),Ar(s))if(s.findHostDirectiveDefs!==null){let a=[];o=o||new Map,s.findHostDirectiveDefs(s,a,o),r.unshift(...a,s);let c=a.length;$a(e,n,c)}else r.unshift(s),$a(e,n,0);else o=o||new Map,s.findHostDirectiveDefs?.(s,r,o),r.push(s)}return r===null?null:[r,o]}function $a(e,n,t){n.componentOffset=t,(e.components??=[]).push(n.index)}function M0(e,n,t){if(n){let r=e.localNames=[];for(let o=0;o<n.length;o+=2){let i=t[n[o+1]];if(i==null)throw new E(-301,!1);r.push(n[o],i)}}}function S0(e,n,t){if(t){if(n.exportAs)for(let r=0;r<n.exportAs.length;r++)t[n.exportAs[r]]=e;Ar(n)&&(t[""]=e)}}function x0(e,n,t){e.flags|=1,e.directiveStart=n,e.directiveEnd=n+t,e.providerIndexes=n}function T0(e,n,t,r,o){e.data[r]=o;let i=o.factory||(o.factory=An(o.type,!0)),s=new Ir(i,Ar(o),q);e.blueprint[r]=s,t[r]=s,w0(e,n,r,Dh(e,t,o.hostVars,lt),o)}function O0(e,n,t){let r=Oe(n,e),o=Eh(t),i=e[st].rendererFactory,s=16;t.signals?s=4096:t.onPush&&(s=64);let a=Ui(e,Bi(e,o,null,s,r,n,null,i.createRenderer(r,t),null,null,null));e[n.index]=a}function N0(e,n,t,r,o,i){let s=Oe(e,n);A0(n[Z],s,i,e.value,t,r,o)}function A0(e,n,t,r,o,i,s){if(i==null)e.removeAttribute(n,o,t);else{let a=s==null?Di(i):s(i,r||"",o);e.setAttribute(n,o,a,t)}}function P0(e,n,t,r,o,i){let s=i[n];if(s!==null)for(let a=0;a<s.length;){let c=s[a++],l=s[a++],u=s[a++],d=s[a++];Ch(r,t,c,l,u,d)}}function R0(e,n,t){let r=null,o=0;for(;o<t.length;){let i=t[o];if(i===0){o+=4;continue}else if(i===5){o+=2;continue}if(typeof i=="number")break;if(e.hasOwnProperty(i)){r===null&&(r=[]);let s=e[i];for(let a=0;a<s.length;a+=3)if(s[a]===n){r.push(i,s[a+1],s[a+2],t[o+1]);break}}o+=2}return r}function Sh(e,n,t,r){return[e,!0,0,n,null,r,null,t,null,null]}function xh(e,n){let t=e.contentQueries;if(t!==null){let r=j(null);try{for(let o=0;o<t.length;o+=2){let i=t[o],s=t[o+1];if(s!==-1){let a=e.data[s];yf(i),a.contentQueries(2,n[s],s)}}}finally{j(r)}}}function Ui(e,n){return e[wr]?e[ed][Ze]=n:e[wr]=n,e[ed]=n,n}function Ha(e,n,t){yf(0);let r=j(null);try{n(e,t)}finally{j(r)}}function k0(e){return e[Yo]??=[]}function F0(e){return e.cleanup??=[]}function Th(e,n){let t=e[Pn],r=t?t.get(vt,null):null;r&&r.handleError(n)}function Gc(e,n,t,r,o){for(let i=0;i<t.length;){let s=t[i++],a=t[i++],c=t[i++],l=n[s],u=e.data[s];Ch(u,l,r,a,c,o)}}function L0(e,n,t){let r=lf(n,e);qy(e[Z],r,t)}function j0(e,n){let t=Vt(n,e),r=t[A];V0(r,t);let o=t[Te];o!==null&&t[it]===null&&(t[it]=Nc(o,t[Pn])),Wc(r,t,t[Ve])}function V0(e,n){for(let t=n.length;t<e.blueprint.length;t++)n.push(e.blueprint[t])}function Wc(e,n,t){Cc(n);try{let r=e.viewQuery;r!==null&&Ha(1,r,t);let o=e.template;o!==null&&wh(e,n,o,1,t),e.firstCreatePass&&(e.firstCreatePass=!1),n[kn]?.finishViewCreation(e),e.staticContentQueries&&xh(e,n),e.staticViewQueries&&Ha(2,e.viewQuery,t);let i=e.components;i!==null&&B0(n,i)}catch(r){throw e.firstCreatePass&&(e.incompleteFirstPass=!0,e.firstCreatePass=!1),r}finally{n[M]&=-5,Dc()}}function B0(e,n){for(let t=0;t<n.length;t++)j0(e,n[t])}function Oh(e,n,t,r){let o=j(null);try{let i=n.tView,a=e[M]&4096?4096:16,c=Bi(e,i,t,a,null,n,null,null,r?.injector??null,r?.embeddedViewInjector??null,r?.dehydratedView??null),l=e[n.index];c[Rn]=l;let u=e[kn];return u!==null&&(c[kn]=u.createEmbeddedView(i)),Wc(i,c,t),c}finally{j(o)}}function U0(e,n){let t=De+n;if(t<e.length)return e[t]}function za(e,n){return!n||n.firstChild===null||ii(e)}function Nh(e,n,t,r=!0){let o=n[A];if(Ky(o,n,e,t),r){let s=Ua(t,e),a=n[Z],c=fh(a,e[mt]);c!==null&&Qy(o,e[Xe],a,n,c,s)}let i=n[it];i!==null&&i.firstChild!==null&&(i.firstChild=null)}function $0(e,n){let t=ci(e,n);return t!==void 0&&Lc(t[A],t),t}function ui(e,n,t,r,o=!1){for(;t!==null;){if(t.type===128){t=o?t.projectionNext:t.next;continue}let i=n[t.index];i!==null&&r.push(Ye(i)),ct(i)&&H0(i,r);let s=t.type;if(s&8)ui(e,n,t.child,r);else if(s&32){let a=Rc(t,n),c;for(;c=a();)r.push(c)}else if(s&16){let a=hh(n,t);if(Array.isArray(a))r.push(...a);else{let c=en(n[Be]);ui(c[A],c,a,r,!0)}}t=o?t.projectionNext:t.next}return r}function H0(e,n){for(let t=De;t<e.length;t++){let r=e[t],o=r[A].firstChild;o!==null&&ui(r[A],r,o,n)}e[mt]!==e[Te]&&n.push(e[mt])}var Ah=[];function z0(e){return e[je]??G0(e)}function G0(e){let n=Ah.pop()??Object.create(q0);return n.lView=e,n}function W0(e){e.lView[je]!==e&&(e.lView=null,Ah.push(e))}var q0=K(D({},Ls),{consumerIsAlwaysLive:!0,consumerMarkedDirty:e=>{Si(e.lView)},consumerOnSignalRead(){this.lView[je]=this}});function Z0(e){let n=e[je]??Object.create(Q0);return n.lView=e,n}var Q0=K(D({},Ls),{consumerIsAlwaysLive:!0,consumerMarkedDirty:e=>{let n=en(e.lView);for(;n&&!Ph(n[A]);)n=en(n);n&&df(n)},consumerOnSignalRead(){this.lView[je]=this}});function Ph(e){return e.type!==2}var Y0=100;function Rh(e,n=!0,t=0){let r=e[st],o=r.rendererFactory,i=!1;i||o.begin?.();try{K0(e,t)}catch(s){throw n&&Th(e,s),s}finally{i||(o.end?.(),r.inlineEffectRunner?.flush())}}function K0(e,n){let t=vf();try{nd(!0),Ga(e,n);let r=0;for(;Mi(e);){if(r===Y0)throw new E(103,!1);r++,Ga(e,1)}}finally{nd(t)}}function J0(e,n,t,r){let o=n[M];if((o&256)===256)return;let i=!1,s=!1;!i&&n[st].inlineEffectRunner?.flush(),Cc(n);let a=!0,c=null,l=null;i||(Ph(e)?(l=z0(n),c=js(l)):hu()===null?(a=!1,l=Z0(n),c=js(l)):n[je]&&(Bs(n[je]),n[je]=null));try{uf(n),Av(e.bindingStartIndex),t!==null&&wh(e,n,t,2,r);let u=(o&3)===3;if(!i)if(u){let m=e.preOrderCheckHooks;m!==null&&$o(n,m,null)}else{let m=e.preOrderHooks;m!==null&&Ho(n,m,0,null),ca(n,0)}if(s||X0(n),kh(n,0),e.contentQueries!==null&&xh(e,n),!i)if(u){let m=e.contentCheckHooks;m!==null&&$o(n,m)}else{let m=e.contentHooks;m!==null&&Ho(n,m,1),ca(n,1)}u0(e,n);let d=e.components;d!==null&&Lh(n,d,0);let v=e.viewQuery;if(v!==null&&Ha(2,v,r),!i)if(u){let m=e.viewCheckHooks;m!==null&&$o(n,m)}else{let m=e.viewHooks;m!==null&&Ho(n,m,2),ca(n,2)}if(e.firstUpdatePass===!0&&(e.firstUpdatePass=!1),n[aa]){for(let m of n[aa])m();n[aa]=null}i||(n[M]&=-73)}catch(u){throw i||Si(n),u}finally{l!==null&&(pu(l,c),a&&W0(l)),Dc()}}function kh(e,n){for(let t=zf(e);t!==null;t=Gf(t))for(let r=De;r<t.length;r++){let o=t[r];Fh(o,n)}}function X0(e){for(let n=zf(e);n!==null;n=Gf(n)){if(!(n[M]&Xo.HasTransplantedViews))continue;let t=n[Jo];for(let r=0;r<t.length;r++){let o=t[r];df(o)}}}function eC(e,n,t){let r=Vt(n,e);Fh(r,t)}function Fh(e,n){mc(e)&&Ga(e,n)}function Ga(e,n){let r=e[A],o=e[M],i=e[je],s=!!(n===0&&o&16);if(s||=!!(o&64&&n===0),s||=!!(o&1024),s||=!!(i?.dirty&&Vs(i)),s||=!1,i&&(i.dirty=!1),e[M]&=-9217,s)J0(r,e,r.template,e[Ve]);else if(o&8192){kh(e,1);let a=r.components;a!==null&&Lh(e,a,1)}}function Lh(e,n,t){for(let r=0;r<n.length;r++)eC(e,n[r],t)}function qc(e,n){let t=vf()?64:1088;for(e[st].changeDetectionScheduler?.notify(n);e;){e[M]|=t;let r=en(e);if(ei(e)&&!r)return e;e=r}return null}var nn=class{get rootNodes(){let n=this._lView,t=n[A];return ui(t,n,t.firstChild,[])}constructor(n,t,r=!0){this._lView=n,this._cdRefInjectingView=t,this.notifyErrorHandler=r,this._appRef=null,this._attachedToViewContainer=!1}get context(){return this._lView[Ve]}set context(n){this._lView[Ve]=n}get destroyed(){return(this._lView[M]&256)===256}destroy(){if(this._appRef)this._appRef.detachView(this);else if(this._attachedToViewContainer){let n=this._lView[pe];if(ct(n)){let t=n[Ko],r=t?t.indexOf(this):-1;r>-1&&(ci(n,r),Zo(t,r))}this._attachedToViewContainer=!1}Lc(this._lView[A],this._lView)}onDestroy(n){ff(this._lView,n)}markForCheck(){qc(this._cdRefInjectingView||this._lView,4)}detach(){this._lView[M]&=-129}reattach(){xa(this._lView),this._lView[M]|=128}detectChanges(){this._lView[M]|=1024,Rh(this._lView,this.notifyErrorHandler)}checkNoChanges(){}attachToViewContainerRef(){if(this._appRef)throw new E(902,!1);this._attachedToViewContainer=!0}detachFromAppRef(){this._appRef=null;let n=ei(this._lView),t=this._lView[Rn];t!==null&&!n&&Fc(t,this._lView),lh(this._lView[A],this._lView)}attachToAppRef(n){if(this._attachedToViewContainer)throw new E(902,!1);this._appRef=n;let t=ei(this._lView),r=this._lView[Rn];r!==null&&!t&&uh(r,this._lView),xa(this._lView)}},Zc=(()=>{class e{static{this.__NG_ELEMENT_ID__=rC}}return e})(),tC=Zc,nC=class extends tC{constructor(n,t,r){super(),this._declarationLView=n,this._declarationTContainer=t,this.elementRef=r}get ssrId(){return this._declarationTContainer.tView?.ssrId||null}createEmbeddedView(n,t){return this.createEmbeddedViewImpl(n,t)}createEmbeddedViewImpl(n,t,r){let o=Oh(this._declarationLView,this._declarationTContainer,n,{embeddedViewInjector:t,dehydratedView:r});return new nn(o)}};function rC(){return jh(we(),H())}function jh(e,n){return e.type&4?new nC(n,e,Ai(e,n)):null}var oC=new RegExp(`^(\\d+)*(${Qf}|${Zf})*(.*)`);function iC(e){let n=e.match(oC),[t,r,o,i]=n,s=r?parseInt(r,10):o,a=[];for(let[c,l,u]of i.matchAll(/(f|n)(\d*)/g)){let d=parseInt(u,10)||1;a.push(l,d)}return[s,...a]}function sC(e){return!e.prev&&e.parent?.type===8}function pa(e){return e.index-se}function aC(e,n){let t=e.i18nNodes;if(t)return t.get(n)}function $i(e,n,t,r){let o=pa(r),i=aC(e,o);if(i===void 0){let s=e.data[My];if(s?.[o])i=lC(s[o],t);else if(n.firstChild===r)i=e.firstChild;else{let a=r.prev===null,c=r.prev??r.parent;if(sC(r)){let l=pa(r.parent);i=Ba(e,l)}else{let l=Oe(c,t);if(a)i=l.firstChild;else{let u=pa(c),d=Ba(e,u);if(c.type===2&&d){let m=Ac(e,u)+1;i=Hi(m,d)}else i=l.nextSibling}}}}return i}function Hi(e,n){let t=n;for(let r=0;r<e;r++)t=t.nextSibling;return t}function cC(e,n){let t=e;for(let r=0;r<n.length;r+=2){let o=n[r],i=n[r+1];for(let s=0;s<i;s++)switch(o){case Va.FirstChild:t=t.firstChild;break;case Va.NextSibling:t=t.nextSibling;break}}return t}function lC(e,n){let[t,...r]=iC(e),o;if(t===Zf)o=n[Be][Te];else if(t===Qf)o=Gy(n[Be][Te]);else{let i=Number(t);o=Ye(n[i+se])}return cC(o,r)}var uC=!1;function dC(e){uC=e}function fC(e){let n=e[it];if(n){let{i18nNodes:t,dehydratedIcuData:r}=n;if(t&&r){let o=e[Z];for(let i of r.values())hC(o,t,i)}n.i18nNodes=void 0,n.dehydratedIcuData=void 0}}function hC(e,n,t){for(let r of t.node.cases[t.case]){let o=n.get(r.index-se);o&&jc(e,o,!1)}}function Vh(e){let n=e[Er]??[],r=e[pe][Z];for(let o of n)pC(o,r);e[Er]=Le}function pC(e,n){let t=0,r=e.firstChild;if(r){let o=e.data[si];for(;t<o;){let i=r.nextSibling;jc(n,r,!1),r=i,t++}}}function Bh(e){Vh(e);let n=e[Te];Qe(n)&&di(n);for(let t=De;t<e.length;t++)di(e[t])}function di(e){fC(e);let n=e[A];for(let t=se;t<n.bindingStartIndex;t++)if(ct(e[t])){let r=e[t];Bh(r)}else Qe(e[t])&&di(e[t])}function gC(e){let n=e._views;for(let t of n){let r=Ny(t);r!==null&&r[Te]!==null&&(Qe(r)?di(r):Bh(r))}}function mC(e,n){let t=[];for(let r of n)for(let o=0;o<(r[Yf]??1);o++){let i={data:r,firstChild:null};r[si]>0&&(i.firstChild=e,e=Hi(r[si],e)),t.push(i)}return[e,t]}var Uh=()=>null;function vC(e,n){let t=e[Er];return!n||t===null||t.length===0?null:t[0].data[_y]===n?t.shift():(Vh(e),null)}function yC(){Uh=vC}function Wa(e,n){return Uh(e,n)}var Ln=class{},zi=new b("",{providedIn:"root",factory:()=>!1});var $h=new b(""),Hh=new b(""),qa=class{},fi=class{};function CC(e){let n=Error(`No component factory found for ${ve(e)}.`);return n[DC]=e,n}var DC="ngComponent";var Za=class{resolveComponentFactory(n){throw CC(n)}},jn=class{static{this.NULL=new Za}},Vn=class{},Wn=(()=>{class e{constructor(){this.destroyNode=null}static{this.__NG_ELEMENT_ID__=()=>wC()}}return e})();function wC(){let e=H(),n=we(),t=Vt(n.index,e);return(Qe(t)?t:e)[Z]}var EC=(()=>{class e{static{this.\u0275prov=I({token:e,providedIn:"root",factory:()=>null})}}return e})();function hi(e,n,t){let r=t?e.styles:null,o=t?e.classes:null,i=0;if(n!==null)for(let s=0;s<n.length;s++){let a=n[s];if(typeof a=="number")i=a;else if(i==1)o=zu(o,a);else if(i==2){let c=a,l=n[++s];r=zu(r,c+": "+l+";")}}t?e.styles=r:e.stylesWithoutHost=r,t?e.classes=o:e.classesWithoutHost=o}var pi=class extends jn{constructor(n){super(),this.ngModule=n}resolveComponentFactory(n){let t=Rt(n);return new Bn(t,this.ngModule)}};function vd(e,n){let t=[];for(let r in e){if(!e.hasOwnProperty(r))continue;let o=e[r];if(o===void 0)continue;let i=Array.isArray(o),s=i?o[0]:o,a=i?o[1]:Pt.None;n?t.push({propName:s,templateName:r,isSignal:(a&Pt.SignalBased)!==0}):t.push({propName:s,templateName:r})}return t}function IC(e){let n=e.toLowerCase();return n==="svg"?cf:n==="math"?Cv:null}var Bn=class extends fi{get inputs(){let n=this.componentDef,t=n.inputTransforms,r=vd(n.inputs,!0);if(t!==null)for(let o of r)t.hasOwnProperty(o.propName)&&(o.transform=t[o.propName]);return r}get outputs(){return vd(this.componentDef.outputs,!1)}constructor(n,t){super(),this.componentDef=n,this.ngModule=t,this.componentType=n.type,this.selector=Jm(n.selectors),this.ngContentSelectors=n.ngContentSelectors?n.ngContentSelectors:[],this.isBoundToModule=!!t}create(n,t,r,o){let i=j(null);try{o=o||this.ngModule;let s=o instanceof xe?o:o?.injector;s&&this.componentDef.getStandaloneInjector!==null&&(s=this.componentDef.getStandaloneInjector(s)||s);let a=s?new Oa(n,s):n,c=a.get(Vn,null);if(c===null)throw new E(407,!1);let l=a.get(EC,null),u=a.get(Ln,null),d={rendererFactory:c,sanitizer:l,inlineEffectRunner:null,changeDetectionScheduler:u},v=c.createRenderer(null,this.componentDef),m=this.componentDef.selectors[0][0]||"div",C=r?h0(v,r,this.componentDef.encapsulation,a):kc(v,m,IC(m)),P=512;this.componentDef.signals?P|=4096:this.componentDef.onPush||(P|=16);let $=null;C!==null&&($=Nc(C,a,!0));let z=Hc(0,null,null,1,0,null,null,null,null,null,null),de=Bi(null,z,null,P,null,null,d,v,a,null,$);Cc(de);let fe,ge,Mt=null;try{let Ie=this.componentDef,hn,Rs=null;Ie.findHostDirectiveDefs?(hn=[],Rs=new Map,Ie.findHostDirectiveDefs(Ie,hn,Rs),hn.push(Ie)):hn=[Ie];let zg=bC(de,C);Mt=_C(zg,C,Ie,hn,de,d,v),ge=gc(z,se),C&&xC(v,Ie,C,r),t!==void 0&&TC(ge,this.ngContentSelectors,t),fe=SC(Mt,Ie,hn,Rs,de,[OC]),Wc(z,de,null)}catch(Ie){throw Mt!==null&&La(Mt),La(de),Ie}finally{Dc()}return new Qa(this.componentType,fe,Ai(ge,de),de,ge)}finally{j(i)}}},Qa=class extends qa{constructor(n,t,r,o,i){super(),this.location=r,this._rootLView=o,this._tNode=i,this.previousInputValues=null,this.instance=t,this.hostView=this.changeDetectorRef=new nn(o,void 0,!1),this.componentType=n}setInput(n,t){let r=this._tNode.inputs,o;if(r!==null&&(o=r[n])){if(this.previousInputValues??=new Map,this.previousInputValues.has(n)&&Object.is(this.previousInputValues.get(n),t))return;let i=this._rootLView;Gc(i[A],i,o,n,t),this.previousInputValues.set(n,t);let s=Vt(this._tNode.index,i);qc(s,1)}}get injector(){return new Jt(this._tNode,this._rootLView)}destroy(){this.hostView.destroy()}onDestroy(n){this.hostView.onDestroy(n)}};function bC(e,n){let t=e[A],r=se;return e[r]=n,Lr(t,r,2,"#host",null)}function _C(e,n,t,r,o,i,s){let a=o[A];MC(r,e,n,s);let c=null;n!==null&&(c=Nc(n,o[Pn]));let l=i.rendererFactory.createRenderer(n,t),u=16;t.signals?u=4096:t.onPush&&(u=64);let d=Bi(o,Eh(t),null,u,o[e.index],e,i,l,null,null,c);return a.firstCreatePass&&$a(a,e,r.length-1),Ui(o,d),o[e.index]=d}function MC(e,n,t,r){for(let o of e)n.mergedAttrs=uc(n.mergedAttrs,o.hostAttrs);n.mergedAttrs!==null&&(hi(n,n.mergedAttrs,!0),t!==null&&mh(r,t,n))}function SC(e,n,t,r,o,i){let s=we(),a=o[A],c=Oe(s,o);_h(a,o,s,t,null,r);for(let u=0;u<t.length;u++){let d=s.directiveStart+u,v=br(o,a,d,s);kt(v,o)}Mh(a,o,s),c&&kt(c,o);let l=br(o,a,s.directiveStart+s.componentOffset,s);if(e[Ve]=o[Ve]=l,i!==null)for(let u of i)u(l,n);return Bc(a,s,o),l}function xC(e,n,t,r){if(r)Ea(e,t,["ng-version","18.2.8"]);else{let{attrs:o,classes:i}=Xm(n.selectors[0]);o&&Ea(e,t,o),i&&i.length>0&&gh(e,t,i.join(" "))}}function TC(e,n,t){let r=e.projection=[];for(let o=0;o<n.length;o++){let i=t[o];r.push(i!=null?Array.from(i):null)}}function OC(){let e=we();Ni(H()[A],e)}var qn=(()=>{class e{static{this.__NG_ELEMENT_ID__=NC}}return e})();function NC(){let e=we();return PC(e,H())}var AC=qn,zh=class extends AC{constructor(n,t,r){super(),this._lContainer=n,this._hostTNode=t,this._hostLView=r}get element(){return Ai(this._hostTNode,this._hostLView)}get injector(){return new Jt(this._hostTNode,this._hostLView)}get parentInjector(){let n=Ec(this._hostTNode,this._hostLView);if(Sf(n)){let t=ni(n,this._hostLView),r=ti(n),o=t[A].data[r+8];return new Jt(o,t)}else return new Jt(null,this._hostLView)}clear(){for(;this.length>0;)this.remove(this.length-1)}get(n){let t=yd(this._lContainer);return t!==null&&t[n]||null}get length(){return this._lContainer.length-De}createEmbeddedView(n,t,r){let o,i;typeof r=="number"?o=r:r!=null&&(o=r.index,i=r.injector);let s=Wa(this._lContainer,n.ssrId),a=n.createEmbeddedViewImpl(t||{},i,s);return this.insertImpl(a,o,za(this._hostTNode,s)),a}createComponent(n,t,r,o,i){let s=n&&!gv(n),a;if(s)a=t;else{let C=t||{};a=C.index,r=C.injector,o=C.projectableNodes,i=C.environmentInjector||C.ngModuleRef}let c=s?n:new Bn(Rt(n)),l=r||this.parentInjector;if(!i&&c.ngModule==null){let P=(s?l:this.parentInjector).get(xe,null);P&&(i=P)}let u=Rt(c.componentType??{}),d=Wa(this._lContainer,u?.id??null),v=d?.firstChild??null,m=c.create(l,o,v,i);return this.insertImpl(m.hostView,a,za(this._hostTNode,d)),m}insert(n,t){return this.insertImpl(n,t,!0)}insertImpl(n,t,r){let o=n._lView;if(wv(o)){let a=this.indexOf(n);if(a!==-1)this.detach(a);else{let c=o[pe],l=new zh(c,c[Xe],c[pe]);l.detach(l.indexOf(n))}}let i=this._adjustIndex(t),s=this._lContainer;return Nh(s,o,i,r),n.attachToViewContainerRef(),Vd(ga(s),i,n),n}move(n,t){return this.insert(n,t)}indexOf(n){let t=yd(this._lContainer);return t!==null?t.indexOf(n):-1}remove(n){let t=this._adjustIndex(n,-1),r=ci(this._lContainer,t);r&&(Zo(ga(this._lContainer),t),Lc(r[A],r))}detach(n){let t=this._adjustIndex(n,-1),r=ci(this._lContainer,t);return r&&Zo(ga(this._lContainer),t)!=null?new nn(r):null}_adjustIndex(n,t=0){return n??this.length+t}};function yd(e){return e[Ko]}function ga(e){return e[Ko]||(e[Ko]=[])}function PC(e,n){let t,r=n[e.index];return ct(r)?t=r:(t=Sh(r,n,null,e),n[e.index]=t,Ui(n,t)),Gh(t,n,e,r),new zh(t,e,n)}function RC(e,n){let t=e[Z],r=t.createComment(""),o=Oe(n,e),i=fh(t,o);return li(t,i,r,n0(t,o),!1),r}var Gh=Wh,Qc=()=>!1;function kC(e,n,t){return Qc(e,n,t)}function Wh(e,n,t,r){if(e[mt])return;let o;t.type&8?o=Ye(r):o=RC(n,t),e[mt]=o}function FC(e,n,t){if(e[mt]&&e[Er])return!0;let r=t[it],o=n.index-se;if(!r||my(n)||kr(r,o))return!1;let s=Ba(r,o),a=r.data[Oc]?.[o],[c,l]=mC(s,a);return e[mt]=c,e[Er]=l,!0}function LC(e,n,t,r){Qc(e,t,n)||Wh(e,n,t,r)}function jC(){Gh=LC,Qc=FC}var Cd=new Set;function Ut(e){Cd.has(e)||(Cd.add(e),performance?.mark?.("mark_feature_usage",{detail:{feature:e}}))}function Yc(e){let n=e.inputConfig,t={};for(let r in n)if(n.hasOwnProperty(r)){let o=n[r];Array.isArray(o)&&o[3]&&(t[r]=o[3])}e.inputTransforms=t}var Ft=class{},_r=class{};var Ya=class extends Ft{constructor(n,t,r,o=!0){super(),this.ngModuleType=n,this._parent=t,this._bootstrapComponents=[],this.destroyCbs=[],this.componentFactoryResolver=new pi(this);let i=Zd(n);this._bootstrapComponents=sh(i.bootstrap),this._r3Injector=Lf(n,t,[{provide:Ft,useValue:this},{provide:jn,useValue:this.componentFactoryResolver},...r],ve(n),new Set(["environment"])),o&&this.resolveInjectorInitializers()}resolveInjectorInitializers(){this._r3Injector.resolveInjectorInitializers(),this.instance=this._r3Injector.get(this.ngModuleType)}get injector(){return this._r3Injector}destroy(){let n=this._r3Injector;!n.destroyed&&n.destroy(),this.destroyCbs.forEach(t=>t()),this.destroyCbs=null}onDestroy(n){this.destroyCbs.push(n)}},Ka=class extends _r{constructor(n){super(),this.moduleType=n}create(n){return new Ya(this.moduleType,n,[])}};var gi=class extends Ft{constructor(n){super(),this.componentFactoryResolver=new pi(this),this.instance=null;let t=new Dr([...n.providers,{provide:Ft,useValue:this},{provide:jn,useValue:this.componentFactoryResolver}],n.parent||hc(),n.debugName,new Set(["environment"]));this.injector=t,n.runEnvironmentInitializers&&t.resolveInjectorInitializers()}destroy(){this.injector.destroy()}onDestroy(n){this.injector.onDestroy(n)}};function Gi(e,n,t=null){return new gi({providers:e,parent:n,debugName:t,runEnvironmentInitializers:!0}).injector}function qh(e){return e!==null&&(typeof e=="function"||typeof e=="object")}function Kc(e,n,t){return e[n]=t}function VC(e,n){return e[n]}function Lt(e,n,t){let r=e[n];return Object.is(r,t)?!1:(e[n]=t,!0)}function BC(e,n,t,r){let o=Lt(e,n,t);return Lt(e,n+1,r)||o}function jr(e){return(e.flags&32)===32}function UC(e,n,t,r,o,i,s,a,c){let l=n.consts,u=Lr(n,e,4,s||null,a||null);zc(n,t,u,Fn(l,c)),Ni(n,u);let d=u.tView=Hc(2,u,r,o,i,n.directiveRegistry,n.pipeRegistry,null,n.schemas,l,null);return n.queries!==null&&(n.queries.template(n,u),d.queries=n.queries.embeddedTView(u)),u}function $C(e,n,t,r,o,i,s,a,c,l){let u=t+se,d=n.firstCreatePass?UC(u,n,e,r,o,i,s,a,c):n.data[u];sn(d,!1);let v=Zh(n,e,d,t);Oi()&&ji(n,e,v,d),kt(v,e);let m=Sh(v,e,v,d);return e[u]=m,Ui(e,m),kC(m,d,e),_i(d)&&Uc(n,e,d),c!=null&&$c(e,d,l),d}function ne(e,n,t,r,o,i,s,a){let c=H(),l=Ue(),u=Fn(l.consts,i);return $C(c,l,e,n,t,r,o,u,s,a),ne}var Zh=Qh;function Qh(e,n,t,r){return Bt(!0),n[Z].createComment("")}function HC(e,n,t,r){let o=n[it],i=!o||Pr()||jr(t)||kr(o,r);if(Bt(i),i)return Qh(e,n,t,r);let s=o.data[by]?.[r]??null;s!==null&&t.tView!==null&&t.tView.ssrId===null&&(t.tView.ssrId=s);let a=$i(o,e,n,t);ki(o,r,a);let c=Ac(o,r);return Hi(c,a)}function zC(){Zh=HC}var Tn=function(e){return e[e.EarlyRead=0]="EarlyRead",e[e.Write=1]="Write",e[e.MixedReadWrite=2]="MixedReadWrite",e[e.Read=3]="Read",e}(Tn||{}),Yh=(()=>{class e{constructor(){this.impl=null}execute(){this.impl?.execute()}static{this.\u0275prov=I({token:e,providedIn:"root",factory:()=>new e})}}return e})(),Ja=class e{constructor(){this.ngZone=g(W),this.scheduler=g(Ln),this.errorHandler=g(vt,{optional:!0}),this.sequences=new Set,this.deferredRegistrations=new Set,this.executing=!1}static{this.PHASES=[Tn.EarlyRead,Tn.Write,Tn.MixedReadWrite,Tn.Read]}execute(){this.executing=!0;for(let n of e.PHASES)for(let t of this.sequences)if(!(t.erroredOrDestroyed||!t.hooks[n]))try{t.pipelinedValue=this.ngZone.runOutsideAngular(()=>t.hooks[n](t.pipelinedValue))}catch(r){t.erroredOrDestroyed=!0,this.errorHandler?.handleError(r)}this.executing=!1;for(let n of this.sequences)n.afterRun(),n.once&&(this.sequences.delete(n),n.destroy());for(let n of this.deferredRegistrations)this.sequences.add(n);this.deferredRegistrations.size>0&&this.scheduler.notify(7),this.deferredRegistrations.clear()}register(n){this.executing?this.deferredRegistrations.add(n):(this.sequences.add(n),this.scheduler.notify(6))}unregister(n){this.executing&&this.sequences.has(n)?(n.erroredOrDestroyed=!0,n.pipelinedValue=void 0,n.once=!0):(this.sequences.delete(n),this.deferredRegistrations.delete(n))}static{this.\u0275prov=I({token:e,providedIn:"root",factory:()=>new e})}},Xa=class{constructor(n,t,r,o){this.impl=n,this.hooks=t,this.once=r,this.erroredOrDestroyed=!1,this.pipelinedValue=void 0,this.unregisterOnDestroy=o?.onDestroy(()=>this.destroy())}afterRun(){this.erroredOrDestroyed=!1,this.pipelinedValue=void 0}destroy(){this.impl.unregister(this),this.unregisterOnDestroy?.()}};function Jc(e,n){!n?.injector&&pv(Jc);let t=n?.injector??g(Ke);return gr(t)?(Ut("NgAfterNextRender"),WC(e,t,n,!0)):qC}function GC(e,n){if(e instanceof Function){let t=[void 0,void 0,void 0,void 0];return t[n]=e,t}else return[e.earlyRead,e.write,e.mixedReadWrite,e.read]}function WC(e,n,t,r){let o=n.get(Yh);o.impl??=n.get(Ja);let i=t?.phase??Tn.MixedReadWrite,s=t?.manualCleanup!==!0?n.get(_c):null,a=new Xa(o.impl,GC(e,i),r,s);return o.impl.register(a),a}var qC={destroy(){}};function Xc(e,n,t,r){let o=H(),i=xi();if(Lt(o,i,n)){let s=Ue(),a=wc();N0(a,o,e,n,t,r)}return Xc}function Kh(e,n,t,r){return Lt(e,xi(),t)?n+Di(t)+r:lt}function jo(e,n){return e<<17|n<<2}function rn(e){return e>>17&32767}function ZC(e){return(e&2)==2}function QC(e,n){return e&131071|n<<17}function ec(e){return e|2}function Un(e){return(e&131068)>>2}function ma(e,n){return e&-131069|n<<2}function YC(e){return(e&1)===1}function tc(e){return e|1}function KC(e,n,t,r,o,i){let s=i?n.classBindings:n.styleBindings,a=rn(s),c=Un(s);e[r]=t;let l=!1,u;if(Array.isArray(t)){let d=t;u=d[1],(u===null||Tr(d,u)>0)&&(l=!0)}else u=t;if(o)if(c!==0){let v=rn(e[a+1]);e[r+1]=jo(v,a),v!==0&&(e[v+1]=ma(e[v+1],r)),e[a+1]=QC(e[a+1],r)}else e[r+1]=jo(a,0),a!==0&&(e[a+1]=ma(e[a+1],r)),a=r;else e[r+1]=jo(c,0),a===0?a=r:e[c+1]=ma(e[c+1],r),c=r;l&&(e[r+1]=ec(e[r+1])),Dd(e,u,r,!0),Dd(e,u,r,!1),JC(n,u,e,r,i),s=jo(a,c),i?n.classBindings=s:n.styleBindings=s}function JC(e,n,t,r,o){let i=o?e.residualClasses:e.residualStyles;i!=null&&typeof n=="string"&&Tr(i,n)>=0&&(t[r+1]=tc(t[r+1]))}function Dd(e,n,t,r){let o=e[t+1],i=n===null,s=r?rn(o):Un(o),a=!1;for(;s!==0&&(a===!1||i);){let c=e[s],l=e[s+1];XC(c,n)&&(a=!0,e[s+1]=r?tc(l):ec(l)),s=r?rn(l):Un(l)}a&&(e[t+1]=r?ec(o):tc(o))}function XC(e,n){return e===null||n==null||(Array.isArray(e)?e[1]:e)===n?!0:Array.isArray(e)&&typeof n=="string"?Tr(e,n)>=0:!1}function w(e,n,t){let r=H(),o=xi();if(Lt(r,o,n)){let i=Ue(),s=wc();bh(i,s,r,e,n,r[Z],t,!1)}return w}function wd(e,n,t,r,o){let i=n.inputs,s=o?"class":"style";Gc(e,t,i[s],s,r)}function et(e,n){return eD(e,n,null,!0),et}function eD(e,n,t,r){let o=H(),i=Ue(),s=Pv(2);if(i.firstUpdatePass&&nD(i,e,s,r),n!==lt&&Lt(o,s,n)){let a=i.data[zn()];aD(i,a,o,o[Z],e,o[s+1]=cD(n,t),r,s)}}function tD(e,n){return n>=e.expandoStartIndex}function nD(e,n,t,r){let o=e.data;if(o[t+1]===null){let i=o[zn()],s=tD(e,t);lD(i,r)&&n===null&&!s&&(n=!1),n=rD(o,i,n,r),KC(o,i,n,t,s,r)}}function rD(e,n,t,r){let o=Lv(e),i=r?n.residualClasses:n.residualStyles;if(o===null)(r?n.classBindings:n.styleBindings)===0&&(t=va(null,e,n,t,r),t=Mr(t,n.attrs,r),i=null);else{let s=n.directiveStylingLast;if(s===-1||e[s]!==o)if(t=va(o,e,n,t,r),i===null){let c=oD(e,n,r);c!==void 0&&Array.isArray(c)&&(c=va(null,e,n,c[1],r),c=Mr(c,n.attrs,r),iD(e,n,r,c))}else i=sD(e,n,r)}return i!==void 0&&(r?n.residualClasses=i:n.residualStyles=i),t}function oD(e,n,t){let r=t?n.classBindings:n.styleBindings;if(Un(r)!==0)return e[rn(r)]}function iD(e,n,t,r){let o=t?n.classBindings:n.styleBindings;e[rn(o)]=r}function sD(e,n,t){let r,o=n.directiveEnd;for(let i=1+n.directiveStylingLast;i<o;i++){let s=e[i].hostAttrs;r=Mr(r,s,t)}return Mr(r,n.attrs,t)}function va(e,n,t,r,o){let i=null,s=t.directiveEnd,a=t.directiveStylingLast;for(a===-1?a=t.directiveStart:a++;a<s&&(i=n[a],r=Mr(r,i.hostAttrs,o),i!==e);)a++;return e!==null&&(t.directiveStylingLast=a),r}function Mr(e,n,t){let r=t?1:2,o=-1;if(n!==null)for(let i=0;i<n.length;i++){let s=n[i];typeof s=="number"?o=s:o===r&&(Array.isArray(e)||(e=e===void 0?[]:["",e]),Bm(e,s,t?!0:n[++i]))}return e===void 0?null:e}function aD(e,n,t,r,o,i,s,a){if(!(n.type&3))return;let c=e.data,l=c[a+1],u=YC(l)?Ed(c,n,t,o,Un(l),s):void 0;if(!mi(u)){mi(i)||ZC(l)&&(i=Ed(c,null,t,o,a,s));let d=lf(zn(),t);c0(r,s,d,o,i)}}function Ed(e,n,t,r,o,i){let s=n===null,a;for(;o>0;){let c=e[o],l=Array.isArray(c),u=l?c[1]:c,d=u===null,v=t[o+1];v===lt&&(v=d?Le:void 0);let m=d?ia(v,r):u===r?v:void 0;if(l&&!mi(m)&&(m=ia(c,r)),mi(m)&&(a=m,s))return a;let C=e[o+1];o=s?rn(C):Un(C)}if(n!==null){let c=i?n.residualClasses:n.residualStyles;c!=null&&(a=ia(c,r))}return a}function mi(e){return e!==void 0}function cD(e,n){return e==null||e===""||(typeof n=="string"?e=e+n:typeof e=="object"&&(e=ve(Fr(e)))),e}function lD(e,n){return(e.flags&(n?8:16))!==0}function Ee(e,n){Ut("NgControlFlow");let t=H(),r=xi(),o=t[r]!==lt?t[r]:-1,i=o!==-1?Id(t,se+o):void 0,s=0;if(Lt(t,r,e)){let a=j(null);try{if(i!==void 0&&$0(i,s),e!==-1){let c=se+e,l=Id(t,c),u=uD(t[A],c),d=Wa(l,u.tView.ssrId),v=Oh(t,u,n,{dehydratedView:d});Nh(l,v,s,za(u,d))}}finally{j(a)}}else if(i!==void 0){let a=U0(i,s);a!==void 0&&(a[Ve]=n)}}function Id(e,n){return e[n]}function uD(e,n){return gc(e,n)}function dD(e,n,t,r,o,i){let s=n.consts,a=Fn(s,o),c=Lr(n,e,2,r,a);return zc(n,t,c,Fn(s,i)),c.attrs!==null&&hi(c,c.attrs,!1),c.mergedAttrs!==null&&hi(c,c.mergedAttrs,!0),n.queries!==null&&n.queries.elementStart(n,c),c}function h(e,n,t,r){let o=H(),i=Ue(),s=se+e,a=o[Z],c=i.firstCreatePass?dD(s,i,o,n,t,r):i.data[s],l=Jh(i,o,c,a,n,e);o[s]=l;let u=_i(c);return sn(c,!0),mh(a,l,c),!jr(c)&&Oi()&&ji(i,o,l,c),bv()===0&&kt(l,o),_v(),u&&(Uc(i,o,c),Bc(i,c,o)),r!==null&&$c(o,c),h}function f(){let e=we();vc()?mf():(e=e.parent,sn(e,!1));let n=e;Sv(n)&&Tv(),Mv();let t=Ue();return t.firstCreatePass&&(Ni(t,e),pc(e)&&t.queries.elementEnd(e)),n.classesWithoutHost!=null&&zv(n)&&wd(t,n,H(),n.classesWithoutHost,!0),n.stylesWithoutHost!=null&&Gv(n)&&wd(t,n,H(),n.stylesWithoutHost,!1),f}function R(e,n,t,r){return h(e,n,t,r),f(),R}var Jh=(e,n,t,r,o,i)=>(Bt(!0),kc(r,o,bf()));function fD(e,n,t,r,o,i){let s=n[it],a=!s||Pr()||jr(t)||kr(s,i);if(Bt(a),a)return kc(r,o,bf());let c=$i(s,e,n,t);return eh(s,i)&&ki(s,i,c.nextSibling),s&&(Uf(t)||$f(c))&&Nr(t)&&(xv(t),ph(c)),c}function hD(){Jh=fD}function pD(e,n,t,r,o){let i=n.consts,s=Fn(i,r),a=Lr(n,e,8,"ng-container",s);s!==null&&hi(a,s,!0);let c=Fn(i,o);return zc(n,t,a,c),n.queries!==null&&n.queries.elementStart(n,a),a}function Xh(e,n,t){let r=H(),o=Ue(),i=e+se,s=o.firstCreatePass?pD(i,o,r,n,t):o.data[i];sn(s,!0);let a=tp(o,r,s,e);return r[i]=a,Oi()&&ji(o,r,a,s),kt(a,r),_i(s)&&(Uc(o,r,s),Bc(o,s,r)),t!=null&&$c(r,s),Xh}function ep(){let e=we(),n=Ue();return vc()?mf():(e=e.parent,sn(e,!1)),n.firstCreatePass&&(Ni(n,e),pc(e)&&n.queries.elementEnd(e)),ep}function Wi(e,n,t){return Xh(e,n,t),ep(),Wi}var tp=(e,n,t,r)=>(Bt(!0),ch(n[Z],""));function gD(e,n,t,r){let o,i=n[it],s=!i||Pr()||kr(i,r)||jr(t);if(Bt(s),s)return ch(n[Z],"");let a=$i(i,e,n,t),c=Ry(i,r);return ki(i,r,a),o=Hi(c,a),o}function mD(){tp=gD}function Ct(){return H()}var vi="en-US";var vD=vi;function yD(e){typeof e=="string"&&(vD=e.toLowerCase().replace(/_/g,"-"))}var CD=(e,n,t)=>{};function Q(e,n,t,r){let o=H(),i=Ue(),s=we();return wD(i,o,o[Z],s,e,n,r),Q}function DD(e,n,t,r){let o=e.cleanup;if(o!=null)for(let i=0;i<o.length-1;i+=2){let s=o[i];if(s===t&&o[i+1]===r){let a=n[Yo],c=o[i+2];return a.length>c?a[c]:null}typeof s=="string"&&(i+=2)}return null}function wD(e,n,t,r,o,i,s){let a=_i(r),l=e.firstCreatePass&&F0(e),u=n[Ve],d=k0(n),v=!0;if(r.type&3||s){let P=Oe(r,n),$=s?s(P):P,z=d.length,de=s?ge=>s(Ye(ge[r.index])):r.index,fe=null;if(!s&&a&&(fe=DD(e,n,o,r.index)),fe!==null){let ge=fe.__ngLastListenerFn__||fe;ge.__ngNextListenerFn__=i,fe.__ngLastListenerFn__=i,v=!1}else{i=_d(r,n,u,i),CD(P,o,i);let ge=t.listen($,o,i);d.push(i,ge),l&&l.push(o,de,z,z+1)}}else i=_d(r,n,u,i);let m=r.outputs,C;if(v&&m!==null&&(C=m[o])){let P=C.length;if(P)for(let $=0;$<P;$+=2){let z=C[$],de=C[$+1],Mt=n[z][de].subscribe(i),Ie=d.length;d.push(i,Mt),l&&l.push(o,r.index,Ie,-(Ie+1))}}}function bd(e,n,t,r){let o=j(null);try{return nt(6,n,t),t(r)!==!1}catch(i){return Th(e,i),!1}finally{nt(7,n,t),j(o)}}function _d(e,n,t,r){return function o(i){if(i===Function)return r;let s=e.componentOffset>-1?Vt(e.index,n):n;qc(s,5);let a=bd(n,t,r,i),c=o.__ngNextListenerFn__;for(;c;)a=bd(n,t,c,i)&&a,c=c.__ngNextListenerFn__;return a}}function V(e=1){return Vv(e)}function Vr(e,n,t){return np(e,"",n,"",t),Vr}function np(e,n,t,r,o){let i=H(),s=Kh(i,n,t,r);if(s!==lt){let a=Ue(),c=wc();bh(a,c,i,e,s,i[Z],o,!1)}return np}function el(e){let n=Nv();return Dv(n,se+e)}function p(e,n=""){let t=H(),r=Ue(),o=e+se,i=r.firstCreatePass?Lr(r,o,1,n,null):r.data[o],s=rp(r,t,i,n,e);t[o]=s,Oi()&&ji(r,t,s,i),sn(i,!1)}var rp=(e,n,t,r,o)=>(Bt(!0),ah(n[Z],r));function ED(e,n,t,r,o){let i=n[it],s=!i||Pr()||jr(t)||kr(i,o);return Bt(s),s?ah(n[Z],r):$i(i,e,n,t)}function ID(){rp=ED}function $e(e){return op("",e,""),$e}function op(e,n,t){let r=H(),o=Kh(r,e,n,t);return o!==lt&&L0(r,zn(),o),op}var bD=(()=>{class e{constructor(t){this._injector=t,this.cachedInjectors=new Map}getOrCreateStandaloneInjector(t){if(!t.standalone)return null;if(!this.cachedInjectors.has(t)){let r=Kd(!1,t.type),o=r.length>0?Gi([r],this._injector,`Standalone[${t.type.name}]`):null;this.cachedInjectors.set(t,o)}return this.cachedInjectors.get(t)}ngOnDestroy(){try{for(let t of this.cachedInjectors.values())t!==null&&t.destroy()}finally{this.cachedInjectors.clear()}}static{this.\u0275prov=I({token:e,providedIn:"environment",factory:()=>new e(x(xe))})}}return e})();function re(e){Ut("NgStandalone"),e.getStandaloneInjector=n=>n.get(bD).getOrCreateStandaloneInjector(e)}function Ae(e,n,t){let r=yc()+e,o=H();return o[r]===lt?Kc(o,r,t?n.call(t):n()):VC(o,r)}function Y(e,n,t,r){return _D(H(),yc(),e,n,t,r)}function ip(e,n,t,r,o){return MD(H(),yc(),e,n,t,r,o)}function sp(e,n){let t=e[n];return t===lt?void 0:t}function _D(e,n,t,r,o,i){let s=n+t;return Lt(e,s,o)?Kc(e,s+1,i?r.call(i,o):r(o)):sp(e,s+1)}function MD(e,n,t,r,o,i,s){let a=n+t;return BC(e,a,o,i)?Kc(e,a+2,s?r.call(s,o,i):r(o,i)):sp(e,a+2)}function ap(e,n){return jh(e,n)}var qi=(()=>{class e{log(t){console.log(t)}warn(t){console.warn(t)}static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac,providedIn:"platform"})}}return e})();var cp=new b("");function Br(e){return!!e&&typeof e.then=="function"}function lp(e){return!!e&&typeof e.subscribe=="function"}var Zi=new b(""),up=(()=>{class e{constructor(){this.initialized=!1,this.done=!1,this.donePromise=new Promise((t,r)=>{this.resolve=t,this.reject=r}),this.appInits=g(Zi,{optional:!0})??[]}runInitializers(){if(this.initialized)return;let t=[];for(let o of this.appInits){let i=o();if(Br(i))t.push(i);else if(lp(i)){let s=new Promise((a,c)=>{i.subscribe({complete:a,error:c})});t.push(s)}}let r=()=>{this.done=!0,this.resolve()};Promise.all(t).then(()=>{r()}).catch(o=>{this.reject(o)}),t.length===0&&r(),this.initialized=!0}static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac,providedIn:"root"})}}return e})(),ln=new b("");function SD(){gu(()=>{throw new E(600,!1)})}function xD(e){return e.isBoundToModule}var TD=10;function OD(e,n,t){try{let r=t();return Br(r)?r.catch(o=>{throw n.runOutsideAngular(()=>e.handleError(o)),o}):r}catch(r){throw n.runOutsideAngular(()=>e.handleError(r)),r}}var ut=(()=>{class e{constructor(){this._bootstrapListeners=[],this._runningTick=!1,this._destroyed=!1,this._destroyListeners=[],this._views=[],this.internalErrorHandler=g(fy),this.afterRenderManager=g(Yh),this.zonelessEnabled=g(zi),this.dirtyFlags=0,this.deferredDirtyFlags=0,this.externalTestViews=new Set,this.beforeRender=new he,this.afterTick=new he,this.componentTypes=[],this.components=[],this.isStable=g(an).hasPendingTasks.pipe(k(t=>!t)),this._injector=g(xe)}get allViews(){return[...this.externalTestViews.keys(),...this._views]}get destroyed(){return this._destroyed}whenStable(){let t;return new Promise(r=>{t=this.isStable.subscribe({next:o=>{o&&r()}})}).finally(()=>{t.unsubscribe()})}get injector(){return this._injector}bootstrap(t,r){let o=t instanceof fi;if(!this._injector.get(up).done){let v=!o&&qd(t),m=!1;throw new E(405,m)}let s;o?s=t:s=this._injector.get(jn).resolveComponentFactory(t),this.componentTypes.push(s.componentType);let a=xD(s)?void 0:this._injector.get(Ft),c=r||s.selector,l=s.create(Ke.NULL,[],c,a),u=l.location.nativeElement,d=l.injector.get(cp,null);return d?.registerApplication(u),l.onDestroy(()=>{this.detachView(l.hostView),zo(this.components,l),d?.unregisterApplication(u)}),this._loadComponent(l),l}tick(){this.zonelessEnabled||(this.dirtyFlags|=1),this._tick()}_tick(){if(this._runningTick)throw new E(101,!1);let t=j(null);try{this._runningTick=!0,this.synchronize()}catch(r){this.internalErrorHandler(r)}finally{this._runningTick=!1,j(t),this.afterTick.next()}}synchronize(){let t=null;this._injector.destroyed||(t=this._injector.get(Vn,null,{optional:!0})),this.dirtyFlags|=this.deferredDirtyFlags,this.deferredDirtyFlags=0;let r=0;for(;this.dirtyFlags!==0&&r++<TD;)this.synchronizeOnce(t)}synchronizeOnce(t){if(this.dirtyFlags|=this.deferredDirtyFlags,this.deferredDirtyFlags=0,this.dirtyFlags&7){let r=!!(this.dirtyFlags&1);this.dirtyFlags&=-8,this.dirtyFlags|=8,this.beforeRender.next(r);for(let{_lView:o,notifyErrorHandler:i}of this._views)ND(o,i,r,this.zonelessEnabled);if(this.dirtyFlags&=-5,this.syncDirtyFlagsWithViews(),this.dirtyFlags&7)return}else t?.begin?.(),t?.end?.();this.dirtyFlags&8&&(this.dirtyFlags&=-9,this.afterRenderManager.execute()),this.syncDirtyFlagsWithViews()}syncDirtyFlagsWithViews(){if(this.allViews.some(({_lView:t})=>Mi(t))){this.dirtyFlags|=2;return}else this.dirtyFlags&=-8}attachView(t){let r=t;this._views.push(r),r.attachToAppRef(this)}detachView(t){let r=t;zo(this._views,r),r.detachFromAppRef()}_loadComponent(t){this.attachView(t.hostView),this.tick(),this.components.push(t);let r=this._injector.get(ln,[]);[...this._bootstrapListeners,...r].forEach(o=>o(t))}ngOnDestroy(){if(!this._destroyed)try{this._destroyListeners.forEach(t=>t()),this._views.slice().forEach(t=>t.destroy())}finally{this._destroyed=!0,this._views=[],this._bootstrapListeners=[],this._destroyListeners=[]}}onDestroy(t){return this._destroyListeners.push(t),()=>zo(this._destroyListeners,t)}destroy(){if(this._destroyed)throw new E(406,!1);let t=this._injector;t.destroy&&!t.destroyed&&t.destroy()}get viewCount(){return this._views.length}warnIfDestroyed(){}static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac,providedIn:"root"})}}return e})();function zo(e,n){let t=e.indexOf(n);t>-1&&e.splice(t,1)}var Vo;function Qi(e){Vo??=new WeakMap;let n=Vo.get(e);if(n)return n;let t=e.isStable.pipe(We(r=>r)).toPromise().then(()=>{});return Vo.set(e,t),e.onDestroy(()=>Vo?.delete(e)),t}function ND(e,n,t,r){if(!t&&!Mi(e))return;Rh(e,n,t&&!r?0:1)}var nc=class{constructor(n,t){this.ngModuleFactory=n,this.componentFactories=t}},Yi=(()=>{class e{compileModuleSync(t){return new Ka(t)}compileModuleAsync(t){return Promise.resolve(this.compileModuleSync(t))}compileModuleAndAllComponentsSync(t){let r=this.compileModuleSync(t),o=Zd(t),i=sh(o.declarations).reduce((s,a)=>{let c=Rt(a);return c&&s.push(new Bn(c)),s},[]);return new nc(r,i)}compileModuleAndAllComponentsAsync(t){return Promise.resolve(this.compileModuleAndAllComponentsSync(t))}clearCache(){}clearCacheFor(t){}getModuleId(t){}static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac,providedIn:"root"})}}return e})();var AD=(()=>{class e{constructor(){this.zone=g(W),this.changeDetectionScheduler=g(Ln),this.applicationRef=g(ut)}initialize(){this._onMicrotaskEmptySubscription||(this._onMicrotaskEmptySubscription=this.zone.onMicrotaskEmpty.subscribe({next:()=>{this.changeDetectionScheduler.runningTick||this.zone.run(()=>{this.applicationRef.tick()})}}))}ngOnDestroy(){this._onMicrotaskEmptySubscription?.unsubscribe()}static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac,providedIn:"root"})}}return e})(),PD=new b("",{factory:()=>!1});function dp({ngZoneFactory:e,ignoreChangesOutsideZone:n,scheduleInRootZone:t}){return e??=()=>new W(K(D({},hp()),{scheduleInRootZone:t})),[{provide:W,useFactory:e},{provide:Xt,multi:!0,useFactory:()=>{let r=g(AD,{optional:!0});return()=>r.initialize()}},{provide:Xt,multi:!0,useFactory:()=>{let r=g(RD);return()=>{r.initialize()}}},n===!0?{provide:$h,useValue:!0}:[],{provide:Hh,useValue:t??jf}]}function fp(e){let n=e?.ignoreChangesOutsideZone,t=e?.scheduleInRootZone,r=dp({ngZoneFactory:()=>{let o=hp(e);return o.scheduleInRootZone=t,o.shouldCoalesceEventChangeDetection&&Ut("NgZone_CoalesceEvent"),new W(o)},ignoreChangesOutsideZone:n,scheduleInRootZone:t});return on([{provide:PD,useValue:!0},{provide:zi,useValue:!1},r])}function hp(e){return{enableLongStackTrace:!1,shouldCoalesceEventChangeDetection:e?.eventCoalescing??!1,shouldCoalesceRunChangeDetection:e?.runCoalescing??!1}}var RD=(()=>{class e{constructor(){this.subscription=new X,this.initialized=!1,this.zone=g(W),this.pendingTasks=g(an)}initialize(){if(this.initialized)return;this.initialized=!0;let t=null;!this.zone.isStable&&!this.zone.hasPendingMacrotasks&&!this.zone.hasPendingMicrotasks&&(t=this.pendingTasks.add()),this.zone.runOutsideAngular(()=>{this.subscription.add(this.zone.onStable.subscribe(()=>{W.assertNotInAngularZone(),queueMicrotask(()=>{t!==null&&!this.zone.hasPendingMacrotasks&&!this.zone.hasPendingMicrotasks&&(this.pendingTasks.remove(t),t=null)})}))}),this.subscription.add(this.zone.onUnstable.subscribe(()=>{W.assertInAngularZone(),t??=this.pendingTasks.add()}))}ngOnDestroy(){this.subscription.unsubscribe()}static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac,providedIn:"root"})}}return e})();var kD=(()=>{class e{constructor(){this.appRef=g(ut),this.taskService=g(an),this.ngZone=g(W),this.zonelessEnabled=g(zi),this.disableScheduling=g($h,{optional:!0})??!1,this.zoneIsDefined=typeof Zone<"u"&&!!Zone.root.run,this.schedulerTickApplyArgs=[{data:{__scheduler_tick__:!0}}],this.subscriptions=new X,this.angularZoneId=this.zoneIsDefined?this.ngZone._inner?.get(oi):null,this.scheduleInRootZone=!this.zonelessEnabled&&this.zoneIsDefined&&(g(Hh,{optional:!0})??!1),this.cancelScheduledCallback=null,this.useMicrotaskScheduler=!1,this.runningTick=!1,this.pendingRenderTaskId=null,this.subscriptions.add(this.appRef.afterTick.subscribe(()=>{this.runningTick||this.cleanup()})),this.subscriptions.add(this.ngZone.onUnstable.subscribe(()=>{this.runningTick||this.cleanup()})),this.disableScheduling||=!this.zonelessEnabled&&(this.ngZone instanceof Fa||!this.zoneIsDefined)}notify(t){if(!this.zonelessEnabled&&t===5)return;switch(t){case 0:{this.appRef.dirtyFlags|=2;break}case 3:case 2:case 4:case 5:case 1:{this.appRef.dirtyFlags|=4;break}case 7:{this.appRef.deferredDirtyFlags|=8;break}case 9:case 8:case 6:case 10:default:this.appRef.dirtyFlags|=8}if(!this.shouldScheduleTick())return;let r=this.useMicrotaskScheduler?cd:Vf;this.pendingRenderTaskId=this.taskService.add(),this.scheduleInRootZone?this.cancelScheduledCallback=Zone.root.run(()=>r(()=>this.tick())):this.cancelScheduledCallback=this.ngZone.runOutsideAngular(()=>r(()=>this.tick()))}shouldScheduleTick(){return!(this.disableScheduling||this.pendingRenderTaskId!==null||this.runningTick||this.appRef._runningTick||!this.zonelessEnabled&&this.zoneIsDefined&&Zone.current.get(oi+this.angularZoneId))}tick(){if(this.runningTick||this.appRef.destroyed)return;!this.zonelessEnabled&&this.appRef.dirtyFlags&7&&(this.appRef.dirtyFlags|=1);let t=this.taskService.add();try{this.ngZone.run(()=>{this.runningTick=!0,this.appRef._tick()},void 0,this.schedulerTickApplyArgs)}catch(r){throw this.taskService.remove(t),r}finally{this.cleanup()}this.useMicrotaskScheduler=!0,cd(()=>{this.useMicrotaskScheduler=!1,this.taskService.remove(t)})}ngOnDestroy(){this.subscriptions.unsubscribe(),this.cleanup()}cleanup(){if(this.runningTick=!1,this.cancelScheduledCallback?.(),this.cancelScheduledCallback=null,this.pendingRenderTaskId!==null){let t=this.pendingRenderTaskId;this.pendingRenderTaskId=null,this.taskService.remove(t)}}static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac,providedIn:"root"})}}return e})();function FD(){return typeof $localize<"u"&&$localize.locale||vi}var tl=new b("",{providedIn:"root",factory:()=>g(tl,N.Optional|N.SkipSelf)||FD()});var rc=new b("");function Bo(e){return!e.moduleRef}function LD(e){let n=Bo(e)?e.r3Injector:e.moduleRef.injector,t=n.get(W);return t.run(()=>{Bo(e)?e.r3Injector.resolveInjectorInitializers():e.moduleRef.resolveInjectorInitializers();let r=n.get(vt,null),o;if(t.runOutsideAngular(()=>{o=t.onError.subscribe({next:i=>{r.handleError(i)}})}),Bo(e)){let i=()=>n.destroy(),s=e.platformInjector.get(rc);s.add(i),n.onDestroy(()=>{o.unsubscribe(),s.delete(i)})}else{let i=()=>e.moduleRef.destroy(),s=e.platformInjector.get(rc);s.add(i),e.moduleRef.onDestroy(()=>{zo(e.allPlatformModules,e.moduleRef),o.unsubscribe(),s.delete(i)})}return OD(r,t,()=>{let i=n.get(up);return i.runInitializers(),i.donePromise.then(()=>{let s=n.get(tl,vi);if(yD(s||vi),Bo(e)){let a=n.get(ut);return e.rootComponent!==void 0&&a.bootstrap(e.rootComponent),a}else return jD(e.moduleRef,e.allPlatformModules),e.moduleRef})})})}function jD(e,n){let t=e.injector.get(ut);if(e._bootstrapComponents.length>0)e._bootstrapComponents.forEach(r=>t.bootstrap(r));else if(e.instance.ngDoBootstrap)e.instance.ngDoBootstrap(t);else throw new E(-403,!1);n.push(e)}var Go=null;function VD(e=[],n){return Ke.create({name:n,providers:[{provide:Ii,useValue:"platform"},{provide:rc,useValue:new Set([()=>Go=null])},...e]})}function BD(e=[]){if(Go)return Go;let n=VD(e);return Go=n,SD(),UD(n),n}function UD(e){e.get(xc,null)?.forEach(t=>t())}var Ur=(()=>{class e{static{this.__NG_ELEMENT_ID__=$D}}return e})();function $D(e){return HD(we(),H(),(e&16)===16)}function HD(e,n,t){if(Nr(e)&&!t){let r=Vt(e.index,n);return new nn(r,r)}else if(e.type&175){let r=n[Be];return new nn(r,n)}return null}var oc=class{constructor(){}supports(n){return n instanceof Map||qh(n)}create(){return new ic}},ic=class{constructor(){this._records=new Map,this._mapHead=null,this._appendAfter=null,this._previousMapHead=null,this._changesHead=null,this._changesTail=null,this._additionsHead=null,this._additionsTail=null,this._removalsHead=null,this._removalsTail=null}get isDirty(){return this._additionsHead!==null||this._changesHead!==null||this._removalsHead!==null}forEachItem(n){let t;for(t=this._mapHead;t!==null;t=t._next)n(t)}forEachPreviousItem(n){let t;for(t=this._previousMapHead;t!==null;t=t._nextPrevious)n(t)}forEachChangedItem(n){let t;for(t=this._changesHead;t!==null;t=t._nextChanged)n(t)}forEachAddedItem(n){let t;for(t=this._additionsHead;t!==null;t=t._nextAdded)n(t)}forEachRemovedItem(n){let t;for(t=this._removalsHead;t!==null;t=t._nextRemoved)n(t)}diff(n){if(!n)n=new Map;else if(!(n instanceof Map||qh(n)))throw new E(900,!1);return this.check(n)?this:null}onDestroy(){}check(n){this._reset();let t=this._mapHead;if(this._appendAfter=null,this._forEach(n,(r,o)=>{if(t&&t.key===o)this._maybeAddToChanges(t,r),this._appendAfter=t,t=t._next;else{let i=this._getOrCreateRecordForKey(o,r);t=this._insertBeforeOrAppend(t,i)}}),t){t._prev&&(t._prev._next=null),this._removalsHead=t;for(let r=t;r!==null;r=r._nextRemoved)r===this._mapHead&&(this._mapHead=null),this._records.delete(r.key),r._nextRemoved=r._next,r.previousValue=r.currentValue,r.currentValue=null,r._prev=null,r._next=null}return this._changesTail&&(this._changesTail._nextChanged=null),this._additionsTail&&(this._additionsTail._nextAdded=null),this.isDirty}_insertBeforeOrAppend(n,t){if(n){let r=n._prev;return t._next=n,t._prev=r,n._prev=t,r&&(r._next=t),n===this._mapHead&&(this._mapHead=t),this._appendAfter=n,n}return this._appendAfter?(this._appendAfter._next=t,t._prev=this._appendAfter):this._mapHead=t,this._appendAfter=t,null}_getOrCreateRecordForKey(n,t){if(this._records.has(n)){let o=this._records.get(n);this._maybeAddToChanges(o,t);let i=o._prev,s=o._next;return i&&(i._next=s),s&&(s._prev=i),o._next=null,o._prev=null,o}let r=new sc(n);return this._records.set(n,r),r.currentValue=t,this._addToAdditions(r),r}_reset(){if(this.isDirty){let n;for(this._previousMapHead=this._mapHead,n=this._previousMapHead;n!==null;n=n._next)n._nextPrevious=n._next;for(n=this._changesHead;n!==null;n=n._nextChanged)n.previousValue=n.currentValue;for(n=this._additionsHead;n!=null;n=n._nextAdded)n.previousValue=n.currentValue;this._changesHead=this._changesTail=null,this._additionsHead=this._additionsTail=null,this._removalsHead=null}}_maybeAddToChanges(n,t){Object.is(t,n.currentValue)||(n.previousValue=n.currentValue,n.currentValue=t,this._addToChanges(n))}_addToAdditions(n){this._additionsHead===null?this._additionsHead=this._additionsTail=n:(this._additionsTail._nextAdded=n,this._additionsTail=n)}_addToChanges(n){this._changesHead===null?this._changesHead=this._changesTail=n:(this._changesTail._nextChanged=n,this._changesTail=n)}_forEach(n,t){n instanceof Map?n.forEach(t):Object.keys(n).forEach(r=>t(n[r],r))}},sc=class{constructor(n){this.key=n,this.previousValue=null,this.currentValue=null,this._nextPrevious=null,this._next=null,this._prev=null,this._nextAdded=null,this._nextRemoved=null,this._nextChanged=null}};function Md(){return new nl([new oc])}var nl=(()=>{class e{static{this.\u0275prov=I({token:e,providedIn:"root",factory:Md})}constructor(t){this.factories=t}static create(t,r){if(r){let o=r.factories.slice();t=t.concat(o)}return new e(t)}static extend(t){return{provide:e,useFactory:r=>e.create(t,r||Md()),deps:[[e,new cc,new Ei]]}}find(t){let r=this.factories.find(o=>o.supports(t));if(r)return r;throw new E(901,!1)}}return e})();function pp(e){try{let{rootComponent:n,appProviders:t,platformProviders:r}=e,o=BD(r),i=[dp({}),{provide:Ln,useExisting:kD},...t||[]],s=new gi({providers:i,parent:o,debugName:"",runEnvironmentInitializers:!1});return LD({r3Injector:s.injector,platformInjector:o,rootComponent:n})}catch(n){return Promise.reject(n)}}var Sd=!1;function zD(){Sd||(Sd=!0,Oy(),hD(),ID(),mD(),zC(),jC(),yC(),m0())}function GD(e,n){return Qi(e)}function gp(){return on([{provide:Fo,useFactory:()=>{let e=!0;return gr()&&(e=!!g(Gn,{optional:!0})?.get(Jf,null)),e&&Ut("NgHydration"),e}},{provide:Xt,useValue:()=>{dC(!1),gr()&&g(Fo)&&(WD(),zD())},multi:!0},{provide:nh,useFactory:()=>gr()&&g(Fo)},{provide:ln,useFactory:()=>{if(gr()&&g(Fo)){let e=g(ut),n=g(Ke);return()=>{GD(e,n).then(()=>{gC(e)})}}return()=>{}},multi:!0}])}function WD(){let e=Pi(),n;for(let t of e.body.childNodes)if(t.nodeType===Node.COMMENT_NODE&&t.textContent?.trim()===xy){n=t;break}if(!n)throw new E(-507,!1)}function $r(e){return typeof e=="boolean"?e:e!=null&&e!=="false"}function mp(e){let n=Rt(e);if(!n)return null;let t=new Bn(n);return{get selector(){return t.selector},get type(){return t.componentType},get inputs(){return t.inputs},get outputs(){return t.outputs},get ngContentSelectors(){return t.ngContentSelectors},get isStandalone(){return n.standalone},get isSignal(){return n.signals}}}var Ep=null;function Zn(){return Ep}function Ip(e){Ep??=e}var Ki=class{};var ye=new b(""),al=(()=>{class e{historyGo(t){throw new Error("")}static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275prov=I({token:e,factory:()=>g(ZD),providedIn:"platform"})}}return e})(),bp=new b(""),ZD=(()=>{class e extends al{constructor(){super(),this._doc=g(ye),this._location=window.location,this._history=window.history}getBaseHrefFromDOM(){return Zn().getBaseHref(this._doc)}onPopState(t){let r=Zn().getGlobalEventTarget(this._doc,"window");return r.addEventListener("popstate",t,!1),()=>r.removeEventListener("popstate",t)}onHashChange(t){let r=Zn().getGlobalEventTarget(this._doc,"window");return r.addEventListener("hashchange",t,!1),()=>r.removeEventListener("hashchange",t)}get href(){return this._location.href}get protocol(){return this._location.protocol}get hostname(){return this._location.hostname}get port(){return this._location.port}get pathname(){return this._location.pathname}get search(){return this._location.search}get hash(){return this._location.hash}set pathname(t){this._location.pathname=t}pushState(t,r,o){this._history.pushState(t,r,o)}replaceState(t,r,o){this._history.replaceState(t,r,o)}forward(){this._history.forward()}back(){this._history.back()}historyGo(t=0){this._history.go(t)}getState(){return this._history.state}static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275prov=I({token:e,factory:()=>new e,providedIn:"platform"})}}return e})();function cl(e,n){if(e.length==0)return n;if(n.length==0)return e;let t=0;return e.endsWith("/")&&t++,n.startsWith("/")&&t++,t==2?e+n.substring(1):t==1?e+n:e+"/"+n}function vp(e){let n=e.match(/#|\?|$/),t=n&&n.index||e.length,r=t-(e[t-1]==="/"?1:0);return e.slice(0,r)+e.slice(t)}function Dt(e){return e&&e[0]!=="?"?"?"+e:e}var wt=(()=>{class e{historyGo(t){throw new Error("")}static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275prov=I({token:e,factory:()=>g(ll),providedIn:"root"})}}return e})(),_p=new b(""),ll=(()=>{class e extends wt{constructor(t,r){super(),this._platformLocation=t,this._removeListenerFns=[],this._baseHref=r??this._platformLocation.getBaseHrefFromDOM()??g(ye).location?.origin??""}ngOnDestroy(){for(;this._removeListenerFns.length;)this._removeListenerFns.pop()()}onPopState(t){this._removeListenerFns.push(this._platformLocation.onPopState(t),this._platformLocation.onHashChange(t))}getBaseHref(){return this._baseHref}prepareExternalUrl(t){return cl(this._baseHref,t)}path(t=!1){let r=this._platformLocation.pathname+Dt(this._platformLocation.search),o=this._platformLocation.hash;return o&&t?`${r}${o}`:r}pushState(t,r,o,i){let s=this.prepareExternalUrl(o+Dt(i));this._platformLocation.pushState(t,r,s)}replaceState(t,r,o,i){let s=this.prepareExternalUrl(o+Dt(i));this._platformLocation.replaceState(t,r,s)}forward(){this._platformLocation.forward()}back(){this._platformLocation.back()}getState(){return this._platformLocation.getState()}historyGo(t=0){this._platformLocation.historyGo?.(t)}static{this.\u0275fac=function(r){return new(r||e)(x(al),x(_p,8))}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac,providedIn:"root"})}}return e})(),Mp=(()=>{class e extends wt{constructor(t,r){super(),this._platformLocation=t,this._baseHref="",this._removeListenerFns=[],r!=null&&(this._baseHref=r)}ngOnDestroy(){for(;this._removeListenerFns.length;)this._removeListenerFns.pop()()}onPopState(t){this._removeListenerFns.push(this._platformLocation.onPopState(t),this._platformLocation.onHashChange(t))}getBaseHref(){return this._baseHref}path(t=!1){let r=this._platformLocation.hash??"#";return r.length>0?r.substring(1):r}prepareExternalUrl(t){let r=cl(this._baseHref,t);return r.length>0?"#"+r:r}pushState(t,r,o,i){let s=this.prepareExternalUrl(o+Dt(i));s.length==0&&(s=this._platformLocation.pathname),this._platformLocation.pushState(t,r,s)}replaceState(t,r,o,i){let s=this.prepareExternalUrl(o+Dt(i));s.length==0&&(s=this._platformLocation.pathname),this._platformLocation.replaceState(t,r,s)}forward(){this._platformLocation.forward()}back(){this._platformLocation.back()}getState(){return this._platformLocation.getState()}historyGo(t=0){this._platformLocation.historyGo?.(t)}static{this.\u0275fac=function(r){return new(r||e)(x(al),x(_p,8))}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac})}}return e})(),Qn=(()=>{class e{constructor(t){this._subject=new me,this._urlChangeListeners=[],this._urlChangeSubscription=null,this._locationStrategy=t;let r=this._locationStrategy.getBaseHref();this._basePath=KD(vp(yp(r))),this._locationStrategy.onPopState(o=>{this._subject.emit({url:this.path(!0),pop:!0,state:o.state,type:o.type})})}ngOnDestroy(){this._urlChangeSubscription?.unsubscribe(),this._urlChangeListeners=[]}path(t=!1){return this.normalize(this._locationStrategy.path(t))}getState(){return this._locationStrategy.getState()}isCurrentPathEqualTo(t,r=""){return this.path()==this.normalize(t+Dt(r))}normalize(t){return e.stripTrailingSlash(YD(this._basePath,yp(t)))}prepareExternalUrl(t){return t&&t[0]!=="/"&&(t="/"+t),this._locationStrategy.prepareExternalUrl(t)}go(t,r="",o=null){this._locationStrategy.pushState(o,"",t,r),this._notifyUrlChangeListeners(this.prepareExternalUrl(t+Dt(r)),o)}replaceState(t,r="",o=null){this._locationStrategy.replaceState(o,"",t,r),this._notifyUrlChangeListeners(this.prepareExternalUrl(t+Dt(r)),o)}forward(){this._locationStrategy.forward()}back(){this._locationStrategy.back()}historyGo(t=0){this._locationStrategy.historyGo?.(t)}onUrlChange(t){return this._urlChangeListeners.push(t),this._urlChangeSubscription??=this.subscribe(r=>{this._notifyUrlChangeListeners(r.url,r.state)}),()=>{let r=this._urlChangeListeners.indexOf(t);this._urlChangeListeners.splice(r,1),this._urlChangeListeners.length===0&&(this._urlChangeSubscription?.unsubscribe(),this._urlChangeSubscription=null)}}_notifyUrlChangeListeners(t="",r){this._urlChangeListeners.forEach(o=>o(t,r))}subscribe(t,r,o){return this._subject.subscribe({next:t,error:r,complete:o})}static{this.normalizeQueryParams=Dt}static{this.joinWithSlash=cl}static{this.stripTrailingSlash=vp}static{this.\u0275fac=function(r){return new(r||e)(x(wt))}}static{this.\u0275prov=I({token:e,factory:()=>QD(),providedIn:"root"})}}return e})();function QD(){return new Qn(x(wt))}function YD(e,n){if(!e||!n.startsWith(e))return n;let t=n.substring(e.length);return t===""||["/",";","?","#"].includes(t[0])?t:n}function yp(e){return e.replace(/\/index.html$/,"")}function KD(e){if(new RegExp("^(https?:)?//").test(e)){let[,t]=e.split(/\/\/[^\/]+/);return t}return e}function ul(e,n){n=encodeURIComponent(n);for(let t of e.split(";")){let r=t.indexOf("="),[o,i]=r==-1?[t,""]:[t.slice(0,r),t.slice(r+1)];if(o.trim()===n)return decodeURIComponent(i)}return null}var rl=/\s+/,Cp=[],Yn=(()=>{class e{constructor(t,r){this._ngEl=t,this._renderer=r,this.initialClasses=Cp,this.stateMap=new Map}set klass(t){this.initialClasses=t!=null?t.trim().split(rl):Cp}set ngClass(t){this.rawClass=typeof t=="string"?t.trim().split(rl):t}ngDoCheck(){for(let r of this.initialClasses)this._updateState(r,!0);let t=this.rawClass;if(Array.isArray(t)||t instanceof Set)for(let r of t)this._updateState(r,!0);else if(t!=null)for(let r of Object.keys(t))this._updateState(r,!!t[r]);this._applyStateDiff()}_updateState(t,r){let o=this.stateMap.get(t);o!==void 0?(o.enabled!==r&&(o.changed=!0,o.enabled=r),o.touched=!0):this.stateMap.set(t,{enabled:r,changed:!0,touched:!0})}_applyStateDiff(){for(let t of this.stateMap){let r=t[0],o=t[1];o.changed?(this._toggleClass(r,o.enabled),o.changed=!1):o.touched||(o.enabled&&this._toggleClass(r,!1),this.stateMap.delete(r)),o.touched=!1}}_toggleClass(t,r){t=t.trim(),t.length>0&&t.split(rl).forEach(o=>{r?this._renderer.addClass(this._ngEl.nativeElement,o):this._renderer.removeClass(this._ngEl.nativeElement,o)})}static{this.\u0275fac=function(r){return new(r||e)(q(cn),q(Wn))}}static{this.\u0275dir=jt({type:e,selectors:[["","ngClass",""]],inputs:{klass:[0,"class","klass"],ngClass:"ngClass"},standalone:!0})}}return e})();var Sp=(()=>{class e{constructor(t,r){this._viewContainer=t,this._context=new ol,this._thenTemplateRef=null,this._elseTemplateRef=null,this._thenViewRef=null,this._elseViewRef=null,this._thenTemplateRef=r}set ngIf(t){this._context.$implicit=this._context.ngIf=t,this._updateView()}set ngIfThen(t){Dp("ngIfThen",t),this._thenTemplateRef=t,this._thenViewRef=null,this._updateView()}set ngIfElse(t){Dp("ngIfElse",t),this._elseTemplateRef=t,this._elseViewRef=null,this._updateView()}_updateView(){this._context.$implicit?this._thenViewRef||(this._viewContainer.clear(),this._elseViewRef=null,this._thenTemplateRef&&(this._thenViewRef=this._viewContainer.createEmbeddedView(this._thenTemplateRef,this._context))):this._elseViewRef||(this._viewContainer.clear(),this._thenViewRef=null,this._elseTemplateRef&&(this._elseViewRef=this._viewContainer.createEmbeddedView(this._elseTemplateRef,this._context)))}static ngTemplateContextGuard(t,r){return!0}static{this.\u0275fac=function(r){return new(r||e)(q(qn),q(Zc))}}static{this.\u0275dir=jt({type:e,selectors:[["","ngIf",""]],inputs:{ngIf:"ngIf",ngIfThen:"ngIfThen",ngIfElse:"ngIfElse"},standalone:!0})}}return e})(),ol=class{constructor(){this.$implicit=null,this.ngIf=null}};function Dp(e,n){if(!!!(!n||n.createEmbeddedView))throw new Error(`${e} must be a TemplateRef, but received '${ve(n)}'.`)}var Xi=(()=>{class e{constructor(t,r,o){this._ngEl=t,this._differs=r,this._renderer=o,this._ngStyle=null,this._differ=null}set ngStyle(t){this._ngStyle=t,!this._differ&&t&&(this._differ=this._differs.find(t).create())}ngDoCheck(){if(this._differ){let t=this._differ.diff(this._ngStyle);t&&this._applyChanges(t)}}_setStyle(t,r){let[o,i]=t.split("."),s=o.indexOf("-")===-1?void 0:at.DashCase;r!=null?this._renderer.setStyle(this._ngEl.nativeElement,o,i?`${r}${i}`:r,s):this._renderer.removeStyle(this._ngEl.nativeElement,o,s)}_applyChanges(t){t.forEachRemovedItem(r=>this._setStyle(r.key,null)),t.forEachAddedItem(r=>this._setStyle(r.key,r.currentValue)),t.forEachChangedItem(r=>this._setStyle(r.key,r.currentValue))}static{this.\u0275fac=function(r){return new(r||e)(q(cn),q(nl),q(Wn))}}static{this.\u0275dir=jt({type:e,selectors:[["","ngStyle",""]],inputs:{ngStyle:"ngStyle"},standalone:!0})}}return e})(),xp=(()=>{class e{constructor(t){this._viewContainerRef=t,this._viewRef=null,this.ngTemplateOutletContext=null,this.ngTemplateOutlet=null,this.ngTemplateOutletInjector=null}ngOnChanges(t){if(this._shouldRecreateView(t)){let r=this._viewContainerRef;if(this._viewRef&&r.remove(r.indexOf(this._viewRef)),!this.ngTemplateOutlet){this._viewRef=null;return}let o=this._createContextForwardProxy();this._viewRef=r.createEmbeddedView(this.ngTemplateOutlet,o,{injector:this.ngTemplateOutletInjector??void 0})}}_shouldRecreateView(t){return!!t.ngTemplateOutlet||!!t.ngTemplateOutletInjector}_createContextForwardProxy(){return new Proxy({},{set:(t,r,o)=>this.ngTemplateOutletContext?Reflect.set(this.ngTemplateOutletContext,r,o):!1,get:(t,r,o)=>{if(this.ngTemplateOutletContext)return Reflect.get(this.ngTemplateOutletContext,r,o)}})}static{this.\u0275fac=function(r){return new(r||e)(q(qn))}}static{this.\u0275dir=jt({type:e,selectors:[["","ngTemplateOutlet",""]],inputs:{ngTemplateOutletContext:"ngTemplateOutletContext",ngTemplateOutlet:"ngTemplateOutlet",ngTemplateOutletInjector:"ngTemplateOutletInjector"},standalone:!0,features:[Hn]})}}return e})();var Et=(()=>{class e{static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275mod=Or({type:e})}static{this.\u0275inj=xr({})}}return e})(),dl="browser",JD="server";function fl(e){return e===dl}function Hr(e){return e===JD}var hl=(()=>{class e{static{this.\u0275prov=I({token:e,providedIn:"root",factory:()=>fl(g(Ne))?new il(g(ye),window):new sl})}}return e})(),il=class{constructor(n,t){this.document=n,this.window=t,this.offset=()=>[0,0]}setOffset(n){Array.isArray(n)?this.offset=()=>n:this.offset=n}getScrollPosition(){return[this.window.scrollX,this.window.scrollY]}scrollToPosition(n){this.window.scrollTo(n[0],n[1])}scrollToAnchor(n){let t=XD(this.document,n);t&&(this.scrollToElement(t),t.focus())}setHistoryScrollRestoration(n){this.window.history.scrollRestoration=n}scrollToElement(n){let t=n.getBoundingClientRect(),r=t.left+this.window.pageXOffset,o=t.top+this.window.pageYOffset,i=this.offset();this.window.scrollTo(r-i[0],o-i[1])}};function XD(e,n){let t=e.getElementById(n)||e.getElementsByName(n)[0];if(t)return t;if(typeof e.createTreeWalker=="function"&&e.body&&typeof e.body.attachShadow=="function"){let r=e.createTreeWalker(e.body,NodeFilter.SHOW_ELEMENT),o=r.currentNode;for(;o;){let i=o.shadowRoot;if(i){let s=i.getElementById(n)||i.querySelector(`[name="${n}"]`);if(s)return s}o=r.nextNode()}}return null}var sl=class{setOffset(n){}getScrollPosition(){return[0,0]}scrollToPosition(n){}scrollToAnchor(n){}setHistoryScrollRestoration(n){}},Ji=class{};var ts=class e{constructor(n){this.normalizedNames=new Map,this.lazyUpdate=null,n?typeof n=="string"?this.lazyInit=()=>{this.headers=new Map,n.split(`
-`).forEach(t=>{let r=t.indexOf(":");if(r>0){let o=t.slice(0,r),i=o.toLowerCase(),s=t.slice(r+1).trim();this.maybeSetNormalizedName(o,i),this.headers.has(i)?this.headers.get(i).push(s):this.headers.set(i,[s])}})}:typeof Headers<"u"&&n instanceof Headers?(this.headers=new Map,n.forEach((t,r)=>{this.setHeaderEntries(r,t)})):this.lazyInit=()=>{this.headers=new Map,Object.entries(n).forEach(([t,r])=>{this.setHeaderEntries(t,r)})}:this.headers=new Map}has(n){return this.init(),this.headers.has(n.toLowerCase())}get(n){this.init();let t=this.headers.get(n.toLowerCase());return t&&t.length>0?t[0]:null}keys(){return this.init(),Array.from(this.normalizedNames.values())}getAll(n){return this.init(),this.headers.get(n.toLowerCase())||null}append(n,t){return this.clone({name:n,value:t,op:"a"})}set(n,t){return this.clone({name:n,value:t,op:"s"})}delete(n,t){return this.clone({name:n,value:t,op:"d"})}maybeSetNormalizedName(n,t){this.normalizedNames.has(t)||this.normalizedNames.set(t,n)}init(){this.lazyInit&&(this.lazyInit instanceof e?this.copyFrom(this.lazyInit):this.lazyInit(),this.lazyInit=null,this.lazyUpdate&&(this.lazyUpdate.forEach(n=>this.applyUpdate(n)),this.lazyUpdate=null))}copyFrom(n){n.init(),Array.from(n.headers.keys()).forEach(t=>{this.headers.set(t,n.headers.get(t)),this.normalizedNames.set(t,n.normalizedNames.get(t))})}clone(n){let t=new e;return t.lazyInit=this.lazyInit&&this.lazyInit instanceof e?this.lazyInit:this,t.lazyUpdate=(this.lazyUpdate||[]).concat([n]),t}applyUpdate(n){let t=n.name.toLowerCase();switch(n.op){case"a":case"s":let r=n.value;if(typeof r=="string"&&(r=[r]),r.length===0)return;this.maybeSetNormalizedName(n.name,t);let o=(n.op==="a"?this.headers.get(t):void 0)||[];o.push(...r),this.headers.set(t,o);break;case"d":let i=n.value;if(!i)this.headers.delete(t),this.normalizedNames.delete(t);else{let s=this.headers.get(t);if(!s)return;s=s.filter(a=>i.indexOf(a)===-1),s.length===0?(this.headers.delete(t),this.normalizedNames.delete(t)):this.headers.set(t,s)}break}}setHeaderEntries(n,t){let r=(Array.isArray(t)?t:[t]).map(i=>i.toString()),o=n.toLowerCase();this.headers.set(o,r),this.maybeSetNormalizedName(n,o)}forEach(n){this.init(),Array.from(this.normalizedNames.keys()).forEach(t=>n(this.normalizedNames.get(t),this.headers.get(t)))}};var Fp=function(e){return e[e.Sent=0]="Sent",e[e.UploadProgress=1]="UploadProgress",e[e.ResponseHeader=2]="ResponseHeader",e[e.DownloadProgress=3]="DownloadProgress",e[e.Response=4]="Response",e[e.User=5]="User",e}(Fp||{}),pl=class{constructor(n,t=200,r="OK"){this.headers=n.headers||new ts,this.status=n.status!==void 0?n.status:t,this.statusText=n.statusText||r,this.url=n.url||null,this.ok=this.status>=200&&this.status<300}};var ns=class e extends pl{constructor(n={}){super(n),this.type=Fp.Response,this.body=n.body!==void 0?n.body:null}clone(n={}){return new e({body:n.body!==void 0?n.body:this.body,headers:n.headers||this.headers,status:n.status!==void 0?n.status:this.status,statusText:n.statusText||this.statusText,url:n.url||this.url||void 0})}};var ew=new b("");var tw=new b(""),Tp="b",Op="h",Np="s",Ap="st",Pp="u",Rp="rt",es=new b(""),nw=["GET","HEAD"];function rw(e,n){let m=g(es),{isCacheActive:t}=m,r=du(m,["isCacheActive"]),{transferCache:o,method:i}=e;if(!t||o===!1||i==="POST"&&!r.includePostRequests&&!o||i!=="POST"&&!nw.includes(i)||!r.includeRequestsWithAuthHeaders&&ow(e)||r.filter?.(e)===!1)return n(e);let s=g(Gn),a=g(tw,{optional:!0}),c=Hr(g(Ne));if(a&&!c)throw new E(2803,!1);let l=c&&a?cw(e.url,a):e.url,u=sw(e,l),d=s.get(u,null),v=r.includeHeaders;if(typeof o=="object"&&o.includeHeaders&&(v=o.includeHeaders),d){let{[Tp]:C,[Rp]:P,[Op]:$,[Np]:z,[Ap]:de,[Pp]:fe}=d,ge=C;switch(P){case"arraybuffer":ge=new TextEncoder().encode(C).buffer;break;case"blob":ge=new Blob([C]);break}let Mt=new ts($);return _(new ns({body:ge,headers:Mt,status:z,statusText:de,url:fe}))}return n(e).pipe(oe(C=>{C instanceof ns&&c&&s.set(u,{[Tp]:C.body,[Op]:iw(C.headers,v),[Np]:C.status,[Ap]:C.statusText,[Pp]:l,[Rp]:e.responseType})}))}function ow(e){return e.headers.has("authorization")||e.headers.has("proxy-authorization")}function iw(e,n){if(!n)return{};let t={};for(let r of n){let o=e.getAll(r);o!==null&&(t[r]=o)}return t}function kp(e){return[...e.keys()].sort().map(n=>`${n}=${e.getAll(n)}`).join("&")}function sw(e,n){let{params:t,method:r,responseType:o}=e,i=kp(t),s=e.serializeBody();s instanceof URLSearchParams?s=kp(s):typeof s!="string"&&(s="");let a=[r,o,n,s,i].join("|"),c=aw(a);return c}function aw(e){let n=0;for(let t of e)n=Math.imul(31,n)+t.charCodeAt(0)<<0;return n+=2147483648,n.toString()}function Lp(e){return[{provide:es,useFactory:()=>(Ut("NgHttpTransferCache"),D({isCacheActive:!0},e))},{provide:ew,useValue:rw,multi:!0,deps:[Gn,es]},{provide:ln,multi:!0,useFactory:()=>{let n=g(ut),t=g(es);return()=>{Qi(n).then(()=>{t.isCacheActive=!1})}}}]}function cw(e,n){let t=new URL(e,"resolve://").origin,r=n[t];return r?e.replace(t,r):e}var vl=class extends Ki{constructor(){super(...arguments),this.supportsDOMEvents=!0}},yl=class e extends vl{static makeCurrent(){Ip(new e)}onAndCancel(n,t,r){return n.addEventListener(t,r),()=>{n.removeEventListener(t,r)}}dispatchEvent(n,t){n.dispatchEvent(t)}remove(n){n.remove()}createElement(n,t){return t=t||this.getDefaultDocument(),t.createElement(n)}createHtmlDocument(){return document.implementation.createHTMLDocument("fakeTitle")}getDefaultDocument(){return document}isElementNode(n){return n.nodeType===Node.ELEMENT_NODE}isShadowRoot(n){return n instanceof DocumentFragment}getGlobalEventTarget(n,t){return t==="window"?window:t==="document"?n:t==="body"?n.body:null}getBaseHref(n){let t=lw();return t==null?null:uw(t)}resetBaseElement(){Gr=null}getUserAgent(){return window.navigator.userAgent}getCookie(n){return ul(document.cookie,n)}},Gr=null;function lw(){return Gr=Gr||document.querySelector("base"),Gr?Gr.getAttribute("href"):null}function uw(e){return new URL(e,document.baseURI).pathname}var dw=(()=>{class e{build(){return new XMLHttpRequest}static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac})}}return e})(),Cl=new b(""),Up=(()=>{class e{constructor(t,r){this._zone=r,this._eventNameToPlugin=new Map,t.forEach(o=>{o.manager=this}),this._plugins=t.slice().reverse()}addEventListener(t,r,o){return this._findPluginFor(r).addEventListener(t,r,o)}getZone(){return this._zone}_findPluginFor(t){let r=this._eventNameToPlugin.get(t);if(r)return r;if(r=this._plugins.find(i=>i.supports(t)),!r)throw new E(5101,!1);return this._eventNameToPlugin.set(t,r),r}static{this.\u0275fac=function(r){return new(r||e)(x(Cl),x(W))}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac})}}return e})(),rs=class{constructor(n){this._doc=n}},gl="ng-app-id",$p=(()=>{class e{constructor(t,r,o,i={}){this.doc=t,this.appId=r,this.nonce=o,this.platformId=i,this.styleRef=new Map,this.hostNodes=new Set,this.styleNodesInDOM=this.collectServerRenderedStyles(),this.platformIsServer=Hr(i),this.resetHostNodes()}addStyles(t){for(let r of t)this.changeUsageCount(r,1)===1&&this.onStyleAdded(r)}removeStyles(t){for(let r of t)this.changeUsageCount(r,-1)<=0&&this.onStyleRemoved(r)}ngOnDestroy(){let t=this.styleNodesInDOM;t&&(t.forEach(r=>r.remove()),t.clear());for(let r of this.getAllStyles())this.onStyleRemoved(r);this.resetHostNodes()}addHost(t){this.hostNodes.add(t);for(let r of this.getAllStyles())this.addStyleToHost(t,r)}removeHost(t){this.hostNodes.delete(t)}getAllStyles(){return this.styleRef.keys()}onStyleAdded(t){for(let r of this.hostNodes)this.addStyleToHost(r,t)}onStyleRemoved(t){let r=this.styleRef;r.get(t)?.elements?.forEach(o=>o.remove()),r.delete(t)}collectServerRenderedStyles(){let t=this.doc.head?.querySelectorAll(`style[${gl}="${this.appId}"]`);if(t?.length){let r=new Map;return t.forEach(o=>{o.textContent!=null&&r.set(o.textContent,o)}),r}return null}changeUsageCount(t,r){let o=this.styleRef;if(o.has(t)){let i=o.get(t);return i.usage+=r,i.usage}return o.set(t,{usage:r,elements:[]}),r}getStyleElement(t,r){let o=this.styleNodesInDOM,i=o?.get(r);if(i?.parentNode===t)return o.delete(r),i.removeAttribute(gl),i;{let s=this.doc.createElement("style");return this.nonce&&s.setAttribute("nonce",this.nonce),s.textContent=r,this.platformIsServer&&s.setAttribute(gl,this.appId),t.appendChild(s),s}}addStyleToHost(t,r){let o=this.getStyleElement(t,r),i=this.styleRef,s=i.get(r)?.elements;s?s.push(o):i.set(r,{elements:[o],usage:1})}resetHostNodes(){let t=this.hostNodes;t.clear(),t.add(this.doc.head)}static{this.\u0275fac=function(r){return new(r||e)(x(ye),x(Ri),x(Tc,8),x(Ne))}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac})}}return e})(),ml={svg:"http://www.w3.org/2000/svg",xhtml:"http://www.w3.org/1999/xhtml",xlink:"http://www.w3.org/1999/xlink",xml:"http://www.w3.org/XML/1998/namespace",xmlns:"http://www.w3.org/2000/xmlns/",math:"http://www.w3.org/1998/Math/MathML"},El=/%COMP%/g,Hp="%COMP%",fw=`_nghost-${Hp}`,hw=`_ngcontent-${Hp}`,pw=!0,gw=new b("",{providedIn:"root",factory:()=>pw});function mw(e){return hw.replace(El,e)}function vw(e){return fw.replace(El,e)}function zp(e,n){return n.map(t=>t.replace(El,e))}var jp=(()=>{class e{constructor(t,r,o,i,s,a,c,l=null){this.eventManager=t,this.sharedStylesHost=r,this.appId=o,this.removeStylesOnCompDestroy=i,this.doc=s,this.platformId=a,this.ngZone=c,this.nonce=l,this.rendererByCompId=new Map,this.platformIsServer=Hr(a),this.defaultRenderer=new Wr(t,s,c,this.platformIsServer)}createRenderer(t,r){if(!t||!r)return this.defaultRenderer;this.platformIsServer&&r.encapsulation===ot.ShadowDom&&(r=K(D({},r),{encapsulation:ot.Emulated}));let o=this.getOrCreateRenderer(t,r);return o instanceof os?o.applyToHost(t):o instanceof qr&&o.applyStyles(),o}getOrCreateRenderer(t,r){let o=this.rendererByCompId,i=o.get(r.id);if(!i){let s=this.doc,a=this.ngZone,c=this.eventManager,l=this.sharedStylesHost,u=this.removeStylesOnCompDestroy,d=this.platformIsServer;switch(r.encapsulation){case ot.Emulated:i=new os(c,l,r,this.appId,u,s,a,d);break;case ot.ShadowDom:return new Dl(c,l,t,r,s,a,this.nonce,d);default:i=new qr(c,l,r,u,s,a,d);break}o.set(r.id,i)}return i}ngOnDestroy(){this.rendererByCompId.clear()}static{this.\u0275fac=function(r){return new(r||e)(x(Up),x($p),x(Ri),x(gw),x(ye),x(Ne),x(W),x(Tc))}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac})}}return e})(),Wr=class{constructor(n,t,r,o){this.eventManager=n,this.doc=t,this.ngZone=r,this.platformIsServer=o,this.data=Object.create(null),this.throwOnSyntheticProps=!0,this.destroyNode=null}destroy(){}createElement(n,t){return t?this.doc.createElementNS(ml[t]||t,n):this.doc.createElement(n)}createComment(n){return this.doc.createComment(n)}createText(n){return this.doc.createTextNode(n)}appendChild(n,t){(Vp(n)?n.content:n).appendChild(t)}insertBefore(n,t,r){n&&(Vp(n)?n.content:n).insertBefore(t,r)}removeChild(n,t){t.remove()}selectRootElement(n,t){let r=typeof n=="string"?this.doc.querySelector(n):n;if(!r)throw new E(-5104,!1);return t||(r.textContent=""),r}parentNode(n){return n.parentNode}nextSibling(n){return n.nextSibling}setAttribute(n,t,r,o){if(o){t=o+":"+t;let i=ml[o];i?n.setAttributeNS(i,t,r):n.setAttribute(t,r)}else n.setAttribute(t,r)}removeAttribute(n,t,r){if(r){let o=ml[r];o?n.removeAttributeNS(o,t):n.removeAttribute(`${r}:${t}`)}else n.removeAttribute(t)}addClass(n,t){n.classList.add(t)}removeClass(n,t){n.classList.remove(t)}setStyle(n,t,r,o){o&(at.DashCase|at.Important)?n.style.setProperty(t,r,o&at.Important?"important":""):n.style[t]=r}removeStyle(n,t,r){r&at.DashCase?n.style.removeProperty(t):n.style[t]=""}setProperty(n,t,r){n!=null&&(n[t]=r)}setValue(n,t){n.nodeValue=t}listen(n,t,r){if(typeof n=="string"&&(n=Zn().getGlobalEventTarget(this.doc,n),!n))throw new Error(`Unsupported event target ${n} for event ${t}`);return this.eventManager.addEventListener(n,t,this.decoratePreventDefault(r))}decoratePreventDefault(n){return t=>{if(t==="__ngUnwrap__")return n;(this.platformIsServer?this.ngZone.runGuarded(()=>n(t)):n(t))===!1&&t.preventDefault()}}};function Vp(e){return e.tagName==="TEMPLATE"&&e.content!==void 0}var Dl=class extends Wr{constructor(n,t,r,o,i,s,a,c){super(n,i,s,c),this.sharedStylesHost=t,this.hostEl=r,this.shadowRoot=r.attachShadow({mode:"open"}),this.sharedStylesHost.addHost(this.shadowRoot);let l=zp(o.id,o.styles);for(let u of l){let d=document.createElement("style");a&&d.setAttribute("nonce",a),d.textContent=u,this.shadowRoot.appendChild(d)}}nodeOrShadowRoot(n){return n===this.hostEl?this.shadowRoot:n}appendChild(n,t){return super.appendChild(this.nodeOrShadowRoot(n),t)}insertBefore(n,t,r){return super.insertBefore(this.nodeOrShadowRoot(n),t,r)}removeChild(n,t){return super.removeChild(null,t)}parentNode(n){return this.nodeOrShadowRoot(super.parentNode(this.nodeOrShadowRoot(n)))}destroy(){this.sharedStylesHost.removeHost(this.shadowRoot)}},qr=class extends Wr{constructor(n,t,r,o,i,s,a,c){super(n,i,s,a),this.sharedStylesHost=t,this.removeStylesOnCompDestroy=o,this.styles=c?zp(c,r.styles):r.styles}applyStyles(){this.sharedStylesHost.addStyles(this.styles)}destroy(){this.removeStylesOnCompDestroy&&this.sharedStylesHost.removeStyles(this.styles)}},os=class extends qr{constructor(n,t,r,o,i,s,a,c){let l=o+"-"+r.id;super(n,t,r,i,s,a,c,l),this.contentAttr=mw(l),this.hostAttr=vw(l)}applyToHost(n){this.applyStyles(),this.setAttribute(n,this.hostAttr,"")}createElement(n,t){let r=super.createElement(n,t);return super.setAttribute(r,this.contentAttr,""),r}},yw=(()=>{class e extends rs{constructor(t){super(t)}supports(t){return!0}addEventListener(t,r,o){return t.addEventListener(r,o,!1),()=>this.removeEventListener(t,r,o)}removeEventListener(t,r,o){return t.removeEventListener(r,o)}static{this.\u0275fac=function(r){return new(r||e)(x(ye))}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac})}}return e})(),Bp=["alt","control","meta","shift"],Cw={"\b":"Backspace","	":"Tab","\x7F":"Delete","\x1B":"Escape",Del:"Delete",Esc:"Escape",Left:"ArrowLeft",Right:"ArrowRight",Up:"ArrowUp",Down:"ArrowDown",Menu:"ContextMenu",Scroll:"ScrollLock",Win:"OS"},Dw={alt:e=>e.altKey,control:e=>e.ctrlKey,meta:e=>e.metaKey,shift:e=>e.shiftKey},ww=(()=>{class e extends rs{constructor(t){super(t)}supports(t){return e.parseEventName(t)!=null}addEventListener(t,r,o){let i=e.parseEventName(r),s=e.eventCallback(i.fullKey,o,this.manager.getZone());return this.manager.getZone().runOutsideAngular(()=>Zn().onAndCancel(t,i.domEventName,s))}static parseEventName(t){let r=t.toLowerCase().split("."),o=r.shift();if(r.length===0||!(o==="keydown"||o==="keyup"))return null;let i=e._normalizeKey(r.pop()),s="",a=r.indexOf("code");if(a>-1&&(r.splice(a,1),s="code."),Bp.forEach(l=>{let u=r.indexOf(l);u>-1&&(r.splice(u,1),s+=l+".")}),s+=i,r.length!=0||i.length===0)return null;let c={};return c.domEventName=o,c.fullKey=s,c}static matchEventFullKeyCode(t,r){let o=Cw[t.key]||t.key,i="";return r.indexOf("code.")>-1&&(o=t.code,i="code."),o==null||!o?!1:(o=o.toLowerCase(),o===" "?o="space":o==="."&&(o="dot"),Bp.forEach(s=>{if(s!==o){let a=Dw[s];a(t)&&(i+=s+".")}}),i+=o,i===r)}static eventCallback(t,r,o){return i=>{e.matchEventFullKeyCode(i,t)&&o.runGuarded(()=>r(i))}}static _normalizeKey(t){return t==="esc"?"escape":t}static{this.\u0275fac=function(r){return new(r||e)(x(ye))}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac})}}return e})();function Gp(e,n){return pp(D({rootComponent:e},Ew(n)))}function Ew(e){return{appProviders:[...Sw,...e?.providers??[]],platformProviders:Mw}}function Iw(){yl.makeCurrent()}function bw(){return new vt}function _w(){return qf(document),document}var Mw=[{provide:Ne,useValue:dl},{provide:xc,useValue:Iw,multi:!0},{provide:ye,useFactory:_w,deps:[]}];var Sw=[{provide:Ii,useValue:"root"},{provide:vt,useFactory:bw,deps:[]},{provide:Cl,useClass:yw,multi:!0,deps:[ye,W,Ne]},{provide:Cl,useClass:ww,multi:!0,deps:[ye]},jp,$p,Up,{provide:Vn,useExisting:jp},{provide:Ji,useClass:dw,deps:[]},[]];var $t=(()=>{class e{constructor(t){this._doc=t}getTitle(){return this._doc.title}setTitle(t){this._doc.title=t||""}static{this.\u0275fac=function(r){return new(r||e)(x(ye))}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac,providedIn:"root"})}}return e})();var wl=function(e){return e[e.NoHttpTransferCache=0]="NoHttpTransferCache",e[e.HttpTransferCacheOptions=1]="HttpTransferCacheOptions",e[e.I18nSupport=2]="I18nSupport",e[e.EventReplay=3]="EventReplay",e}(wl||{});function Wp(...e){let n=[],t=new Set,r=t.has(wl.HttpTransferCacheOptions);for(let{\u0275providers:o,\u0275kind:i}of e)t.add(i),o.length&&n.push(o);return on([[],gp(),t.has(wl.NoHttpTransferCache)||r?[]:Lp({}),n])}var O="primary",co=Symbol("RouteTitle"),Sl=class{constructor(n){this.params=n||{}}has(n){return Object.prototype.hasOwnProperty.call(this.params,n)}get(n){if(this.has(n)){let t=this.params[n];return Array.isArray(t)?t[0]:t}return null}getAll(n){if(this.has(n)){let t=this.params[n];return Array.isArray(t)?t:[t]}return[]}get keys(){return Object.keys(this.params)}};function nr(e){return new Sl(e)}function xw(e,n,t){let r=t.path.split("/");if(r.length>e.length||t.pathMatch==="full"&&(n.hasChildren()||r.length<e.length))return null;let o={};for(let i=0;i<r.length;i++){let s=r[i],a=e[i];if(s[0]===":")o[s.substring(1)]=a;else if(s!==a.path)return null}return{consumed:e.slice(0,r.length),posParams:o}}function Tw(e,n){if(e.length!==n.length)return!1;for(let t=0;t<e.length;++t)if(!dt(e[t],n[t]))return!1;return!0}function dt(e,n){let t=e?xl(e):void 0,r=n?xl(n):void 0;if(!t||!r||t.length!=r.length)return!1;let o;for(let i=0;i<t.length;i++)if(o=t[i],!rg(e[o],n[o]))return!1;return!0}function xl(e){return[...Object.keys(e),...Object.getOwnPropertySymbols(e)]}function rg(e,n){if(Array.isArray(e)&&Array.isArray(n)){if(e.length!==n.length)return!1;let t=[...e].sort(),r=[...n].sort();return t.every((o,i)=>r[i]===o)}else return e===n}function og(e){return e.length>0?e[e.length-1]:null}function Gt(e){return Xs(e)?e:Br(e)?J(Promise.resolve(e)):_(e)}var Ow={exact:sg,subset:ag},ig={exact:Nw,subset:Aw,ignored:()=>!0};function qp(e,n,t){return Ow[t.paths](e.root,n.root,t.matrixParams)&&ig[t.queryParams](e.queryParams,n.queryParams)&&!(t.fragment==="exact"&&e.fragment!==n.fragment)}function Nw(e,n){return dt(e,n)}function sg(e,n,t){if(!dn(e.segments,n.segments)||!cs(e.segments,n.segments,t)||e.numberOfChildren!==n.numberOfChildren)return!1;for(let r in n.children)if(!e.children[r]||!sg(e.children[r],n.children[r],t))return!1;return!0}function Aw(e,n){return Object.keys(n).length<=Object.keys(e).length&&Object.keys(n).every(t=>rg(e[t],n[t]))}function ag(e,n,t){return cg(e,n,n.segments,t)}function cg(e,n,t,r){if(e.segments.length>t.length){let o=e.segments.slice(0,t.length);return!(!dn(o,t)||n.hasChildren()||!cs(o,t,r))}else if(e.segments.length===t.length){if(!dn(e.segments,t)||!cs(e.segments,t,r))return!1;for(let o in n.children)if(!e.children[o]||!ag(e.children[o],n.children[o],r))return!1;return!0}else{let o=t.slice(0,e.segments.length),i=t.slice(e.segments.length);return!dn(e.segments,o)||!cs(e.segments,o,r)||!e.children[O]?!1:cg(e.children[O],n,i,r)}}function cs(e,n,t){return n.every((r,o)=>ig[t](e[o].parameters,r.parameters))}var bt=class{constructor(n=new B([],{}),t={},r=null){this.root=n,this.queryParams=t,this.fragment=r}get queryParamMap(){return this._queryParamMap??=nr(this.queryParams),this._queryParamMap}toString(){return kw.serialize(this)}},B=class{constructor(n,t){this.segments=n,this.children=t,this.parent=null,Object.values(t).forEach(r=>r.parent=this)}hasChildren(){return this.numberOfChildren>0}get numberOfChildren(){return Object.keys(this.children).length}toString(){return ls(this)}},un=class{constructor(n,t){this.path=n,this.parameters=t}get parameterMap(){return this._parameterMap??=nr(this.parameters),this._parameterMap}toString(){return ug(this)}};function Pw(e,n){return dn(e,n)&&e.every((t,r)=>dt(t.parameters,n[r].parameters))}function dn(e,n){return e.length!==n.length?!1:e.every((t,r)=>t.path===n[r].path)}function Rw(e,n){let t=[];return Object.entries(e.children).forEach(([r,o])=>{r===O&&(t=t.concat(n(o,r)))}),Object.entries(e.children).forEach(([r,o])=>{r!==O&&(t=t.concat(n(o,r)))}),t}var ar=(()=>{class e{static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275prov=I({token:e,factory:()=>new rr,providedIn:"root"})}}return e})(),rr=class{parse(n){let t=new Ol(n);return new bt(t.parseRootSegment(),t.parseQueryParams(),t.parseFragment())}serialize(n){let t=`/${Zr(n.root,!0)}`,r=jw(n.queryParams),o=typeof n.fragment=="string"?`#${Fw(n.fragment)}`:"";return`${t}${r}${o}`}},kw=new rr;function ls(e){return e.segments.map(n=>ug(n)).join("/")}function Zr(e,n){if(!e.hasChildren())return ls(e);if(n){let t=e.children[O]?Zr(e.children[O],!1):"",r=[];return Object.entries(e.children).forEach(([o,i])=>{o!==O&&r.push(`${o}:${Zr(i,!1)}`)}),r.length>0?`${t}(${r.join("//")})`:t}else{let t=Rw(e,(r,o)=>o===O?[Zr(e.children[O],!1)]:[`${o}:${Zr(r,!1)}`]);return Object.keys(e.children).length===1&&e.children[O]!=null?`${ls(e)}/${t[0]}`:`${ls(e)}/(${t.join("//")})`}}function lg(e){return encodeURIComponent(e).replace(/%40/g,"@").replace(/%3A/gi,":").replace(/%24/g,"$").replace(/%2C/gi,",")}function ss(e){return lg(e).replace(/%3B/gi,";")}function Fw(e){return encodeURI(e)}function Tl(e){return lg(e).replace(/\(/g,"%28").replace(/\)/g,"%29").replace(/%26/gi,"&")}function us(e){return decodeURIComponent(e)}function Zp(e){return us(e.replace(/\+/g,"%20"))}function ug(e){return`${Tl(e.path)}${Lw(e.parameters)}`}function Lw(e){return Object.entries(e).map(([n,t])=>`;${Tl(n)}=${Tl(t)}`).join("")}function jw(e){let n=Object.entries(e).map(([t,r])=>Array.isArray(r)?r.map(o=>`${ss(t)}=${ss(o)}`).join("&"):`${ss(t)}=${ss(r)}`).filter(t=>t);return n.length?`?${n.join("&")}`:""}var Vw=/^[^\/()?;#]+/;function Il(e){let n=e.match(Vw);return n?n[0]:""}var Bw=/^[^\/()?;=#]+/;function Uw(e){let n=e.match(Bw);return n?n[0]:""}var $w=/^[^=?&#]+/;function Hw(e){let n=e.match($w);return n?n[0]:""}var zw=/^[^&#]+/;function Gw(e){let n=e.match(zw);return n?n[0]:""}var Ol=class{constructor(n){this.url=n,this.remaining=n}parseRootSegment(){return this.consumeOptional("/"),this.remaining===""||this.peekStartsWith("?")||this.peekStartsWith("#")?new B([],{}):new B([],this.parseChildren())}parseQueryParams(){let n={};if(this.consumeOptional("?"))do this.parseQueryParam(n);while(this.consumeOptional("&"));return n}parseFragment(){return this.consumeOptional("#")?decodeURIComponent(this.remaining):null}parseChildren(){if(this.remaining==="")return{};this.consumeOptional("/");let n=[];for(this.peekStartsWith("(")||n.push(this.parseSegment());this.peekStartsWith("/")&&!this.peekStartsWith("//")&&!this.peekStartsWith("/(");)this.capture("/"),n.push(this.parseSegment());let t={};this.peekStartsWith("/(")&&(this.capture("/"),t=this.parseParens(!0));let r={};return this.peekStartsWith("(")&&(r=this.parseParens(!1)),(n.length>0||Object.keys(t).length>0)&&(r[O]=new B(n,t)),r}parseSegment(){let n=Il(this.remaining);if(n===""&&this.peekStartsWith(";"))throw new E(4009,!1);return this.capture(n),new un(us(n),this.parseMatrixParams())}parseMatrixParams(){let n={};for(;this.consumeOptional(";");)this.parseParam(n);return n}parseParam(n){let t=Uw(this.remaining);if(!t)return;this.capture(t);let r="";if(this.consumeOptional("=")){let o=Il(this.remaining);o&&(r=o,this.capture(r))}n[us(t)]=us(r)}parseQueryParam(n){let t=Hw(this.remaining);if(!t)return;this.capture(t);let r="";if(this.consumeOptional("=")){let s=Gw(this.remaining);s&&(r=s,this.capture(r))}let o=Zp(t),i=Zp(r);if(n.hasOwnProperty(o)){let s=n[o];Array.isArray(s)||(s=[s],n[o]=s),s.push(i)}else n[o]=i}parseParens(n){let t={};for(this.capture("(");!this.consumeOptional(")")&&this.remaining.length>0;){let r=Il(this.remaining),o=this.remaining[r.length];if(o!=="/"&&o!==")"&&o!==";")throw new E(4010,!1);let i;r.indexOf(":")>-1?(i=r.slice(0,r.indexOf(":")),this.capture(i),this.capture(":")):n&&(i=O);let s=this.parseChildren();t[i]=Object.keys(s).length===1?s[O]:new B([],s),this.consumeOptional("//")}return t}peekStartsWith(n){return this.remaining.startsWith(n)}consumeOptional(n){return this.peekStartsWith(n)?(this.remaining=this.remaining.substring(n.length),!0):!1}capture(n){if(!this.consumeOptional(n))throw new E(4011,!1)}};function dg(e){return e.segments.length>0?new B([],{[O]:e}):e}function fg(e){let n={};for(let[r,o]of Object.entries(e.children)){let i=fg(o);if(r===O&&i.segments.length===0&&i.hasChildren())for(let[s,a]of Object.entries(i.children))n[s]=a;else(i.segments.length>0||i.hasChildren())&&(n[r]=i)}let t=new B(e.segments,n);return Ww(t)}function Ww(e){if(e.numberOfChildren===1&&e.children[O]){let n=e.children[O];return new B(e.segments.concat(n.segments),n.children)}return e}function fn(e){return e instanceof bt}function qw(e,n,t=null,r=null){let o=hg(e);return pg(o,n,t,r)}function hg(e){let n;function t(i){let s={};for(let c of i.children){let l=t(c);s[c.outlet]=l}let a=new B(i.url,s);return i===e&&(n=a),a}let r=t(e.root),o=dg(r);return n??o}function pg(e,n,t,r){let o=e;for(;o.parent;)o=o.parent;if(n.length===0)return bl(o,o,o,t,r);let i=Zw(n);if(i.toRoot())return bl(o,o,new B([],{}),t,r);let s=Qw(i,o,e),a=s.processChildren?Kr(s.segmentGroup,s.index,i.commands):mg(s.segmentGroup,s.index,i.commands);return bl(o,s.segmentGroup,a,t,r)}function ds(e){return typeof e=="object"&&e!=null&&!e.outlets&&!e.segmentPath}function eo(e){return typeof e=="object"&&e!=null&&e.outlets}function bl(e,n,t,r,o){let i={};r&&Object.entries(r).forEach(([c,l])=>{i[c]=Array.isArray(l)?l.map(u=>`${u}`):`${l}`});let s;e===n?s=t:s=gg(e,n,t);let a=dg(fg(s));return new bt(a,i,o)}function gg(e,n,t){let r={};return Object.entries(e.children).forEach(([o,i])=>{i===n?r[o]=t:r[o]=gg(i,n,t)}),new B(e.segments,r)}var fs=class{constructor(n,t,r){if(this.isAbsolute=n,this.numberOfDoubleDots=t,this.commands=r,n&&r.length>0&&ds(r[0]))throw new E(4003,!1);let o=r.find(eo);if(o&&o!==og(r))throw new E(4004,!1)}toRoot(){return this.isAbsolute&&this.commands.length===1&&this.commands[0]=="/"}};function Zw(e){if(typeof e[0]=="string"&&e.length===1&&e[0]==="/")return new fs(!0,0,e);let n=0,t=!1,r=e.reduce((o,i,s)=>{if(typeof i=="object"&&i!=null){if(i.outlets){let a={};return Object.entries(i.outlets).forEach(([c,l])=>{a[c]=typeof l=="string"?l.split("/"):l}),[...o,{outlets:a}]}if(i.segmentPath)return[...o,i.segmentPath]}return typeof i!="string"?[...o,i]:s===0?(i.split("/").forEach((a,c)=>{c==0&&a==="."||(c==0&&a===""?t=!0:a===".."?n++:a!=""&&o.push(a))}),o):[...o,i]},[]);return new fs(t,n,r)}var Xn=class{constructor(n,t,r){this.segmentGroup=n,this.processChildren=t,this.index=r}};function Qw(e,n,t){if(e.isAbsolute)return new Xn(n,!0,0);if(!t)return new Xn(n,!1,NaN);if(t.parent===null)return new Xn(t,!0,0);let r=ds(e.commands[0])?0:1,o=t.segments.length-1+r;return Yw(t,o,e.numberOfDoubleDots)}function Yw(e,n,t){let r=e,o=n,i=t;for(;i>o;){if(i-=o,r=r.parent,!r)throw new E(4005,!1);o=r.segments.length}return new Xn(r,!1,o-i)}function Kw(e){return eo(e[0])?e[0].outlets:{[O]:e}}function mg(e,n,t){if(e??=new B([],{}),e.segments.length===0&&e.hasChildren())return Kr(e,n,t);let r=Jw(e,n,t),o=t.slice(r.commandIndex);if(r.match&&r.pathIndex<e.segments.length){let i=new B(e.segments.slice(0,r.pathIndex),{});return i.children[O]=new B(e.segments.slice(r.pathIndex),e.children),Kr(i,0,o)}else return r.match&&o.length===0?new B(e.segments,{}):r.match&&!e.hasChildren()?Nl(e,n,t):r.match?Kr(e,0,o):Nl(e,n,t)}function Kr(e,n,t){if(t.length===0)return new B(e.segments,{});{let r=Kw(t),o={};if(Object.keys(r).some(i=>i!==O)&&e.children[O]&&e.numberOfChildren===1&&e.children[O].segments.length===0){let i=Kr(e.children[O],n,t);return new B(e.segments,i.children)}return Object.entries(r).forEach(([i,s])=>{typeof s=="string"&&(s=[s]),s!==null&&(o[i]=mg(e.children[i],n,s))}),Object.entries(e.children).forEach(([i,s])=>{r[i]===void 0&&(o[i]=s)}),new B(e.segments,o)}}function Jw(e,n,t){let r=0,o=n,i={match:!1,pathIndex:0,commandIndex:0};for(;o<e.segments.length;){if(r>=t.length)return i;let s=e.segments[o],a=t[r];if(eo(a))break;let c=`${a}`,l=r<t.length-1?t[r+1]:null;if(o>0&&c===void 0)break;if(c&&l&&typeof l=="object"&&l.outlets===void 0){if(!Yp(c,l,s))return i;r+=2}else{if(!Yp(c,{},s))return i;r++}o++}return{match:!0,pathIndex:o,commandIndex:r}}function Nl(e,n,t){let r=e.segments.slice(0,n),o=0;for(;o<t.length;){let i=t[o];if(eo(i)){let c=Xw(i.outlets);return new B(r,c)}if(o===0&&ds(t[0])){let c=e.segments[n];r.push(new un(c.path,Qp(t[0]))),o++;continue}let s=eo(i)?i.outlets[O]:`${i}`,a=o<t.length-1?t[o+1]:null;s&&a&&ds(a)?(r.push(new un(s,Qp(a))),o+=2):(r.push(new un(s,{})),o++)}return new B(r,{})}function Xw(e){let n={};return Object.entries(e).forEach(([t,r])=>{typeof r=="string"&&(r=[r]),r!==null&&(n[t]=Nl(new B([],{}),0,r))}),n}function Qp(e){let n={};return Object.entries(e).forEach(([t,r])=>n[t]=`${r}`),n}function Yp(e,n,t){return e==t.path&&dt(n,t.parameters)}var Jr="imperative",ae=function(e){return e[e.NavigationStart=0]="NavigationStart",e[e.NavigationEnd=1]="NavigationEnd",e[e.NavigationCancel=2]="NavigationCancel",e[e.NavigationError=3]="NavigationError",e[e.RoutesRecognized=4]="RoutesRecognized",e[e.ResolveStart=5]="ResolveStart",e[e.ResolveEnd=6]="ResolveEnd",e[e.GuardsCheckStart=7]="GuardsCheckStart",e[e.GuardsCheckEnd=8]="GuardsCheckEnd",e[e.RouteConfigLoadStart=9]="RouteConfigLoadStart",e[e.RouteConfigLoadEnd=10]="RouteConfigLoadEnd",e[e.ChildActivationStart=11]="ChildActivationStart",e[e.ChildActivationEnd=12]="ChildActivationEnd",e[e.ActivationStart=13]="ActivationStart",e[e.ActivationEnd=14]="ActivationEnd",e[e.Scroll=15]="Scroll",e[e.NavigationSkipped=16]="NavigationSkipped",e}(ae||{}),ze=class{constructor(n,t){this.id=n,this.url=t}},or=class extends ze{constructor(n,t,r="imperative",o=null){super(n,t),this.type=ae.NavigationStart,this.navigationTrigger=r,this.restoredState=o}toString(){return`NavigationStart(id: ${this.id}, url: '${this.url}')`}},ft=class extends ze{constructor(n,t,r){super(n,t),this.urlAfterRedirects=r,this.type=ae.NavigationEnd}toString(){return`NavigationEnd(id: ${this.id}, url: '${this.url}', urlAfterRedirects: '${this.urlAfterRedirects}')`}},Re=function(e){return e[e.Redirect=0]="Redirect",e[e.SupersededByNewNavigation=1]="SupersededByNewNavigation",e[e.NoDataFromResolver=2]="NoDataFromResolver",e[e.GuardRejected=3]="GuardRejected",e}(Re||{}),hs=function(e){return e[e.IgnoredSameUrlNavigation=0]="IgnoredSameUrlNavigation",e[e.IgnoredByUrlHandlingStrategy=1]="IgnoredByUrlHandlingStrategy",e}(hs||{}),It=class extends ze{constructor(n,t,r,o){super(n,t),this.reason=r,this.code=o,this.type=ae.NavigationCancel}toString(){return`NavigationCancel(id: ${this.id}, url: '${this.url}')`}},Ht=class extends ze{constructor(n,t,r,o){super(n,t),this.reason=r,this.code=o,this.type=ae.NavigationSkipped}},to=class extends ze{constructor(n,t,r,o){super(n,t),this.error=r,this.target=o,this.type=ae.NavigationError}toString(){return`NavigationError(id: ${this.id}, url: '${this.url}', error: ${this.error})`}},ps=class extends ze{constructor(n,t,r,o){super(n,t),this.urlAfterRedirects=r,this.state=o,this.type=ae.RoutesRecognized}toString(){return`RoutesRecognized(id: ${this.id}, url: '${this.url}', urlAfterRedirects: '${this.urlAfterRedirects}', state: ${this.state})`}},Al=class extends ze{constructor(n,t,r,o){super(n,t),this.urlAfterRedirects=r,this.state=o,this.type=ae.GuardsCheckStart}toString(){return`GuardsCheckStart(id: ${this.id}, url: '${this.url}', urlAfterRedirects: '${this.urlAfterRedirects}', state: ${this.state})`}},Pl=class extends ze{constructor(n,t,r,o,i){super(n,t),this.urlAfterRedirects=r,this.state=o,this.shouldActivate=i,this.type=ae.GuardsCheckEnd}toString(){return`GuardsCheckEnd(id: ${this.id}, url: '${this.url}', urlAfterRedirects: '${this.urlAfterRedirects}', state: ${this.state}, shouldActivate: ${this.shouldActivate})`}},Rl=class extends ze{constructor(n,t,r,o){super(n,t),this.urlAfterRedirects=r,this.state=o,this.type=ae.ResolveStart}toString(){return`ResolveStart(id: ${this.id}, url: '${this.url}', urlAfterRedirects: '${this.urlAfterRedirects}', state: ${this.state})`}},kl=class extends ze{constructor(n,t,r,o){super(n,t),this.urlAfterRedirects=r,this.state=o,this.type=ae.ResolveEnd}toString(){return`ResolveEnd(id: ${this.id}, url: '${this.url}', urlAfterRedirects: '${this.urlAfterRedirects}', state: ${this.state})`}},Fl=class{constructor(n){this.route=n,this.type=ae.RouteConfigLoadStart}toString(){return`RouteConfigLoadStart(path: ${this.route.path})`}},Ll=class{constructor(n){this.route=n,this.type=ae.RouteConfigLoadEnd}toString(){return`RouteConfigLoadEnd(path: ${this.route.path})`}},jl=class{constructor(n){this.snapshot=n,this.type=ae.ChildActivationStart}toString(){return`ChildActivationStart(path: '${this.snapshot.routeConfig&&this.snapshot.routeConfig.path||""}')`}},Vl=class{constructor(n){this.snapshot=n,this.type=ae.ChildActivationEnd}toString(){return`ChildActivationEnd(path: '${this.snapshot.routeConfig&&this.snapshot.routeConfig.path||""}')`}},Bl=class{constructor(n){this.snapshot=n,this.type=ae.ActivationStart}toString(){return`ActivationStart(path: '${this.snapshot.routeConfig&&this.snapshot.routeConfig.path||""}')`}},Ul=class{constructor(n){this.snapshot=n,this.type=ae.ActivationEnd}toString(){return`ActivationEnd(path: '${this.snapshot.routeConfig&&this.snapshot.routeConfig.path||""}')`}},gs=class{constructor(n,t,r){this.routerEvent=n,this.position=t,this.anchor=r,this.type=ae.Scroll}toString(){let n=this.position?`${this.position[0]}, ${this.position[1]}`:null;return`Scroll(anchor: '${this.anchor}', position: '${n}')`}},no=class{},ir=class{constructor(n,t){this.url=n,this.navigationBehaviorOptions=t}};function eE(e,n){return e.providers&&!e._injector&&(e._injector=Gi(e.providers,n,`Route: ${e.path}`)),e._injector??n}function tt(e){return e.outlet||O}function tE(e,n){let t=e.filter(r=>tt(r)===n);return t.push(...e.filter(r=>tt(r)!==n)),t}function lo(e){if(!e)return null;if(e.routeConfig?._injector)return e.routeConfig._injector;for(let n=e.parent;n;n=n.parent){let t=n.routeConfig;if(t?._loadedInjector)return t._loadedInjector;if(t?._injector)return t._injector}return null}var $l=class{get injector(){return lo(this.route?.snapshot)??this.rootInjector}set injector(n){}constructor(n){this.rootInjector=n,this.outlet=null,this.route=null,this.children=new uo(this.rootInjector),this.attachRef=null}},uo=(()=>{class e{constructor(t){this.rootInjector=t,this.contexts=new Map}onChildOutletCreated(t,r){let o=this.getOrCreateContext(t);o.outlet=r,this.contexts.set(t,o)}onChildOutletDestroyed(t){let r=this.getContext(t);r&&(r.outlet=null,r.attachRef=null)}onOutletDeactivated(){let t=this.contexts;return this.contexts=new Map,t}onOutletReAttached(t){this.contexts=t}getOrCreateContext(t){let r=this.getContext(t);return r||(r=new $l(this.rootInjector),this.contexts.set(t,r)),r}getContext(t){return this.contexts.get(t)||null}static{this.\u0275fac=function(r){return new(r||e)(x(xe))}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac,providedIn:"root"})}}return e})(),ms=class{constructor(n){this._root=n}get root(){return this._root.value}parent(n){let t=this.pathFromRoot(n);return t.length>1?t[t.length-2]:null}children(n){let t=Hl(n,this._root);return t?t.children.map(r=>r.value):[]}firstChild(n){let t=Hl(n,this._root);return t&&t.children.length>0?t.children[0].value:null}siblings(n){let t=zl(n,this._root);return t.length<2?[]:t[t.length-2].children.map(o=>o.value).filter(o=>o!==n)}pathFromRoot(n){return zl(n,this._root).map(t=>t.value)}};function Hl(e,n){if(e===n.value)return n;for(let t of n.children){let r=Hl(e,t);if(r)return r}return null}function zl(e,n){if(e===n.value)return[n];for(let t of n.children){let r=zl(e,t);if(r.length)return r.unshift(n),r}return[]}var Pe=class{constructor(n,t){this.value=n,this.children=t}toString(){return`TreeNode(${this.value})`}};function Jn(e){let n={};return e&&e.children.forEach(t=>n[t.value.outlet]=t),n}var vs=class extends ms{constructor(n,t){super(n),this.snapshot=t,Xl(this,n)}toString(){return this.snapshot.toString()}};function vg(e){let n=nE(e),t=new ce([new un("",{})]),r=new ce({}),o=new ce({}),i=new ce({}),s=new ce(""),a=new zt(t,r,i,s,o,O,e,n.root);return a.snapshot=n.root,new vs(new Pe(a,[]),n)}function nE(e){let n={},t={},r={},o="",i=new er([],n,r,o,t,O,e,null,{});return new Cs("",new Pe(i,[]))}var zt=class{constructor(n,t,r,o,i,s,a,c){this.urlSubject=n,this.paramsSubject=t,this.queryParamsSubject=r,this.fragmentSubject=o,this.dataSubject=i,this.outlet=s,this.component=a,this._futureSnapshot=c,this.title=this.dataSubject?.pipe(k(l=>l[co]))??_(void 0),this.url=n,this.params=t,this.queryParams=r,this.fragment=o,this.data=i}get routeConfig(){return this._futureSnapshot.routeConfig}get root(){return this._routerState.root}get parent(){return this._routerState.parent(this)}get firstChild(){return this._routerState.firstChild(this)}get children(){return this._routerState.children(this)}get pathFromRoot(){return this._routerState.pathFromRoot(this)}get paramMap(){return this._paramMap??=this.params.pipe(k(n=>nr(n))),this._paramMap}get queryParamMap(){return this._queryParamMap??=this.queryParams.pipe(k(n=>nr(n))),this._queryParamMap}toString(){return this.snapshot?this.snapshot.toString():`Future(${this._futureSnapshot})`}};function ys(e,n,t="emptyOnly"){let r,{routeConfig:o}=e;return n!==null&&(t==="always"||o?.path===""||!n.component&&!n.routeConfig?.loadComponent)?r={params:D(D({},n.params),e.params),data:D(D({},n.data),e.data),resolve:D(D(D(D({},e.data),n.data),o?.data),e._resolvedData)}:r={params:D({},e.params),data:D({},e.data),resolve:D(D({},e.data),e._resolvedData??{})},o&&Cg(o)&&(r.resolve[co]=o.title),r}var er=class{get title(){return this.data?.[co]}constructor(n,t,r,o,i,s,a,c,l){this.url=n,this.params=t,this.queryParams=r,this.fragment=o,this.data=i,this.outlet=s,this.component=a,this.routeConfig=c,this._resolve=l}get root(){return this._routerState.root}get parent(){return this._routerState.parent(this)}get firstChild(){return this._routerState.firstChild(this)}get children(){return this._routerState.children(this)}get pathFromRoot(){return this._routerState.pathFromRoot(this)}get paramMap(){return this._paramMap??=nr(this.params),this._paramMap}get queryParamMap(){return this._queryParamMap??=nr(this.queryParams),this._queryParamMap}toString(){let n=this.url.map(r=>r.toString()).join("/"),t=this.routeConfig?this.routeConfig.path:"";return`Route(url:'${n}', path:'${t}')`}},Cs=class extends ms{constructor(n,t){super(t),this.url=n,Xl(this,t)}toString(){return yg(this._root)}};function Xl(e,n){n.value._routerState=e,n.children.forEach(t=>Xl(e,t))}function yg(e){let n=e.children.length>0?` { ${e.children.map(yg).join(", ")} } `:"";return`${e.value}${n}`}function _l(e){if(e.snapshot){let n=e.snapshot,t=e._futureSnapshot;e.snapshot=t,dt(n.queryParams,t.queryParams)||e.queryParamsSubject.next(t.queryParams),n.fragment!==t.fragment&&e.fragmentSubject.next(t.fragment),dt(n.params,t.params)||e.paramsSubject.next(t.params),Tw(n.url,t.url)||e.urlSubject.next(t.url),dt(n.data,t.data)||e.dataSubject.next(t.data)}else e.snapshot=e._futureSnapshot,e.dataSubject.next(e._futureSnapshot.data)}function Gl(e,n){let t=dt(e.params,n.params)&&Pw(e.url,n.url),r=!e.parent!=!n.parent;return t&&!r&&(!e.parent||Gl(e.parent,n.parent))}function Cg(e){return typeof e.title=="string"||e.title===null}var eu=(()=>{class e{constructor(){this.activated=null,this._activatedRoute=null,this.name=O,this.activateEvents=new me,this.deactivateEvents=new me,this.attachEvents=new me,this.detachEvents=new me,this.parentContexts=g(uo),this.location=g(qn),this.changeDetector=g(Ur),this.inputBinder=g(Is,{optional:!0}),this.supportsBindingToComponentInputs=!0}get activatedComponentRef(){return this.activated}ngOnChanges(t){if(t.name){let{firstChange:r,previousValue:o}=t.name;if(r)return;this.isTrackedInParentContexts(o)&&(this.deactivate(),this.parentContexts.onChildOutletDestroyed(o)),this.initializeOutletWithName()}}ngOnDestroy(){this.isTrackedInParentContexts(this.name)&&this.parentContexts.onChildOutletDestroyed(this.name),this.inputBinder?.unsubscribeFromRouteData(this)}isTrackedInParentContexts(t){return this.parentContexts.getContext(t)?.outlet===this}ngOnInit(){this.initializeOutletWithName()}initializeOutletWithName(){if(this.parentContexts.onChildOutletCreated(this.name,this),this.activated)return;let t=this.parentContexts.getContext(this.name);t?.route&&(t.attachRef?this.attach(t.attachRef,t.route):this.activateWith(t.route,t.injector))}get isActivated(){return!!this.activated}get component(){if(!this.activated)throw new E(4012,!1);return this.activated.instance}get activatedRoute(){if(!this.activated)throw new E(4012,!1);return this._activatedRoute}get activatedRouteData(){return this._activatedRoute?this._activatedRoute.snapshot.data:{}}detach(){if(!this.activated)throw new E(4012,!1);this.location.detach();let t=this.activated;return this.activated=null,this._activatedRoute=null,this.detachEvents.emit(t.instance),t}attach(t,r){this.activated=t,this._activatedRoute=r,this.location.insert(t.hostView),this.inputBinder?.bindActivatedRouteToOutletComponent(this),this.attachEvents.emit(t.instance)}deactivate(){if(this.activated){let t=this.component;this.activated.destroy(),this.activated=null,this._activatedRoute=null,this.deactivateEvents.emit(t)}}activateWith(t,r){if(this.isActivated)throw new E(4013,!1);this._activatedRoute=t;let o=this.location,s=t.snapshot.component,a=this.parentContexts.getOrCreateContext(this.name).children,c=new Wl(t,a,o.injector);this.activated=o.createComponent(s,{index:o.length,injector:c,environmentInjector:r}),this.changeDetector.markForCheck(),this.inputBinder?.bindActivatedRouteToOutletComponent(this),this.activateEvents.emit(this.activated.instance)}static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275dir=jt({type:e,selectors:[["router-outlet"]],inputs:{name:"name"},outputs:{activateEvents:"activate",deactivateEvents:"deactivate",attachEvents:"attach",detachEvents:"detach"},exportAs:["outlet"],standalone:!0,features:[Hn]})}}return e})(),Wl=class e{__ngOutletInjector(n){return new e(this.route,this.childContexts,n)}constructor(n,t,r){this.route=n,this.childContexts=t,this.parent=r}get(n,t){return n===zt?this.route:n===uo?this.childContexts:this.parent.get(n,t)}},Is=new b(""),Kp=(()=>{class e{constructor(){this.outletDataSubscriptions=new Map}bindActivatedRouteToOutletComponent(t){this.unsubscribeFromRouteData(t),this.subscribeToRouteData(t)}unsubscribeFromRouteData(t){this.outletDataSubscriptions.get(t)?.unsubscribe(),this.outletDataSubscriptions.delete(t)}subscribeToRouteData(t){let{activatedRoute:r}=t,o=pr([r.queryParams,r.params,r.data]).pipe(Se(([i,s,a],c)=>(a=D(D(D({},i),s),a),c===0?_(a):Promise.resolve(a)))).subscribe(i=>{if(!t.isActivated||!t.activatedComponentRef||t.activatedRoute!==r||r.component===null){this.unsubscribeFromRouteData(t);return}let s=mp(r.component);if(!s){this.unsubscribeFromRouteData(t);return}for(let{templateName:a}of s.inputs)t.activatedComponentRef.setInput(a,i[a])});this.outletDataSubscriptions.set(t,o)}static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac})}}return e})();function rE(e,n,t){let r=ro(e,n._root,t?t._root:void 0);return new vs(r,n)}function ro(e,n,t){if(t&&e.shouldReuseRoute(n.value,t.value.snapshot)){let r=t.value;r._futureSnapshot=n.value;let o=oE(e,n,t);return new Pe(r,o)}else{if(e.shouldAttach(n.value)){let i=e.retrieve(n.value);if(i!==null){let s=i.route;return s.value._futureSnapshot=n.value,s.children=n.children.map(a=>ro(e,a)),s}}let r=iE(n.value),o=n.children.map(i=>ro(e,i));return new Pe(r,o)}}function oE(e,n,t){return n.children.map(r=>{for(let o of t.children)if(e.shouldReuseRoute(r.value,o.value.snapshot))return ro(e,r,o);return ro(e,r)})}function iE(e){return new zt(new ce(e.url),new ce(e.params),new ce(e.queryParams),new ce(e.fragment),new ce(e.data),e.outlet,e.component,e)}var oo=class{constructor(n,t){this.redirectTo=n,this.navigationBehaviorOptions=t}},Dg="ngNavigationCancelingError";function Ds(e,n){let{redirectTo:t,navigationBehaviorOptions:r}=fn(n)?{redirectTo:n,navigationBehaviorOptions:void 0}:n,o=wg(!1,Re.Redirect);return o.url=t,o.navigationBehaviorOptions=r,o}function wg(e,n){let t=new Error(`NavigationCancelingError: ${e||""}`);return t[Dg]=!0,t.cancellationCode=n,t}function sE(e){return Eg(e)&&fn(e.url)}function Eg(e){return!!e&&e[Dg]}var aE=(e,n,t,r)=>k(o=>(new ql(n,o.targetRouterState,o.currentRouterState,t,r).activate(e),o)),ql=class{constructor(n,t,r,o,i){this.routeReuseStrategy=n,this.futureState=t,this.currState=r,this.forwardEvent=o,this.inputBindingEnabled=i}activate(n){let t=this.futureState._root,r=this.currState?this.currState._root:null;this.deactivateChildRoutes(t,r,n),_l(this.futureState.root),this.activateChildRoutes(t,r,n)}deactivateChildRoutes(n,t,r){let o=Jn(t);n.children.forEach(i=>{let s=i.value.outlet;this.deactivateRoutes(i,o[s],r),delete o[s]}),Object.values(o).forEach(i=>{this.deactivateRouteAndItsChildren(i,r)})}deactivateRoutes(n,t,r){let o=n.value,i=t?t.value:null;if(o===i)if(o.component){let s=r.getContext(o.outlet);s&&this.deactivateChildRoutes(n,t,s.children)}else this.deactivateChildRoutes(n,t,r);else i&&this.deactivateRouteAndItsChildren(t,r)}deactivateRouteAndItsChildren(n,t){n.value.component&&this.routeReuseStrategy.shouldDetach(n.value.snapshot)?this.detachAndStoreRouteSubtree(n,t):this.deactivateRouteAndOutlet(n,t)}detachAndStoreRouteSubtree(n,t){let r=t.getContext(n.value.outlet),o=r&&n.value.component?r.children:t,i=Jn(n);for(let s of Object.values(i))this.deactivateRouteAndItsChildren(s,o);if(r&&r.outlet){let s=r.outlet.detach(),a=r.children.onOutletDeactivated();this.routeReuseStrategy.store(n.value.snapshot,{componentRef:s,route:n,contexts:a})}}deactivateRouteAndOutlet(n,t){let r=t.getContext(n.value.outlet),o=r&&n.value.component?r.children:t,i=Jn(n);for(let s of Object.values(i))this.deactivateRouteAndItsChildren(s,o);r&&(r.outlet&&(r.outlet.deactivate(),r.children.onOutletDeactivated()),r.attachRef=null,r.route=null)}activateChildRoutes(n,t,r){let o=Jn(t);n.children.forEach(i=>{this.activateRoutes(i,o[i.value.outlet],r),this.forwardEvent(new Ul(i.value.snapshot))}),n.children.length&&this.forwardEvent(new Vl(n.value.snapshot))}activateRoutes(n,t,r){let o=n.value,i=t?t.value:null;if(_l(o),o===i)if(o.component){let s=r.getOrCreateContext(o.outlet);this.activateChildRoutes(n,t,s.children)}else this.activateChildRoutes(n,t,r);else if(o.component){let s=r.getOrCreateContext(o.outlet);if(this.routeReuseStrategy.shouldAttach(o.snapshot)){let a=this.routeReuseStrategy.retrieve(o.snapshot);this.routeReuseStrategy.store(o.snapshot,null),s.children.onOutletReAttached(a.contexts),s.attachRef=a.componentRef,s.route=a.route.value,s.outlet&&s.outlet.attach(a.componentRef,a.route.value),_l(a.route.value),this.activateChildRoutes(n,null,s.children)}else s.attachRef=null,s.route=o,s.outlet&&s.outlet.activateWith(o,s.injector),this.activateChildRoutes(n,null,s.children)}else this.activateChildRoutes(n,null,r)}},ws=class{constructor(n){this.path=n,this.route=this.path[this.path.length-1]}},tr=class{constructor(n,t){this.component=n,this.route=t}};function cE(e,n,t){let r=e._root,o=n?n._root:null;return Qr(r,o,t,[r.value])}function lE(e){let n=e.routeConfig?e.routeConfig.canActivateChild:null;return!n||n.length===0?null:{node:e,guards:n}}function cr(e,n){let t=Symbol(),r=n.get(e,t);return r===t?typeof e=="function"&&!Ad(e)?e:n.get(e):r}function Qr(e,n,t,r,o={canDeactivateChecks:[],canActivateChecks:[]}){let i=Jn(n);return e.children.forEach(s=>{uE(s,i[s.value.outlet],t,r.concat([s.value]),o),delete i[s.value.outlet]}),Object.entries(i).forEach(([s,a])=>Xr(a,t.getContext(s),o)),o}function uE(e,n,t,r,o={canDeactivateChecks:[],canActivateChecks:[]}){let i=e.value,s=n?n.value:null,a=t?t.getContext(e.value.outlet):null;if(s&&i.routeConfig===s.routeConfig){let c=dE(s,i,i.routeConfig.runGuardsAndResolvers);c?o.canActivateChecks.push(new ws(r)):(i.data=s.data,i._resolvedData=s._resolvedData),i.component?Qr(e,n,a?a.children:null,r,o):Qr(e,n,t,r,o),c&&a&&a.outlet&&a.outlet.isActivated&&o.canDeactivateChecks.push(new tr(a.outlet.component,s))}else s&&Xr(n,a,o),o.canActivateChecks.push(new ws(r)),i.component?Qr(e,null,a?a.children:null,r,o):Qr(e,null,t,r,o);return o}function dE(e,n,t){if(typeof t=="function")return t(e,n);switch(t){case"pathParamsChange":return!dn(e.url,n.url);case"pathParamsOrQueryParamsChange":return!dn(e.url,n.url)||!dt(e.queryParams,n.queryParams);case"always":return!0;case"paramsOrQueryParamsChange":return!Gl(e,n)||!dt(e.queryParams,n.queryParams);case"paramsChange":default:return!Gl(e,n)}}function Xr(e,n,t){let r=Jn(e),o=e.value;Object.entries(r).forEach(([i,s])=>{o.component?n?Xr(s,n.children.getContext(i),t):Xr(s,null,t):Xr(s,n,t)}),o.component?n&&n.outlet&&n.outlet.isActivated?t.canDeactivateChecks.push(new tr(n.outlet.component,o)):t.canDeactivateChecks.push(new tr(null,o)):t.canDeactivateChecks.push(new tr(null,o))}function fo(e){return typeof e=="function"}function fE(e){return typeof e=="boolean"}function hE(e){return e&&fo(e.canLoad)}function pE(e){return e&&fo(e.canActivate)}function gE(e){return e&&fo(e.canActivateChild)}function mE(e){return e&&fo(e.canDeactivate)}function vE(e){return e&&fo(e.canMatch)}function Ig(e){return e instanceof pt||e?.name==="EmptyError"}var as=Symbol("INITIAL_VALUE");function sr(){return Se(e=>pr(e.map(n=>n.pipe(gt(1),ra(as)))).pipe(k(n=>{for(let t of n)if(t!==!0){if(t===as)return as;if(t===!1||yE(t))return t}return!0}),Me(n=>n!==as),gt(1)))}function yE(e){return fn(e)||e instanceof oo}function CE(e,n){return ee(t=>{let{targetSnapshot:r,currentSnapshot:o,guards:{canActivateChecks:i,canDeactivateChecks:s}}=t;return s.length===0&&i.length===0?_(K(D({},t),{guardsResult:!0})):DE(s,r,o,e).pipe(ee(a=>a&&fE(a)?wE(r,i,e,n):_(a)),k(a=>K(D({},t),{guardsResult:a})))})}function DE(e,n,t,r){return J(e).pipe(ee(o=>ME(o.component,o.route,t,n,r)),We(o=>o!==!0,!0))}function wE(e,n,t,r){return J(n).pipe(Tt(o=>In(IE(o.route.parent,r),EE(o.route,r),_E(e,o.path,t),bE(e,o.route,t))),We(o=>o!==!0,!0))}function EE(e,n){return e!==null&&n&&n(new Bl(e)),_(!0)}function IE(e,n){return e!==null&&n&&n(new jl(e)),_(!0)}function bE(e,n,t){let r=n.routeConfig?n.routeConfig.canActivate:null;if(!r||r.length===0)return _(!0);let o=r.map(i=>Po(()=>{let s=lo(n)??t,a=cr(i,s),c=pE(a)?a.canActivate(n,e):Je(s,()=>a(n,e));return Gt(c).pipe(We())}));return _(o).pipe(sr())}function _E(e,n,t){let r=n[n.length-1],i=n.slice(0,n.length-1).reverse().map(s=>lE(s)).filter(s=>s!==null).map(s=>Po(()=>{let a=s.guards.map(c=>{let l=lo(s.node)??t,u=cr(c,l),d=gE(u)?u.canActivateChild(r,e):Je(l,()=>u(r,e));return Gt(d).pipe(We())});return _(a).pipe(sr())}));return _(i).pipe(sr())}function ME(e,n,t,r,o){let i=n&&n.routeConfig?n.routeConfig.canDeactivate:null;if(!i||i.length===0)return _(!0);let s=i.map(a=>{let c=lo(n)??o,l=cr(a,c),u=mE(l)?l.canDeactivate(e,n,t,r):Je(c,()=>l(e,n,t,r));return Gt(u).pipe(We())});return _(s).pipe(sr())}function SE(e,n,t,r){let o=n.canLoad;if(o===void 0||o.length===0)return _(!0);let i=o.map(s=>{let a=cr(s,e),c=hE(a)?a.canLoad(n,t):Je(e,()=>a(n,t));return Gt(c)});return _(i).pipe(sr(),bg(r))}function bg(e){return Qs(oe(n=>{if(typeof n!="boolean")throw Ds(e,n)}),k(n=>n===!0))}function xE(e,n,t,r){let o=n.canMatch;if(!o||o.length===0)return _(!0);let i=o.map(s=>{let a=cr(s,e),c=vE(a)?a.canMatch(n,t):Je(e,()=>a(n,t));return Gt(c)});return _(i).pipe(sr(),bg(r))}var io=class{constructor(n){this.segmentGroup=n||null}},so=class extends Error{constructor(n){super(),this.urlTree=n}};function Kn(e){return wn(new io(e))}function TE(e){return wn(new E(4e3,!1))}function OE(e){return wn(wg(!1,Re.GuardRejected))}var Zl=class{constructor(n,t){this.urlSerializer=n,this.urlTree=t}lineralizeSegments(n,t){let r=[],o=t.root;for(;;){if(r=r.concat(o.segments),o.numberOfChildren===0)return _(r);if(o.numberOfChildren>1||!o.children[O])return TE(`${n.redirectTo}`);o=o.children[O]}}applyRedirectCommands(n,t,r,o,i){if(typeof t!="string"){let a=t,{queryParams:c,fragment:l,routeConfig:u,url:d,outlet:v,params:m,data:C,title:P}=o,$=Je(i,()=>a({params:m,data:C,queryParams:c,fragment:l,routeConfig:u,url:d,outlet:v,title:P}));if($ instanceof bt)throw new so($);t=$}let s=this.applyRedirectCreateUrlTree(t,this.urlSerializer.parse(t),n,r);if(t[0]==="/")throw new so(s);return s}applyRedirectCreateUrlTree(n,t,r,o){let i=this.createSegmentGroup(n,t.root,r,o);return new bt(i,this.createQueryParams(t.queryParams,this.urlTree.queryParams),t.fragment)}createQueryParams(n,t){let r={};return Object.entries(n).forEach(([o,i])=>{if(typeof i=="string"&&i[0]===":"){let a=i.substring(1);r[o]=t[a]}else r[o]=i}),r}createSegmentGroup(n,t,r,o){let i=this.createSegments(n,t.segments,r,o),s={};return Object.entries(t.children).forEach(([a,c])=>{s[a]=this.createSegmentGroup(n,c,r,o)}),new B(i,s)}createSegments(n,t,r,o){return t.map(i=>i.path[0]===":"?this.findPosParam(n,i,o):this.findOrReturn(i,r))}findPosParam(n,t,r){let o=r[t.path.substring(1)];if(!o)throw new E(4001,!1);return o}findOrReturn(n,t){let r=0;for(let o of t){if(o.path===n.path)return t.splice(r),o;r++}return n}},Ql={matched:!1,consumedSegments:[],remainingSegments:[],parameters:{},positionalParamSegments:{}};function NE(e,n,t,r,o){let i=_g(e,n,t);return i.matched?(r=eE(n,r),xE(r,n,t,o).pipe(k(s=>s===!0?i:D({},Ql)))):_(i)}function _g(e,n,t){if(n.path==="**")return AE(t);if(n.path==="")return n.pathMatch==="full"&&(e.hasChildren()||t.length>0)?D({},Ql):{matched:!0,consumedSegments:[],remainingSegments:t,parameters:{},positionalParamSegments:{}};let o=(n.matcher||xw)(t,e,n);if(!o)return D({},Ql);let i={};Object.entries(o.posParams??{}).forEach(([a,c])=>{i[a]=c.path});let s=o.consumed.length>0?D(D({},i),o.consumed[o.consumed.length-1].parameters):i;return{matched:!0,consumedSegments:o.consumed,remainingSegments:t.slice(o.consumed.length),parameters:s,positionalParamSegments:o.posParams??{}}}function AE(e){return{matched:!0,parameters:e.length>0?og(e).parameters:{},consumedSegments:e,remainingSegments:[],positionalParamSegments:{}}}function Jp(e,n,t,r){return t.length>0&&kE(e,t,r)?{segmentGroup:new B(n,RE(r,new B(t,e.children))),slicedSegments:[]}:t.length===0&&FE(e,t,r)?{segmentGroup:new B(e.segments,PE(e,t,r,e.children)),slicedSegments:t}:{segmentGroup:new B(e.segments,e.children),slicedSegments:t}}function PE(e,n,t,r){let o={};for(let i of t)if(bs(e,n,i)&&!r[tt(i)]){let s=new B([],{});o[tt(i)]=s}return D(D({},r),o)}function RE(e,n){let t={};t[O]=n;for(let r of e)if(r.path===""&&tt(r)!==O){let o=new B([],{});t[tt(r)]=o}return t}function kE(e,n,t){return t.some(r=>bs(e,n,r)&&tt(r)!==O)}function FE(e,n,t){return t.some(r=>bs(e,n,r))}function bs(e,n,t){return(e.hasChildren()||n.length>0)&&t.pathMatch==="full"?!1:t.path===""}function LE(e,n,t){return n.length===0&&!e.children[t]}var Yl=class{};function jE(e,n,t,r,o,i,s="emptyOnly"){return new Kl(e,n,t,r,o,s,i).recognize()}var VE=31,Kl=class{constructor(n,t,r,o,i,s,a){this.injector=n,this.configLoader=t,this.rootComponentType=r,this.config=o,this.urlTree=i,this.paramsInheritanceStrategy=s,this.urlSerializer=a,this.applyRedirects=new Zl(this.urlSerializer,this.urlTree),this.absoluteRedirectCount=0,this.allowRedirects=!0}noMatchError(n){return new E(4002,`'${n.segmentGroup}'`)}recognize(){let n=Jp(this.urlTree.root,[],[],this.config).segmentGroup;return this.match(n).pipe(k(({children:t,rootSnapshot:r})=>{let o=new Pe(r,t),i=new Cs("",o),s=qw(r,[],this.urlTree.queryParams,this.urlTree.fragment);return s.queryParams=this.urlTree.queryParams,i.url=this.urlSerializer.serialize(s),{state:i,tree:s}}))}match(n){let t=new er([],Object.freeze({}),Object.freeze(D({},this.urlTree.queryParams)),this.urlTree.fragment,Object.freeze({}),O,this.rootComponentType,null,{});return this.processSegmentGroup(this.injector,this.config,n,O,t).pipe(k(r=>({children:r,rootSnapshot:t})),xt(r=>{if(r instanceof so)return this.urlTree=r.urlTree,this.match(r.urlTree.root);throw r instanceof io?this.noMatchError(r):r}))}processSegmentGroup(n,t,r,o,i){return r.segments.length===0&&r.hasChildren()?this.processChildren(n,t,r,i):this.processSegment(n,t,r,r.segments,o,!0,i).pipe(k(s=>s instanceof Pe?[s]:[]))}processChildren(n,t,r,o){let i=[];for(let s of Object.keys(r.children))s==="primary"?i.unshift(s):i.push(s);return J(i).pipe(Tt(s=>{let a=r.children[s],c=tE(t,s);return this.processSegmentGroup(n,c,a,s,o)}),na((s,a)=>(s.push(...a),s)),Ot(null),ta(),ee(s=>{if(s===null)return Kn(r);let a=Mg(s);return BE(a),_(a)}))}processSegment(n,t,r,o,i,s,a){return J(t).pipe(Tt(c=>this.processSegmentAgainstRoute(c._injector??n,t,c,r,o,i,s,a).pipe(xt(l=>{if(l instanceof io)return _(null);throw l}))),We(c=>!!c),xt(c=>{if(Ig(c))return LE(r,o,i)?_(new Yl):Kn(r);throw c}))}processSegmentAgainstRoute(n,t,r,o,i,s,a,c){return tt(r)!==s&&(s===O||!bs(o,i,r))?Kn(o):r.redirectTo===void 0?this.matchSegmentAgainstRoute(n,o,r,i,s,c):this.allowRedirects&&a?this.expandSegmentAgainstRouteUsingRedirect(n,o,t,r,i,s,c):Kn(o)}expandSegmentAgainstRouteUsingRedirect(n,t,r,o,i,s,a){let{matched:c,parameters:l,consumedSegments:u,positionalParamSegments:d,remainingSegments:v}=_g(t,o,i);if(!c)return Kn(t);typeof o.redirectTo=="string"&&o.redirectTo[0]==="/"&&(this.absoluteRedirectCount++,this.absoluteRedirectCount>VE&&(this.allowRedirects=!1));let m=new er(i,l,Object.freeze(D({},this.urlTree.queryParams)),this.urlTree.fragment,Xp(o),tt(o),o.component??o._loadedComponent??null,o,eg(o)),C=ys(m,a,this.paramsInheritanceStrategy);m.params=Object.freeze(C.params),m.data=Object.freeze(C.data);let P=this.applyRedirects.applyRedirectCommands(u,o.redirectTo,d,m,n);return this.applyRedirects.lineralizeSegments(o,P).pipe(ee($=>this.processSegment(n,r,t,$.concat(v),s,!1,a)))}matchSegmentAgainstRoute(n,t,r,o,i,s){let a=NE(t,r,o,n,this.urlSerializer);return r.path==="**"&&(t.children={}),a.pipe(Se(c=>c.matched?(n=r._injector??n,this.getChildConfig(n,r,o).pipe(Se(({routes:l})=>{let u=r._loadedInjector??n,{parameters:d,consumedSegments:v,remainingSegments:m}=c,C=new er(v,d,Object.freeze(D({},this.urlTree.queryParams)),this.urlTree.fragment,Xp(r),tt(r),r.component??r._loadedComponent??null,r,eg(r)),P=ys(C,s,this.paramsInheritanceStrategy);C.params=Object.freeze(P.params),C.data=Object.freeze(P.data);let{segmentGroup:$,slicedSegments:z}=Jp(t,v,m,l);if(z.length===0&&$.hasChildren())return this.processChildren(u,l,$,C).pipe(k(fe=>new Pe(C,fe)));if(l.length===0&&z.length===0)return _(new Pe(C,[]));let de=tt(r)===i;return this.processSegment(u,l,$,z,de?O:i,!0,C).pipe(k(fe=>new Pe(C,fe instanceof Pe?[fe]:[])))}))):Kn(t)))}getChildConfig(n,t,r){return t.children?_({routes:t.children,injector:n}):t.loadChildren?t._loadedRoutes!==void 0?_({routes:t._loadedRoutes,injector:t._loadedInjector}):SE(n,t,r,this.urlSerializer).pipe(ee(o=>o?this.configLoader.loadChildren(n,t).pipe(oe(i=>{t._loadedRoutes=i.routes,t._loadedInjector=i.injector})):OE(t))):_({routes:[],injector:n})}};function BE(e){e.sort((n,t)=>n.value.outlet===O?-1:t.value.outlet===O?1:n.value.outlet.localeCompare(t.value.outlet))}function UE(e){let n=e.value.routeConfig;return n&&n.path===""}function Mg(e){let n=[],t=new Set;for(let r of e){if(!UE(r)){n.push(r);continue}let o=n.find(i=>r.value.routeConfig===i.value.routeConfig);o!==void 0?(o.children.push(...r.children),t.add(o)):n.push(r)}for(let r of t){let o=Mg(r.children);n.push(new Pe(r.value,o))}return n.filter(r=>!t.has(r))}function Xp(e){return e.data||{}}function eg(e){return e.resolve||{}}function $E(e,n,t,r,o,i){return ee(s=>jE(e,n,t,r,s.extractedUrl,o,i).pipe(k(({state:a,tree:c})=>K(D({},s),{targetSnapshot:a,urlAfterRedirects:c}))))}function HE(e,n){return ee(t=>{let{targetSnapshot:r,guards:{canActivateChecks:o}}=t;if(!o.length)return _(t);let i=new Set(o.map(c=>c.route)),s=new Set;for(let c of i)if(!s.has(c))for(let l of Sg(c))s.add(l);let a=0;return J(s).pipe(Tt(c=>i.has(c)?zE(c,r,e,n):(c.data=ys(c,c.parent,e).resolve,_(void 0))),oe(()=>a++),_n(1),ee(c=>a===s.size?_(t):_e))})}function Sg(e){let n=e.children.map(t=>Sg(t)).flat();return[e,...n]}function zE(e,n,t,r){let o=e.routeConfig,i=e._resolve;return o?.title!==void 0&&!Cg(o)&&(i[co]=o.title),GE(i,e,n,r).pipe(k(s=>(e._resolvedData=s,e.data=ys(e,e.parent,t).resolve,null)))}function GE(e,n,t,r){let o=xl(e);if(o.length===0)return _({});let i={};return J(o).pipe(ee(s=>WE(e[s],n,t,r).pipe(We(),oe(a=>{if(a instanceof oo)throw Ds(new rr,a);i[s]=a}))),_n(1),ea(i),xt(s=>Ig(s)?_e:wn(s)))}function WE(e,n,t,r){let o=lo(n)??r,i=cr(e,o),s=i.resolve?i.resolve(n,t):Je(o,()=>i(n,t));return Gt(s)}function Ml(e){return Se(n=>{let t=e(n);return t?J(t).pipe(k(()=>n)):_(n)})}var xg=(()=>{class e{buildTitle(t){let r,o=t.root;for(;o!==void 0;)r=this.getResolvedTitleForRoute(o)??r,o=o.children.find(i=>i.outlet===O);return r}getResolvedTitleForRoute(t){return t.data[co]}static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275prov=I({token:e,factory:()=>g(qE),providedIn:"root"})}}return e})(),qE=(()=>{class e extends xg{constructor(t){super(),this.title=t}updateTitle(t){let r=this.buildTitle(t);r!==void 0&&this.title.setTitle(r)}static{this.\u0275fac=function(r){return new(r||e)(x($t))}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac,providedIn:"root"})}}return e})(),ho=new b("",{providedIn:"root",factory:()=>({})}),ZE=(()=>{class e{static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275cmp=te({type:e,selectors:[["ng-component"]],standalone:!0,features:[re],decls:1,vars:0,template:function(r,o){r&1&&R(0,"router-outlet")},dependencies:[eu],encapsulation:2})}}return e})();function tu(e){let n=e.children&&e.children.map(tu),t=n?K(D({},e),{children:n}):D({},e);return!t.component&&!t.loadComponent&&(n||t.loadChildren)&&t.outlet&&t.outlet!==O&&(t.component=ZE),t}var ao=new b(""),nu=(()=>{class e{constructor(){this.componentLoaders=new WeakMap,this.childrenLoaders=new WeakMap,this.compiler=g(Yi)}loadComponent(t){if(this.componentLoaders.get(t))return this.componentLoaders.get(t);if(t._loadedComponent)return _(t._loadedComponent);this.onLoadStartListener&&this.onLoadStartListener(t);let r=Gt(t.loadComponent()).pipe(k(Tg),oe(i=>{this.onLoadEndListener&&this.onLoadEndListener(t),t._loadedComponent=i}),bn(()=>{this.componentLoaders.delete(t)})),o=new Dn(r,()=>new he).pipe(Cn());return this.componentLoaders.set(t,o),o}loadChildren(t,r){if(this.childrenLoaders.get(r))return this.childrenLoaders.get(r);if(r._loadedRoutes)return _({routes:r._loadedRoutes,injector:r._loadedInjector});this.onLoadStartListener&&this.onLoadStartListener(r);let i=QE(r,this.compiler,t,this.onLoadEndListener).pipe(bn(()=>{this.childrenLoaders.delete(r)})),s=new Dn(i,()=>new he).pipe(Cn());return this.childrenLoaders.set(r,s),s}static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac,providedIn:"root"})}}return e})();function QE(e,n,t,r){return Gt(e.loadChildren()).pipe(k(Tg),ee(o=>o instanceof _r||Array.isArray(o)?_(o):J(n.compileModuleAsync(o))),k(o=>{r&&r(e);let i,s,a=!1;return Array.isArray(o)?(s=o,a=!0):(i=o.create(t).injector,s=i.get(ao,[],{optional:!0,self:!0}).flat()),{routes:s.map(tu),injector:i}}))}function YE(e){return e&&typeof e=="object"&&"default"in e}function Tg(e){return YE(e)?e.default:e}var ru=(()=>{class e{static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275prov=I({token:e,factory:()=>g(KE),providedIn:"root"})}}return e})(),KE=(()=>{class e{shouldProcessUrl(t){return!0}extract(t){return t}merge(t,r){return t}static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac,providedIn:"root"})}}return e})(),Og=new b(""),Ng=new b("");function JE(e,n,t){let r=e.get(Ng),o=e.get(ye);return e.get(W).runOutsideAngular(()=>{if(!o.startViewTransition||r.skipNextTransition)return r.skipNextTransition=!1,new Promise(l=>setTimeout(l));let i,s=new Promise(l=>{i=l}),a=o.startViewTransition(()=>(i(),XE(e))),{onViewTransitionCreated:c}=r;return c&&Je(e,()=>c({transition:a,from:n,to:t})),s})}function XE(e){return new Promise(n=>{Jc({read:()=>setTimeout(n)},{injector:e})})}var eI=new b(""),_s=(()=>{class e{get hasRequestedNavigation(){return this.navigationId!==0}constructor(){this.currentNavigation=null,this.currentTransition=null,this.lastSuccessfulNavigation=null,this.events=new he,this.transitionAbortSubject=new he,this.configLoader=g(nu),this.environmentInjector=g(xe),this.urlSerializer=g(ar),this.rootContexts=g(uo),this.location=g(Qn),this.inputBindingEnabled=g(Is,{optional:!0})!==null,this.titleStrategy=g(xg),this.options=g(ho,{optional:!0})||{},this.paramsInheritanceStrategy=this.options.paramsInheritanceStrategy||"emptyOnly",this.urlHandlingStrategy=g(ru),this.createViewTransition=g(Og,{optional:!0}),this.navigationErrorHandler=g(eI,{optional:!0}),this.navigationId=0,this.afterPreactivation=()=>_(void 0),this.rootComponentType=null;let t=o=>this.events.next(new Fl(o)),r=o=>this.events.next(new Ll(o));this.configLoader.onLoadEndListener=r,this.configLoader.onLoadStartListener=t}complete(){this.transitions?.complete()}handleNavigationRequest(t){let r=++this.navigationId;this.transitions?.next(K(D(D({},this.transitions.value),t),{id:r}))}setupNavigations(t,r,o){return this.transitions=new ce({id:0,currentUrlTree:r,currentRawUrl:r,extractedUrl:this.urlHandlingStrategy.extract(r),urlAfterRedirects:this.urlHandlingStrategy.extract(r),rawUrl:r,extras:{},resolve:()=>{},reject:()=>{},promise:Promise.resolve(!0),source:Jr,restoredState:null,currentSnapshot:o.snapshot,targetSnapshot:null,currentRouterState:o,targetRouterState:null,guards:{canActivateChecks:[],canDeactivateChecks:[]},guardsResult:null}),this.transitions.pipe(Me(i=>i.id!==0),k(i=>K(D({},i),{extractedUrl:this.urlHandlingStrategy.extract(i.rawUrl)})),Se(i=>{let s=!1,a=!1;return _(i).pipe(Se(c=>{if(this.navigationId>i.id)return this.cancelNavigationTransition(i,"",Re.SupersededByNewNavigation),_e;this.currentTransition=i,this.currentNavigation={id:c.id,initialUrl:c.rawUrl,extractedUrl:c.extractedUrl,targetBrowserUrl:typeof c.extras.browserUrl=="string"?this.urlSerializer.parse(c.extras.browserUrl):c.extras.browserUrl,trigger:c.source,extras:c.extras,previousNavigation:this.lastSuccessfulNavigation?K(D({},this.lastSuccessfulNavigation),{previousNavigation:null}):null};let l=!t.navigated||this.isUpdatingInternalState()||this.isUpdatedBrowserUrl(),u=c.extras.onSameUrlNavigation??t.onSameUrlNavigation;if(!l&&u!=="reload"){let d="";return this.events.next(new Ht(c.id,this.urlSerializer.serialize(c.rawUrl),d,hs.IgnoredSameUrlNavigation)),c.resolve(!1),_e}if(this.urlHandlingStrategy.shouldProcessUrl(c.rawUrl))return _(c).pipe(Se(d=>{let v=this.transitions?.getValue();return this.events.next(new or(d.id,this.urlSerializer.serialize(d.extractedUrl),d.source,d.restoredState)),v!==this.transitions?.getValue()?_e:Promise.resolve(d)}),$E(this.environmentInjector,this.configLoader,this.rootComponentType,t.config,this.urlSerializer,this.paramsInheritanceStrategy),oe(d=>{i.targetSnapshot=d.targetSnapshot,i.urlAfterRedirects=d.urlAfterRedirects,this.currentNavigation=K(D({},this.currentNavigation),{finalUrl:d.urlAfterRedirects});let v=new ps(d.id,this.urlSerializer.serialize(d.extractedUrl),this.urlSerializer.serialize(d.urlAfterRedirects),d.targetSnapshot);this.events.next(v)}));if(l&&this.urlHandlingStrategy.shouldProcessUrl(c.currentRawUrl)){let{id:d,extractedUrl:v,source:m,restoredState:C,extras:P}=c,$=new or(d,this.urlSerializer.serialize(v),m,C);this.events.next($);let z=vg(this.rootComponentType).snapshot;return this.currentTransition=i=K(D({},c),{targetSnapshot:z,urlAfterRedirects:v,extras:K(D({},P),{skipLocationChange:!1,replaceUrl:!1})}),this.currentNavigation.finalUrl=v,_(i)}else{let d="";return this.events.next(new Ht(c.id,this.urlSerializer.serialize(c.extractedUrl),d,hs.IgnoredByUrlHandlingStrategy)),c.resolve(!1),_e}}),oe(c=>{let l=new Al(c.id,this.urlSerializer.serialize(c.extractedUrl),this.urlSerializer.serialize(c.urlAfterRedirects),c.targetSnapshot);this.events.next(l)}),k(c=>(this.currentTransition=i=K(D({},c),{guards:cE(c.targetSnapshot,c.currentSnapshot,this.rootContexts)}),i)),CE(this.environmentInjector,c=>this.events.next(c)),oe(c=>{if(i.guardsResult=c.guardsResult,c.guardsResult&&typeof c.guardsResult!="boolean")throw Ds(this.urlSerializer,c.guardsResult);let l=new Pl(c.id,this.urlSerializer.serialize(c.extractedUrl),this.urlSerializer.serialize(c.urlAfterRedirects),c.targetSnapshot,!!c.guardsResult);this.events.next(l)}),Me(c=>c.guardsResult?!0:(this.cancelNavigationTransition(c,"",Re.GuardRejected),!1)),Ml(c=>{if(c.guards.canActivateChecks.length)return _(c).pipe(oe(l=>{let u=new Rl(l.id,this.urlSerializer.serialize(l.extractedUrl),this.urlSerializer.serialize(l.urlAfterRedirects),l.targetSnapshot);this.events.next(u)}),Se(l=>{let u=!1;return _(l).pipe(HE(this.paramsInheritanceStrategy,this.environmentInjector),oe({next:()=>u=!0,complete:()=>{u||this.cancelNavigationTransition(l,"",Re.NoDataFromResolver)}}))}),oe(l=>{let u=new kl(l.id,this.urlSerializer.serialize(l.extractedUrl),this.urlSerializer.serialize(l.urlAfterRedirects),l.targetSnapshot);this.events.next(u)}))}),Ml(c=>{let l=u=>{let d=[];u.routeConfig?.loadComponent&&!u.routeConfig._loadedComponent&&d.push(this.configLoader.loadComponent(u.routeConfig).pipe(oe(v=>{u.component=v}),k(()=>{})));for(let v of u.children)d.push(...l(v));return d};return pr(l(c.targetSnapshot.root)).pipe(Ot(null),gt(1))}),Ml(()=>this.afterPreactivation()),Se(()=>{let{currentSnapshot:c,targetSnapshot:l}=i,u=this.createViewTransition?.(this.environmentInjector,c.root,l.root);return u?J(u).pipe(k(()=>i)):_(i)}),k(c=>{let l=rE(t.routeReuseStrategy,c.targetSnapshot,c.currentRouterState);return this.currentTransition=i=K(D({},c),{targetRouterState:l}),this.currentNavigation.targetRouterState=l,i}),oe(()=>{this.events.next(new no)}),aE(this.rootContexts,t.routeReuseStrategy,c=>this.events.next(c),this.inputBindingEnabled),gt(1),oe({next:c=>{s=!0,this.lastSuccessfulNavigation=this.currentNavigation,this.events.next(new ft(c.id,this.urlSerializer.serialize(c.extractedUrl),this.urlSerializer.serialize(c.urlAfterRedirects))),this.titleStrategy?.updateTitle(c.targetRouterState.snapshot),c.resolve(!0)},complete:()=>{s=!0}}),oa(this.transitionAbortSubject.pipe(oe(c=>{throw c}))),bn(()=>{!s&&!a&&this.cancelNavigationTransition(i,"",Re.SupersededByNewNavigation),this.currentTransition?.id===i.id&&(this.currentNavigation=null,this.currentTransition=null)}),xt(c=>{if(a=!0,Eg(c))this.events.next(new It(i.id,this.urlSerializer.serialize(i.extractedUrl),c.message,c.cancellationCode)),sE(c)?this.events.next(new ir(c.url,c.navigationBehaviorOptions)):i.resolve(!1);else{let l=new to(i.id,this.urlSerializer.serialize(i.extractedUrl),c,i.targetSnapshot??void 0);try{let u=Je(this.environmentInjector,()=>this.navigationErrorHandler?.(l));if(u instanceof oo){let{message:d,cancellationCode:v}=Ds(this.urlSerializer,u);this.events.next(new It(i.id,this.urlSerializer.serialize(i.extractedUrl),d,v)),this.events.next(new ir(u.redirectTo,u.navigationBehaviorOptions))}else{this.events.next(l);let d=t.errorHandler(c);i.resolve(!!d)}}catch(u){this.options.resolveNavigationPromiseOnError?i.resolve(!1):i.reject(u)}}return _e}))}))}cancelNavigationTransition(t,r,o){let i=new It(t.id,this.urlSerializer.serialize(t.extractedUrl),r,o);this.events.next(i),t.resolve(!1)}isUpdatingInternalState(){return this.currentTransition?.extractedUrl.toString()!==this.currentTransition?.currentUrlTree.toString()}isUpdatedBrowserUrl(){let t=this.urlHandlingStrategy.extract(this.urlSerializer.parse(this.location.path(!0))),r=this.currentNavigation?.targetBrowserUrl??this.currentNavigation?.extractedUrl;return t.toString()!==r?.toString()&&!this.currentNavigation?.extras.skipLocationChange}static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac,providedIn:"root"})}}return e})();function tI(e){return e!==Jr}var nI=(()=>{class e{static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275prov=I({token:e,factory:()=>g(rI),providedIn:"root"})}}return e})(),Jl=class{shouldDetach(n){return!1}store(n,t){}shouldAttach(n){return!1}retrieve(n){return null}shouldReuseRoute(n,t){return n.routeConfig===t.routeConfig}},rI=(()=>{class e extends Jl{static{this.\u0275fac=(()=>{let t;return function(o){return(t||(t=Ic(e)))(o||e)}})()}static{this.\u0275prov=I({token:e,factory:e.\u0275fac,providedIn:"root"})}}return e})(),Ag=(()=>{class e{static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275prov=I({token:e,factory:()=>g(oI),providedIn:"root"})}}return e})(),oI=(()=>{class e extends Ag{constructor(){super(...arguments),this.location=g(Qn),this.urlSerializer=g(ar),this.options=g(ho,{optional:!0})||{},this.canceledNavigationResolution=this.options.canceledNavigationResolution||"replace",this.urlHandlingStrategy=g(ru),this.urlUpdateStrategy=this.options.urlUpdateStrategy||"deferred",this.currentUrlTree=new bt,this.rawUrlTree=this.currentUrlTree,this.currentPageId=0,this.lastSuccessfulId=-1,this.routerState=vg(null),this.stateMemento=this.createStateMemento()}getCurrentUrlTree(){return this.currentUrlTree}getRawUrlTree(){return this.rawUrlTree}restoredState(){return this.location.getState()}get browserPageId(){return this.canceledNavigationResolution!=="computed"?this.currentPageId:this.restoredState()?.\u0275routerPageId??this.currentPageId}getRouterState(){return this.routerState}createStateMemento(){return{rawUrlTree:this.rawUrlTree,currentUrlTree:this.currentUrlTree,routerState:this.routerState}}registerNonRouterCurrentEntryChangeListener(t){return this.location.subscribe(r=>{r.type==="popstate"&&t(r.url,r.state)})}handleRouterEvent(t,r){if(t instanceof or)this.stateMemento=this.createStateMemento();else if(t instanceof Ht)this.rawUrlTree=r.initialUrl;else if(t instanceof ps){if(this.urlUpdateStrategy==="eager"&&!r.extras.skipLocationChange){let o=this.urlHandlingStrategy.merge(r.finalUrl,r.initialUrl);this.setBrowserUrl(r.targetBrowserUrl??o,r)}}else t instanceof no?(this.currentUrlTree=r.finalUrl,this.rawUrlTree=this.urlHandlingStrategy.merge(r.finalUrl,r.initialUrl),this.routerState=r.targetRouterState,this.urlUpdateStrategy==="deferred"&&!r.extras.skipLocationChange&&this.setBrowserUrl(r.targetBrowserUrl??this.rawUrlTree,r)):t instanceof It&&(t.code===Re.GuardRejected||t.code===Re.NoDataFromResolver)?this.restoreHistory(r):t instanceof to?this.restoreHistory(r,!0):t instanceof ft&&(this.lastSuccessfulId=t.id,this.currentPageId=this.browserPageId)}setBrowserUrl(t,r){let o=t instanceof bt?this.urlSerializer.serialize(t):t;if(this.location.isCurrentPathEqualTo(o)||r.extras.replaceUrl){let i=this.browserPageId,s=D(D({},r.extras.state),this.generateNgRouterState(r.id,i));this.location.replaceState(o,"",s)}else{let i=D(D({},r.extras.state),this.generateNgRouterState(r.id,this.browserPageId+1));this.location.go(o,"",i)}}restoreHistory(t,r=!1){if(this.canceledNavigationResolution==="computed"){let o=this.browserPageId,i=this.currentPageId-o;i!==0?this.location.historyGo(i):this.currentUrlTree===t.finalUrl&&i===0&&(this.resetState(t),this.resetUrlToCurrentUrlTree())}else this.canceledNavigationResolution==="replace"&&(r&&this.resetState(t),this.resetUrlToCurrentUrlTree())}resetState(t){this.routerState=this.stateMemento.routerState,this.currentUrlTree=this.stateMemento.currentUrlTree,this.rawUrlTree=this.urlHandlingStrategy.merge(this.currentUrlTree,t.finalUrl??this.rawUrlTree)}resetUrlToCurrentUrlTree(){this.location.replaceState(this.urlSerializer.serialize(this.rawUrlTree),"",this.generateNgRouterState(this.lastSuccessfulId,this.currentPageId))}generateNgRouterState(t,r){return this.canceledNavigationResolution==="computed"?{navigationId:t,\u0275routerPageId:r}:{navigationId:t}}static{this.\u0275fac=(()=>{let t;return function(o){return(t||(t=Ic(e)))(o||e)}})()}static{this.\u0275prov=I({token:e,factory:e.\u0275fac,providedIn:"root"})}}return e})(),Yr=function(e){return e[e.COMPLETE=0]="COMPLETE",e[e.FAILED=1]="FAILED",e[e.REDIRECTING=2]="REDIRECTING",e}(Yr||{});function Pg(e,n){e.events.pipe(Me(t=>t instanceof ft||t instanceof It||t instanceof to||t instanceof Ht),k(t=>t instanceof ft||t instanceof Ht?Yr.COMPLETE:(t instanceof It?t.code===Re.Redirect||t.code===Re.SupersededByNewNavigation:!1)?Yr.REDIRECTING:Yr.FAILED),Me(t=>t!==Yr.REDIRECTING),gt(1)).subscribe(()=>{n()})}function iI(e){throw e}var sI={paths:"exact",fragment:"ignored",matrixParams:"ignored",queryParams:"exact"},aI={paths:"subset",fragment:"ignored",matrixParams:"ignored",queryParams:"subset"},_t=(()=>{class e{get currentUrlTree(){return this.stateManager.getCurrentUrlTree()}get rawUrlTree(){return this.stateManager.getRawUrlTree()}get events(){return this._events}get routerState(){return this.stateManager.getRouterState()}constructor(){this.disposed=!1,this.console=g(qi),this.stateManager=g(Ag),this.options=g(ho,{optional:!0})||{},this.pendingTasks=g(an),this.urlUpdateStrategy=this.options.urlUpdateStrategy||"deferred",this.navigationTransitions=g(_s),this.urlSerializer=g(ar),this.location=g(Qn),this.urlHandlingStrategy=g(ru),this._events=new he,this.errorHandler=this.options.errorHandler||iI,this.navigated=!1,this.routeReuseStrategy=g(nI),this.onSameUrlNavigation=this.options.onSameUrlNavigation||"ignore",this.config=g(ao,{optional:!0})?.flat()??[],this.componentInputBindingEnabled=!!g(Is,{optional:!0}),this.eventsSubscription=new X,this.resetConfig(this.config),this.navigationTransitions.setupNavigations(this,this.currentUrlTree,this.routerState).subscribe({error:t=>{this.console.warn(t)}}),this.subscribeToNavigationEvents()}subscribeToNavigationEvents(){let t=this.navigationTransitions.events.subscribe(r=>{try{let o=this.navigationTransitions.currentTransition,i=this.navigationTransitions.currentNavigation;if(o!==null&&i!==null){if(this.stateManager.handleRouterEvent(r,i),r instanceof It&&r.code!==Re.Redirect&&r.code!==Re.SupersededByNewNavigation)this.navigated=!0;else if(r instanceof ft)this.navigated=!0;else if(r instanceof ir){let s=r.navigationBehaviorOptions,a=this.urlHandlingStrategy.merge(r.url,o.currentRawUrl),c=D({browserUrl:o.extras.browserUrl,info:o.extras.info,skipLocationChange:o.extras.skipLocationChange,replaceUrl:o.extras.replaceUrl||this.urlUpdateStrategy==="eager"||tI(o.source)},s);this.scheduleNavigation(a,Jr,null,c,{resolve:o.resolve,reject:o.reject,promise:o.promise})}}lI(r)&&this._events.next(r)}catch(o){this.navigationTransitions.transitionAbortSubject.next(o)}});this.eventsSubscription.add(t)}resetRootComponentType(t){this.routerState.root.component=t,this.navigationTransitions.rootComponentType=t}initialNavigation(){this.setUpLocationChangeListener(),this.navigationTransitions.hasRequestedNavigation||this.navigateToSyncWithBrowser(this.location.path(!0),Jr,this.stateManager.restoredState())}setUpLocationChangeListener(){this.nonRouterCurrentEntryChangeSubscription??=this.stateManager.registerNonRouterCurrentEntryChangeListener((t,r)=>{setTimeout(()=>{this.navigateToSyncWithBrowser(t,"popstate",r)},0)})}navigateToSyncWithBrowser(t,r,o){let i={replaceUrl:!0},s=o?.navigationId?o:null;if(o){let c=D({},o);delete c.navigationId,delete c.\u0275routerPageId,Object.keys(c).length!==0&&(i.state=c)}let a=this.parseUrl(t);this.scheduleNavigation(a,r,s,i)}get url(){return this.serializeUrl(this.currentUrlTree)}getCurrentNavigation(){return this.navigationTransitions.currentNavigation}get lastSuccessfulNavigation(){return this.navigationTransitions.lastSuccessfulNavigation}resetConfig(t){this.config=t.map(tu),this.navigated=!1}ngOnDestroy(){this.dispose()}dispose(){this.navigationTransitions.complete(),this.nonRouterCurrentEntryChangeSubscription&&(this.nonRouterCurrentEntryChangeSubscription.unsubscribe(),this.nonRouterCurrentEntryChangeSubscription=void 0),this.disposed=!0,this.eventsSubscription.unsubscribe()}createUrlTree(t,r={}){let{relativeTo:o,queryParams:i,fragment:s,queryParamsHandling:a,preserveFragment:c}=r,l=c?this.currentUrlTree.fragment:s,u=null;switch(a??this.options.defaultQueryParamsHandling){case"merge":u=D(D({},this.currentUrlTree.queryParams),i);break;case"preserve":u=this.currentUrlTree.queryParams;break;default:u=i||null}u!==null&&(u=this.removeEmptyProps(u));let d;try{let v=o?o.snapshot:this.routerState.snapshot.root;d=hg(v)}catch{(typeof t[0]!="string"||t[0][0]!=="/")&&(t=[]),d=this.currentUrlTree.root}return pg(d,t,u,l??null)}navigateByUrl(t,r={skipLocationChange:!1}){let o=fn(t)?t:this.parseUrl(t),i=this.urlHandlingStrategy.merge(o,this.rawUrlTree);return this.scheduleNavigation(i,Jr,null,r)}navigate(t,r={skipLocationChange:!1}){return cI(t),this.navigateByUrl(this.createUrlTree(t,r),r)}serializeUrl(t){return this.urlSerializer.serialize(t)}parseUrl(t){try{return this.urlSerializer.parse(t)}catch{return this.urlSerializer.parse("/")}}isActive(t,r){let o;if(r===!0?o=D({},sI):r===!1?o=D({},aI):o=r,fn(t))return qp(this.currentUrlTree,t,o);let i=this.parseUrl(t);return qp(this.currentUrlTree,i,o)}removeEmptyProps(t){return Object.entries(t).reduce((r,[o,i])=>(i!=null&&(r[o]=i),r),{})}scheduleNavigation(t,r,o,i,s){if(this.disposed)return Promise.resolve(!1);let a,c,l;s?(a=s.resolve,c=s.reject,l=s.promise):l=new Promise((d,v)=>{a=d,c=v});let u=this.pendingTasks.add();return Pg(this,()=>{queueMicrotask(()=>this.pendingTasks.remove(u))}),this.navigationTransitions.handleNavigationRequest({source:r,restoredState:o,currentUrlTree:this.currentUrlTree,currentRawUrl:this.currentUrlTree,rawUrl:t,extras:i,resolve:a,reject:c,promise:l,currentSnapshot:this.routerState.snapshot,currentRouterState:this.routerState}),l.catch(d=>Promise.reject(d))}static{this.\u0275fac=function(r){return new(r||e)}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac,providedIn:"root"})}}return e})();function cI(e){for(let n=0;n<e.length;n++)if(e[n]==null)throw new E(4008,!1)}function lI(e){return!(e instanceof no)&&!(e instanceof ir)}var lr=(()=>{class e{constructor(t,r,o,i,s,a){this.router=t,this.route=r,this.tabIndexAttribute=o,this.renderer=i,this.el=s,this.locationStrategy=a,this.href=null,this.onChanges=new he,this.preserveFragment=!1,this.skipLocationChange=!1,this.replaceUrl=!1,this.routerLinkInput=null;let c=s.nativeElement.tagName?.toLowerCase();this.isAnchorElement=c==="a"||c==="area",this.isAnchorElement?this.subscription=t.events.subscribe(l=>{l instanceof ft&&this.updateHref()}):this.setTabIndexIfNotOnNativeEl("0")}setTabIndexIfNotOnNativeEl(t){this.tabIndexAttribute!=null||this.isAnchorElement||this.applyAttributeValue("tabindex",t)}ngOnChanges(t){this.isAnchorElement&&this.updateHref(),this.onChanges.next(this)}set routerLink(t){t==null?(this.routerLinkInput=null,this.setTabIndexIfNotOnNativeEl(null)):(fn(t)?this.routerLinkInput=t:this.routerLinkInput=Array.isArray(t)?t:[t],this.setTabIndexIfNotOnNativeEl("0"))}onClick(t,r,o,i,s){let a=this.urlTree;if(a===null||this.isAnchorElement&&(t!==0||r||o||i||s||typeof this.target=="string"&&this.target!="_self"))return!0;let c={skipLocationChange:this.skipLocationChange,replaceUrl:this.replaceUrl,state:this.state,info:this.info};return this.router.navigateByUrl(a,c),!this.isAnchorElement}ngOnDestroy(){this.subscription?.unsubscribe()}updateHref(){let t=this.urlTree;this.href=t!==null&&this.locationStrategy?this.locationStrategy?.prepareExternalUrl(this.router.serializeUrl(t)):null;let r=this.href===null?null:oh(this.href,this.el.nativeElement.tagName.toLowerCase(),"href");this.applyAttributeValue("href",r)}applyAttributeValue(t,r){let o=this.renderer,i=this.el.nativeElement;r!==null?o.setAttribute(i,t,r):o.removeAttribute(i,t)}get urlTree(){return this.routerLinkInput===null?null:fn(this.routerLinkInput)?this.routerLinkInput:this.router.createUrlTree(this.routerLinkInput,{relativeTo:this.relativeTo!==void 0?this.relativeTo:this.route,queryParams:this.queryParams,fragment:this.fragment,queryParamsHandling:this.queryParamsHandling,preserveFragment:this.preserveFragment})}static{this.\u0275fac=function(r){return new(r||e)(q(_t),q(zt),bc("tabindex"),q(Wn),q(cn),q(wt))}}static{this.\u0275dir=jt({type:e,selectors:[["","routerLink",""]],hostVars:1,hostBindings:function(r,o){r&1&&Q("click",function(s){return o.onClick(s.button,s.ctrlKey,s.shiftKey,s.altKey,s.metaKey)}),r&2&&Xc("target",o.target)},inputs:{target:"target",queryParams:"queryParams",fragment:"fragment",queryParamsHandling:"queryParamsHandling",state:"state",info:"info",relativeTo:"relativeTo",preserveFragment:[2,"preserveFragment","preserveFragment",$r],skipLocationChange:[2,"skipLocationChange","skipLocationChange",$r],replaceUrl:[2,"replaceUrl","replaceUrl",$r],routerLink:"routerLink"},standalone:!0,features:[Yc,Hn]})}}return e})();var Es=class{};var uI=(()=>{class e{constructor(t,r,o,i,s){this.router=t,this.injector=o,this.preloadingStrategy=i,this.loader=s}setUpPreloading(){this.subscription=this.router.events.pipe(Me(t=>t instanceof ft),Tt(()=>this.preload())).subscribe(()=>{})}preload(){return this.processRoutes(this.injector,this.router.config)}ngOnDestroy(){this.subscription&&this.subscription.unsubscribe()}processRoutes(t,r){let o=[];for(let i of r){i.providers&&!i._injector&&(i._injector=Gi(i.providers,t,`Route: ${i.path}`));let s=i._injector??t,a=i._loadedInjector??s;(i.loadChildren&&!i._loadedRoutes&&i.canLoad===void 0||i.loadComponent&&!i._loadedComponent)&&o.push(this.preloadConfig(s,i)),(i.children||i._loadedRoutes)&&o.push(this.processRoutes(a,i.children??i._loadedRoutes))}return J(o).pipe(En())}preloadConfig(t,r){return this.preloadingStrategy.preload(r,()=>{let o;r.loadChildren&&r.canLoad===void 0?o=this.loader.loadChildren(t,r):o=_(null);let i=o.pipe(ee(s=>s===null?_(void 0):(r._loadedRoutes=s.routes,r._loadedInjector=s.injector,this.processRoutes(s.injector??t,s.routes))));if(r.loadComponent&&!r._loadedComponent){let s=this.loader.loadComponent(r);return J([i,s]).pipe(En())}else return i})}static{this.\u0275fac=function(r){return new(r||e)(x(_t),x(Yi),x(xe),x(Es),x(nu))}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac,providedIn:"root"})}}return e})(),ou=new b(""),Rg=(()=>{class e{constructor(t,r,o,i,s={}){this.urlSerializer=t,this.transitions=r,this.viewportScroller=o,this.zone=i,this.options=s,this.lastId=0,this.lastSource="imperative",this.restoredId=0,this.store={},s.scrollPositionRestoration||="disabled",s.anchorScrolling||="disabled"}init(){this.options.scrollPositionRestoration!=="disabled"&&this.viewportScroller.setHistoryScrollRestoration("manual"),this.routerEventsSubscription=this.createScrollEvents(),this.scrollEventsSubscription=this.consumeScrollEvents()}createScrollEvents(){return this.transitions.events.subscribe(t=>{t instanceof or?(this.store[this.lastId]=this.viewportScroller.getScrollPosition(),this.lastSource=t.navigationTrigger,this.restoredId=t.restoredState?t.restoredState.navigationId:0):t instanceof ft?(this.lastId=t.id,this.scheduleScrollEvent(t,this.urlSerializer.parse(t.urlAfterRedirects).fragment)):t instanceof Ht&&t.code===hs.IgnoredSameUrlNavigation&&(this.lastSource=void 0,this.restoredId=0,this.scheduleScrollEvent(t,this.urlSerializer.parse(t.url).fragment))})}consumeScrollEvents(){return this.transitions.events.subscribe(t=>{t instanceof gs&&(t.position?this.options.scrollPositionRestoration==="top"?this.viewportScroller.scrollToPosition([0,0]):this.options.scrollPositionRestoration==="enabled"&&this.viewportScroller.scrollToPosition(t.position):t.anchor&&this.options.anchorScrolling==="enabled"?this.viewportScroller.scrollToAnchor(t.anchor):this.options.scrollPositionRestoration!=="disabled"&&this.viewportScroller.scrollToPosition([0,0]))})}scheduleScrollEvent(t,r){this.zone.runOutsideAngular(()=>{setTimeout(()=>{this.zone.run(()=>{this.transitions.events.next(new gs(t,this.lastSource==="popstate"?this.store[this.restoredId]:null,r))})},0)})}ngOnDestroy(){this.routerEventsSubscription?.unsubscribe(),this.scrollEventsSubscription?.unsubscribe()}static{this.\u0275fac=function(r){yh()}}static{this.\u0275prov=I({token:e,factory:e.\u0275fac})}}return e})();function kg(e,...n){return on([{provide:ao,multi:!0,useValue:e},[],{provide:zt,useFactory:Fg,deps:[_t]},{provide:ln,multi:!0,useFactory:jg},n.map(t=>t.\u0275providers)])}function Fg(e){return e.routerState.root}function ur(e,n){return{\u0275kind:e,\u0275providers:n}}function Lg(e={}){return ur(4,[{provide:ou,useFactory:()=>{let t=g(hl),r=g(W),o=g(_s),i=g(ar);return new Rg(i,o,t,r,e)}}])}function jg(){let e=g(Ke);return n=>{let t=e.get(ut);if(n!==t.components[0])return;let r=e.get(_t),o=e.get(Vg);e.get(iu)===1&&r.initialNavigation(),e.get(Bg,null,N.Optional)?.setUpPreloading(),e.get(ou,null,N.Optional)?.init(),r.resetRootComponentType(t.componentTypes[0]),o.closed||(o.next(),o.complete(),o.unsubscribe())}}var Vg=new b("",{factory:()=>new he}),iu=new b("",{providedIn:"root",factory:()=>1});function dI(){return ur(2,[{provide:iu,useValue:0},{provide:Zi,multi:!0,deps:[Ke],useFactory:n=>{let t=n.get(bp,Promise.resolve());return()=>t.then(()=>new Promise(r=>{let o=n.get(_t),i=n.get(Vg);Pg(o,()=>{r(!0)}),n.get(_s).afterPreactivation=()=>(r(!0),i.closed?_(void 0):i),o.initialNavigation()}))}}])}function fI(){return ur(3,[{provide:Zi,multi:!0,useFactory:()=>{let n=g(_t);return()=>{n.setUpLocationChangeListener()}}},{provide:iu,useValue:2}])}var Bg=new b("");function hI(e){return ur(0,[{provide:Bg,useExisting:uI},{provide:Es,useExisting:e}])}function pI(){return ur(8,[Kp,{provide:Is,useExisting:Kp}])}function gI(e){let n=[{provide:Og,useValue:JE},{provide:Ng,useValue:D({skipNextTransition:!!e?.skipInitialTransition},e)}];return ur(9,n)}var tg=new b("ROUTER_FORROOT_GUARD"),mI=[Qn,{provide:ar,useClass:rr},_t,uo,{provide:zt,useFactory:Fg,deps:[_t]},nu,[]],dr=(()=>{class e{constructor(t){}static forRoot(t,r){return{ngModule:e,providers:[mI,[],{provide:ao,multi:!0,useValue:t},{provide:tg,useFactory:DI,deps:[[_t,new Ei,new cc]]},{provide:ho,useValue:r||{}},r?.useHash?yI():CI(),vI(),r?.preloadingStrategy?hI(r.preloadingStrategy).\u0275providers:[],r?.initialNavigation?wI(r):[],r?.bindToComponentInputs?pI().\u0275providers:[],r?.enableViewTransitions?gI().\u0275providers:[],EI()]}}static forChild(t){return{ngModule:e,providers:[{provide:ao,multi:!0,useValue:t}]}}static{this.\u0275fac=function(r){return new(r||e)(x(tg,8))}}static{this.\u0275mod=Or({type:e})}static{this.\u0275inj=xr({})}}return e})();function vI(){return{provide:ou,useFactory:()=>{let e=g(hl),n=g(W),t=g(ho),r=g(_s),o=g(ar);return t.scrollOffset&&e.setOffset(t.scrollOffset),new Rg(o,r,e,n,t)}}}function yI(){return{provide:wt,useClass:Mp}}function CI(){return{provide:wt,useClass:ll}}function DI(e){return"guarded"}function wI(e){return[e.initialNavigation==="disabled"?fI().\u0275providers:[],e.initialNavigation==="enabledBlocking"?dI().\u0275providers:[]]}var ng=new b("");function EI(){return[{provide:ng,useFactory:jg},{provide:ln,multi:!0,useExisting:ng}]}var II=e=>({large:e});function bI(e,n){if(e&1&&R(0,"img",5),e&2){let t=V();Vr("alt",t.title),w("src",t.image,yt)}}function _I(e,n){if(e&1&&(h(0,"video",6),R(1,"source",7),f()),e&2){let t=V();w("poster",t.image,yt),y(),w("src",t.video,yt)}}function MI(e,n){if(e&1&&(h(0,"h2",3),p(1),f()),e&2){let t=V();y(),$e(t.description)}}var Wt=class e{title="";description=null;image=null;video=null;large=!1;static \u0275fac=function(t){return new(t||e)};static \u0275cmp=te({type:e,selectors:[["app-intro"]],inputs:{title:"title",description:"description",image:"image",video:"video",large:"large"},standalone:!0,features:[re],decls:9,vars:9,consts:[[3,"ngClass"],["loading","lazy",3,"src","alt",4,"ngIf"],["muted","true","loop","","autoplay","",3,"poster",4,"ngIf"],["lang","en"],["lang","en",4,"ngIf"],["loading","lazy",3,"src","alt"],["muted","true","loop","","autoplay","",3,"poster"],["type","video/mp4",3,"src"]],template:function(t,r){t&1&&(h(0,"section",0),ne(1,bI,1,2,"img",1)(2,_I,2,2,"video",2),h(3,"article")(4,"div")(5,"h1",3),p(6),f(),ne(7,MI,2,1,"h2",4),f()()(),R(8,"aside")),t&2&&(w("ngClass",Y(7,II,r.large)),y(),w("ngIf",r.image&&!r.video),y(),w("ngIf",r.image&&r.video),y(3),et("compact",r.description===null),y(),$e(r.title),y(),w("ngIf",r.description))},dependencies:[Et,Yn,Sp],styles:["section[_ngcontent-%COMP%]{align-items:flex-end;flex-direction:row;position:relative;display:flex;height:50vh;width:100%}section.large[_ngcontent-%COMP%]{height:calc(100vh - 248px)}section[_ngcontent-%COMP%] > img[_ngcontent-%COMP%], section[_ngcontent-%COMP%] > video[_ngcontent-%COMP%]{position:absolute;object-fit:cover;height:100%;width:100%;z-index:-1;left:0;top:0}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%]{background:var(--foreground-color);width:calc(100% - 192px);padding:10px 0 10px 10px;position:absolute;min-width:320px;bottom:-100px;right:0}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]{background-color:var(--background-color);justify-content:center;flex-direction:column;padding:20px;display:flex;width:100%}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > h1[_ngcontent-%COMP%], section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > h2[_ngcontent-%COMP%]{border-top:1px solid var(--foreground-color-dark);padding:10px}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > h1[_ngcontent-%COMP%]{color:var(--foreground-color);text-transform:uppercase;hyphens:auto}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > h1.compact[_ngcontent-%COMP%]{border:none;width:75%}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > h2[_ngcontent-%COMP%]{color:var(--foreground-color-dark)}aside[_ngcontent-%COMP%]{background:linear-gradient(to right,var(--accent-color-dark),var(--accent-color-darker));height:120px;width:100%}@media only screen and (max-width: 1080px){section[_ngcontent-%COMP%]{height:30vh}section.large[_ngcontent-%COMP%]{height:50vh}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > h1[_ngcontent-%COMP%]{font-size:24px}}"]})};var Ug=e=>({"background-color":e}),SI=e=>[e];function xI(e,n){if(e&1&&(h(0,"a",0),p(1),f()),e&2){let t=V();Vr("href",t.link,yt),w("ngStyle",Y(3,Ug,"var("+t.color+")")),y(),$e(t.title)}}function TI(e,n){if(e&1&&(h(0,"a",1),p(1),f()),e&2){let t=V();w("routerLink",Y(3,SI,t.link))("ngStyle",Y(5,Ug,"var("+t.color+")")),y(),$e(t.title)}}var Ms=class e{title="";color="--border-color";link="/";isRemote=!1;ngOnInit(){this.isValidHttpUrl(this.link)&&(this.isRemote=!0)}isValidHttpUrl(n){return/^https?:\/\//i.test(n)}static \u0275fac=function(t){return new(t||e)};static \u0275cmp=te({type:e,selectors:[["app-button"]],inputs:{title:"title",color:"color",link:"link"},standalone:!0,features:[re],decls:2,vars:1,consts:[["target","_blank",3,"href","ngStyle"],[3,"routerLink","ngStyle"]],template:function(t,r){t&1&&ne(0,xI,2,5,"a",0)(1,TI,2,7,"a",1),t&2&&Ee(r.isRemote?0:1)},dependencies:[Et,Xi,dr,lr],styles:["a[_ngcontent-%COMP%]{border-radius:10px 5px;display:inline-block;padding:12.5px 25px;transition:all .5s;margin:20px 0}a[_ngcontent-%COMP%]:hover{color:var(--text-color);filter:brightness(1.25)}"]})};var OI=(e,n)=>({reverse:e,cinema:n}),NI=e=>({"background-color":e}),AI=e=>({underline:e});function PI(e,n){if(e&1&&(h(0,"p"),p(1),f()),e&2){let t=V();y(),$e(t.content)}}function RI(e,n){if(e&1&&R(0,"app-button",3),e&2){let t=V();w("title",t.button)("link",t.action)}}var Zt=class e{title="";content=null;image=null;cinema=!1;color="--accent-color-darker";reverse=!1;action=null;button="Learn More";static \u0275fac=function(t){return new(t||e)};static \u0275cmp=te({type:e,selectors:[["app-section"]],inputs:{title:"title",content:"content",image:"image",cinema:"cinema",color:"color",reverse:"reverse",action:"action",button:"button"},standalone:!0,features:[re],decls:9,vars:14,consts:[[3,"ngClass"],["loading","lazy",3,"src"],[3,"ngStyle"],[3,"title","link"]],template:function(t,r){t&1&&(h(0,"section",0)(1,"aside"),R(2,"img",1),f(),h(3,"article",2)(4,"div")(5,"h2",0),p(6),f(),ne(7,PI,2,1,"p")(8,RI,1,2,"app-button",3),f()()()),t&2&&(w("ngClass",ip(7,OI,r.reverse,r.cinema)),y(2),w("src",r.image,yt),y(),w("ngStyle",Y(10,NI,"var("+r.color+")")),y(2),w("ngClass",Y(12,AI,r.content)),y(),$e(r.title),y(),Ee(r.content?7:-1),y(),Ee(r.action?8:-1))},dependencies:[Et,Yn,Xi,Ms],styles:["section[_ngcontent-%COMP%]{padding:0 0 20px;display:flex}section[_ngcontent-%COMP%] > aside[_ngcontent-%COMP%]{position:relative;min-width:50%}section.cinema[_ngcontent-%COMP%] > aside[_ngcontent-%COMP%]{min-width:60%}section.reverse[_ngcontent-%COMP%] > aside[_ngcontent-%COMP%]{order:2}section[_ngcontent-%COMP%] > aside[_ngcontent-%COMP%] > img[_ngcontent-%COMP%]{position:absolute;object-fit:cover;height:100%;width:100%;z-index:-1;left:0;top:0}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%]{padding:25px 192px 25px 25px;min-height:240px;flex:1}section.reverse[_ngcontent-%COMP%] > article[_ngcontent-%COMP%]{padding:25px 25px 25px 192px;order:1}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]{width:100%}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > h2[_ngcontent-%COMP%]{padding:0 0 20px}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > h2.underline[_ngcontent-%COMP%]{border-bottom:1px solid var(--text-color)}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > p[_ngcontent-%COMP%]{padding:20px 0;line-height:2}@media only screen and (max-width: 1080px){section[_ngcontent-%COMP%]{flex-direction:column}section[_ngcontent-%COMP%] > aside[_ngcontent-%COMP%]{min-height:200px}section.reverse[_ngcontent-%COMP%] > aside[_ngcontent-%COMP%]{order:1}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%]{padding:20px}section.reverse[_ngcontent-%COMP%] > article[_ngcontent-%COMP%]{padding:20px;order:2}}"]})};var Ss=class e{constructor(n){this.titleService=n}ngOnInit(){this.titleService.setTitle("Blockchain built on Trust and Value | Bitcoin Silver")}static \u0275fac=function(t){return new(t||e)(q($t))};static \u0275cmp=te({type:e,selectors:[["app-home"]],standalone:!0,features:[re],decls:4,vars:5,consts:[["title","Bitcoin Silver: A Blockchain Built on Trust, Ethics, and Value","image","assets/images/blockchain.jpg","video","assets/videos/hero.mp4",3,"large"],["image","assets/images/office.jpg","title","Welcome to Bitcoin Silver","content","Our mission is to revolutionize the preservation and growth of value through blockchain technology. We are committed to creating a transparent, community-driven platform that provides a secure and sustainable store of value for the long term. By harnessing advanced technology and fostering collaboration, we empower individuals and organizations to achieve financial sovereignty and long-term stability.","color","--info-color","action","/learn",3,"cinema","reverse"],["image","assets/images/technology.jpg","title","Checkout our innovative Blockchain Solutions","color","--accent-color-darker","action","/solutions",3,"cinema","reverse"]],template:function(t,r){t&1&&(h(0,"section"),R(1,"app-intro",0)(2,"app-section",1)(3,"app-section",2),f()),t&2&&(y(),w("large",!0),y(),w("cinema",!1)("reverse",!1),y(),w("cinema",!0)("reverse",!0))},dependencies:[Wt,Zt]})};var xs=class e{constructor(n){this.titleService=n}ngOnInit(){this.titleService.setTitle("Learn | Bitcoin Silver")}static \u0275fac=function(t){return new(t||e)(q($t))};static \u0275cmp=te({type:e,selectors:[["app-learn"]],standalone:!0,features:[re],decls:88,vars:2,consts:[["title","Learn","description","Advancing technologies for better lives","image","assets/images/learn.jpg"],["id","blockchain"],["image","assets/images/community.jpg","title","Get Started Now!","content","Join us in revolutionizing the digital commodity asset concept and blockchain space. Start your journey with BTCS today and become a part of our community-driven project. Discover how you can contribute, participate, and benefit from a transparent and innovative digital asset ecosystem.","color","--info-color","action","https://bitstorage.finance/spot/trading/BTCSUSDT","button","Buy Bitcoin Silver",3,"cinema","reverse"],[1,"odd"],["id","faq",1,"odd"],["id","roadmap"],[1,"uppercase"]],template:function(t,r){t&1&&(h(0,"section"),R(1,"app-intro",0),h(2,"h2"),p(3,"Blockchain and Bitcoin Silver"),f(),h(4,"article",1)(5,"div")(6,"h3"),p(7,"\u25B7 Mission"),f(),h(8,"p"),p(9,"Our mission is to transform the way value is preserved and enhanced through blockchain technology. We aim to build a transparent, community-driven platform that offers a secure and sustainable reserve of value for the long term. By leveraging advanced technology and fostering cooperation, we empower individuals and organizations to achieve financial sovereignty and stability."),f(),h(10,"h3"),p(11,"\u25B7 Vision"),f(),h(12,"p"),p(13," We envision a world where financial security and growth are within reach for everyone. Our blockchain platform strives to set a new standard for value storage and appreciation, moving beyond traditional financial systems. We see a future where collaboration, innovation, and trust drive our community, creating a more equitable and prosperous global economy."),f(),h(14,"p"),p(15,"Together, through our mission, vision, and values, we are building a blockchain platform that redefines how value is preserved, leaving a legacy of trust, transparency, and community-driven innovation. Join us in creating a brighter, more secure future for all."),f()(),h(16,"div")(17,"h3"),p(18,"\u{1F5F9} Trustworthiness"),f(),h(19,"p"),p(20,"Trust is the foundation of our platform. We are committed to the highest standards of security and reliability, ensuring that our users can depend on us to protect their assets and data with unwavering integrity."),f(),h(21,"h3"),p(22,"\u{1F5F9} Transparency"),f(),h(23,"p"),p(24,"Transparency is central to everything we do. We believe openness and accountability are vital for building a strong, resilient community. Our platform is fully transparent, with all transactions and processes visible to users, fostering mutual trust and understanding."),f(),h(25,"h3"),p(26,"\u{1F5F9} Community-Driven"),f(),h(27,"p"),p(28,"We are driven by our community. Every decision and development is shaped by the input and participation of our users. We value the collective wisdom and creativity of our community, knowing that together, we can achieve far more than we ever could alone."),f(),h(29,"h3"),p(30,"\u{1F5F9} Innovation"),f(),h(31,"p"),p(32,"Innovation fuels our progress. We are dedicated to exploring new technologies and methodologies to continually improve our platform. Our commitment to innovation ensures we stay at the forefront of the blockchain industry, offering unparalleled value and opportunities."),f()()(),R(33,"app-section",2),h(34,"h2",3),p(35,"Frequently Asked Questions"),f(),h(36,"article",4)(37,"div")(38,"h3"),p(39,"\u24D8 What are the main goals of the BTCS project?"),f(),h(40,"p"),p(41,"The BTCS project aims to restore credibility in the cryptocurrency space by ensuring a secure and transparent protocol. We focus on addressing previous issues, safeguarding data, and providing a robust platform for all stakeholders."),f(),h(42,"h3"),p(43,"\u24D8 How does BTCS ensure the protection of investor interests?"),f(),h(44,"p"),p(45,"We have implemented comprehensive data safeguarding measures and backup solutions to protect investor interests. Our proactive approach includes continuous monitoring and technical support to maintain the integrity and security of the project."),f(),h(46,"h3"),p(47,"\u24D8 What is the BTCS teams commitment to the community?"),f(),h(48,"p"),p(49,"The BTCS team is dedicated to fostering an open and transparent environment. We are committed to keeping all operations and updates open to community members, ensuring that our project is truly community-driven and aligned with the highest standards of integrity."),f()(),h(50,"div")(51,"h3"),p(52,"\u24D8 How can I get involved with BTCS?"),f(),h(53,"p"),p(54,"You can get involved by joining our community on Discord, exploring our GitHub repository, and participating in our discussions and development efforts. Additionally, you can start mining with our primary pools or track our progress using the Block Explorer."),f(),h(55,"h3"),p(56,"\u24D8 What are the benefits of participating in the BTCS project?"),f(),h(57,"p"),p(58,"By participating in the BTCS project, you benefit from being part of a fair and transparent cryptocurrency initiative. You'll have access to innovative features, the opportunity to contribute to a community-driven project, and the potential for valuable returns as the project grows and succeeds."),f()()(),h(59,"h2"),p(60,"Roadmap"),f(),h(61,"article",5)(62,"div")(63,"h3"),p(64,"\u{1F5F9} [Q3 2024]"),f(),h(65,"p",6),p(66,"Select tech stack, code blockchain, start mining"),f(),h(67,"h3"),p(68,"\u{1F5F9} [Q4 2024]"),f(),h(69,"p",6),p(70,"Improve infrastructure, build community, list on Tier 3 exchange"),f(),h(71,"h3"),p(72,"\u{1F5F9} [Q1 2025]"),f(),h(73,"p",6),p(74,"Maintain infrastructure, enhance sustainability, list on Tier 2 exchange"),f()(),h(75,"div")(76,"h3"),p(77,"\u25A1 [Q2 2025]"),f(),h(78,"p",6),p(79,"Launch P2P mobile exchange"),f(),h(80,"h3"),p(81,"\u25A1 [Q3 2025]"),f(),h(82,"p",6),p(83,"Meet compliance milestones, increase user engagement"),f(),h(84,"h3"),p(85,"\u25A1 [Q4 2025/Q1 2026]"),f(),h(86,"p",6),p(87,"Establish foundation, secure partnerships, list on Tier 1 exchange"),f()()()()),t&2&&(y(33),w("cinema",!1)("reverse",!1))},dependencies:[Wt,Zt],styles:["article[_ngcontent-%COMP%]{background:var(--background-color);padding:0 192px 50px;display:flex;width:100%}article.odd[_ngcontent-%COMP%]{background:var(--accent-color-darker)}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]{flex:1}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]:last-child{margin:0 0 0 50px}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > h3[_ngcontent-%COMP%]{margin:0 0 20px}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > p[_ngcontent-%COMP%]{margin:0 0 25px}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > p.uppercase[_ngcontent-%COMP%]{text-transform:uppercase}h2[_ngcontent-%COMP%]{padding:50px 192px 10px}h2.odd[_ngcontent-%COMP%]{background:var(--accent-color-darker)}@media only screen and (max-width: 1080px){article[_ngcontent-%COMP%]{padding:0 20px 50px;flex-direction:column}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]:last-child{margin:0}h2[_ngcontent-%COMP%]{padding:50px 20px 10px}}"]})};var Ts=class e{constructor(n){this.titleService=n}ngOnInit(){this.titleService.setTitle("Solutions | Bitcoin Silver")}static \u0275fac=function(t){return new(t||e)(q($t))};static \u0275cmp=te({type:e,selectors:[["app-solutions"]],standalone:!0,features:[re],decls:34,vars:6,consts:[["title","Solutions","description","Innovative solutions for the future","image","assets/images/solutions.jpg"],["id","blockchain","image","assets/images/blockchain.jpg","title","Blockchain","content","Bitcoin Silver is a cryptocurrency forked from Bitcoin, designed to enhance transaction speed, security, and user experience. It addresses Bitcoin's scalability issues by implementing a modified consensus mechanism for faster block generation and higher transaction capacity. The blockchain utilizes advanced cryptographic techniques, ensuring a secure environment for digital assets. Bitcoin Silver also emphasizes decentralization, allowing community participation in the validation process to foster trust and reduce central control. Overall, Bitcoin Silver aims to offer a more accessible and efficient alternative in the cryptocurrency space, appealing to both investors and everyday users.","color","--info-color","action","https://github.com/bitcoin-silver",3,"cinema","reverse"],["id","wallet","image","assets/images/wallet.jpg","title","Wallet","content","Our mobile wallet prioritizes user security by generating private keys offline, ensuring maximum protection for your cryptocurrencies. This offline key generation significantly reduces the risk of exposure to online threats, keeping your digital assets safe. The wallet allows you to easily send and receive cryptocurrencies while maintaining full control over your private keys. With a user-friendly interface, you can quickly access your funds, check balances, and track transactions on the go. Designed for security and convenience, our mobile wallet provides a reliable solution for managing your cryptocurrencies safely and efficiently.","color","--accent-color-darker","action","https://github.com/bitcoin-silver/core/releases/download/v1.0.2/bitcoinsilver-android.apk","button","Download Wallet",3,"cinema","reverse"],["image","assets/images/community.jpg","title","Get Started Now!","content","Join us in revolutionizing the digital commodity asset concept and blockchain space. Start your journey with BTCS today and become a part of our community-driven project. Discover how you can contribute, participate, and benefit from a transparent and innovative digital asset ecosystem.","color","--info-color","action","https://bitstorage.finance/spot/trading/BTCSUSDT","button","Buy Bitcoin Silver",3,"cinema","reverse"]],template:function(t,r){t&1&&(h(0,"section"),R(1,"app-intro",0)(2,"app-section",1),h(3,"article")(4,"div")(5,"h3"),p(6,"Algorithm:"),R(7,"br"),p(8,"SHA256"),f(),h(9,"p"),p(10,"Using the SHA256 algorithm to ensure secure and efficient hashing."),f()(),h(11,"div")(12,"h3"),p(13,"Block Time:"),R(14,"br"),p(15,"5 Minutes"),f(),h(16,"p"),p(17,"Fast block generation time for quicker transaction confirmations."),f()(),h(18,"div")(19,"h3"),p(20,"Coin Maturity:"),R(21,"br"),p(22,"200 Blocks"),f(),h(23,"p"),p(24,"Coins become spendable after 200 blocks to enhance network security."),f()(),h(25,"div")(26,"h3"),p(27,"Maximum Supply:"),R(28,"br"),p(29,"21,470,000 BTCS"),f(),h(30,"p"),p(31,"Capped supply to maintain value and avoid inflation."),f()()(),R(32,"app-section",2)(33,"app-section",3),f()),t&2&&(y(2),w("cinema",!1)("reverse",!1),y(30),w("cinema",!1)("reverse",!0),y(),w("cinema",!1)("reverse",!1))},dependencies:[Wt,Zt],styles:["article[_ngcontent-%COMP%]{background:var(--accent-color-dark);padding:50px 192px;display:flex;width:100%}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]{background:var(--accent-color-darker);border:5px solid var(--foreground-color);border-radius:10px 5px;padding:25px;flex:1}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]:not(:first-child){margin:0 0 0 25px}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > h3[_ngcontent-%COMP%]{margin:0 0 10px}@media only screen and (max-width: 1080px){article[_ngcontent-%COMP%]{flex-direction:column;padding:50px 20px}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]{margin:0}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]:not(:first-child){margin:25px 0 0}}"]})};var $g=[{path:"",component:Ss},{path:"learn",component:xs},{path:"solutions",component:Ts},{path:"**",redirectTo:"",pathMatch:"full"}];var Hg={providers:[fp({eventCoalescing:!0}),kg($g,Lg({scrollPositionRestoration:"enabled",anchorScrolling:"enabled"})),Wp()]};var au=e=>({compact:e}),ht=e=>({expanded:e}),po=()=>["/learn"],Os=()=>["/solutions"];function kI(e,n){e&1&&Wi(0)}function FI(e,n){if(e&1){let t=Ct();h(0,"a",7),Q("click",function(){le(t);let o=V();return ue(o.isMobileMenuOpen=!o.isMobileMenuOpen)}),p(1),f(),h(2,"div",9),ne(3,kI,1,0,"ng-container",10),f()}if(e&2){let t=V(),r=el(13);y(),$e(t.isMobileMenuOpen?"\u2715":"\u2630"),y(),et("visible",t.isMobileMenuOpen),y(),w("ngTemplateOutlet",r)}}function LI(e,n){e&1&&Wi(0)}function jI(e,n){if(e&1&&ne(0,LI,1,0,"ng-container",10),e&2){V();let t=el(13);w("ngTemplateOutlet",t)}}function VI(e,n){if(e&1){let t=Ct();h(0,"p",7),Q("click",function(){le(t);let o=V(2);return ue(o.expanded=o.isMobile?1:null)}),p(1,"\u25BC"),f()}}function BI(e,n){if(e&1){let t=Ct();h(0,"p",7),Q("click",function(){le(t);let o=V(2);return ue(o.expanded=o.isMobile?2:null)}),p(1,"\u25BC"),f()}}function UI(e,n){if(e&1){let t=Ct();h(0,"p",7),Q("click",function(){le(t);let o=V(2);return ue(o.expanded=o.isMobile?3:null)}),p(1,"\u25BC"),f()}}function $I(e,n){if(e&1){let t=Ct();h(0,"p",7),Q("click",function(){le(t);let o=V(2);return ue(o.expanded=o.isMobile?4:null)}),p(1,"\u25BC"),f()}}function HI(e,n){if(e&1){let t=Ct();h(0,"p",7),Q("click",function(){le(t);let o=V(2);return ue(o.expanded=o.isMobile?5:null)}),p(1,"\u25BC"),f()}}function zI(e,n){if(e&1){let t=Ct();h(0,"nav",1)(1,"ul")(2,"li")(3,"span")(4,"a",11),Q("click",function(){le(t);let o=V();return ue(o.isMobileMenuOpen=!1)}),p(5,"Learn"),f(),ne(6,VI,2,0,"p"),f(),h(7,"div",1)(8,"article")(9,"h1"),p(10,"Learn"),f(),h(11,"p"),p(12,"Advancing technologies for better lives"),f(),h(13,"div")(14,"a",12),Q("click",function(){le(t);let o=V();return ue(o.isMobileMenuOpen=!1)}),p(15,"Learn more"),f()()(),h(16,"ul")(17,"li")(18,"a",13),Q("click",function(){le(t);let o=V();return ue(o.isMobileMenuOpen=!1)}),p(19,"Blockchain and Bitcoin Silver"),f()(),h(20,"li")(21,"a",14),Q("click",function(){le(t);let o=V();return ue(o.isMobileMenuOpen=!1)}),p(22,"Frequently Asked Questions"),f()(),h(23,"li")(24,"a",15),Q("click",function(){le(t);let o=V();return ue(o.isMobileMenuOpen=!1)}),p(25,"Roadmap"),f()(),h(26,"li")(27,"a",16),p(28,"Explorer"),f()()(),h(29,"aside"),R(30,"img",17),f()()(),h(31,"li")(32,"span")(33,"a",11),Q("click",function(){le(t);let o=V();return ue(o.isMobileMenuOpen=!1)}),p(34,"Solutions"),f(),ne(35,BI,2,0,"p"),f(),h(36,"div",1)(37,"article")(38,"h1"),p(39,"Solutions"),f(),h(40,"p"),p(41,"Innovative solutions for the future"),f(),h(42,"div")(43,"a",12),Q("click",function(){le(t);let o=V();return ue(o.isMobileMenuOpen=!1)}),p(44,"Learn more"),f()()(),h(45,"ul")(46,"li")(47,"a",13),Q("click",function(){le(t);let o=V();return ue(o.isMobileMenuOpen=!1)}),p(48,"Blockchain"),f()(),h(49,"li")(50,"a",18),Q("click",function(){le(t);let o=V();return ue(o.isMobileMenuOpen=!1)}),p(51,"Wallet"),f()()(),h(52,"aside"),R(53,"img",19),f()()(),h(54,"li")(55,"span")(56,"a",1),p(57,"Invest"),f(),ne(58,UI,2,0,"p"),f(),h(59,"div",1)(60,"article")(61,"h1"),p(62,"Invest"),f(),h(63,"p"),p(64,"Financial security and growth for everyone"),f()(),h(65,"ul")(66,"li")(67,"a",20),p(68,"Bitstorage"),f()(),h(69,"li")(70,"a",21),p(71,"Exbitron"),f()()(),h(72,"aside"),R(73,"img",22),f()()(),h(74,"li")(75,"span")(76,"a",1),p(77,"Community"),f(),ne(78,$I,2,0,"p"),f(),h(79,"div",1)(80,"article")(81,"h1"),p(82,"Community"),f(),h(83,"p"),p(84,"Connecting and engaging with the community"),f()(),h(85,"ul")(86,"li")(87,"a",23),p(88,"Discord"),f()(),h(89,"li")(90,"a",24),p(91,"X (Twitter)"),f()(),h(92,"li")(93,"a",25),p(94,"Facebook"),f()(),h(95,"li")(96,"a",26),p(97,"Youtube"),f()()(),h(98,"aside"),R(99,"img",27),f()()(),h(100,"li")(101,"span")(102,"a",1),p(103,"Downloads"),f(),ne(104,HI,2,0,"p"),f(),h(105,"div",1)(106,"article")(107,"h1"),p(108,"Downloads"),f(),h(109,"p"),p(110,"Your gateway to Bitcoin Silver resources"),f()(),h(111,"ul")(112,"li")(113,"a",28),p(114,"Mobile Wallet"),f()(),h(115,"li")(116,"a",29),p(117,"Linux Wallet"),f()(),h(118,"li")(119,"a",30),p(120,"Windows Wallet"),f()(),h(121,"li")(122,"a",31),p(123,"Whitepaper"),f()(),h(124,"li")(125,"a",32),p(126,"Whitepaper (Technical)"),f()()(),h(127,"aside"),R(128,"img",33),f()()(),h(129,"li")(130,"a",34),p(131,"Developers"),f()()()()}if(e&2){let t=V();w("ngClass",Y(35,au,t.isCompact)),y(4),w("ngClass",Y(37,ht,t.expanded===1))("routerLink",Ae(39,po)),y(2),Ee(t.expanded!==1?6:-1),y(),w("ngClass",Y(40,ht,t.expanded===1)),y(7),w("routerLink",Ae(42,po)),y(2),et("expanded",t.expanded===1),y(2),w("routerLink",Ae(43,po)),y(3),w("routerLink",Ae(44,po)),y(3),w("routerLink",Ae(45,po)),y(9),w("ngClass",Y(46,ht,t.expanded===2))("routerLink",Ae(48,Os)),y(2),Ee(t.expanded!==2?35:-1),y(),w("ngClass",Y(49,ht,t.expanded===2)),y(7),w("routerLink",Ae(51,Os)),y(2),et("expanded",t.expanded===2),y(2),w("routerLink",Ae(52,Os)),y(3),w("routerLink",Ae(53,Os)),y(6),w("ngClass",Y(54,ht,t.expanded===3)),y(2),Ee(t.expanded!==3?58:-1),y(),w("ngClass",Y(56,ht,t.expanded===3)),y(6),et("expanded",t.expanded===3),y(11),w("ngClass",Y(58,ht,t.expanded===4)),y(2),Ee(t.expanded!==4?78:-1),y(),w("ngClass",Y(60,ht,t.expanded===4)),y(6),et("expanded",t.expanded===4),y(17),w("ngClass",Y(62,ht,t.expanded===5)),y(2),Ee(t.expanded!==5?104:-1),y(),w("ngClass",Y(64,ht,t.expanded===5)),y(6),et("expanded",t.expanded===5)}}var Ns=class e{isMobile=!1;language="en";isCompact=!1;isMobileMenuOpen=!1;expanded=null;switchLanguage(n){this.language=n}onWindowScroll(){(window.scrollY||document.documentElement.scrollTop||document.body.scrollTop||0)>64?this.isCompact=!0:this.isCompact=!1}static \u0275fac=function(t){return new(t||e)};static \u0275cmp=te({type:e,selectors:[["app-header"]],hostBindings:function(t,r){t&1&&Q("scroll",function(){return r.onWindowScroll()},!1,Li)},inputs:{isMobile:"isMobile"},standalone:!0,features:[re],decls:14,vars:9,consts:[["sharedLinks",""],[3,"ngClass"],[1,"logo"],["href","https://bitcoin-silver.github.io"],["src","assets/images/logo.png"],[1,"navigation"],[1,"shortcuts"],[3,"click"],[1,"categories"],[1,"mobile-navigation"],[4,"ngTemplateOutlet"],[3,"click","ngClass","routerLink"],[3,"click","routerLink"],["fragment","blockchain",3,"click","routerLink"],["fragment","faq",3,"click","routerLink"],["fragment","roadmap",3,"click","routerLink"],["href","http://explorer.btcs.pools4mining.com:3001/","target","_blank"],["src","assets/images/learn.jpg"],["fragment","wallet",3,"click","routerLink"],["src","assets/images/solutions.jpg"],["href","https://bitstorage.finance/spot/trading/BTCSUSDT","target","_blank"],["href","https://app.exbitron.com/exchange/?market=BTCS-USDT","target","_blank"],["src","assets/images/technology.jpg"],["href","https://discord.com/invite/MCGn7dzvgd","target","_blank"],["href","https://x.com/Bitcoin_Silver_","target","_blank"],["href","https://www.facebook.com/BitcoinSilver.BTCS/","target","_blank"],["href","https://youtube.com/@bitcoinsilver","target","_blank"],["src","assets/images/community.jpg"],["href","https://github.com/bitcoin-silver/core/releases/download/v1.0.2/bitcoinsilver-android.apk","target","_blank"],["href","https://github.com/bitcoin-silver/core/releases/download/v1.0.2/bitcoinsilver-linux.tar.gz","target","_blank"],["href","https://github.com/bitcoin-silver/core/releases/download/v1.0.2/bitcoinsilver-windows.zip","target","_blank"],["href","https://bitcoin-silver.github.io/assets/documents/whitepaper.pdf","target","_blank"],["href","https://bitcoin-silver.github.io/assets/documents/whitepaper_technical.pdf","target","_blank"],["src","assets/images/downloads.jpg"],["href","https://github.com/bitcoin-silver","target","_blank"]],template:function(t,r){if(t&1){let o=Ct();R(0,"aside",1),h(1,"header",1)(2,"div",2)(3,"a",3),R(4,"img",4),f()(),h(5,"div",5)(6,"div",6)(7,"a",7),Q("click",function(){return le(o),ue(r.switchLanguage("en"))}),p(8,"EN"),f()(),h(9,"div",8),ne(10,FI,4,4)(11,jI,1,1,"ng-container"),f()()(),ne(12,zI,132,66,"ng-template",null,0,ap)}t&2&&(w("ngClass",Y(5,au,r.isCompact)),y(),w("ngClass",Y(7,au,r.isCompact)),y(6),et("active",r.language==="en"),y(3),Ee(r.isMobile?10:11))},dependencies:[Et,Yn,xp,dr,lr],styles:['aside[_ngcontent-%COMP%]{height:128px}aside.compact[_ngcontent-%COMP%]{height:64px}header[_ngcontent-%COMP%]{background:var(--background-color);transition:height .25s;flex-direction:row;padding:0 192px;position:fixed;display:flex;height:128px;width:100vw;z-index:98;top:0}header.compact[_ngcontent-%COMP%]{flex-direction:row-reverse;height:64px}header[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%]{align-items:flex-end;padding:0 0 35px;display:flex;height:100%;width:220px}header.compact[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%]{align-items:center;padding:0;order:1}header.compact[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%]{width:164px}header[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]{align-items:center;display:flex;width:100%}header[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%] > a[_ngcontent-%COMP%] > img[_ngcontent-%COMP%]{width:100%}header[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%]{flex-direction:column;display:flex;flex:1}header.compact[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%]{flex-direction:row}header[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%] > .shortcuts[_ngcontent-%COMP%]{justify-content:flex-end;align-items:center;padding:20px 0;display:flex}header[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%] > .shortcuts[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]{font-size:14px}header.compact[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%] > .shortcuts[_ngcontent-%COMP%]{order:3}header[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%] > .categories[_ngcontent-%COMP%]{justify-content:flex-end;display:flex;flex:1}header.compact[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%] > .categories[_ngcontent-%COMP%]{justify-content:center;align-items:center;order:2}header[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%]   .mobile-navigation[_ngcontent-%COMP%]{background-color:var(--background-color);height:calc(100vh - 100px);flex-direction:column;transition:right .5s;position:absolute;overflow-y:auto;display:flex;width:100%;top:100px;right:-100%}header[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%]   .mobile-navigation.visible[_ngcontent-%COMP%]{right:0}header.compact[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%]   .mobile-navigation[_ngcontent-%COMP%]{height:calc(100vh - 64px);top:64px}nav[_ngcontent-%COMP%]{height:100%}nav[_ngcontent-%COMP%]   a[_ngcontent-%COMP%]{font-size:20px}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%]{flex-direction:row;display:flex;height:100%}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%], nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%]{list-style:none}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > span[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]{display:block;height:100%}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > span[_ngcontent-%COMP%] > p[_ngcontent-%COMP%]{color:var(--accent-color-dark);text-align:right;cursor:pointer;padding:0 5px;display:none}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%]{margin:0 0 0 20px;position:relative;display:flex;height:100%}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%]:hover:after{background:var(--accent-color-dark);position:absolute;display:block;height:5px;width:50%;content:"";bottom:0;left:25%}nav.compact[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%]{align-items:center}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%]:hover > div[_ngcontent-%COMP%]{pointer-events:auto;opacity:1}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]{border-top:5px solid var(--accent-color-dark);background:var(--background-color);pointer-events:none;min-height:300px;position:fixed;display:flex;width:100%;opacity:0;z-index:2;top:128px;left:0}nav.compact[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]{top:64px}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > article[_ngcontent-%COMP%], nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%], nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > aside[_ngcontent-%COMP%]{flex-direction:column;display:flex;flex:1}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > article[_ngcontent-%COMP%]{background:var(--accent-color-darker);padding:50px 0 50px 192px;width:30%}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > h1[_ngcontent-%COMP%]{color:var(--accent-color)}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > p[_ngcontent-%COMP%]{padding:20px 0}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]{color:var(--accent-color)}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]:hover{color:var(--text-color)}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%]{padding:50px 25px;width:30%}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%]{padding:0 0 10px}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > aside[_ngcontent-%COMP%]{justify-content:right;padding:50px 192px 50px 0;width:40%}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > aside[_ngcontent-%COMP%] > img[_ngcontent-%COMP%]{object-fit:cover;height:150px;width:100%}@media only screen and (max-width: 1080px){aside[_ngcontent-%COMP%]{height:100px}header[_ngcontent-%COMP%]{height:100px}header[_ngcontent-%COMP%], header.compact[_ngcontent-%COMP%]{padding:0 20px}header[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%]{padding:0 0 15px;width:150px}header.compact[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%]{width:120px;padding:0}header[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%] > .shortcuts[_ngcontent-%COMP%]{padding:20px 0 10px}header.compact[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%] > .shortcuts[_ngcontent-%COMP%]{padding:0;order:2;flex:1}header.compact[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%] > .categories[_ngcontent-%COMP%]{flex:none;order:3}header[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%] > .categories[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]{font-size:28px}header.compact[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%] > .categories[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]{margin:0 0 0 25px}nav[_ngcontent-%COMP%]{background:var(--accent-color-darker);overflow-y:auto;min-height:100%;padding:20px;height:auto}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%]{flex-direction:column;height:auto}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%]{border-bottom:1px solid var(--accent-color);flex-direction:column;padding:10px 0;display:flex;margin:0}nav.compact[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%]{align-items:flex-start}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > span[_ngcontent-%COMP%]{justify-content:space-between;display:flex;width:100%}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > span[_ngcontent-%COMP%] > a.expanded[_ngcontent-%COMP%]{color:var(--accent-color)}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > span[_ngcontent-%COMP%] > p[_ngcontent-%COMP%]{display:block}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]{pointer-events:auto;background:none;position:static;min-height:auto;display:none;border:none;width:100%;opacity:1}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div.expanded[_ngcontent-%COMP%]{display:block}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%]{overflow:hidden;width:100%;height:0}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > ul.expanded[_ngcontent-%COMP%]{padding:0 0 10px;height:auto}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > ul.expanded[_ngcontent-%COMP%] > li[_ngcontent-%COMP%]{padding:10px 0 0}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > article[_ngcontent-%COMP%]{display:none}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > aside[_ngcontent-%COMP%]{display:none}}']})};var GI=()=>["/learn"],WI=()=>["/solutions"],As=class e{static \u0275fac=function(t){return new(t||e)};static \u0275cmp=te({type:e,selectors:[["app-footer"]],standalone:!0,features:[re],decls:40,vars:4,consts:[[1,"logo"],["href","http://bitcoin-silver.github.io"],["src","assets/images/logo.png"],[1,"links"],[1,"internal"],[3,"routerLink"],["href","https://github.com/bitcoin-silver","target","_blank"],[1,"external"],["href","https://www.livecoinwatch.com/price/BitcoinSilverv2-____BTCS","target","_blank"],["href","https://miningpoolstats.stream/bitcoinsilver","target","_blank"],["href","https://bitstorage.finance/spot/trading/BTCSUSDT","target","_blank"],["href","https://app.exbitron.com/exchange/?market=BTCS-USDT","target","_blank"],["href","https://discord.com/invite/MCGn7dzvgd","target","_blank"],["xmlns","http://www.w3.org/2000/svg","viewBox","0 0 640 512"],["fill","currentColor","d","M524.5 69.8a1.5 1.5 0 0 0 -.8-.7A485.1 485.1 0 0 0 404.1 32a1.8 1.8 0 0 0 -1.9 .9 337.5 337.5 0 0 0 -14.9 30.6 447.8 447.8 0 0 0 -134.4 0 309.5 309.5 0 0 0 -15.1-30.6 1.9 1.9 0 0 0 -1.9-.9A483.7 483.7 0 0 0 116.1 69.1a1.7 1.7 0 0 0 -.8 .7C39.1 183.7 18.2 294.7 28.4 404.4a2 2 0 0 0 .8 1.4A487.7 487.7 0 0 0 176 479.9a1.9 1.9 0 0 0 2.1-.7A348.2 348.2 0 0 0 208.1 430.4a1.9 1.9 0 0 0 -1-2.6 321.2 321.2 0 0 1 -45.9-21.9 1.9 1.9 0 0 1 -.2-3.1c3.1-2.3 6.2-4.7 9.1-7.1a1.8 1.8 0 0 1 1.9-.3c96.2 43.9 200.4 43.9 295.5 0a1.8 1.8 0 0 1 1.9 .2c2.9 2.4 6 4.9 9.1 7.2a1.9 1.9 0 0 1 -.2 3.1 301.4 301.4 0 0 1 -45.9 21.8 1.9 1.9 0 0 0 -1 2.6 391.1 391.1 0 0 0 30 48.8 1.9 1.9 0 0 0 2.1 .7A486 486 0 0 0 610.7 405.7a1.9 1.9 0 0 0 .8-1.4C623.7 277.6 590.9 167.5 524.5 69.8z"],["href","https://x.com/Bitcoin_Silver_","target","_blank"],["xmlns","http://www.w3.org/2000/svg","viewBox","0 0 512 512"],["fill","currentColor","d","M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"],["href","https://www.facebook.com/BitcoinSilver.BTCS/","target","_blank"],["xmlns","http://www.w3.org/2000/svg","viewBox","0 0 320 512"],["fill","currentColor","d","M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z"],["href","https://youtube.com/@bitcoinsilver","target","_blank"],["xmlns","http://www.w3.org/2000/svg","viewBox","0 0 576 512"],["fill","currentColor","d","M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"]],template:function(t,r){t&1&&(h(0,"footer")(1,"div",0)(2,"a",1),R(3,"img",2),f()(),h(4,"div",3)(5,"div",4)(6,"a",5),p(7,"Learn"),f(),h(8,"a",5),p(9,"Solutions"),f(),h(10,"a",6),p(11,"Developers"),f()(),h(12,"p"),p(13,"Related Websites"),f(),h(14,"div",7)(15,"a",8),p(16,"Livecoinwatch"),f(),h(17,"a",9),p(18,"Miningpoolstats"),f()(),h(19,"div",7)(20,"a",10),p(21,"Bitstorage"),f(),h(22,"a",11),p(23,"Exbitron"),f()()()(),h(24,"aside")(25,"p"),p(26,"\xA9 2024 Bitcoin Silver. All rights reserved."),f(),h(27,"div")(28,"a",12),Rr(),h(29,"svg",13),R(30,"path",14),f()(),Ti(),h(31,"a",15),Rr(),h(32,"svg",16),R(33,"path",17),f()(),Ti(),h(34,"a",18),Rr(),h(35,"svg",19),R(36,"path",20),f()(),Ti(),h(37,"a",21),Rr(),h(38,"svg",22),R(39,"path",23),f()()()()),t&2&&(y(6),w("routerLink",Ae(2,GI)),y(2),w("routerLink",Ae(3,WI)))},dependencies:[dr,lr],styles:["footer[_ngcontent-%COMP%]{background:var(--accent-color-dark);padding:50px 192px;flex-direction:row;display:flex;width:100%}footer[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%]{transition:width .25s;align-items:flex-end;margin:0 100px 0 0;display:flex;height:100%;width:164px}footer[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]{align-items:center;display:flex;width:100%}footer[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%] > a[_ngcontent-%COMP%] > img[_ngcontent-%COMP%]{width:100%}footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%]{flex-direction:column;height:100px;display:flex;flex:1}footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%] > .internal[_ngcontent-%COMP%], footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%] > .external[_ngcontent-%COMP%]{flex-direction:row;flex-wrap:wrap;display:flex}footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%] > .internal[_ngcontent-%COMP%]{margin:0 0 25px}footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%] > .internal[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]{font-size:20px}footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%] > .internal[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]:not(:first-child), footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%] > .external[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]:not(:first-child){margin:0 0 0 20px}footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%] > p[_ngcontent-%COMP%]{color:var(--foreground-color);font-size:14px}footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%] > .external[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]{color:var(--accent-color)}footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%] > .external[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]:hover{color:var(--text-color)}aside[_ngcontent-%COMP%]{background:var(--accent-color-darker);padding:10px 192px 50px;display:flex;width:100%}aside[_ngcontent-%COMP%] > p[_ngcontent-%COMP%]{color:var(--foreground-color);font-size:14px}aside[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]{justify-content:flex-end;display:flex;flex:1}aside[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > a[_ngcontent-%COMP%] > svg[_ngcontent-%COMP%]{color:var(--foreground-color);height:16px}aside[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]{margin:0 0 0 10px}aside[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > a[_ngcontent-%COMP%] > svg[_ngcontent-%COMP%]:hover{color:var(--accent-color)}@media only screen and (max-width: 1080px){footer[_ngcontent-%COMP%]{flex-direction:column;padding:50px 20px}footer[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%]{padding:0 0 25px;width:150px}footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%]{flex:none}aside[_ngcontent-%COMP%]{padding:10px 20px 50px}}"]})};function qI(e,n){e&1&&(h(0,"aside")(1,"div")(2,"p"),p(3,"\u25E0"),f(),h(4,"p"),p(5,"\u25E1"),f()()())}function ZI(e,n){if(e&1&&(h(0,"main"),R(1,"app-header",0)(2,"router-outlet")(3,"app-footer"),f()),e&2){let t=V();y(),w("isMobile",t.isMobile)}}var Ps=class e{constructor(n){this.platformId=n}isMobile=!1;isLoading=!0;ngOnInit(){this.checkIfMobile()}ngAfterViewInit(){setTimeout(()=>{this.isLoading=!1},1e3)}onWindowResize(){this.checkIfMobile()}checkIfMobile(){fl(this.platformId)&&(this.isMobile=window.innerWidth<=1080)}static \u0275fac=function(t){return new(t||e)(q(Ne))};static \u0275cmp=te({type:e,selectors:[["app-root"]],hostBindings:function(t,r){t&1&&Q("resize",function(){return r.onWindowResize()},!1,Li)},standalone:!0,features:[re],decls:2,vars:1,consts:[[3,"isMobile"]],template:function(t,r){t&1&&ne(0,qI,6,0,"aside")(1,ZI,4,1,"main"),t&2&&Ee(r.isLoading?0:1)},dependencies:[eu,Ns,As],styles:["aside[_ngcontent-%COMP%]{background:var(--background-color);justify-content:center;align-items:center;position:fixed;display:flex;height:100%;width:100%;z-index:99;inset:0}aside[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]{animation:_ngcontent-%COMP%_rotate .5s linear infinite;justify-content:center;flex-direction:column;align-items:center;display:flex}aside[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > p[_ngcontent-%COMP%]{font-size:96px;line-height:0;margin:0}aside[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > p[_ngcontent-%COMP%]:nth-child(1){color:var(--accent-color)}aside[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > p[_ngcontent-%COMP%]:nth-child(2){color:var(--accent-color-dark)}@keyframes _ngcontent-%COMP%_rotate{0%{transform:rotate(0)}to{transform:rotate(360deg)}}main[_ngcontent-%COMP%]{flex-direction:column;min-height:100vh;display:flex}section[_ngcontent-%COMP%]{flex:1}"]})};Gp(Ps,Hg).catch(e=>console.error(e));
+  `)}` : "", this.name = "UnsubscriptionError", this.errors = t
+});
+
+function fr(e, n) {
+    if (e) {
+        let t = e.indexOf(n);
+        0 <= t && e.splice(t, 1)
+    }
+}
+var X = class e {
+    constructor(n) {
+        this.initialTeardown = n, this.closed = !1, this._parentage = null, this._finalizers = null
+    }
+    unsubscribe() {
+        let n;
+        if (!this.closed) {
+            this.closed = !0;
+            let {
+                _parentage: t
+            } = this;
+            if (t)
+                if (this._parentage = null, Array.isArray(t))
+                    for (let i of t) i.remove(this);
+                else t.remove(this);
+            let {
+                initialTeardown: r
+            } = this;
+            if (S(r)) try {
+                r()
+            } catch (i) {
+                n = i instanceof mo ? i.errors : [i]
+            }
+            let {
+                _finalizers: o
+            } = this;
+            if (o) {
+                this._finalizers = null;
+                for (let i of o) try {
+                    mu(i)
+                } catch (s) {
+                    n = n ?? [], s instanceof mo ? n = [...n, ...s.errors] : n.push(s)
+                }
+            }
+            if (n) throw new mo(n)
+        }
+    }
+    add(n) {
+        var t;
+        if (n && n !== this)
+            if (this.closed) mu(n);
+            else {
+                if (n instanceof e) {
+                    if (n.closed || n._hasParent(this)) return;
+                    n._addParent(this)
+                }(this._finalizers = (t = this._finalizers) !== null && t !== void 0 ? t : []).push(n)
+            }
+    }
+    _hasParent(n) {
+        let {
+            _parentage: t
+        } = this;
+        return t === n || Array.isArray(t) && t.includes(n)
+    }
+    _addParent(n) {
+        let {
+            _parentage: t
+        } = this;
+        this._parentage = Array.isArray(t) ? (t.push(n), t) : t ? [t, n] : n
+    }
+    _removeParent(n) {
+        let {
+            _parentage: t
+        } = this;
+        t === n ? this._parentage = null : Array.isArray(t) && fr(t, n)
+    }
+    remove(n) {
+        let {
+            _finalizers: t
+        } = this;
+        t && fr(t, n), n instanceof e && n._removeParent(this)
+    }
+};
+X.EMPTY = (() => {
+    let e = new X;
+    return e.closed = !0, e
+})();
+var zs = X.EMPTY;
+
+function vo(e) {
+    return e instanceof X || e && "closed" in e && S(e.remove) && S(e.add) && S(e.unsubscribe)
+}
+
+function mu(e) {
+    S(e) ? e() : e.unsubscribe()
+}
+var Ge = {
+    onUnhandledError: null,
+    onStoppedNotification: null,
+    Promise: void 0,
+    useDeprecatedSynchronousErrorHandling: !1,
+    useDeprecatedNextContext: !1
+};
+var gn = {
+    setTimeout(e, n, ...t) {
+        let {
+            delegate: r
+        } = gn;
+        return r?.setTimeout ? r.setTimeout(e, n, ...t) : setTimeout(e, n, ...t)
+    },
+    clearTimeout(e) {
+        let {
+            delegate: n
+        } = gn;
+        return (n?.clearTimeout || clearTimeout)(e)
+    },
+    delegate: void 0
+};
+
+function yo(e) {
+    gn.setTimeout(() => {
+        let {
+            onUnhandledError: n
+        } = Ge;
+        if (n) n(e);
+        else throw e
+    })
+}
+
+function hr() {}
+var vu = Gs("C", void 0, void 0);
+
+function yu(e) {
+    return Gs("E", void 0, e)
+}
+
+function Cu(e) {
+    return Gs("N", e, void 0)
+}
+
+function Gs(e, n, t) {
+    return {
+        kind: e,
+        value: n,
+        error: t
+    }
+}
+var Qt = null;
+
+function mn(e) {
+    if (Ge.useDeprecatedSynchronousErrorHandling) {
+        let n = !Qt;
+        if (n && (Qt = {
+                errorThrown: !1,
+                error: null
+            }), e(), n) {
+            let {
+                errorThrown: t,
+                error: r
+            } = Qt;
+            if (Qt = null, t) throw r
+        }
+    } else e()
+}
+
+function Du(e) {
+    Ge.useDeprecatedSynchronousErrorHandling && Qt && (Qt.errorThrown = !0, Qt.error = e)
+}
+var Yt = class extends X {
+        constructor(n) {
+            super(), this.isStopped = !1, n ? (this.destination = n, vo(n) && n.add(this)) : this.destination = tm
+        }
+        static create(n, t, r) {
+            return new vn(n, t, r)
+        }
+        next(n) {
+            this.isStopped ? qs(Cu(n), this) : this._next(n)
+        }
+        error(n) {
+            this.isStopped ? qs(yu(n), this) : (this.isStopped = !0, this._error(n))
+        }
+        complete() {
+            this.isStopped ? qs(vu, this) : (this.isStopped = !0, this._complete())
+        }
+        unsubscribe() {
+            this.closed || (this.isStopped = !0, super.unsubscribe(), this.destination = null)
+        }
+        _next(n) {
+            this.destination.next(n)
+        }
+        _error(n) {
+            try {
+                this.destination.error(n)
+            } finally {
+                this.unsubscribe()
+            }
+        }
+        _complete() {
+            try {
+                this.destination.complete()
+            } finally {
+                this.unsubscribe()
+            }
+        }
+    },
+    Xg = Function.prototype.bind;
+
+function Ws(e, n) {
+    return Xg.call(e, n)
+}
+var Zs = class {
+        constructor(n) {
+            this.partialObserver = n
+        }
+        next(n) {
+            let {
+                partialObserver: t
+            } = this;
+            if (t.next) try {
+                t.next(n)
+            } catch (r) {
+                Co(r)
+            }
+        }
+        error(n) {
+            let {
+                partialObserver: t
+            } = this;
+            if (t.error) try {
+                t.error(n)
+            } catch (r) {
+                Co(r)
+            } else Co(n)
+        }
+        complete() {
+            let {
+                partialObserver: n
+            } = this;
+            if (n.complete) try {
+                n.complete()
+            } catch (t) {
+                Co(t)
+            }
+        }
+    },
+    vn = class extends Yt {
+        constructor(n, t, r) {
+            super();
+            let o;
+            if (S(n) || !n) o = {
+                next: n ?? void 0,
+                error: t ?? void 0,
+                complete: r ?? void 0
+            };
+            else {
+                let i;
+                this && Ge.useDeprecatedNextContext ? (i = Object.create(n), i.unsubscribe = () => this.unsubscribe(), o = {
+                    next: n.next && Ws(n.next, i),
+                    error: n.error && Ws(n.error, i),
+                    complete: n.complete && Ws(n.complete, i)
+                }) : o = n
+            }
+            this.destination = new Zs(o)
+        }
+    };
+
+function Co(e) {
+    Ge.useDeprecatedSynchronousErrorHandling ? Du(e) : yo(e)
+}
+
+function em(e) {
+    throw e
+}
+
+function qs(e, n) {
+    let {
+        onStoppedNotification: t
+    } = Ge;
+    t && gn.setTimeout(() => t(e, n))
+}
+var tm = {
+    closed: !0,
+    next: hr,
+    error: em,
+    complete: hr
+};
+var yn = typeof Symbol == "function" && Symbol.observable || "@@observable";
+
+function be(e) {
+    return e
+}
+
+function Qs(...e) {
+    return Ys(e)
+}
+
+function Ys(e) {
+    return e.length === 0 ? be : e.length === 1 ? e[0] : function(t) {
+        return e.reduce((r, o) => o(r), t)
+    }
+}
+var U = (() => {
+    class e {
+        constructor(t) {
+            t && (this._subscribe = t)
+        }
+        lift(t) {
+            let r = new e;
+            return r.source = this, r.operator = t, r
+        }
+        subscribe(t, r, o) {
+            let i = rm(t) ? t : new vn(t, r, o);
+            return mn(() => {
+                let {
+                    operator: s,
+                    source: a
+                } = this;
+                i.add(s ? s.call(i, a) : a ? this._subscribe(i) : this._trySubscribe(i))
+            }), i
+        }
+        _trySubscribe(t) {
+            try {
+                return this._subscribe(t)
+            } catch (r) {
+                t.error(r)
+            }
+        }
+        forEach(t, r) {
+            return r = wu(r), new r((o, i) => {
+                let s = new vn({
+                    next: a => {
+                        try {
+                            t(a)
+                        } catch (c) {
+                            i(c), s.unsubscribe()
+                        }
+                    },
+                    error: i,
+                    complete: o
+                });
+                this.subscribe(s)
+            })
+        }
+        _subscribe(t) {
+            var r;
+            return (r = this.source) === null || r === void 0 ? void 0 : r.subscribe(t)
+        } [yn]() {
+            return this
+        }
+        pipe(...t) {
+            return Ys(t)(this)
+        }
+        toPromise(t) {
+            return t = wu(t), new t((r, o) => {
+                let i;
+                this.subscribe(s => i = s, s => o(s), () => r(i))
+            })
+        }
+    }
+    return e.create = n => new e(n), e
+})();
+
+function wu(e) {
+    var n;
+    return (n = e ?? Ge.Promise) !== null && n !== void 0 ? n : Promise
+}
+
+function nm(e) {
+    return e && S(e.next) && S(e.error) && S(e.complete)
+}
+
+function rm(e) {
+    return e && e instanceof Yt || nm(e) && vo(e)
+}
+
+function Ks(e) {
+    return S(e?.lift)
+}
+
+function F(e) {
+    return n => {
+        if (Ks(n)) return n.lift(function(t) {
+            try {
+                return e(t, this)
+            } catch (r) {
+                this.error(r)
+            }
+        });
+        throw new TypeError("Unable to lift unknown Observable type")
+    }
+}
+
+function L(e, n, t, r, o) {
+    return new Js(e, n, t, r, o)
+}
+var Js = class extends Yt {
+    constructor(n, t, r, o, i, s) {
+        super(n), this.onFinalize = i, this.shouldUnsubscribe = s, this._next = t ? function(a) {
+            try {
+                t(a)
+            } catch (c) {
+                n.error(c)
+            }
+        } : super._next, this._error = o ? function(a) {
+            try {
+                o(a)
+            } catch (c) {
+                n.error(c)
+            } finally {
+                this.unsubscribe()
+            }
+        } : super._error, this._complete = r ? function() {
+            try {
+                r()
+            } catch (a) {
+                n.error(a)
+            } finally {
+                this.unsubscribe()
+            }
+        } : super._complete
+    }
+    unsubscribe() {
+        var n;
+        if (!this.shouldUnsubscribe || this.shouldUnsubscribe()) {
+            let {
+                closed: t
+            } = this;
+            super.unsubscribe(), !t && ((n = this.onFinalize) === null || n === void 0 || n.call(this))
+        }
+    }
+};
+
+function Cn() {
+    return F((e, n) => {
+        let t = null;
+        e._refCount++;
+        let r = L(n, void 0, void 0, void 0, () => {
+            if (!e || e._refCount <= 0 || 0 < --e._refCount) {
+                t = null;
+                return
+            }
+            let o = e._connection,
+                i = t;
+            t = null, o && (!i || o === i) && o.unsubscribe(), n.unsubscribe()
+        });
+        e.subscribe(r), r.closed || (t = e.connect())
+    })
+}
+var Dn = class extends U {
+    constructor(n, t) {
+        super(), this.source = n, this.subjectFactory = t, this._subject = null, this._refCount = 0, this._connection = null, Ks(n) && (this.lift = n.lift)
+    }
+    _subscribe(n) {
+        return this.getSubject().subscribe(n)
+    }
+    getSubject() {
+        let n = this._subject;
+        return (!n || n.isStopped) && (this._subject = this.subjectFactory()), this._subject
+    }
+    _teardown() {
+        this._refCount = 0;
+        let {
+            _connection: n
+        } = this;
+        this._subject = this._connection = null, n?.unsubscribe()
+    }
+    connect() {
+        let n = this._connection;
+        if (!n) {
+            n = this._connection = new X;
+            let t = this.getSubject();
+            n.add(this.source.subscribe(L(t, void 0, () => {
+                this._teardown(), t.complete()
+            }, r => {
+                this._teardown(), t.error(r)
+            }, () => this._teardown()))), n.closed && (this._connection = null, n = X.EMPTY)
+        }
+        return n
+    }
+    refCount() {
+        return Cn()(this)
+    }
+};
+var Eu = pn(e => function() {
+    e(this), this.name = "ObjectUnsubscribedError", this.message = "object unsubscribed"
+});
+var he = (() => {
+        class e extends U {
+            constructor() {
+                super(), this.closed = !1, this.currentObservers = null, this.observers = [], this.isStopped = !1, this.hasError = !1, this.thrownError = null
+            }
+            lift(t) {
+                let r = new Do(this, this);
+                return r.operator = t, r
+            }
+            _throwIfClosed() {
+                if (this.closed) throw new Eu
+            }
+            next(t) {
+                mn(() => {
+                    if (this._throwIfClosed(), !this.isStopped) {
+                        this.currentObservers || (this.currentObservers = Array.from(this.observers));
+                        for (let r of this.currentObservers) r.next(t)
+                    }
+                })
+            }
+            error(t) {
+                mn(() => {
+                    if (this._throwIfClosed(), !this.isStopped) {
+                        this.hasError = this.isStopped = !0, this.thrownError = t;
+                        let {
+                            observers: r
+                        } = this;
+                        for (; r.length;) r.shift().error(t)
+                    }
+                })
+            }
+            complete() {
+                mn(() => {
+                    if (this._throwIfClosed(), !this.isStopped) {
+                        this.isStopped = !0;
+                        let {
+                            observers: t
+                        } = this;
+                        for (; t.length;) t.shift().complete()
+                    }
+                })
+            }
+            unsubscribe() {
+                this.isStopped = this.closed = !0, this.observers = this.currentObservers = null
+            }
+            get observed() {
+                var t;
+                return ((t = this.observers) === null || t === void 0 ? void 0 : t.length) > 0
+            }
+            _trySubscribe(t) {
+                return this._throwIfClosed(), super._trySubscribe(t)
+            }
+            _subscribe(t) {
+                return this._throwIfClosed(), this._checkFinalizedStatuses(t), this._innerSubscribe(t)
+            }
+            _innerSubscribe(t) {
+                let {
+                    hasError: r,
+                    isStopped: o,
+                    observers: i
+                } = this;
+                return r || o ? zs : (this.currentObservers = null, i.push(t), new X(() => {
+                    this.currentObservers = null, fr(i, t)
+                }))
+            }
+            _checkFinalizedStatuses(t) {
+                let {
+                    hasError: r,
+                    thrownError: o,
+                    isStopped: i
+                } = this;
+                r ? t.error(o) : i && t.complete()
+            }
+            asObservable() {
+                let t = new U;
+                return t.source = this, t
+            }
+        }
+        return e.create = (n, t) => new Do(n, t), e
+    })(),
+    Do = class extends he {
+        constructor(n, t) {
+            super(), this.destination = n, this.source = t
+        }
+        next(n) {
+            var t, r;
+            (r = (t = this.destination) === null || t === void 0 ? void 0 : t.next) === null || r === void 0 || r.call(t, n)
+        }
+        error(n) {
+            var t, r;
+            (r = (t = this.destination) === null || t === void 0 ? void 0 : t.error) === null || r === void 0 || r.call(t, n)
+        }
+        complete() {
+            var n, t;
+            (t = (n = this.destination) === null || n === void 0 ? void 0 : n.complete) === null || t === void 0 || t.call(n)
+        }
+        _subscribe(n) {
+            var t, r;
+            return (r = (t = this.source) === null || t === void 0 ? void 0 : t.subscribe(n)) !== null && r !== void 0 ? r : zs
+        }
+    };
+var ce = class extends he {
+    constructor(n) {
+        super(), this._value = n
+    }
+    get value() {
+        return this.getValue()
+    }
+    _subscribe(n) {
+        let t = super._subscribe(n);
+        return !t.closed && n.next(this._value), t
+    }
+    getValue() {
+        let {
+            hasError: n,
+            thrownError: t,
+            _value: r
+        } = this;
+        if (n) throw t;
+        return this._throwIfClosed(), r
+    }
+    next(n) {
+        super.next(this._value = n)
+    }
+};
+var _e = new U(e => e.complete());
+
+function Iu(e) {
+    return e && S(e.schedule)
+}
+
+function bu(e) {
+    return e[e.length - 1]
+}
+
+function _u(e) {
+    return S(bu(e)) ? e.pop() : void 0
+}
+
+function St(e) {
+    return Iu(bu(e)) ? e.pop() : void 0
+}
+
+function Su(e, n, t, r) {
+    function o(i) {
+        return i instanceof t ? i : new t(function(s) {
+            s(i)
+        })
+    }
+    return new(t || (t = Promise))(function(i, s) {
+        function a(u) {
+            try {
+                l(r.next(u))
+            } catch (d) {
+                s(d)
+            }
+        }
+
+        function c(u) {
+            try {
+                l(r.throw(u))
+            } catch (d) {
+                s(d)
+            }
+        }
+
+        function l(u) {
+            u.done ? i(u.value) : o(u.value).then(a, c)
+        }
+        l((r = r.apply(e, n || [])).next())
+    })
+}
+
+function Mu(e) {
+    var n = typeof Symbol == "function" && Symbol.iterator,
+        t = n && e[n],
+        r = 0;
+    if (t) return t.call(e);
+    if (e && typeof e.length == "number") return {
+        next: function() {
+            return e && r >= e.length && (e = void 0), {
+                value: e && e[r++],
+                done: !e
+            }
+        }
+    };
+    throw new TypeError(n ? "Object is not iterable." : "Symbol.iterator is not defined.")
+}
+
+function Kt(e) {
+    return this instanceof Kt ? (this.v = e, this) : new Kt(e)
+}
+
+function xu(e, n, t) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var r = t.apply(e, n || []),
+        o, i = [];
+    return o = Object.create((typeof AsyncIterator == "function" ? AsyncIterator : Object).prototype), a("next"), a("throw"), a("return", s), o[Symbol.asyncIterator] = function() {
+        return this
+    }, o;
+
+    function s(m) {
+        return function(C) {
+            return Promise.resolve(C).then(m, d)
+        }
+    }
+
+    function a(m, C) {
+        r[m] && (o[m] = function(P) {
+            return new Promise(function($, z) {
+                i.push([m, P, $, z]) > 1 || c(m, P)
+            })
+        }, C && (o[m] = C(o[m])))
+    }
+
+    function c(m, C) {
+        try {
+            l(r[m](C))
+        } catch (P) {
+            v(i[0][3], P)
+        }
+    }
+
+    function l(m) {
+        m.value instanceof Kt ? Promise.resolve(m.value.v).then(u, d) : v(i[0][2], m)
+    }
+
+    function u(m) {
+        c("next", m)
+    }
+
+    function d(m) {
+        c("throw", m)
+    }
+
+    function v(m, C) {
+        m(C), i.shift(), i.length && c(i[0][0], i[0][1])
+    }
+}
+
+function Tu(e) {
+    if (!Symbol.asyncIterator) throw new TypeError("Symbol.asyncIterator is not defined.");
+    var n = e[Symbol.asyncIterator],
+        t;
+    return n ? n.call(e) : (e = typeof Mu == "function" ? Mu(e) : e[Symbol.iterator](), t = {}, r("next"), r("throw"), r("return"), t[Symbol.asyncIterator] = function() {
+        return this
+    }, t);
+
+    function r(i) {
+        t[i] = e[i] && function(s) {
+            return new Promise(function(a, c) {
+                s = e[i](s), o(a, c, s.done, s.value)
+            })
+        }
+    }
+
+    function o(i, s, a, c) {
+        Promise.resolve(c).then(function(l) {
+            i({
+                value: l,
+                done: a
+            })
+        }, s)
+    }
+}
+var wo = e => e && typeof e.length == "number" && typeof e != "function";
+
+function Eo(e) {
+    return S(e?.then)
+}
+
+function Io(e) {
+    return S(e[yn])
+}
+
+function bo(e) {
+    return Symbol.asyncIterator && S(e?.[Symbol.asyncIterator])
+}
+
+function _o(e) {
+    return new TypeError(`You provided ${e!==null&&typeof e=="object"?"an invalid object":`'${e}'`} where a stream was expected. You can provide an Observable, Promise, ReadableStream, Array, AsyncIterable, or Iterable.`)
+}
+
+function om() {
+    return typeof Symbol != "function" || !Symbol.iterator ? "@@iterator" : Symbol.iterator
+}
+var Mo = om();
+
+function So(e) {
+    return S(e?.[Mo])
+}
+
+function xo(e) {
+    return xu(this, arguments, function*() {
+        let t = e.getReader();
+        try {
+            for (;;) {
+                let {
+                    value: r,
+                    done: o
+                } = yield Kt(t.read());
+                if (o) return yield Kt(void 0);
+                yield yield Kt(r)
+            }
+        } finally {
+            t.releaseLock()
+        }
+    })
+}
+
+function To(e) {
+    return S(e?.getReader)
+}
+
+function ie(e) {
+    if (e instanceof U) return e;
+    if (e != null) {
+        if (Io(e)) return im(e);
+        if (wo(e)) return sm(e);
+        if (Eo(e)) return am(e);
+        if (bo(e)) return Ou(e);
+        if (So(e)) return cm(e);
+        if (To(e)) return lm(e)
+    }
+    throw _o(e)
+}
+
+function im(e) {
+    return new U(n => {
+        let t = e[yn]();
+        if (S(t.subscribe)) return t.subscribe(n);
+        throw new TypeError("Provided object does not correctly implement Symbol.observable")
+    })
+}
+
+function sm(e) {
+    return new U(n => {
+        for (let t = 0; t < e.length && !n.closed; t++) n.next(e[t]);
+        n.complete()
+    })
+}
+
+function am(e) {
+    return new U(n => {
+        e.then(t => {
+            n.closed || (n.next(t), n.complete())
+        }, t => n.error(t)).then(null, yo)
+    })
+}
+
+function cm(e) {
+    return new U(n => {
+        for (let t of e)
+            if (n.next(t), n.closed) return;
+        n.complete()
+    })
+}
+
+function Ou(e) {
+    return new U(n => {
+        um(e, n).catch(t => n.error(t))
+    })
+}
+
+function lm(e) {
+    return Ou(xo(e))
+}
+
+function um(e, n) {
+    var t, r, o, i;
+    return Su(this, void 0, void 0, function*() {
+        try {
+            for (t = Tu(e); r = yield t.next(), !r.done;) {
+                let s = r.value;
+                if (n.next(s), n.closed) return
+            }
+        } catch (s) {
+            o = {
+                error: s
+            }
+        } finally {
+            try {
+                r && !r.done && (i = t.return) && (yield i.call(t))
+            } finally {
+                if (o) throw o.error
+            }
+        }
+        n.complete()
+    })
+}
+
+function Ce(e, n, t, r = 0, o = !1) {
+    let i = n.schedule(function() {
+        t(), o ? e.add(this.schedule(null, r)) : this.unsubscribe()
+    }, r);
+    if (e.add(i), !o) return i
+}
+
+function Oo(e, n = 0) {
+    return F((t, r) => {
+        t.subscribe(L(r, o => Ce(r, e, () => r.next(o), n), () => Ce(r, e, () => r.complete(), n), o => Ce(r, e, () => r.error(o), n)))
+    })
+}
+
+function No(e, n = 0) {
+    return F((t, r) => {
+        r.add(e.schedule(() => t.subscribe(r), n))
+    })
+}
+
+function Nu(e, n) {
+    return ie(e).pipe(No(n), Oo(n))
+}
+
+function Au(e, n) {
+    return ie(e).pipe(No(n), Oo(n))
+}
+
+function Pu(e, n) {
+    return new U(t => {
+        let r = 0;
+        return n.schedule(function() {
+            r === e.length ? t.complete() : (t.next(e[r++]), t.closed || this.schedule())
+        })
+    })
+}
+
+function Ru(e, n) {
+    return new U(t => {
+        let r;
+        return Ce(t, n, () => {
+            r = e[Mo](), Ce(t, n, () => {
+                let o, i;
+                try {
+                    ({
+                        value: o,
+                        done: i
+                    } = r.next())
+                } catch (s) {
+                    t.error(s);
+                    return
+                }
+                i ? t.complete() : t.next(o)
+            }, 0, !0)
+        }), () => S(r?.return) && r.return()
+    })
+}
+
+function Ao(e, n) {
+    if (!e) throw new Error("Iterable cannot be null");
+    return new U(t => {
+        Ce(t, n, () => {
+            let r = e[Symbol.asyncIterator]();
+            Ce(t, n, () => {
+                r.next().then(o => {
+                    o.done ? t.complete() : t.next(o.value)
+                })
+            }, 0, !0)
+        })
+    })
+}
+
+function ku(e, n) {
+    return Ao(xo(e), n)
+}
+
+function Fu(e, n) {
+    if (e != null) {
+        if (Io(e)) return Nu(e, n);
+        if (wo(e)) return Pu(e, n);
+        if (Eo(e)) return Au(e, n);
+        if (bo(e)) return Ao(e, n);
+        if (So(e)) return Ru(e, n);
+        if (To(e)) return ku(e, n)
+    }
+    throw _o(e)
+}
+
+function J(e, n) {
+    return n ? Fu(e, n) : ie(e)
+}
+
+function _(...e) {
+    let n = St(e);
+    return J(e, n)
+}
+
+function wn(e, n) {
+    let t = S(e) ? e : () => e,
+        r = o => o.error(t());
+    return new U(n ? o => n.schedule(r, 0, o) : r)
+}
+
+function Xs(e) {
+    return !!e && (e instanceof U || S(e.lift) && S(e.subscribe))
+}
+var pt = pn(e => function() {
+    e(this), this.name = "EmptyError", this.message = "no elements in sequence"
+});
+
+function k(e, n) {
+    return F((t, r) => {
+        let o = 0;
+        t.subscribe(L(r, i => {
+            r.next(e.call(n, i, o++))
+        }))
+    })
+}
+var {
+    isArray: dm
+} = Array;
+
+function fm(e, n) {
+    return dm(n) ? e(...n) : e(n)
+}
+
+function Lu(e) {
+    return k(n => fm(e, n))
+}
+var {
+    isArray: hm
+} = Array, {
+    getPrototypeOf: pm,
+    prototype: gm,
+    keys: mm
+} = Object;
+
+function ju(e) {
+    if (e.length === 1) {
+        let n = e[0];
+        if (hm(n)) return {
+            args: n,
+            keys: null
+        };
+        if (vm(n)) {
+            let t = mm(n);
+            return {
+                args: t.map(r => n[r]),
+                keys: t
+            }
+        }
+    }
+    return {
+        args: e,
+        keys: null
+    }
+}
+
+function vm(e) {
+    return e && typeof e == "object" && pm(e) === gm
+}
+
+function Vu(e, n) {
+    return e.reduce((t, r, o) => (t[r] = n[o], t), {})
+}
+
+function pr(...e) {
+    let n = St(e),
+        t = _u(e),
+        {
+            args: r,
+            keys: o
+        } = ju(e);
+    if (r.length === 0) return J([], n);
+    let i = new U(ym(r, n, o ? s => Vu(o, s) : be));
+    return t ? i.pipe(Lu(t)) : i
+}
+
+function ym(e, n, t = be) {
+    return r => {
+        Bu(n, () => {
+            let {
+                length: o
+            } = e, i = new Array(o), s = o, a = o;
+            for (let c = 0; c < o; c++) Bu(n, () => {
+                let l = J(e[c], n),
+                    u = !1;
+                l.subscribe(L(r, d => {
+                    i[c] = d, u || (u = !0, a--), a || r.next(t(i.slice()))
+                }, () => {
+                    --s || r.complete()
+                }))
+            }, r)
+        }, r)
+    }
+}
+
+function Bu(e, n, t) {
+    e ? Ce(t, e, n) : n()
+}
+
+function Uu(e, n, t, r, o, i, s, a) {
+    let c = [],
+        l = 0,
+        u = 0,
+        d = !1,
+        v = () => {
+            d && !c.length && !l && n.complete()
+        },
+        m = P => l < r ? C(P) : c.push(P),
+        C = P => {
+            i && n.next(P), l++;
+            let $ = !1;
+            ie(t(P, u++)).subscribe(L(n, z => {
+                o?.(z), i ? m(z) : n.next(z)
+            }, () => {
+                $ = !0
+            }, void 0, () => {
+                if ($) try {
+                    for (l--; c.length && l < r;) {
+                        let z = c.shift();
+                        s ? Ce(n, s, () => C(z)) : C(z)
+                    }
+                    v()
+                } catch (z) {
+                    n.error(z)
+                }
+            }))
+        };
+    return e.subscribe(L(n, m, () => {
+        d = !0, v()
+    })), () => {
+        a?.()
+    }
+}
+
+function ee(e, n, t = 1 / 0) {
+    return S(n) ? ee((r, o) => k((i, s) => n(r, i, o, s))(ie(e(r, o))), t) : (typeof n == "number" && (t = n), F((r, o) => Uu(r, o, e, t)))
+}
+
+function En(e = 1 / 0) {
+    return ee(be, e)
+}
+
+function $u() {
+    return En(1)
+}
+
+function In(...e) {
+    return $u()(J(e, St(e)))
+}
+
+function Po(e) {
+    return new U(n => {
+        ie(e()).subscribe(n)
+    })
+}
+
+function Me(e, n) {
+    return F((t, r) => {
+        let o = 0;
+        t.subscribe(L(r, i => e.call(n, i, o++) && r.next(i)))
+    })
+}
+
+function xt(e) {
+    return F((n, t) => {
+        let r = null,
+            o = !1,
+            i;
+        r = n.subscribe(L(t, void 0, void 0, s => {
+            i = ie(e(s, xt(e)(n))), r ? (r.unsubscribe(), r = null, i.subscribe(t)) : o = !0
+        })), o && (r.unsubscribe(), r = null, i.subscribe(t))
+    })
+}
+
+function Hu(e, n, t, r, o) {
+    return (i, s) => {
+        let a = t,
+            c = n,
+            l = 0;
+        i.subscribe(L(s, u => {
+            let d = l++;
+            c = a ? e(c, u, d) : (a = !0, u), r && s.next(c)
+        }, o && (() => {
+            a && s.next(c), s.complete()
+        })))
+    }
+}
+
+function Tt(e, n) {
+    return S(n) ? ee(e, n, 1) : ee(e, 1)
+}
+
+function Ot(e) {
+    return F((n, t) => {
+        let r = !1;
+        n.subscribe(L(t, o => {
+            r = !0, t.next(o)
+        }, () => {
+            r || t.next(e), t.complete()
+        }))
+    })
+}
+
+function gt(e) {
+    return e <= 0 ? () => _e : F((n, t) => {
+        let r = 0;
+        n.subscribe(L(t, o => {
+            ++r <= e && (t.next(o), e <= r && t.complete())
+        }))
+    })
+}
+
+function ea(e) {
+    return k(() => e)
+}
+
+function Ro(e = Cm) {
+    return F((n, t) => {
+        let r = !1;
+        n.subscribe(L(t, o => {
+            r = !0, t.next(o)
+        }, () => r ? t.complete() : t.error(e())))
+    })
+}
+
+function Cm() {
+    return new pt
+}
+
+function bn(e) {
+    return F((n, t) => {
+        try {
+            n.subscribe(t)
+        } finally {
+            t.add(e)
+        }
+    })
+}
+
+function We(e, n) {
+    let t = arguments.length >= 2;
+    return r => r.pipe(e ? Me((o, i) => e(o, i, r)) : be, gt(1), t ? Ot(n) : Ro(() => new pt))
+}
+
+function _n(e) {
+    return e <= 0 ? () => _e : F((n, t) => {
+        let r = [];
+        n.subscribe(L(t, o => {
+            r.push(o), e < r.length && r.shift()
+        }, () => {
+            for (let o of r) t.next(o);
+            t.complete()
+        }, void 0, () => {
+            r = null
+        }))
+    })
+}
+
+function ta(e, n) {
+    let t = arguments.length >= 2;
+    return r => r.pipe(e ? Me((o, i) => e(o, i, r)) : be, _n(1), t ? Ot(n) : Ro(() => new pt))
+}
+
+function na(e, n) {
+    return F(Hu(e, n, arguments.length >= 2, !0))
+}
+
+function ra(...e) {
+    let n = St(e);
+    return F((t, r) => {
+        (n ? In(e, t, n) : In(e, t)).subscribe(r)
+    })
+}
+
+function Se(e, n) {
+    return F((t, r) => {
+        let o = null,
+            i = 0,
+            s = !1,
+            a = () => s && !o && r.complete();
+        t.subscribe(L(r, c => {
+            o?.unsubscribe();
+            let l = 0,
+                u = i++;
+            ie(e(c, u)).subscribe(o = L(r, d => r.next(n ? n(c, d, u, l++) : d), () => {
+                o = null, a()
+            }))
+        }, () => {
+            s = !0, a()
+        }))
+    })
+}
+
+function oa(e) {
+    return F((n, t) => {
+        ie(e).subscribe(L(t, () => t.complete(), hr)), !t.closed && n.subscribe(t)
+    })
+}
+
+function oe(e, n, t) {
+    let r = S(e) || n || t ? {
+        next: e,
+        error: n,
+        complete: t
+    } : e;
+    return r ? F((o, i) => {
+        var s;
+        (s = r.subscribe) === null || s === void 0 || s.call(r);
+        let a = !0;
+        o.subscribe(L(i, c => {
+            var l;
+            (l = r.next) === null || l === void 0 || l.call(r, c), i.next(c)
+        }, () => {
+            var c;
+            a = !1, (c = r.complete) === null || c === void 0 || c.call(r), i.complete()
+        }, c => {
+            var l;
+            a = !1, (l = r.error) === null || l === void 0 || l.call(r, c), i.error(c)
+        }, () => {
+            var c, l;
+            a && ((c = r.unsubscribe) === null || c === void 0 || c.call(r)), (l = r.finalize) === null || l === void 0 || l.call(r)
+        }))
+    }) : be
+}
+var xd = "https://g.co/ng/security#xss",
+    E = class extends Error {
+        constructor(n, t) {
+            super(yi(n, t)), this.code = n
+        }
+    };
+
+function yi(e, n) {
+    return `${`NG0${Math.abs(e)}`}${n?": "+n:""}`
+}
+
+function Sr(e) {
+    return {
+        toString: e
+    }.toString()
+}
+var ko = "__parameters__";
+
+function Dm(e) {
+    return function(...t) {
+        if (e) {
+            let r = e(...t);
+            for (let o in r) this[o] = r[o]
+        }
+    }
+}
+
+function Td(e, n, t) {
+    return Sr(() => {
+        let r = Dm(n);
+
+        function o(...i) {
+            if (this instanceof o) return r.apply(this, i), this;
+            let s = new o(...i);
+            return a.annotation = s, a;
+
+            function a(c, l, u) {
+                let d = c.hasOwnProperty(ko) ? c[ko] : Object.defineProperty(c, ko, {
+                    value: []
+                })[ko];
+                for (; d.length <= u;) d.push(null);
+                return (d[u] = d[u] || []).push(s), c
+            }
+        }
+        return t && (o.prototype = Object.create(t.prototype)), o.prototype.ngMetadataName = e, o.annotationCls = o, o
+    })
+}
+var ya = globalThis;
+
+function G(e) {
+    for (let n in e)
+        if (e[n] === G) return n;
+    throw Error("Could not find renamed property on target object.")
+}
+
+function ve(e) {
+    if (typeof e == "string") return e;
+    if (Array.isArray(e)) return "[" + e.map(ve).join(", ") + "]";
+    if (e == null) return "" + e;
+    if (e.overriddenName) return `${e.overriddenName}`;
+    if (e.name) return `${e.name}`;
+    let n = e.toString();
+    if (n == null) return "" + n;
+    let t = n.indexOf(`
+`);
+    return t === -1 ? n : n.substring(0, t)
+}
+
+function zu(e, n) {
+    return e == null || e === "" ? n === null ? "" : n : n == null || n === "" ? e : e + " " + n
+}
+var wm = G({
+    __forward_ref__: G
+});
+
+function Od(e) {
+    return e.__forward_ref__ = Od, e.toString = function() {
+        return ve(this())
+    }, e
+}
+
+function Fe(e) {
+    return Nd(e) ? e() : e
+}
+
+function Nd(e) {
+    return typeof e == "function" && e.hasOwnProperty(wm) && e.__forward_ref__ === Od
+}
+
+function I(e) {
+    return {
+        token: e.token,
+        providedIn: e.providedIn || null,
+        factory: e.factory,
+        value: void 0
+    }
+}
+
+function xr(e) {
+    return {
+        providers: e.providers || [],
+        imports: e.imports || []
+    }
+}
+
+function Ci(e) {
+    return Gu(e, Pd) || Gu(e, Rd)
+}
+
+function Ad(e) {
+    return Ci(e) !== null
+}
+
+function Gu(e, n) {
+    return e.hasOwnProperty(n) ? e[n] : null
+}
+
+function Em(e) {
+    let n = e && (e[Pd] || e[Rd]);
+    return n || null
+}
+
+function Wu(e) {
+    return e && (e.hasOwnProperty(qu) || e.hasOwnProperty(Im)) ? e[qu] : null
+}
+var Pd = G({
+        \u0275prov: G
+    }),
+    qu = G({
+        \u0275inj: G
+    }),
+    Rd = G({
+        ngInjectableDef: G
+    }),
+    Im = G({
+        ngInjectorDef: G
+    }),
+    b = class {
+        constructor(n, t) {
+            this._desc = n, this.ngMetadataName = "InjectionToken", this.\u0275prov = void 0, typeof t == "number" ? this.__NG_ELEMENT_ID__ = t : t !== void 0 && (this.\u0275prov = I({
+                token: this,
+                providedIn: t.providedIn || "root",
+                factory: t.factory
+            }))
+        }
+        get multi() {
+            return this
+        }
+        toString() {
+            return `InjectionToken ${this._desc}`
+        }
+    };
+
+function kd(e) {
+    return e && !!e.\u0275providers
+}
+var bm = G({
+        \u0275cmp: G
+    }),
+    _m = G({
+        \u0275dir: G
+    }),
+    Mm = G({
+        \u0275pipe: G
+    }),
+    Sm = G({
+        \u0275mod: G
+    }),
+    Wo = G({
+        \u0275fac: G
+    }),
+    vr = G({
+        __NG_ELEMENT_ID__: G
+    }),
+    Zu = G({
+        __NG_ENV_ID__: G
+    });
+
+function Di(e) {
+    return typeof e == "string" ? e : e == null ? "" : String(e)
+}
+
+function xm(e) {
+    return typeof e == "function" ? e.name || e.toString() : typeof e == "object" && e != null && typeof e.type == "function" ? e.type.name || e.type.toString() : Di(e)
+}
+
+function Tm(e, n) {
+    let t = n ? `. Dependency path: ${n.join(" > ")} > ${e}` : "";
+    throw new E(-200, e)
+}
+
+function ac(e, n) {
+    throw new E(-201, !1)
+}
+var N = function(e) {
+        return e[e.Default = 0] = "Default", e[e.Host = 1] = "Host", e[e.Self = 2] = "Self", e[e.SkipSelf = 4] = "SkipSelf", e[e.Optional = 8] = "Optional", e
+    }(N || {}),
+    Ca;
+
+function Fd() {
+    return Ca
+}
+
+function ke(e) {
+    let n = Ca;
+    return Ca = e, n
+}
+
+function Ld(e, n, t) {
+    let r = Ci(e);
+    if (r && r.providedIn == "root") return r.value === void 0 ? r.value = r.factory() : r.value;
+    if (t & N.Optional) return null;
+    if (n !== void 0) return n;
+    ac(e, "Injector")
+}
+var Om = {},
+    yr = Om,
+    Da = "__NG_DI_FLAG__",
+    qo = "ngTempTokenPath",
+    Nm = "ngTokenPath",
+    Am = /\n/gm,
+    Pm = "\u0275",
+    Qu = "__source",
+    On;
+
+function Rm() {
+    return On
+}
+
+function Nt(e) {
+    let n = On;
+    return On = e, n
+}
+
+function km(e, n = N.Default) {
+    if (On === void 0) throw new E(-203, !1);
+    return On === null ? Ld(e, void 0, n) : On.get(e, n & N.Optional ? null : void 0, n)
+}
+
+function x(e, n = N.Default) {
+    return (Fd() || km)(Fe(e), n)
+}
+
+function g(e, n = N.Default) {
+    return x(e, wi(n))
+}
+
+function wi(e) {
+    return typeof e > "u" || typeof e == "number" ? e : 0 | (e.optional && 8) | (e.host && 1) | (e.self && 2) | (e.skipSelf && 4)
+}
+
+function wa(e) {
+    let n = [];
+    for (let t = 0; t < e.length; t++) {
+        let r = Fe(e[t]);
+        if (Array.isArray(r)) {
+            if (r.length === 0) throw new E(900, !1);
+            let o, i = N.Default;
+            for (let s = 0; s < r.length; s++) {
+                let a = r[s],
+                    c = Fm(a);
+                typeof c == "number" ? c === -1 ? o = a.token : i |= c : o = a
+            }
+            n.push(x(o, i))
+        } else n.push(x(r))
+    }
+    return n
+}
+
+function jd(e, n) {
+    return e[Da] = n, e.prototype[Da] = n, e
+}
+
+function Fm(e) {
+    return e[Da]
+}
+
+function Lm(e, n, t, r) {
+    let o = e[qo];
+    throw n[Qu] && o.unshift(n[Qu]), e.message = jm(`
+` + e.message, o, t, r), e[Nm] = o, e[qo] = null, e
+}
+
+function jm(e, n, t, r = null) {
+    e = e && e.charAt(0) === `
+` && e.charAt(1) == Pm ? e.slice(2) : e;
+    let o = ve(n);
+    if (Array.isArray(n)) o = n.map(ve).join(" -> ");
+    else if (typeof n == "object") {
+        let i = [];
+        for (let s in n)
+            if (n.hasOwnProperty(s)) {
+                let a = n[s];
+                i.push(s + ":" + (typeof a == "string" ? JSON.stringify(a) : ve(a)))
+            } o = `{${i.join(", ")}}`
+    }
+    return `${t}${r?"("+r+")":""}[${o}]: ${e.replace(Am,`
+  `)}`
+}
+var Ei = jd(Td("Optional"), 8);
+var cc = jd(Td("SkipSelf"), 4);
+
+function An(e, n) {
+    let t = e.hasOwnProperty(Wo);
+    return t ? e[Wo] : null
+}
+
+function lc(e, n) {
+    e.forEach(t => Array.isArray(t) ? lc(t, n) : n(t))
+}
+
+function Vd(e, n, t) {
+    n >= e.length ? e.push(t) : e.splice(n, 0, t)
+}
+
+function Zo(e, n) {
+    return n >= e.length - 1 ? e.pop() : e.splice(n, 1)[0]
+}
+
+function Vm(e, n, t, r) {
+    let o = e.length;
+    if (o == n) e.push(t, r);
+    else if (o === 1) e.push(r, e[0]), e[0] = t;
+    else {
+        for (o--, e.push(e[o - 1], e[o]); o > n;) {
+            let i = o - 2;
+            e[o] = e[i], o--
+        }
+        e[n] = t, e[n + 1] = r
+    }
+}
+
+function Bm(e, n, t) {
+    let r = Tr(e, n);
+    return r >= 0 ? e[r | 1] = t : (r = ~r, Vm(e, r, n, t)), r
+}
+
+function ia(e, n) {
+    let t = Tr(e, n);
+    if (t >= 0) return e[t | 1]
+}
+
+function Tr(e, n) {
+    return Um(e, n, 1)
+}
+
+function Um(e, n, t) {
+    let r = 0,
+        o = e.length >> t;
+    for (; o !== r;) {
+        let i = r + (o - r >> 1),
+            s = e[i << t];
+        if (n === s) return i << t;
+        s > n ? o = i : r = i + 1
+    }
+    return ~(o << t)
+}
+var Cr = {},
+    Le = [],
+    Xt = new b(""),
+    Bd = new b("", -1),
+    Ud = new b(""),
+    Qo = class {
+        get(n, t = yr) {
+            if (t === yr) {
+                let r = new Error(`NullInjectorError: No provider for ${ve(n)}!`);
+                throw r.name = "NullInjectorError", r
+            }
+            return t
+        }
+    },
+    $d = function(e) {
+        return e[e.OnPush = 0] = "OnPush", e[e.Default = 1] = "Default", e
+    }($d || {}),
+    ot = function(e) {
+        return e[e.Emulated = 0] = "Emulated", e[e.None = 2] = "None", e[e.ShadowDom = 3] = "ShadowDom", e
+    }(ot || {}),
+    Pt = function(e) {
+        return e[e.None = 0] = "None", e[e.SignalBased = 1] = "SignalBased", e[e.HasDecoratorInputTransform = 2] = "HasDecoratorInputTransform", e
+    }(Pt || {});
+
+function $m(e, n, t) {
+    let r = e.length;
+    for (;;) {
+        let o = e.indexOf(n, t);
+        if (o === -1) return o;
+        if (o === 0 || e.charCodeAt(o - 1) <= 32) {
+            let i = n.length;
+            if (o + i === r || e.charCodeAt(o + i) <= 32) return o
+        }
+        t = o + 1
+    }
+}
+
+function Ea(e, n, t) {
+    let r = 0;
+    for (; r < t.length;) {
+        let o = t[r];
+        if (typeof o == "number") {
+            if (o !== 0) break;
+            r++;
+            let i = t[r++],
+                s = t[r++],
+                a = t[r++];
+            e.setAttribute(n, s, a, i)
+        } else {
+            let i = o,
+                s = t[++r];
+            Hm(i) ? e.setProperty(n, i, s) : e.setAttribute(n, i, s), r++
+        }
+    }
+    return r
+}
+
+function Hd(e) {
+    return e === 3 || e === 4 || e === 6
+}
+
+function Hm(e) {
+    return e.charCodeAt(0) === 64
+}
+
+function uc(e, n) {
+    if (!(n === null || n.length === 0))
+        if (e === null || e.length === 0) e = n.slice();
+        else {
+            let t = -1;
+            for (let r = 0; r < n.length; r++) {
+                let o = n[r];
+                typeof o == "number" ? t = o : t === 0 || (t === -1 || t === 2 ? Yu(e, t, o, null, n[++r]) : Yu(e, t, o, null, null))
+            }
+        } return e
+}
+
+function Yu(e, n, t, r, o) {
+    let i = 0,
+        s = e.length;
+    if (n === -1) s = -1;
+    else
+        for (; i < e.length;) {
+            let a = e[i++];
+            if (typeof a == "number") {
+                if (a === n) {
+                    s = -1;
+                    break
+                } else if (a > n) {
+                    s = i - 1;
+                    break
+                }
+            }
+        }
+    for (; i < e.length;) {
+        let a = e[i];
+        if (typeof a == "number") break;
+        if (a === t) {
+            if (r === null) {
+                o !== null && (e[i + 1] = o);
+                return
+            } else if (r === e[i + 1]) {
+                e[i + 2] = o;
+                return
+            }
+        }
+        i++, r !== null && i++, o !== null && i++
+    }
+    s !== -1 && (e.splice(s, 0, n), i = s + 1), e.splice(i++, 0, t), r !== null && e.splice(i++, 0, r), o !== null && e.splice(i++, 0, o)
+}
+var zd = "ng-template";
+
+function zm(e, n, t, r) {
+    let o = 0;
+    if (r) {
+        for (; o < n.length && typeof n[o] == "string"; o += 2)
+            if (n[o] === "class" && $m(n[o + 1].toLowerCase(), t, 0) !== -1) return !0
+    } else if (dc(e)) return !1;
+    if (o = n.indexOf(1, o), o > -1) {
+        let i;
+        for (; ++o < n.length && typeof(i = n[o]) == "string";)
+            if (i.toLowerCase() === t) return !0
+    }
+    return !1
+}
+
+function dc(e) {
+    return e.type === 4 && e.value !== zd
+}
+
+function Gm(e, n, t) {
+    let r = e.type === 4 && !t ? zd : e.value;
+    return n === r
+}
+
+function Wm(e, n, t) {
+    let r = 4,
+        o = e.attrs,
+        i = o !== null ? Qm(o) : 0,
+        s = !1;
+    for (let a = 0; a < n.length; a++) {
+        let c = n[a];
+        if (typeof c == "number") {
+            if (!s && !qe(r) && !qe(c)) return !1;
+            if (s && qe(c)) continue;
+            s = !1, r = c | r & 1;
+            continue
+        }
+        if (!s)
+            if (r & 4) {
+                if (r = 2 | r & 1, c !== "" && !Gm(e, c, t) || c === "" && n.length === 1) {
+                    if (qe(r)) return !1;
+                    s = !0
+                }
+            } else if (r & 8) {
+            if (o === null || !zm(e, o, c, t)) {
+                if (qe(r)) return !1;
+                s = !0
+            }
+        } else {
+            let l = n[++a],
+                u = qm(c, o, dc(e), t);
+            if (u === -1) {
+                if (qe(r)) return !1;
+                s = !0;
+                continue
+            }
+            if (l !== "") {
+                let d;
+                if (u > i ? d = "" : d = o[u + 1].toLowerCase(), r & 2 && l !== d) {
+                    if (qe(r)) return !1;
+                    s = !0
+                }
+            }
+        }
+    }
+    return qe(r) || s
+}
+
+function qe(e) {
+    return (e & 1) === 0
+}
+
+function qm(e, n, t, r) {
+    if (n === null) return -1;
+    let o = 0;
+    if (r || !t) {
+        let i = !1;
+        for (; o < n.length;) {
+            let s = n[o];
+            if (s === e) return o;
+            if (s === 3 || s === 6) i = !0;
+            else if (s === 1 || s === 2) {
+                let a = n[++o];
+                for (; typeof a == "string";) a = n[++o];
+                continue
+            } else {
+                if (s === 4) break;
+                if (s === 0) {
+                    o += 4;
+                    continue
+                }
+            }
+            o += i ? 1 : 2
+        }
+        return -1
+    } else return Ym(n, e)
+}
+
+function Zm(e, n, t = !1) {
+    for (let r = 0; r < n.length; r++)
+        if (Wm(e, n[r], t)) return !0;
+    return !1
+}
+
+function Qm(e) {
+    for (let n = 0; n < e.length; n++) {
+        let t = e[n];
+        if (Hd(t)) return n
+    }
+    return e.length
+}
+
+function Ym(e, n) {
+    let t = e.indexOf(4);
+    if (t > -1)
+        for (t++; t < e.length;) {
+            let r = e[t];
+            if (typeof r == "number") return -1;
+            if (r === n) return t;
+            t++
+        }
+    return -1
+}
+
+function Ku(e, n) {
+    return e ? ":not(" + n.trim() + ")" : n
+}
+
+function Km(e) {
+    let n = e[0],
+        t = 1,
+        r = 2,
+        o = "",
+        i = !1;
+    for (; t < e.length;) {
+        let s = e[t];
+        if (typeof s == "string")
+            if (r & 2) {
+                let a = e[++t];
+                o += "[" + s + (a.length > 0 ? '="' + a + '"' : "") + "]"
+            } else r & 8 ? o += "." + s : r & 4 && (o += " " + s);
+        else o !== "" && !qe(s) && (n += Ku(i, o), o = ""), r = s, i = i || !qe(r);
+        t++
+    }
+    return o !== "" && (n += Ku(i, o)), n
+}
+
+function Jm(e) {
+    return e.map(Km).join(",")
+}
+
+function Xm(e) {
+    let n = [],
+        t = [],
+        r = 1,
+        o = 2;
+    for (; r < e.length;) {
+        let i = e[r];
+        if (typeof i == "string") o === 2 ? i !== "" && n.push(i, e[++r]) : o === 8 && t.push(i);
+        else {
+            if (!qe(o)) break;
+            o = i
+        }
+        r++
+    }
+    return {
+        attrs: n,
+        classes: t
+    }
+}
+
+function te(e) {
+    return Sr(() => {
+        let n = Qd(e),
+            t = K(D({}, n), {
+                decls: e.decls,
+                vars: e.vars,
+                template: e.template,
+                consts: e.consts || null,
+                ngContentSelectors: e.ngContentSelectors,
+                onPush: e.changeDetection === $d.OnPush,
+                directiveDefs: null,
+                pipeDefs: null,
+                dependencies: n.standalone && e.dependencies || null,
+                getStandaloneInjector: null,
+                signals: e.signals ?? !1,
+                data: e.data || {},
+                encapsulation: e.encapsulation || ot.Emulated,
+                styles: e.styles || Le,
+                _: null,
+                schemas: e.schemas || null,
+                tView: null,
+                id: ""
+            });
+        Yd(t);
+        let r = e.dependencies;
+        return t.directiveDefs = Xu(r, !1), t.pipeDefs = Xu(r, !0), t.id = nv(t), t
+    })
+}
+
+function ev(e) {
+    return Rt(e) || Gd(e)
+}
+
+function tv(e) {
+    return e !== null
+}
+
+function Or(e) {
+    return Sr(() => ({
+        type: e.type,
+        bootstrap: e.bootstrap || Le,
+        declarations: e.declarations || Le,
+        imports: e.imports || Le,
+        exports: e.exports || Le,
+        transitiveCompileScopes: null,
+        schemas: e.schemas || null,
+        id: e.id || null
+    }))
+}
+
+function Ju(e, n) {
+    if (e == null) return Cr;
+    let t = {};
+    for (let r in e)
+        if (e.hasOwnProperty(r)) {
+            let o = e[r],
+                i, s, a = Pt.None;
+            Array.isArray(o) ? (a = o[0], i = o[1], s = o[2] ?? i) : (i = o, s = o), n ? (t[i] = a !== Pt.None ? [r, a] : r, n[i] = s) : t[i] = r
+        } return t
+}
+
+function jt(e) {
+    return Sr(() => {
+        let n = Qd(e);
+        return Yd(n), n
+    })
+}
+
+function Rt(e) {
+    return e[bm] || null
+}
+
+function Gd(e) {
+    return e[_m] || null
+}
+
+function Wd(e) {
+    return e[Mm] || null
+}
+
+function qd(e) {
+    let n = Rt(e) || Gd(e) || Wd(e);
+    return n !== null ? n.standalone : !1
+}
+
+function Zd(e, n) {
+    let t = e[Sm] || null;
+    if (!t && n === !0) throw new Error(`Type ${ve(e)} does not have '\u0275mod' property.`);
+    return t
+}
+
+function Qd(e) {
+    let n = {};
+    return {
+        type: e.type,
+        providersResolver: null,
+        factory: null,
+        hostBindings: e.hostBindings || null,
+        hostVars: e.hostVars || 0,
+        hostAttrs: e.hostAttrs || null,
+        contentQueries: e.contentQueries || null,
+        declaredInputs: n,
+        inputTransforms: null,
+        inputConfig: e.inputs || Cr,
+        exportAs: e.exportAs || null,
+        standalone: e.standalone === !0,
+        signals: e.signals === !0,
+        selectors: e.selectors || Le,
+        viewQuery: e.viewQuery || null,
+        features: e.features || null,
+        setInput: null,
+        findHostDirectiveDefs: null,
+        hostDirectives: null,
+        inputs: Ju(e.inputs, n),
+        outputs: Ju(e.outputs),
+        debugInfo: null
+    }
+}
+
+function Yd(e) {
+    e.features?.forEach(n => n(e))
+}
+
+function Xu(e, n) {
+    if (!e) return null;
+    let t = n ? Wd : ev;
+    return () => (typeof e == "function" ? e() : e).map(r => t(r)).filter(tv)
+}
+
+function nv(e) {
+    let n = 0,
+        t = [e.selectors, e.ngContentSelectors, e.hostVars, e.hostAttrs, e.consts, e.vars, e.decls, e.encapsulation, e.standalone, e.signals, e.exportAs, JSON.stringify(e.inputs), JSON.stringify(e.outputs), Object.getOwnPropertyNames(e.type.prototype), !!e.contentQueries, !!e.viewQuery].join("|");
+    for (let o of t) n = Math.imul(31, n) + o.charCodeAt(0) << 0;
+    return n += 2147483648, "c" + n
+}
+
+function on(e) {
+    return {
+        \u0275providers: e
+    }
+}
+
+function rv(...e) {
+    return {
+        \u0275providers: Kd(!0, e),
+        \u0275fromNgModule: !0
+    }
+}
+
+function Kd(e, ...n) {
+    let t = [],
+        r = new Set,
+        o, i = s => {
+            t.push(s)
+        };
+    return lc(n, s => {
+        let a = s;
+        Ia(a, i, [], r) && (o ||= [], o.push(a))
+    }), o !== void 0 && Jd(o, i), t
+}
+
+function Jd(e, n) {
+    for (let t = 0; t < e.length; t++) {
+        let {
+            ngModule: r,
+            providers: o
+        } = e[t];
+        fc(o, i => {
+            n(i, r)
+        })
+    }
+}
+
+function Ia(e, n, t, r) {
+    if (e = Fe(e), !e) return !1;
+    let o = null,
+        i = Wu(e),
+        s = !i && Rt(e);
+    if (!i && !s) {
+        let c = e.ngModule;
+        if (i = Wu(c), i) o = c;
+        else return !1
+    } else {
+        if (s && !s.standalone) return !1;
+        o = e
+    }
+    let a = r.has(o);
+    if (s) {
+        if (a) return !1;
+        if (r.add(o), s.dependencies) {
+            let c = typeof s.dependencies == "function" ? s.dependencies() : s.dependencies;
+            for (let l of c) Ia(l, n, t, r)
+        }
+    } else if (i) {
+        if (i.imports != null && !a) {
+            r.add(o);
+            let l;
+            try {
+                lc(i.imports, u => {
+                    Ia(u, n, t, r) && (l ||= [], l.push(u))
+                })
+            } finally {}
+            l !== void 0 && Jd(l, n)
+        }
+        if (!a) {
+            let l = An(o) || (() => new o);
+            n({
+                provide: o,
+                useFactory: l,
+                deps: Le
+            }, o), n({
+                provide: Ud,
+                useValue: o,
+                multi: !0
+            }, o), n({
+                provide: Xt,
+                useValue: () => x(o),
+                multi: !0
+            }, o)
+        }
+        let c = i.providers;
+        if (c != null && !a) {
+            let l = e;
+            fc(c, u => {
+                n(u, l)
+            })
+        }
+    } else return !1;
+    return o !== e && e.providers !== void 0
+}
+
+function fc(e, n) {
+    for (let t of e) kd(t) && (t = t.\u0275providers), Array.isArray(t) ? fc(t, n) : n(t)
+}
+var ov = G({
+    provide: String,
+    useValue: G
+});
+
+function Xd(e) {
+    return e !== null && typeof e == "object" && ov in e
+}
+
+function iv(e) {
+    return !!(e && e.useExisting)
+}
+
+function sv(e) {
+    return !!(e && e.useFactory)
+}
+
+function ba(e) {
+    return typeof e == "function"
+}
+var Ii = new b(""),
+    Uo = {},
+    av = {},
+    sa;
+
+function hc() {
+    return sa === void 0 && (sa = new Qo), sa
+}
+var xe = class {},
+    Dr = class extends xe {
+        get destroyed() {
+            return this._destroyed
+        }
+        constructor(n, t, r, o) {
+            super(), this.parent = t, this.source = r, this.scopes = o, this.records = new Map, this._ngOnDestroyHooks = new Set, this._onDestroyHooks = [], this._destroyed = !1, Ma(n, s => this.processProvider(s)), this.records.set(Bd, Mn(void 0, this)), o.has("environment") && this.records.set(xe, Mn(void 0, this));
+            let i = this.records.get(Ii);
+            i != null && typeof i.value == "string" && this.scopes.add(i.value), this.injectorDefTypes = new Set(this.get(Ud, Le, N.Self))
+        }
+        destroy() {
+            this.assertNotDestroyed(), this._destroyed = !0;
+            let n = j(null);
+            try {
+                for (let r of this._ngOnDestroyHooks) r.ngOnDestroy();
+                let t = this._onDestroyHooks;
+                this._onDestroyHooks = [];
+                for (let r of t) r()
+            } finally {
+                this.records.clear(), this._ngOnDestroyHooks.clear(), this.injectorDefTypes.clear(), j(n)
+            }
+        }
+        onDestroy(n) {
+            return this.assertNotDestroyed(), this._onDestroyHooks.push(n), () => this.removeOnDestroy(n)
+        }
+        runInContext(n) {
+            this.assertNotDestroyed();
+            let t = Nt(this),
+                r = ke(void 0),
+                o;
+            try {
+                return n()
+            } finally {
+                Nt(t), ke(r)
+            }
+        }
+        get(n, t = yr, r = N.Default) {
+            if (this.assertNotDestroyed(), n.hasOwnProperty(Zu)) return n[Zu](this);
+            r = wi(r);
+            let o, i = Nt(this),
+                s = ke(void 0);
+            try {
+                if (!(r & N.SkipSelf)) {
+                    let c = this.records.get(n);
+                    if (c === void 0) {
+                        let l = hv(n) && Ci(n);
+                        l && this.injectableDefInScope(l) ? c = Mn(_a(n), Uo) : c = null, this.records.set(n, c)
+                    }
+                    if (c != null) return this.hydrate(n, c)
+                }
+                let a = r & N.Self ? hc() : this.parent;
+                return t = r & N.Optional && t === yr ? null : t, a.get(n, t)
+            } catch (a) {
+                if (a.name === "NullInjectorError") {
+                    if ((a[qo] = a[qo] || []).unshift(ve(n)), i) throw a;
+                    return Lm(a, n, "R3InjectorError", this.source)
+                } else throw a
+            } finally {
+                ke(s), Nt(i)
+            }
+        }
+        resolveInjectorInitializers() {
+            let n = j(null),
+                t = Nt(this),
+                r = ke(void 0),
+                o;
+            try {
+                let i = this.get(Xt, Le, N.Self);
+                for (let s of i) s()
+            } finally {
+                Nt(t), ke(r), j(n)
+            }
+        }
+        toString() {
+            let n = [],
+                t = this.records;
+            for (let r of t.keys()) n.push(ve(r));
+            return `R3Injector[${n.join(", ")}]`
+        }
+        assertNotDestroyed() {
+            if (this._destroyed) throw new E(205, !1)
+        }
+        processProvider(n) {
+            n = Fe(n);
+            let t = ba(n) ? n : Fe(n && n.provide),
+                r = lv(n);
+            if (!ba(n) && n.multi === !0) {
+                let o = this.records.get(t);
+                o || (o = Mn(void 0, Uo, !0), o.factory = () => wa(o.multi), this.records.set(t, o)), t = n, o.multi.push(n)
+            }
+            this.records.set(t, r)
+        }
+        hydrate(n, t) {
+            let r = j(null);
+            try {
+                return t.value === Uo && (t.value = av, t.value = t.factory()), typeof t.value == "object" && t.value && fv(t.value) && this._ngOnDestroyHooks.add(t.value), t.value
+            } finally {
+                j(r)
+            }
+        }
+        injectableDefInScope(n) {
+            if (!n.providedIn) return !1;
+            let t = Fe(n.providedIn);
+            return typeof t == "string" ? t === "any" || this.scopes.has(t) : this.injectorDefTypes.has(t)
+        }
+        removeOnDestroy(n) {
+            let t = this._onDestroyHooks.indexOf(n);
+            t !== -1 && this._onDestroyHooks.splice(t, 1)
+        }
+    };
+
+function _a(e) {
+    let n = Ci(e),
+        t = n !== null ? n.factory : An(e);
+    if (t !== null) return t;
+    if (e instanceof b) throw new E(204, !1);
+    if (e instanceof Function) return cv(e);
+    throw new E(204, !1)
+}
+
+function cv(e) {
+    if (e.length > 0) throw new E(204, !1);
+    let t = Em(e);
+    return t !== null ? () => t.factory(e) : () => new e
+}
+
+function lv(e) {
+    if (Xd(e)) return Mn(void 0, e.useValue);
+    {
+        let n = uv(e);
+        return Mn(n, Uo)
+    }
+}
+
+function uv(e, n, t) {
+    let r;
+    if (ba(e)) {
+        let o = Fe(e);
+        return An(o) || _a(o)
+    } else if (Xd(e)) r = () => Fe(e.useValue);
+    else if (sv(e)) r = () => e.useFactory(...wa(e.deps || []));
+    else if (iv(e)) r = () => x(Fe(e.useExisting));
+    else {
+        let o = Fe(e && (e.useClass || e.provide));
+        if (dv(e)) r = () => new o(...wa(e.deps));
+        else return An(o) || _a(o)
+    }
+    return r
+}
+
+function Mn(e, n, t = !1) {
+    return {
+        factory: e,
+        value: n,
+        multi: t ? [] : void 0
+    }
+}
+
+function dv(e) {
+    return !!e.deps
+}
+
+function fv(e) {
+    return e !== null && typeof e == "object" && typeof e.ngOnDestroy == "function"
+}
+
+function hv(e) {
+    return typeof e == "function" || typeof e == "object" && e instanceof b
+}
+
+function Ma(e, n) {
+    for (let t of e) Array.isArray(t) ? Ma(t, n) : t && kd(t) ? Ma(t.\u0275providers, n) : n(t)
+}
+
+function Je(e, n) {
+    e instanceof Dr && e.assertNotDestroyed();
+    let t, r = Nt(e),
+        o = ke(void 0);
+    try {
+        return n()
+    } finally {
+        Nt(r), ke(o)
+    }
+}
+
+function ef() {
+    return Fd() !== void 0 || Rm() != null
+}
+
+function pv(e) {
+    if (!ef()) throw new E(-203, !1)
+}
+
+function gv(e) {
+    return typeof e == "function"
+}
+var Te = 0,
+    A = 1,
+    M = 2,
+    pe = 3,
+    Ze = 4,
+    Xe = 5,
+    it = 6,
+    Yo = 7,
+    Ve = 8,
+    Pn = 9,
+    st = 10,
+    Z = 11,
+    wr = 12,
+    ed = 13,
+    $n = 14,
+    Be = 15,
+    Rn = 16,
+    Sn = 17,
+    kn = 18,
+    bi = 19,
+    tf = 20,
+    At = 21,
+    aa = 22,
+    je = 23,
+    se = 25,
+    nf = 1,
+    Er = 6,
+    mt = 7,
+    Ko = 8,
+    Jo = 9,
+    De = 10,
+    Xo = function(e) {
+        return e[e.None = 0] = "None", e[e.HasTransplantedViews = 2] = "HasTransplantedViews", e
+    }(Xo || {});
+
+function Qe(e) {
+    return Array.isArray(e) && typeof e[nf] == "object"
+}
+
+function ct(e) {
+    return Array.isArray(e) && e[nf] === !0
+}
+
+function pc(e) {
+    return (e.flags & 4) !== 0
+}
+
+function Nr(e) {
+    return e.componentOffset > -1
+}
+
+function _i(e) {
+    return (e.flags & 1) === 1
+}
+
+function Ar(e) {
+    return !!e.template
+}
+
+function ei(e) {
+    return (e[M] & 512) !== 0
+}
+var Sa = class {
+    constructor(n, t, r) {
+        this.previousValue = n, this.currentValue = t, this.firstChange = r
+    }
+    isFirstChange() {
+        return this.firstChange
+    }
+};
+
+function rf(e, n, t, r) {
+    n !== null ? n.applyValueToInputSignal(n, r) : e[t] = r
+}
+
+function Hn() {
+    return of
+}
+
+function of(e) {
+    return e.type.prototype.ngOnChanges && (e.setInput = vv), mv
+}
+Hn.ngInherit = !0;
+
+function mv() {
+    let e = af(this),
+        n = e?.current;
+    if (n) {
+        let t = e.previous;
+        if (t === Cr) e.previous = n;
+        else
+            for (let r in n) t[r] = n[r];
+        e.current = null, this.ngOnChanges(n)
+    }
+}
+
+function vv(e, n, t, r, o) {
+    let i = this.declaredInputs[r],
+        s = af(e) || yv(e, {
+            previous: Cr,
+            current: null
+        }),
+        a = s.current || (s.current = {}),
+        c = s.previous,
+        l = c[i];
+    a[i] = new Sa(l && l.currentValue, t, c === Cr), rf(e, n, o, t)
+}
+var sf = "__ngSimpleChanges__";
+
+function af(e) {
+    return e[sf] || null
+}
+
+function yv(e, n) {
+    return e[sf] = n
+}
+var td = null;
+var nt = function(e, n, t) {
+        td?.(e, n, t)
+    },
+    cf = "svg",
+    Cv = "math";
+
+function Ye(e) {
+    for (; Array.isArray(e);) e = e[Te];
+    return e
+}
+
+function lf(e, n) {
+    return Ye(n[e])
+}
+
+function Oe(e, n) {
+    return Ye(n[e.index])
+}
+
+function gc(e, n) {
+    return e.data[n]
+}
+
+function Dv(e, n) {
+    return e[n]
+}
+
+function Vt(e, n) {
+    let t = n[e];
+    return Qe(t) ? t : t[Te]
+}
+
+function mc(e) {
+    return (e[M] & 128) === 128
+}
+
+function wv(e) {
+    return ct(e[pe])
+}
+
+function Fn(e, n) {
+    return n == null ? null : e[n]
+}
+
+function uf(e) {
+    e[Sn] = 0
+}
+
+function df(e) {
+    e[M] & 1024 || (e[M] |= 1024, mc(e) && Si(e))
+}
+
+function Ev(e, n) {
+    for (; e > 0;) n = n[$n], e--;
+    return n
+}
+
+function Mi(e) {
+    return !!(e[M] & 9216 || e[je]?.dirty)
+}
+
+function xa(e) {
+    e[st].changeDetectionScheduler?.notify(8), e[M] & 64 && (e[M] |= 1024), Mi(e) && Si(e)
+}
+
+function Si(e) {
+    e[st].changeDetectionScheduler?.notify(0);
+    let n = en(e);
+    for (; n !== null && !(n[M] & 8192 || (n[M] |= 8192, !mc(n)));) n = en(n)
+}
+
+function ff(e, n) {
+    if ((e[M] & 256) === 256) throw new E(911, !1);
+    e[At] === null && (e[At] = []), e[At].push(n)
+}
+
+function Iv(e, n) {
+    if (e[At] === null) return;
+    let t = e[At].indexOf(n);
+    t !== -1 && e[At].splice(t, 1)
+}
+
+function en(e) {
+    let n = e[pe];
+    return ct(n) ? n[pe] : n
+}
+var T = {
+    lFrame: wf(null),
+    bindingsEnabled: !0,
+    skipHydrationRootTNode: null
+};
+var hf = !1;
+
+function bv() {
+    return T.lFrame.elementDepthCount
+}
+
+function _v() {
+    T.lFrame.elementDepthCount++
+}
+
+function Mv() {
+    T.lFrame.elementDepthCount--
+}
+
+function pf() {
+    return T.bindingsEnabled
+}
+
+function Pr() {
+    return T.skipHydrationRootTNode !== null
+}
+
+function Sv(e) {
+    return T.skipHydrationRootTNode === e
+}
+
+function xv(e) {
+    T.skipHydrationRootTNode = e
+}
+
+function Tv() {
+    T.skipHydrationRootTNode = null
+}
+
+function H() {
+    return T.lFrame.lView
+}
+
+function Ue() {
+    return T.lFrame.tView
+}
+
+function le(e) {
+    return T.lFrame.contextLView = e, e[Ve]
+}
+
+function ue(e) {
+    return T.lFrame.contextLView = null, e
+}
+
+function we() {
+    let e = gf();
+    for (; e !== null && e.type === 64;) e = e.parent;
+    return e
+}
+
+function gf() {
+    return T.lFrame.currentTNode
+}
+
+function Ov() {
+    let e = T.lFrame,
+        n = e.currentTNode;
+    return e.isParent ? n : n.parent
+}
+
+function sn(e, n) {
+    let t = T.lFrame;
+    t.currentTNode = e, t.isParent = n
+}
+
+function vc() {
+    return T.lFrame.isParent
+}
+
+function mf() {
+    T.lFrame.isParent = !1
+}
+
+function Nv() {
+    return T.lFrame.contextLView
+}
+
+function vf() {
+    return hf
+}
+
+function nd(e) {
+    hf = e
+}
+
+function yc() {
+    let e = T.lFrame,
+        n = e.bindingRootIndex;
+    return n === -1 && (n = e.bindingRootIndex = e.tView.bindingStartIndex), n
+}
+
+function Av(e) {
+    return T.lFrame.bindingIndex = e
+}
+
+function xi() {
+    return T.lFrame.bindingIndex++
+}
+
+function Pv(e) {
+    let n = T.lFrame,
+        t = n.bindingIndex;
+    return n.bindingIndex = n.bindingIndex + e, t
+}
+
+function Rv() {
+    return T.lFrame.inI18n
+}
+
+function kv(e, n) {
+    let t = T.lFrame;
+    t.bindingIndex = t.bindingRootIndex = e, Ta(n)
+}
+
+function Fv() {
+    return T.lFrame.currentDirectiveIndex
+}
+
+function Ta(e) {
+    T.lFrame.currentDirectiveIndex = e
+}
+
+function Lv(e) {
+    let n = T.lFrame.currentDirectiveIndex;
+    return n === -1 ? null : e[n]
+}
+
+function yf(e) {
+    T.lFrame.currentQueryIndex = e
+}
+
+function jv(e) {
+    let n = e[A];
+    return n.type === 2 ? n.declTNode : n.type === 1 ? e[Xe] : null
+}
+
+function Cf(e, n, t) {
+    if (t & N.SkipSelf) {
+        let o = n,
+            i = e;
+        for (; o = o.parent, o === null && !(t & N.Host);)
+            if (o = jv(i), o === null || (i = i[$n], o.type & 10)) break;
+        if (o === null) return !1;
+        n = o, e = i
+    }
+    let r = T.lFrame = Df();
+    return r.currentTNode = n, r.lView = e, !0
+}
+
+function Cc(e) {
+    let n = Df(),
+        t = e[A];
+    T.lFrame = n, n.currentTNode = t.firstChild, n.lView = e, n.tView = t, n.contextLView = e, n.bindingIndex = t.bindingStartIndex, n.inI18n = !1
+}
+
+function Df() {
+    let e = T.lFrame,
+        n = e === null ? null : e.child;
+    return n === null ? wf(e) : n
+}
+
+function wf(e) {
+    let n = {
+        currentTNode: null,
+        isParent: !0,
+        lView: null,
+        tView: null,
+        selectedIndex: -1,
+        contextLView: null,
+        elementDepthCount: 0,
+        currentNamespace: null,
+        currentDirectiveIndex: -1,
+        bindingRootIndex: -1,
+        bindingIndex: -1,
+        currentQueryIndex: 0,
+        parent: e,
+        child: null,
+        inI18n: !1
+    };
+    return e !== null && (e.child = n), n
+}
+
+function Ef() {
+    let e = T.lFrame;
+    return T.lFrame = e.parent, e.currentTNode = null, e.lView = null, e
+}
+var If = Ef;
+
+function Dc() {
+    let e = Ef();
+    e.isParent = !0, e.tView = null, e.selectedIndex = -1, e.contextLView = null, e.elementDepthCount = 0, e.currentDirectiveIndex = -1, e.currentNamespace = null, e.bindingRootIndex = -1, e.bindingIndex = -1, e.currentQueryIndex = 0
+}
+
+function Vv(e) {
+    return (T.lFrame.contextLView = Ev(e, T.lFrame.contextLView))[Ve]
+}
+
+function zn() {
+    return T.lFrame.selectedIndex
+}
+
+function tn(e) {
+    T.lFrame.selectedIndex = e
+}
+
+function wc() {
+    let e = T.lFrame;
+    return gc(e.tView, e.selectedIndex)
+}
+
+function Rr() {
+    T.lFrame.currentNamespace = cf
+}
+
+function Ti() {
+    Bv()
+}
+
+function Bv() {
+    T.lFrame.currentNamespace = null
+}
+
+function bf() {
+    return T.lFrame.currentNamespace
+}
+var _f = !0;
+
+function Oi() {
+    return _f
+}
+
+function Bt(e) {
+    _f = e
+}
+
+function Uv(e, n, t) {
+    let {
+        ngOnChanges: r,
+        ngOnInit: o,
+        ngDoCheck: i
+    } = n.type.prototype;
+    if (r) {
+        let s = of(n);
+        (t.preOrderHooks ??= []).push(e, s), (t.preOrderCheckHooks ??= []).push(e, s)
+    }
+    o && (t.preOrderHooks ??= []).push(0 - e, o), i && ((t.preOrderHooks ??= []).push(e, i), (t.preOrderCheckHooks ??= []).push(e, i))
+}
+
+function Ni(e, n) {
+    for (let t = n.directiveStart, r = n.directiveEnd; t < r; t++) {
+        let i = e.data[t].type.prototype,
+            {
+                ngAfterContentInit: s,
+                ngAfterContentChecked: a,
+                ngAfterViewInit: c,
+                ngAfterViewChecked: l,
+                ngOnDestroy: u
+            } = i;
+        s && (e.contentHooks ??= []).push(-t, s), a && ((e.contentHooks ??= []).push(t, a), (e.contentCheckHooks ??= []).push(t, a)), c && (e.viewHooks ??= []).push(-t, c), l && ((e.viewHooks ??= []).push(t, l), (e.viewCheckHooks ??= []).push(t, l)), u != null && (e.destroyHooks ??= []).push(t, u)
+    }
+}
+
+function $o(e, n, t) {
+    Mf(e, n, 3, t)
+}
+
+function Ho(e, n, t, r) {
+    (e[M] & 3) === t && Mf(e, n, t, r)
+}
+
+function ca(e, n) {
+    let t = e[M];
+    (t & 3) === n && (t &= 16383, t += 1, e[M] = t)
+}
+
+function Mf(e, n, t, r) {
+    let o = r !== void 0 ? e[Sn] & 65535 : 0,
+        i = r ?? -1,
+        s = n.length - 1,
+        a = 0;
+    for (let c = o; c < s; c++)
+        if (typeof n[c + 1] == "number") {
+            if (a = n[c], r != null && a >= r) break
+        } else n[c] < 0 && (e[Sn] += 65536), (a < i || i == -1) && ($v(e, t, n, c), e[Sn] = (e[Sn] & 4294901760) + c + 2), c++
+}
+
+function rd(e, n) {
+    nt(4, e, n);
+    let t = j(null);
+    try {
+        n.call(e)
+    } finally {
+        j(t), nt(5, e, n)
+    }
+}
+
+function $v(e, n, t, r) {
+    let o = t[r] < 0,
+        i = t[r + 1],
+        s = o ? -t[r] : t[r],
+        a = e[s];
+    o ? e[M] >> 14 < e[Sn] >> 16 && (e[M] & 3) === n && (e[M] += 16384, rd(a, i)) : rd(a, i)
+}
+var Nn = -1,
+    Ir = class {
+        constructor(n, t, r) {
+            this.factory = n, this.resolving = !1, this.canSeeViewProviders = t, this.injectImpl = r
+        }
+    };
+
+function Hv(e) {
+    return e instanceof Ir
+}
+
+function zv(e) {
+    return (e.flags & 8) !== 0
+}
+
+function Gv(e) {
+    return (e.flags & 16) !== 0
+}
+var la = {},
+    Oa = class {
+        constructor(n, t) {
+            this.injector = n, this.parentInjector = t
+        }
+        get(n, t, r) {
+            r = wi(r);
+            let o = this.injector.get(n, la, r);
+            return o !== la || t === la ? o : this.parentInjector.get(n, t, r)
+        }
+    };
+
+function Sf(e) {
+    return e !== Nn
+}
+
+function ti(e) {
+    return e & 32767
+}
+
+function Wv(e) {
+    return e >> 16
+}
+
+function ni(e, n) {
+    let t = Wv(e),
+        r = n;
+    for (; t > 0;) r = r[$n], t--;
+    return r
+}
+var Na = !0;
+
+function od(e) {
+    let n = Na;
+    return Na = e, n
+}
+var qv = 256,
+    xf = qv - 1,
+    Tf = 5,
+    Zv = 0,
+    rt = {};
+
+function Qv(e, n, t) {
+    let r;
+    typeof t == "string" ? r = t.charCodeAt(0) || 0 : t.hasOwnProperty(vr) && (r = t[vr]), r == null && (r = t[vr] = Zv++);
+    let o = r & xf,
+        i = 1 << o;
+    n.data[e + (o >> Tf)] |= i
+}
+
+function Of(e, n) {
+    let t = Nf(e, n);
+    if (t !== -1) return t;
+    let r = n[A];
+    r.firstCreatePass && (e.injectorIndex = n.length, ua(r.data, e), ua(n, null), ua(r.blueprint, null));
+    let o = Ec(e, n),
+        i = e.injectorIndex;
+    if (Sf(o)) {
+        let s = ti(o),
+            a = ni(o, n),
+            c = a[A].data;
+        for (let l = 0; l < 8; l++) n[i + l] = a[s + l] | c[s + l]
+    }
+    return n[i + 8] = o, i
+}
+
+function ua(e, n) {
+    e.push(0, 0, 0, 0, 0, 0, 0, 0, n)
+}
+
+function Nf(e, n) {
+    return e.injectorIndex === -1 || e.parent && e.parent.injectorIndex === e.injectorIndex || n[e.injectorIndex + 8] === null ? -1 : e.injectorIndex
+}
+
+function Ec(e, n) {
+    if (e.parent && e.parent.injectorIndex !== -1) return e.parent.injectorIndex;
+    let t = 0,
+        r = null,
+        o = n;
+    for (; o !== null;) {
+        if (r = Ff(o), r === null) return Nn;
+        if (t++, o = o[$n], r.injectorIndex !== -1) return r.injectorIndex | t << 16
+    }
+    return Nn
+}
+
+function Yv(e, n, t) {
+    Qv(e, n, t)
+}
+
+function Kv(e, n) {
+    if (n === "class") return e.classes;
+    if (n === "style") return e.styles;
+    let t = e.attrs;
+    if (t) {
+        let r = t.length,
+            o = 0;
+        for (; o < r;) {
+            let i = t[o];
+            if (Hd(i)) break;
+            if (i === 0) o = o + 2;
+            else if (typeof i == "number")
+                for (o++; o < r && typeof t[o] == "string";) o++;
+            else {
+                if (i === n) return t[o + 1];
+                o = o + 2
+            }
+        }
+    }
+    return null
+}
+
+function Af(e, n, t) {
+    if (t & N.Optional || e !== void 0) return e;
+    ac(n, "NodeInjector")
+}
+
+function Pf(e, n, t, r) {
+    if (t & N.Optional && r === void 0 && (r = null), !(t & (N.Self | N.Host))) {
+        let o = e[Pn],
+            i = ke(void 0);
+        try {
+            return o ? o.get(n, r, t & N.Optional) : Ld(n, r, t & N.Optional)
+        } finally {
+            ke(i)
+        }
+    }
+    return Af(r, n, t)
+}
+
+function Rf(e, n, t, r = N.Default, o) {
+    if (e !== null) {
+        if (n[M] & 2048 && !(r & N.Self)) {
+            let s = ny(e, n, t, r, rt);
+            if (s !== rt) return s
+        }
+        let i = kf(e, n, t, r, rt);
+        if (i !== rt) return i
+    }
+    return Pf(n, t, r, o)
+}
+
+function kf(e, n, t, r, o) {
+    let i = ey(t);
+    if (typeof i == "function") {
+        if (!Cf(n, e, r)) return r & N.Host ? Af(o, t, r) : Pf(n, t, r, o);
+        try {
+            let s;
+            if (s = i(r), s == null && !(r & N.Optional)) ac(t);
+            else return s
+        } finally {
+            If()
+        }
+    } else if (typeof i == "number") {
+        let s = null,
+            a = Nf(e, n),
+            c = Nn,
+            l = r & N.Host ? n[Be][Xe] : null;
+        for ((a === -1 || r & N.SkipSelf) && (c = a === -1 ? Ec(e, n) : n[a + 8], c === Nn || !sd(r, !1) ? a = -1 : (s = n[A], a = ti(c), n = ni(c, n))); a !== -1;) {
+            let u = n[A];
+            if (id(i, a, u.data)) {
+                let d = Jv(a, n, t, s, r, l);
+                if (d !== rt) return d
+            }
+            c = n[a + 8], c !== Nn && sd(r, n[A].data[a + 8] === l) && id(i, a, n) ? (s = u, a = ti(c), n = ni(c, n)) : a = -1
+        }
+    }
+    return o
+}
+
+function Jv(e, n, t, r, o, i) {
+    let s = n[A],
+        a = s.data[e + 8],
+        c = r == null ? Nr(a) && Na : r != s && (a.type & 3) !== 0,
+        l = o & N.Host && i === a,
+        u = Xv(a, s, t, c, l);
+    return u !== null ? br(n, s, u, a) : rt
+}
+
+function Xv(e, n, t, r, o) {
+    let i = e.providerIndexes,
+        s = n.data,
+        a = i & 1048575,
+        c = e.directiveStart,
+        l = e.directiveEnd,
+        u = i >> 20,
+        d = r ? a : a + u,
+        v = o ? a + u : l;
+    for (let m = d; m < v; m++) {
+        let C = s[m];
+        if (m < c && t === C || m >= c && C.type === t) return m
+    }
+    if (o) {
+        let m = s[c];
+        if (m && Ar(m) && m.type === t) return c
+    }
+    return null
+}
+
+function br(e, n, t, r) {
+    let o = e[t],
+        i = n.data;
+    if (Hv(o)) {
+        let s = o;
+        s.resolving && Tm(xm(i[t]));
+        let a = od(s.canSeeViewProviders);
+        s.resolving = !0;
+        let c, l = s.injectImpl ? ke(s.injectImpl) : null,
+            u = Cf(e, r, N.Default);
+        try {
+            o = e[t] = s.factory(void 0, i, e, r), n.firstCreatePass && t >= r.directiveStart && Uv(t, i[t], n)
+        } finally {
+            l !== null && ke(l), od(a), s.resolving = !1, If()
+        }
+    }
+    return o
+}
+
+function ey(e) {
+    if (typeof e == "string") return e.charCodeAt(0) || 0;
+    let n = e.hasOwnProperty(vr) ? e[vr] : void 0;
+    return typeof n == "number" ? n >= 0 ? n & xf : ty : n
+}
+
+function id(e, n, t) {
+    let r = 1 << e;
+    return !!(t[n + (e >> Tf)] & r)
+}
+
+function sd(e, n) {
+    return !(e & N.Self) && !(e & N.Host && n)
+}
+var Jt = class {
+    constructor(n, t) {
+        this._tNode = n, this._lView = t
+    }
+    get(n, t, r) {
+        return Rf(this._tNode, this._lView, n, wi(r), t)
+    }
+};
+
+function ty() {
+    return new Jt(we(), H())
+}
+
+function Ic(e) {
+    return Sr(() => {
+        let n = e.prototype.constructor,
+            t = n[Wo] || Aa(n),
+            r = Object.prototype,
+            o = Object.getPrototypeOf(e.prototype).constructor;
+        for (; o && o !== r;) {
+            let i = o[Wo] || Aa(o);
+            if (i && i !== t) return i;
+            o = Object.getPrototypeOf(o)
+        }
+        return i => new i
+    })
+}
+
+function Aa(e) {
+    return Nd(e) ? () => {
+        let n = Aa(Fe(e));
+        return n && n()
+    } : An(e)
+}
+
+function ny(e, n, t, r, o) {
+    let i = e,
+        s = n;
+    for (; i !== null && s !== null && s[M] & 2048 && !(s[M] & 512);) {
+        let a = kf(i, s, t, r | N.Self, rt);
+        if (a !== rt) return a;
+        let c = i.parent;
+        if (!c) {
+            let l = s[tf];
+            if (l) {
+                let u = l.get(t, rt, r);
+                if (u !== rt) return u
+            }
+            c = Ff(s), s = s[$n]
+        }
+        i = c
+    }
+    return o
+}
+
+function Ff(e) {
+    let n = e[A],
+        t = n.type;
+    return t === 2 ? n.declTNode : t === 1 ? e[Xe] : null
+}
+
+function bc(e) {
+    return Kv(we(), e)
+}
+
+function ad(e, n = null, t = null, r) {
+    let o = Lf(e, n, t, r);
+    return o.resolveInjectorInitializers(), o
+}
+
+function Lf(e, n = null, t = null, r, o = new Set) {
+    let i = [t || Le, rv(e)];
+    return r = r || (typeof e == "object" ? void 0 : ve(e)), new Dr(i, n || hc(), r || null, o)
+}
+var Ke = class e {
+    static {
+        this.THROW_IF_NOT_FOUND = yr
+    }
+    static {
+        this.NULL = new Qo
+    }
+    static create(n, t) {
+        if (Array.isArray(n)) return ad({
+            name: ""
+        }, t, n, "");
+        {
+            let r = n.name ?? "";
+            return ad({
+                name: r
+            }, n.parent, n.providers, r)
+        }
+    }
+    static {
+        this.\u0275prov = I({
+            token: e,
+            providedIn: "any",
+            factory: () => x(Bd)
+        })
+    }
+    static {
+        this.__NG_ELEMENT_ID__ = -1
+    }
+};
+var ry = new b("");
+ry.__NG_ELEMENT_ID__ = e => {
+    let n = we();
+    if (n === null) throw new E(204, !1);
+    if (n.type & 2) return n.value;
+    if (e & N.Optional) return null;
+    throw new E(204, !1)
+};
+var oy = "ngOriginalError";
+
+function da(e) {
+    return e[oy]
+}
+var jf = !0,
+    _c = (() => {
+        class e {
+            static {
+                this.__NG_ELEMENT_ID__ = iy
+            }
+            static {
+                this.__NG_ENV_ID__ = t => t
+            }
+        }
+        return e
+    })(),
+    Pa = class extends _c {
+        constructor(n) {
+            super(), this._lView = n
+        }
+        onDestroy(n) {
+            return ff(this._lView, n), () => Iv(this._lView, n)
+        }
+    };
+
+function iy() {
+    return new Pa(H())
+}
+var an = (() => {
+    class e {
+        constructor() {
+            this.taskId = 0, this.pendingTasks = new Set, this.hasPendingTasks = new ce(!1)
+        }
+        get _hasPendingTasks() {
+            return this.hasPendingTasks.value
+        }
+        add() {
+            this._hasPendingTasks || this.hasPendingTasks.next(!0);
+            let t = this.taskId++;
+            return this.pendingTasks.add(t), t
+        }
+        remove(t) {
+            this.pendingTasks.delete(t), this.pendingTasks.size === 0 && this._hasPendingTasks && this.hasPendingTasks.next(!1)
+        }
+        ngOnDestroy() {
+            this.pendingTasks.clear(), this._hasPendingTasks && this.hasPendingTasks.next(!1)
+        }
+        static {
+            this.\u0275prov = I({
+                token: e,
+                providedIn: "root",
+                factory: () => new e
+            })
+        }
+    }
+    return e
+})();
+var Ra = class extends he {
+        constructor(n = !1) {
+            super(), this.destroyRef = void 0, this.pendingTasks = void 0, this.__isAsync = n, ef() && (this.destroyRef = g(_c, {
+                optional: !0
+            }) ?? void 0, this.pendingTasks = g(an, {
+                optional: !0
+            }) ?? void 0)
+        }
+        emit(n) {
+            let t = j(null);
+            try {
+                super.next(n)
+            } finally {
+                j(t)
+            }
+        }
+        subscribe(n, t, r) {
+            let o = n,
+                i = t || (() => null),
+                s = r;
+            if (n && typeof n == "object") {
+                let c = n;
+                o = c.next?.bind(c), i = c.error?.bind(c), s = c.complete?.bind(c)
+            }
+            this.__isAsync && (i = this.wrapInTimeout(i), o && (o = this.wrapInTimeout(o)), s && (s = this.wrapInTimeout(s)));
+            let a = super.subscribe({
+                next: o,
+                error: i,
+                complete: s
+            });
+            return n instanceof X && n.add(a), a
+        }
+        wrapInTimeout(n) {
+            return t => {
+                let r = this.pendingTasks?.add();
+                setTimeout(() => {
+                    n(t), r !== void 0 && this.pendingTasks?.remove(r)
+                })
+            }
+        }
+    },
+    me = Ra;
+
+function ri(...e) {}
+
+function Vf(e) {
+    let n, t;
+
+    function r() {
+        e = ri;
+        try {
+            t !== void 0 && typeof cancelAnimationFrame == "function" && cancelAnimationFrame(t), n !== void 0 && clearTimeout(n)
+        } catch {}
+    }
+    return n = setTimeout(() => {
+        e(), r()
+    }), typeof requestAnimationFrame == "function" && (t = requestAnimationFrame(() => {
+        e(), r()
+    })), () => r()
+}
+
+function cd(e) {
+    return queueMicrotask(() => e()), () => {
+        e = ri
+    }
+}
+var Mc = "isAngularZone",
+    oi = Mc + "_ID",
+    sy = 0,
+    W = class e {
+        constructor(n) {
+            this.hasPendingMacrotasks = !1, this.hasPendingMicrotasks = !1, this.isStable = !0, this.onUnstable = new me(!1), this.onMicrotaskEmpty = new me(!1), this.onStable = new me(!1), this.onError = new me(!1);
+            let {
+                enableLongStackTrace: t = !1,
+                shouldCoalesceEventChangeDetection: r = !1,
+                shouldCoalesceRunChangeDetection: o = !1,
+                scheduleInRootZone: i = jf
+            } = n;
+            if (typeof Zone > "u") throw new E(908, !1);
+            Zone.assertZonePatched();
+            let s = this;
+            s._nesting = 0, s._outer = s._inner = Zone.current, Zone.TaskTrackingZoneSpec && (s._inner = s._inner.fork(new Zone.TaskTrackingZoneSpec)), t && Zone.longStackTraceZoneSpec && (s._inner = s._inner.fork(Zone.longStackTraceZoneSpec)), s.shouldCoalesceEventChangeDetection = !o && r, s.shouldCoalesceRunChangeDetection = o, s.callbackScheduled = !1, s.scheduleInRootZone = i, ly(s)
+        }
+        static isInAngularZone() {
+            return typeof Zone < "u" && Zone.current.get(Mc) === !0
+        }
+        static assertInAngularZone() {
+            if (!e.isInAngularZone()) throw new E(909, !1)
+        }
+        static assertNotInAngularZone() {
+            if (e.isInAngularZone()) throw new E(909, !1)
+        }
+        run(n, t, r) {
+            return this._inner.run(n, t, r)
+        }
+        runTask(n, t, r, o) {
+            let i = this._inner,
+                s = i.scheduleEventTask("NgZoneEvent: " + o, n, ay, ri, ri);
+            try {
+                return i.runTask(s, t, r)
+            } finally {
+                i.cancelTask(s)
+            }
+        }
+        runGuarded(n, t, r) {
+            return this._inner.runGuarded(n, t, r)
+        }
+        runOutsideAngular(n) {
+            return this._outer.run(n)
+        }
+    },
+    ay = {};
+
+function Sc(e) {
+    if (e._nesting == 0 && !e.hasPendingMicrotasks && !e.isStable) try {
+        e._nesting++, e.onMicrotaskEmpty.emit(null)
+    } finally {
+        if (e._nesting--, !e.hasPendingMicrotasks) try {
+            e.runOutsideAngular(() => e.onStable.emit(null))
+        } finally {
+            e.isStable = !0
+        }
+    }
+}
+
+function cy(e) {
+    if (e.isCheckStableRunning || e.callbackScheduled) return;
+    e.callbackScheduled = !0;
+
+    function n() {
+        Vf(() => {
+            e.callbackScheduled = !1, ka(e), e.isCheckStableRunning = !0, Sc(e), e.isCheckStableRunning = !1
+        })
+    }
+    e.scheduleInRootZone ? Zone.root.run(() => {
+        n()
+    }) : e._outer.run(() => {
+        n()
+    }), ka(e)
+}
+
+function ly(e) {
+    let n = () => {
+            cy(e)
+        },
+        t = sy++;
+    e._inner = e._inner.fork({
+        name: "angular",
+        properties: {
+            [Mc]: !0,
+            [oi]: t,
+            [oi + t]: !0
+        },
+        onInvokeTask: (r, o, i, s, a, c) => {
+            if (uy(c)) return r.invokeTask(i, s, a, c);
+            try {
+                return ld(e), r.invokeTask(i, s, a, c)
+            } finally {
+                (e.shouldCoalesceEventChangeDetection && s.type === "eventTask" || e.shouldCoalesceRunChangeDetection) && n(), ud(e)
+            }
+        },
+        onInvoke: (r, o, i, s, a, c, l) => {
+            try {
+                return ld(e), r.invoke(i, s, a, c, l)
+            } finally {
+                e.shouldCoalesceRunChangeDetection && !e.callbackScheduled && !dy(c) && n(), ud(e)
+            }
+        },
+        onHasTask: (r, o, i, s) => {
+            r.hasTask(i, s), o === i && (s.change == "microTask" ? (e._hasPendingMicrotasks = s.microTask, ka(e), Sc(e)) : s.change == "macroTask" && (e.hasPendingMacrotasks = s.macroTask))
+        },
+        onHandleError: (r, o, i, s) => (r.handleError(i, s), e.runOutsideAngular(() => e.onError.emit(s)), !1)
+    })
+}
+
+function ka(e) {
+    e._hasPendingMicrotasks || (e.shouldCoalesceEventChangeDetection || e.shouldCoalesceRunChangeDetection) && e.callbackScheduled === !0 ? e.hasPendingMicrotasks = !0 : e.hasPendingMicrotasks = !1
+}
+
+function ld(e) {
+    e._nesting++, e.isStable && (e.isStable = !1, e.onUnstable.emit(null))
+}
+
+function ud(e) {
+    e._nesting--, Sc(e)
+}
+var Fa = class {
+    constructor() {
+        this.hasPendingMicrotasks = !1, this.hasPendingMacrotasks = !1, this.isStable = !0, this.onUnstable = new me, this.onMicrotaskEmpty = new me, this.onStable = new me, this.onError = new me
+    }
+    run(n, t, r) {
+        return n.apply(t, r)
+    }
+    runGuarded(n, t, r) {
+        return n.apply(t, r)
+    }
+    runOutsideAngular(n) {
+        return n()
+    }
+    runTask(n, t, r, o) {
+        return n.apply(t, r)
+    }
+};
+
+function uy(e) {
+    return Bf(e, "__ignore_ng_zone__")
+}
+
+function dy(e) {
+    return Bf(e, "__scheduler_tick__")
+}
+
+function Bf(e, n) {
+    return !Array.isArray(e) || e.length !== 1 ? !1 : e[0]?.data?.[n] === !0
+}
+var vt = class {
+        constructor() {
+            this._console = console
+        }
+        handleError(n) {
+            let t = this._findOriginalError(n);
+            this._console.error("ERROR", n), t && this._console.error("ORIGINAL ERROR", t)
+        }
+        _findOriginalError(n) {
+            let t = n && da(n);
+            for (; t && da(t);) t = da(t);
+            return t || null
+        }
+    },
+    fy = new b("", {
+        providedIn: "root",
+        factory: () => {
+            let e = g(W),
+                n = g(vt);
+            return t => e.runOutsideAngular(() => n.handleError(t))
+        }
+    });
+
+function hy() {
+    return Ai(we(), H())
+}
+
+function Ai(e, n) {
+    return new cn(Oe(e, n))
+}
+var cn = (() => {
+    class e {
+        constructor(t) {
+            this.nativeElement = t
+        }
+        static {
+            this.__NG_ELEMENT_ID__ = hy
+        }
+    }
+    return e
+})();
+var py = "ngSkipHydration",
+    gy = "ngskiphydration";
+
+function Uf(e) {
+    let n = e.mergedAttrs;
+    if (n === null) return !1;
+    for (let t = 0; t < n.length; t += 2) {
+        let r = n[t];
+        if (typeof r == "number") return !1;
+        if (typeof r == "string" && r.toLowerCase() === gy) return !0
+    }
+    return !1
+}
+
+function $f(e) {
+    return e.hasAttribute(py)
+}
+
+function ii(e) {
+    return (e.flags & 128) === 128
+}
+
+function my(e) {
+    if (ii(e)) return !0;
+    let n = e.parent;
+    for (; n;) {
+        if (ii(e) || Uf(n)) return !0;
+        n = n.parent
+    }
+    return !1
+}
+var Hf = new Map,
+    vy = 0;
+
+function yy() {
+    return vy++
+}
+
+function Cy(e) {
+    Hf.set(e[bi], e)
+}
+
+function La(e) {
+    Hf.delete(e[bi])
+}
+var dd = "__ngContext__";
+
+function kt(e, n) {
+    Qe(n) ? (e[dd] = n[bi], Cy(n)) : e[dd] = n
+}
+
+function zf(e) {
+    return Wf(e[wr])
+}
+
+function Gf(e) {
+    return Wf(e[Ze])
+}
+
+function Wf(e) {
+    for (; e !== null && !ct(e);) e = e[Ze];
+    return e
+}
+var ja;
+
+function qf(e) {
+    ja = e
+}
+
+function Pi() {
+    if (ja !== void 0) return ja;
+    if (typeof document < "u") return document;
+    throw new E(210, !1)
+}
+var Ri = new b("", {
+        providedIn: "root",
+        factory: () => Dy
+    }),
+    Dy = "ng",
+    xc = new b(""),
+    Ne = new b("", {
+        providedIn: "platform",
+        factory: () => "unknown"
+    });
+var Tc = new b("", {
+    providedIn: "root",
+    factory: () => Pi().body?.querySelector("[ngCspNonce]")?.getAttribute("ngCspNonce") || null
+});
+
+function wy() {
+    let e = new Gn;
+    return g(Ne) === "browser" && (e.store = Ey(Pi(), g(Ri))), e
+}
+var Gn = (() => {
+    class e {
+        constructor() {
+            this.store = {}, this.onSerializeCallbacks = {}
+        }
+        static {
+            this.\u0275prov = I({
+                token: e,
+                providedIn: "root",
+                factory: wy
+            })
+        }
+        get(t, r) {
+            return this.store[t] !== void 0 ? this.store[t] : r
+        }
+        set(t, r) {
+            this.store[t] = r
+        }
+        remove(t) {
+            delete this.store[t]
+        }
+        hasKey(t) {
+            return this.store.hasOwnProperty(t)
+        }
+        get isEmpty() {
+            return Object.keys(this.store).length === 0
+        }
+        onSerialize(t, r) {
+            this.onSerializeCallbacks[t] = r
+        }
+        toJson() {
+            for (let t in this.onSerializeCallbacks)
+                if (this.onSerializeCallbacks.hasOwnProperty(t)) try {
+                    this.store[t] = this.onSerializeCallbacks[t]()
+                } catch (r) {
+                    console.warn("Exception in onSerialize callback: ", r)
+                }
+            return JSON.stringify(this.store).replace(/</g, "\\u003C")
+        }
+    }
+    return e
+})();
+
+function Ey(e, n) {
+    let t = e.getElementById(n + "-state");
+    if (t?.textContent) try {
+        return JSON.parse(t.textContent)
+    } catch (r) {
+        console.warn("Exception while restoring TransferState for app " + n, r)
+    }
+    return {}
+}
+var Zf = "h",
+    Qf = "b",
+    Va = function(e) {
+        return e.FirstChild = "f", e.NextSibling = "n", e
+    }(Va || {}),
+    Iy = "e",
+    by = "t",
+    Oc = "c",
+    Yf = "x",
+    si = "r",
+    _y = "i",
+    My = "n",
+    Kf = "d";
+var Sy = "__nghData__",
+    Jf = Sy,
+    fa = "ngh",
+    xy = "nghm",
+    Xf = () => null;
+
+function Ty(e, n, t = !1) {
+    let r = e.getAttribute(fa);
+    if (r == null) return null;
+    let [o, i] = r.split("|");
+    if (r = t ? i : o, !r) return null;
+    let s = i ? `|${i}` : "",
+        a = t ? o : s,
+        c = {};
+    if (r !== "") {
+        let u = n.get(Gn, null, {
+            optional: !0
+        });
+        u !== null && (c = u.get(Jf, [])[Number(r)])
+    }
+    let l = {
+        data: c,
+        firstChild: e.firstChild ?? null
+    };
+    return t && (l.firstChild = e, ki(l, 0, e.nextSibling)), a ? e.setAttribute(fa, a) : e.removeAttribute(fa), l
+}
+
+function Oy() {
+    Xf = Ty
+}
+
+function Nc(e, n, t = !1) {
+    return Xf(e, n, t)
+}
+
+function Ny(e) {
+    let n = e._lView;
+    return n[A].type === 2 ? null : (ei(n) && (n = n[se]), n)
+}
+
+function Ay(e) {
+    return e.textContent?.replace(/\s/gm, "")
+}
+
+function Py(e) {
+    let n = Pi(),
+        t = n.createNodeIterator(e, NodeFilter.SHOW_COMMENT, {
+            acceptNode(i) {
+                let s = Ay(i);
+                return s === "ngetn" || s === "ngtns" ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT
+            }
+        }),
+        r, o = [];
+    for (; r = t.nextNode();) o.push(r);
+    for (let i of o) i.textContent === "ngetn" ? i.replaceWith(n.createTextNode("")) : i.remove()
+}
+
+function ki(e, n, t) {
+    e.segmentHeads ??= {}, e.segmentHeads[n] = t
+}
+
+function Ba(e, n) {
+    return e.segmentHeads?.[n] ?? null
+}
+
+function Ry(e, n) {
+    let t = e.data,
+        r = t[Iy]?.[n] ?? null;
+    return r === null && t[Oc]?.[n] && (r = Ac(e, n)), r
+}
+
+function eh(e, n) {
+    return e.data[Oc]?.[n] ?? null
+}
+
+function Ac(e, n) {
+    let t = eh(e, n) ?? [],
+        r = 0;
+    for (let o of t) r += o[si] * (o[Yf] ?? 1);
+    return r
+}
+
+function ky(e) {
+    if (typeof e.disconnectedNodes > "u") {
+        let n = e.data[Kf];
+        e.disconnectedNodes = n ? new Set(n) : null
+    }
+    return e.disconnectedNodes
+}
+
+function kr(e, n) {
+    if (typeof e.disconnectedNodes > "u") {
+        let t = e.data[Kf];
+        e.disconnectedNodes = t ? new Set(t) : null
+    }
+    return !!ky(e)?.has(n)
+}
+var Fo = new b(""),
+    th = !1,
+    nh = new b("", {
+        providedIn: "root",
+        factory: () => th
+    });
+var Lo;
+
+function Fy() {
+    if (Lo === void 0 && (Lo = null, ya.trustedTypes)) try {
+        Lo = ya.trustedTypes.createPolicy("angular#unsafe-bypass", {
+            createHTML: e => e,
+            createScript: e => e,
+            createScriptURL: e => e
+        })
+    } catch {}
+    return Lo
+}
+
+function fd(e) {
+    return Fy()?.createScriptURL(e) || e
+}
+var ai = class {
+    constructor(n) {
+        this.changingThisBreaksApplicationSecurity = n
+    }
+    toString() {
+        return `SafeValue must use [property]=binding: ${this.changingThisBreaksApplicationSecurity} (see ${xd})`
+    }
+};
+
+function Fr(e) {
+    return e instanceof ai ? e.changingThisBreaksApplicationSecurity : e
+}
+
+function Pc(e, n) {
+    let t = Ly(e);
+    if (t != null && t !== n) {
+        if (t === "ResourceURL" && n === "URL") return !0;
+        throw new Error(`Required a safe ${n}, got a ${t} (see ${xd})`)
+    }
+    return t === n
+}
+
+function Ly(e) {
+    return e instanceof ai && e.getTypeName() || null
+}
+var jy = /^(?!javascript:)(?:[a-z0-9+.-]+:|[^&:\/?#]*(?:[\/?#]|$))/i;
+
+function rh(e) {
+    return e = String(e), e.match(jy) ? e : "unsafe:" + e
+}
+var Fi = function(e) {
+    return e[e.NONE = 0] = "NONE", e[e.HTML = 1] = "HTML", e[e.STYLE = 2] = "STYLE", e[e.SCRIPT = 3] = "SCRIPT", e[e.URL = 4] = "URL", e[e.RESOURCE_URL = 5] = "RESOURCE_URL", e
+}(Fi || {});
+
+function yt(e) {
+    let n = ih();
+    return n ? n.sanitize(Fi.URL, e) || "" : Pc(e, "URL") ? Fr(e) : rh(Di(e))
+}
+
+function Vy(e) {
+    let n = ih();
+    if (n) return fd(n.sanitize(Fi.RESOURCE_URL, e) || "");
+    if (Pc(e, "ResourceURL")) return fd(Fr(e));
+    throw new E(904, !1)
+}
+
+function By(e, n) {
+    return n === "src" && (e === "embed" || e === "frame" || e === "iframe" || e === "media" || e === "script") || n === "href" && (e === "base" || e === "link") ? Vy : yt
+}
+
+function oh(e, n, t) {
+    return By(n, t)(e)
+}
+
+function ih() {
+    let e = H();
+    return e && e[st].sanitizer
+}
+var Uy = /^>|^->|<!--|-->|--!>|<!-$/g,
+    $y = /(<|>)/g,
+    Hy = "\u200B$1\u200B";
+
+function zy(e) {
+    return e.replace(Uy, n => n.replace($y, Hy))
+}
+
+function Li(e) {
+    return e.ownerDocument.defaultView
+}
+
+function Gy(e) {
+    return e.ownerDocument.body
+}
+
+function sh(e) {
+    return e instanceof Function ? e() : e
+}
+
+function gr(e) {
+    return (e ?? g(Ke)).get(Ne) === "browser"
+}
+var at = function(e) {
+        return e[e.Important = 1] = "Important", e[e.DashCase = 2] = "DashCase", e
+    }(at || {}),
+    Wy;
+
+function Rc(e, n) {
+    return Wy(e, n)
+}
+
+function xn(e, n, t, r, o) {
+    if (r != null) {
+        let i, s = !1;
+        ct(r) ? i = r : Qe(r) && (s = !0, r = r[Te]);
+        let a = Ye(r);
+        e === 0 && t !== null ? o == null ? dh(n, t, a) : li(n, t, a, o || null, !0) : e === 1 && t !== null ? li(n, t, a, o || null, !0) : e === 2 ? jc(n, a, s) : e === 3 && n.destroyNode(a), i != null && a0(n, e, i, t, o)
+    }
+}
+
+function ah(e, n) {
+    return e.createText(n)
+}
+
+function qy(e, n, t) {
+    e.setValue(n, t)
+}
+
+function ch(e, n) {
+    return e.createComment(zy(n))
+}
+
+function kc(e, n, t) {
+    return e.createElement(n, t)
+}
+
+function Zy(e, n) {
+    lh(e, n), n[Te] = null, n[Xe] = null
+}
+
+function Qy(e, n, t, r, o, i) {
+    r[Te] = o, r[Xe] = n, Vi(e, r, t, 1, o, i)
+}
+
+function lh(e, n) {
+    n[st].changeDetectionScheduler?.notify(9), Vi(e, n, n[Z], 2, null, null)
+}
+
+function Yy(e) {
+    let n = e[wr];
+    if (!n) return ha(e[A], e);
+    for (; n;) {
+        let t = null;
+        if (Qe(n)) t = n[wr];
+        else {
+            let r = n[De];
+            r && (t = r)
+        }
+        if (!t) {
+            for (; n && !n[Ze] && n !== e;) Qe(n) && ha(n[A], n), n = n[pe];
+            n === null && (n = e), Qe(n) && ha(n[A], n), t = n && n[Ze]
+        }
+        n = t
+    }
+}
+
+function Ky(e, n, t, r) {
+    let o = De + r,
+        i = t.length;
+    r > 0 && (t[o - 1][Ze] = n), r < i - De ? (n[Ze] = t[o], Vd(t, De + r, n)) : (t.push(n), n[Ze] = null), n[pe] = t;
+    let s = n[Rn];
+    s !== null && t !== s && uh(s, n);
+    let a = n[kn];
+    a !== null && a.insertView(e), xa(n), n[M] |= 128
+}
+
+function uh(e, n) {
+    let t = e[Jo],
+        r = n[pe];
+    if (Qe(r)) e[M] |= Xo.HasTransplantedViews;
+    else {
+        let o = r[pe][Be];
+        n[Be] !== o && (e[M] |= Xo.HasTransplantedViews)
+    }
+    t === null ? e[Jo] = [n] : t.push(n)
+}
+
+function Fc(e, n) {
+    let t = e[Jo],
+        r = t.indexOf(n);
+    t.splice(r, 1)
+}
+
+function ci(e, n) {
+    if (e.length <= De) return;
+    let t = De + n,
+        r = e[t];
+    if (r) {
+        let o = r[Rn];
+        o !== null && o !== e && Fc(o, r), n > 0 && (e[t - 1][Ze] = r[Ze]);
+        let i = Zo(e, De + n);
+        Zy(r[A], r);
+        let s = i[kn];
+        s !== null && s.detachView(i[A]), r[pe] = null, r[Ze] = null, r[M] &= -129
+    }
+    return r
+}
+
+function Lc(e, n) {
+    if (!(n[M] & 256)) {
+        let t = n[Z];
+        t.destroyNode && Vi(e, n, t, 3, null, null), Yy(n)
+    }
+}
+
+function ha(e, n) {
+    if (n[M] & 256) return;
+    let t = j(null);
+    try {
+        n[M] &= -129, n[M] |= 256, n[je] && Bs(n[je]), Xy(e, n), Jy(e, n), n[A].type === 1 && n[Z].destroy();
+        let r = n[Rn];
+        if (r !== null && ct(n[pe])) {
+            r !== n[pe] && Fc(r, n);
+            let o = n[kn];
+            o !== null && o.detachView(e)
+        }
+        La(n)
+    } finally {
+        j(t)
+    }
+}
+
+function Jy(e, n) {
+    let t = e.cleanup,
+        r = n[Yo];
+    if (t !== null)
+        for (let i = 0; i < t.length - 1; i += 2)
+            if (typeof t[i] == "string") {
+                let s = t[i + 3];
+                s >= 0 ? r[s]() : r[-s].unsubscribe(), i += 2
+            } else {
+                let s = r[t[i + 1]];
+                t[i].call(s)
+            } r !== null && (n[Yo] = null);
+    let o = n[At];
+    if (o !== null) {
+        n[At] = null;
+        for (let i = 0; i < o.length; i++) {
+            let s = o[i];
+            s()
+        }
+    }
+}
+
+function Xy(e, n) {
+    let t;
+    if (e != null && (t = e.destroyHooks) != null)
+        for (let r = 0; r < t.length; r += 2) {
+            let o = n[t[r]];
+            if (!(o instanceof Ir)) {
+                let i = t[r + 1];
+                if (Array.isArray(i))
+                    for (let s = 0; s < i.length; s += 2) {
+                        let a = o[i[s]],
+                            c = i[s + 1];
+                        nt(4, a, c);
+                        try {
+                            c.call(a)
+                        } finally {
+                            nt(5, a, c)
+                        }
+                    } else {
+                        nt(4, o, i);
+                        try {
+                            i.call(o)
+                        } finally {
+                            nt(5, o, i)
+                        }
+                    }
+            }
+        }
+}
+
+function e0(e, n, t) {
+    return t0(e, n.parent, t)
+}
+
+function t0(e, n, t) {
+    let r = n;
+    for (; r !== null && r.type & 168;) n = r, r = n.parent;
+    if (r === null) return t[Te];
+    {
+        let {
+            componentOffset: o
+        } = r;
+        if (o > -1) {
+            let {
+                encapsulation: i
+            } = e.data[r.directiveStart + o];
+            if (i === ot.None || i === ot.Emulated) return null
+        }
+        return Oe(r, t)
+    }
+}
+
+function li(e, n, t, r, o) {
+    e.insertBefore(n, t, r, o)
+}
+
+function dh(e, n, t) {
+    e.appendChild(n, t)
+}
+
+function hd(e, n, t, r, o) {
+    r !== null ? li(e, n, t, r, o) : dh(e, n, t)
+}
+
+function fh(e, n) {
+    return e.parentNode(n)
+}
+
+function n0(e, n) {
+    return e.nextSibling(n)
+}
+
+function r0(e, n, t) {
+    return i0(e, n, t)
+}
+
+function o0(e, n, t) {
+    return e.type & 40 ? Oe(e, t) : null
+}
+var i0 = o0,
+    pd;
+
+function ji(e, n, t, r) {
+    let o = e0(e, r, n),
+        i = n[Z],
+        s = r.parent || n[Xe],
+        a = r0(s, r, n);
+    if (o != null)
+        if (Array.isArray(t))
+            for (let c = 0; c < t.length; c++) hd(i, o, t[c], a, !1);
+        else hd(i, o, t, a, !1);
+    pd !== void 0 && pd(i, r, n, t, o)
+}
+
+function mr(e, n) {
+    if (n !== null) {
+        let t = n.type;
+        if (t & 3) return Oe(n, e);
+        if (t & 4) return Ua(-1, e[n.index]);
+        if (t & 8) {
+            let r = n.child;
+            if (r !== null) return mr(e, r);
+            {
+                let o = e[n.index];
+                return ct(o) ? Ua(-1, o) : Ye(o)
+            }
+        } else {
+            if (t & 128) return mr(e, n.next);
+            if (t & 32) return Rc(n, e)() || Ye(e[n.index]);
+            {
+                let r = hh(e, n);
+                if (r !== null) {
+                    if (Array.isArray(r)) return r[0];
+                    let o = en(e[Be]);
+                    return mr(o, r)
+                } else return mr(e, n.next)
+            }
+        }
+    }
+    return null
+}
+
+function hh(e, n) {
+    if (n !== null) {
+        let r = e[Be][Xe],
+            o = n.projection;
+        return r.projection[o]
+    }
+    return null
+}
+
+function Ua(e, n) {
+    let t = De + e + 1;
+    if (t < n.length) {
+        let r = n[t],
+            o = r[A].firstChild;
+        if (o !== null) return mr(r, o)
+    }
+    return n[mt]
+}
+
+function jc(e, n, t) {
+    e.removeChild(null, n, t)
+}
+
+function ph(e) {
+    e.textContent = ""
+}
+
+function Vc(e, n, t, r, o, i, s) {
+    for (; t != null;) {
+        if (t.type === 128) {
+            t = t.next;
+            continue
+        }
+        let a = r[t.index],
+            c = t.type;
+        if (s && n === 0 && (a && kt(Ye(a), r), t.flags |= 2), (t.flags & 32) !== 32)
+            if (c & 8) Vc(e, n, t.child, r, o, i, !1), xn(n, e, o, a, i);
+            else if (c & 32) {
+            let l = Rc(t, r),
+                u;
+            for (; u = l();) xn(n, e, o, u, i);
+            xn(n, e, o, a, i)
+        } else c & 16 ? s0(e, n, r, t, o, i) : xn(n, e, o, a, i);
+        t = s ? t.projectionNext : t.next
+    }
+}
+
+function Vi(e, n, t, r, o, i) {
+    Vc(t, r, e.firstChild, n, o, i, !1)
+}
+
+function s0(e, n, t, r, o, i) {
+    let s = t[Be],
+        c = s[Xe].projection[r.projection];
+    if (Array.isArray(c))
+        for (let l = 0; l < c.length; l++) {
+            let u = c[l];
+            xn(n, e, o, u, i)
+        } else {
+            let l = c,
+                u = s[pe];
+            ii(r) && (l.flags |= 128), Vc(e, n, l, u, o, i, !0)
+        }
+}
+
+function a0(e, n, t, r, o) {
+    let i = t[mt],
+        s = Ye(t);
+    i !== s && xn(n, e, r, i, o);
+    for (let a = De; a < t.length; a++) {
+        let c = t[a];
+        Vi(c[A], c, e, n, r, i)
+    }
+}
+
+function c0(e, n, t, r, o) {
+    if (n) o ? e.addClass(t, r) : e.removeClass(t, r);
+    else {
+        let i = r.indexOf("-") === -1 ? void 0 : at.DashCase;
+        o == null ? e.removeStyle(t, r, i) : (typeof o == "string" && o.endsWith("!important") && (o = o.slice(0, -10), i |= at.Important), e.setStyle(t, r, o, i))
+    }
+}
+
+function l0(e, n, t) {
+    e.setAttribute(n, "style", t)
+}
+
+function gh(e, n, t) {
+    t === "" ? e.removeAttribute(n, "class") : e.setAttribute(n, "class", t)
+}
+
+function mh(e, n, t) {
+    let {
+        mergedAttrs: r,
+        classes: o,
+        styles: i
+    } = t;
+    r !== null && Ea(e, n, r), o !== null && gh(e, n, o), i !== null && l0(e, n, i)
+}
+var lt = {};
+
+function y(e = 1) {
+    vh(Ue(), H(), zn() + e, !1)
+}
+
+function vh(e, n, t, r) {
+    if (!r)
+        if ((n[M] & 3) === 3) {
+            let i = e.preOrderCheckHooks;
+            i !== null && $o(n, i, t)
+        } else {
+            let i = e.preOrderHooks;
+            i !== null && Ho(n, i, 0, t)
+        } tn(t)
+}
+
+function q(e, n = N.Default) {
+    let t = H();
+    if (t === null) return x(e, n);
+    let r = we();
+    return Rf(r, t, Fe(e), n)
+}
+
+function yh() {
+    let e = "invalid";
+    throw new Error(e)
+}
+
+function Ch(e, n, t, r, o, i) {
+    let s = j(null);
+    try {
+        let a = null;
+        o & Pt.SignalBased && (a = n[r][fu]), a !== null && a.transformFn !== void 0 && (i = a.transformFn(i)), o & Pt.HasDecoratorInputTransform && (i = e.inputTransforms[r].call(n, i)), e.setInput !== null ? e.setInput(n, a, i, t, r) : rf(n, a, r, i)
+    } finally {
+        j(s)
+    }
+}
+
+function u0(e, n) {
+    let t = e.hostBindingOpCodes;
+    if (t !== null) try {
+        for (let r = 0; r < t.length; r++) {
+            let o = t[r];
+            if (o < 0) tn(~o);
+            else {
+                let i = o,
+                    s = t[++r],
+                    a = t[++r];
+                kv(s, i);
+                let c = n[i];
+                a(2, c)
+            }
+        }
+    } finally {
+        tn(-1)
+    }
+}
+
+function Bi(e, n, t, r, o, i, s, a, c, l, u) {
+    let d = n.blueprint.slice();
+    return d[Te] = o, d[M] = r | 4 | 128 | 8 | 64, (l !== null || e && e[M] & 2048) && (d[M] |= 2048), uf(d), d[pe] = d[$n] = e, d[Ve] = t, d[st] = s || e && e[st], d[Z] = a || e && e[Z], d[Pn] = c || e && e[Pn] || null, d[Xe] = i, d[bi] = yy(), d[it] = u, d[tf] = l, d[Be] = n.type == 2 ? e[Be] : d, d
+}
+
+function Lr(e, n, t, r, o) {
+    let i = e.data[n];
+    if (i === null) i = d0(e, n, t, r, o), Rv() && (i.flags |= 32);
+    else if (i.type & 64) {
+        i.type = t, i.value = r, i.attrs = o;
+        let s = Ov();
+        i.injectorIndex = s === null ? -1 : s.injectorIndex
+    }
+    return sn(i, !0), i
+}
+
+function d0(e, n, t, r, o) {
+    let i = gf(),
+        s = vc(),
+        a = s ? i : i && i.parent,
+        c = e.data[n] = v0(e, a, t, n, r, o);
+    return e.firstChild === null && (e.firstChild = c), i !== null && (s ? i.child == null && c.parent !== null && (i.child = c) : i.next === null && (i.next = c, c.prev = i)), c
+}
+
+function Dh(e, n, t, r) {
+    if (t === 0) return -1;
+    let o = n.length;
+    for (let i = 0; i < t; i++) n.push(r), e.blueprint.push(r), e.data.push(null);
+    return o
+}
+
+function wh(e, n, t, r, o) {
+    let i = zn(),
+        s = r & 2;
+    try {
+        tn(-1), s && n.length > se && vh(e, n, se, !1), nt(s ? 2 : 0, o), t(r, o)
+    } finally {
+        tn(i), nt(s ? 3 : 1, o)
+    }
+}
+
+function Bc(e, n, t) {
+    if (pc(n)) {
+        let r = j(null);
+        try {
+            let o = n.directiveStart,
+                i = n.directiveEnd;
+            for (let s = o; s < i; s++) {
+                let a = e.data[s];
+                if (a.contentQueries) {
+                    let c = t[s];
+                    a.contentQueries(1, c, s)
+                }
+            }
+        } finally {
+            j(r)
+        }
+    }
+}
+
+function Uc(e, n, t) {
+    pf() && (I0(e, n, t, Oe(t, n)), (t.flags & 64) === 64 && Mh(e, n, t))
+}
+
+function $c(e, n, t = Oe) {
+    let r = n.localNames;
+    if (r !== null) {
+        let o = n.index + 1;
+        for (let i = 0; i < r.length; i += 2) {
+            let s = r[i + 1],
+                a = s === -1 ? t(n, e) : e[s];
+            e[o++] = a
+        }
+    }
+}
+
+function Eh(e) {
+    let n = e.tView;
+    return n === null || n.incompleteFirstPass ? e.tView = Hc(1, null, e.template, e.decls, e.vars, e.directiveDefs, e.pipeDefs, e.viewQuery, e.schemas, e.consts, e.id) : n
+}
+
+function Hc(e, n, t, r, o, i, s, a, c, l, u) {
+    let d = se + r,
+        v = d + o,
+        m = f0(d, v),
+        C = typeof l == "function" ? l() : l;
+    return m[A] = {
+        type: e,
+        blueprint: m,
+        template: t,
+        queries: null,
+        viewQuery: a,
+        declTNode: n,
+        data: m.slice().fill(null, d),
+        bindingStartIndex: d,
+        expandoStartIndex: v,
+        hostBindingOpCodes: null,
+        firstCreatePass: !0,
+        firstUpdatePass: !0,
+        staticViewQueries: !1,
+        staticContentQueries: !1,
+        preOrderHooks: null,
+        preOrderCheckHooks: null,
+        contentHooks: null,
+        contentCheckHooks: null,
+        viewHooks: null,
+        viewCheckHooks: null,
+        destroyHooks: null,
+        cleanup: null,
+        contentQueries: null,
+        components: null,
+        directiveRegistry: typeof i == "function" ? i() : i,
+        pipeRegistry: typeof s == "function" ? s() : s,
+        firstChild: null,
+        schemas: c,
+        consts: C,
+        incompleteFirstPass: !1,
+        ssrId: u
+    }
+}
+
+function f0(e, n) {
+    let t = [];
+    for (let r = 0; r < n; r++) t.push(r < e ? null : lt);
+    return t
+}
+
+function h0(e, n, t, r) {
+    let i = r.get(nh, th) || t === ot.ShadowDom,
+        s = e.selectRootElement(n, i);
+    return p0(s), s
+}
+
+function p0(e) {
+    Ih(e)
+}
+var Ih = () => null;
+
+function g0(e) {
+    $f(e) ? ph(e) : Py(e)
+}
+
+function m0() {
+    Ih = g0
+}
+
+function v0(e, n, t, r, o, i) {
+    let s = n ? n.injectorIndex : -1,
+        a = 0;
+    return Pr() && (a |= 128), {
+        type: t,
+        index: r,
+        insertBeforeIndex: null,
+        injectorIndex: s,
+        directiveStart: -1,
+        directiveEnd: -1,
+        directiveStylingLast: -1,
+        componentOffset: -1,
+        propertyBindings: null,
+        flags: a,
+        providerIndexes: 0,
+        value: o,
+        attrs: i,
+        mergedAttrs: null,
+        localNames: null,
+        initialInputs: void 0,
+        inputs: null,
+        outputs: null,
+        tView: null,
+        next: null,
+        prev: null,
+        projectionNext: null,
+        child: null,
+        parent: n,
+        projection: null,
+        styles: null,
+        stylesWithoutHost: null,
+        residualStyles: void 0,
+        classes: null,
+        classesWithoutHost: null,
+        residualClasses: void 0,
+        classBindings: 0,
+        styleBindings: 0
+    }
+}
+
+function gd(e, n, t, r, o) {
+    for (let i in n) {
+        if (!n.hasOwnProperty(i)) continue;
+        let s = n[i];
+        if (s === void 0) continue;
+        r ??= {};
+        let a, c = Pt.None;
+        Array.isArray(s) ? (a = s[0], c = s[1]) : a = s;
+        let l = i;
+        if (o !== null) {
+            if (!o.hasOwnProperty(i)) continue;
+            l = o[i]
+        }
+        e === 0 ? md(r, t, l, a, c) : md(r, t, l, a)
+    }
+    return r
+}
+
+function md(e, n, t, r, o) {
+    let i;
+    e.hasOwnProperty(t) ? (i = e[t]).push(n, r) : i = e[t] = [n, r], o !== void 0 && i.push(o)
+}
+
+function y0(e, n, t) {
+    let r = n.directiveStart,
+        o = n.directiveEnd,
+        i = e.data,
+        s = n.attrs,
+        a = [],
+        c = null,
+        l = null;
+    for (let u = r; u < o; u++) {
+        let d = i[u],
+            v = t ? t.get(d) : null,
+            m = v ? v.inputs : null,
+            C = v ? v.outputs : null;
+        c = gd(0, d.inputs, u, c, m), l = gd(1, d.outputs, u, l, C);
+        let P = c !== null && s !== null && !dc(n) ? R0(c, u, s) : null;
+        a.push(P)
+    }
+    c !== null && (c.hasOwnProperty("class") && (n.flags |= 8), c.hasOwnProperty("style") && (n.flags |= 16)), n.initialInputs = a, n.inputs = c, n.outputs = l
+}
+
+function C0(e) {
+    return e === "class" ? "className" : e === "for" ? "htmlFor" : e === "formaction" ? "formAction" : e === "innerHtml" ? "innerHTML" : e === "readonly" ? "readOnly" : e === "tabindex" ? "tabIndex" : e
+}
+
+function bh(e, n, t, r, o, i, s, a) {
+    let c = Oe(n, t),
+        l = n.inputs,
+        u;
+    !a && l != null && (u = l[r]) ? (Gc(e, t, u, r, o), Nr(n) && D0(t, n.index)) : n.type & 3 ? (r = C0(r), o = s != null ? s(o, n.value || "", r) : o, i.setProperty(c, r, o)) : n.type & 12
+}
+
+function D0(e, n) {
+    let t = Vt(n, e);
+    t[M] & 16 || (t[M] |= 64)
+}
+
+function zc(e, n, t, r) {
+    if (pf()) {
+        let o = r === null ? null : {
+                "": -1
+            },
+            i = _0(e, t),
+            s, a;
+        i === null ? s = a = null : [s, a] = i, s !== null && _h(e, n, t, s, o, a), o && M0(t, r, o)
+    }
+    t.mergedAttrs = uc(t.mergedAttrs, t.attrs)
+}
+
+function _h(e, n, t, r, o, i) {
+    for (let l = 0; l < r.length; l++) Yv(Of(t, n), e, r[l].type);
+    x0(t, e.data.length, r.length);
+    for (let l = 0; l < r.length; l++) {
+        let u = r[l];
+        u.providersResolver && u.providersResolver(u)
+    }
+    let s = !1,
+        a = !1,
+        c = Dh(e, n, r.length, null);
+    for (let l = 0; l < r.length; l++) {
+        let u = r[l];
+        t.mergedAttrs = uc(t.mergedAttrs, u.hostAttrs), T0(e, t, n, c, u), S0(c, u, o), u.contentQueries !== null && (t.flags |= 4), (u.hostBindings !== null || u.hostAttrs !== null || u.hostVars !== 0) && (t.flags |= 64);
+        let d = u.type.prototype;
+        !s && (d.ngOnChanges || d.ngOnInit || d.ngDoCheck) && ((e.preOrderHooks ??= []).push(t.index), s = !0), !a && (d.ngOnChanges || d.ngDoCheck) && ((e.preOrderCheckHooks ??= []).push(t.index), a = !0), c++
+    }
+    y0(e, t, i)
+}
+
+function w0(e, n, t, r, o) {
+    let i = o.hostBindings;
+    if (i) {
+        let s = e.hostBindingOpCodes;
+        s === null && (s = e.hostBindingOpCodes = []);
+        let a = ~n.index;
+        E0(s) != a && s.push(a), s.push(t, r, i)
+    }
+}
+
+function E0(e) {
+    let n = e.length;
+    for (; n > 0;) {
+        let t = e[--n];
+        if (typeof t == "number" && t < 0) return t
+    }
+    return 0
+}
+
+function I0(e, n, t, r) {
+    let o = t.directiveStart,
+        i = t.directiveEnd;
+    Nr(t) && O0(n, t, e.data[o + t.componentOffset]), e.firstCreatePass || Of(t, n), kt(r, n);
+    let s = t.initialInputs;
+    for (let a = o; a < i; a++) {
+        let c = e.data[a],
+            l = br(n, e, a, t);
+        if (kt(l, n), s !== null && P0(n, a - o, l, c, t, s), Ar(c)) {
+            let u = Vt(t.index, n);
+            u[Ve] = br(n, e, a, t)
+        }
+    }
+}
+
+function Mh(e, n, t) {
+    let r = t.directiveStart,
+        o = t.directiveEnd,
+        i = t.index,
+        s = Fv();
+    try {
+        tn(i);
+        for (let a = r; a < o; a++) {
+            let c = e.data[a],
+                l = n[a];
+            Ta(a), (c.hostBindings !== null || c.hostVars !== 0 || c.hostAttrs !== null) && b0(c, l)
+        }
+    } finally {
+        tn(-1), Ta(s)
+    }
+}
+
+function b0(e, n) {
+    e.hostBindings !== null && e.hostBindings(1, n)
+}
+
+function _0(e, n) {
+    let t = e.directiveRegistry,
+        r = null,
+        o = null;
+    if (t)
+        for (let i = 0; i < t.length; i++) {
+            let s = t[i];
+            if (Zm(n, s.selectors, !1))
+                if (r || (r = []), Ar(s))
+                    if (s.findHostDirectiveDefs !== null) {
+                        let a = [];
+                        o = o || new Map, s.findHostDirectiveDefs(s, a, o), r.unshift(...a, s);
+                        let c = a.length;
+                        $a(e, n, c)
+                    } else r.unshift(s), $a(e, n, 0);
+            else o = o || new Map, s.findHostDirectiveDefs?.(s, r, o), r.push(s)
+        }
+    return r === null ? null : [r, o]
+}
+
+function $a(e, n, t) {
+    n.componentOffset = t, (e.components ??= []).push(n.index)
+}
+
+function M0(e, n, t) {
+    if (n) {
+        let r = e.localNames = [];
+        for (let o = 0; o < n.length; o += 2) {
+            let i = t[n[o + 1]];
+            if (i == null) throw new E(-301, !1);
+            r.push(n[o], i)
+        }
+    }
+}
+
+function S0(e, n, t) {
+    if (t) {
+        if (n.exportAs)
+            for (let r = 0; r < n.exportAs.length; r++) t[n.exportAs[r]] = e;
+        Ar(n) && (t[""] = e)
+    }
+}
+
+function x0(e, n, t) {
+    e.flags |= 1, e.directiveStart = n, e.directiveEnd = n + t, e.providerIndexes = n
+}
+
+function T0(e, n, t, r, o) {
+    e.data[r] = o;
+    let i = o.factory || (o.factory = An(o.type, !0)),
+        s = new Ir(i, Ar(o), q);
+    e.blueprint[r] = s, t[r] = s, w0(e, n, r, Dh(e, t, o.hostVars, lt), o)
+}
+
+function O0(e, n, t) {
+    let r = Oe(n, e),
+        o = Eh(t),
+        i = e[st].rendererFactory,
+        s = 16;
+    t.signals ? s = 4096 : t.onPush && (s = 64);
+    let a = Ui(e, Bi(e, o, null, s, r, n, null, i.createRenderer(r, t), null, null, null));
+    e[n.index] = a
+}
+
+function N0(e, n, t, r, o, i) {
+    let s = Oe(e, n);
+    A0(n[Z], s, i, e.value, t, r, o)
+}
+
+function A0(e, n, t, r, o, i, s) {
+    if (i == null) e.removeAttribute(n, o, t);
+    else {
+        let a = s == null ? Di(i) : s(i, r || "", o);
+        e.setAttribute(n, o, a, t)
+    }
+}
+
+function P0(e, n, t, r, o, i) {
+    let s = i[n];
+    if (s !== null)
+        for (let a = 0; a < s.length;) {
+            let c = s[a++],
+                l = s[a++],
+                u = s[a++],
+                d = s[a++];
+            Ch(r, t, c, l, u, d)
+        }
+}
+
+function R0(e, n, t) {
+    let r = null,
+        o = 0;
+    for (; o < t.length;) {
+        let i = t[o];
+        if (i === 0) {
+            o += 4;
+            continue
+        } else if (i === 5) {
+            o += 2;
+            continue
+        }
+        if (typeof i == "number") break;
+        if (e.hasOwnProperty(i)) {
+            r === null && (r = []);
+            let s = e[i];
+            for (let a = 0; a < s.length; a += 3)
+                if (s[a] === n) {
+                    r.push(i, s[a + 1], s[a + 2], t[o + 1]);
+                    break
+                }
+        }
+        o += 2
+    }
+    return r
+}
+
+function Sh(e, n, t, r) {
+    return [e, !0, 0, n, null, r, null, t, null, null]
+}
+
+function xh(e, n) {
+    let t = e.contentQueries;
+    if (t !== null) {
+        let r = j(null);
+        try {
+            for (let o = 0; o < t.length; o += 2) {
+                let i = t[o],
+                    s = t[o + 1];
+                if (s !== -1) {
+                    let a = e.data[s];
+                    yf(i), a.contentQueries(2, n[s], s)
+                }
+            }
+        } finally {
+            j(r)
+        }
+    }
+}
+
+function Ui(e, n) {
+    return e[wr] ? e[ed][Ze] = n : e[wr] = n, e[ed] = n, n
+}
+
+function Ha(e, n, t) {
+    yf(0);
+    let r = j(null);
+    try {
+        n(e, t)
+    } finally {
+        j(r)
+    }
+}
+
+function k0(e) {
+    return e[Yo] ??= []
+}
+
+function F0(e) {
+    return e.cleanup ??= []
+}
+
+function Th(e, n) {
+    let t = e[Pn],
+        r = t ? t.get(vt, null) : null;
+    r && r.handleError(n)
+}
+
+function Gc(e, n, t, r, o) {
+    for (let i = 0; i < t.length;) {
+        let s = t[i++],
+            a = t[i++],
+            c = t[i++],
+            l = n[s],
+            u = e.data[s];
+        Ch(u, l, r, a, c, o)
+    }
+}
+
+function L0(e, n, t) {
+    let r = lf(n, e);
+    qy(e[Z], r, t)
+}
+
+function j0(e, n) {
+    let t = Vt(n, e),
+        r = t[A];
+    V0(r, t);
+    let o = t[Te];
+    o !== null && t[it] === null && (t[it] = Nc(o, t[Pn])), Wc(r, t, t[Ve])
+}
+
+function V0(e, n) {
+    for (let t = n.length; t < e.blueprint.length; t++) n.push(e.blueprint[t])
+}
+
+function Wc(e, n, t) {
+    Cc(n);
+    try {
+        let r = e.viewQuery;
+        r !== null && Ha(1, r, t);
+        let o = e.template;
+        o !== null && wh(e, n, o, 1, t), e.firstCreatePass && (e.firstCreatePass = !1), n[kn]?.finishViewCreation(e), e.staticContentQueries && xh(e, n), e.staticViewQueries && Ha(2, e.viewQuery, t);
+        let i = e.components;
+        i !== null && B0(n, i)
+    } catch (r) {
+        throw e.firstCreatePass && (e.incompleteFirstPass = !0, e.firstCreatePass = !1), r
+    } finally {
+        n[M] &= -5, Dc()
+    }
+}
+
+function B0(e, n) {
+    for (let t = 0; t < n.length; t++) j0(e, n[t])
+}
+
+function Oh(e, n, t, r) {
+    let o = j(null);
+    try {
+        let i = n.tView,
+            a = e[M] & 4096 ? 4096 : 16,
+            c = Bi(e, i, t, a, null, n, null, null, r?.injector ?? null, r?.embeddedViewInjector ?? null, r?.dehydratedView ?? null),
+            l = e[n.index];
+        c[Rn] = l;
+        let u = e[kn];
+        return u !== null && (c[kn] = u.createEmbeddedView(i)), Wc(i, c, t), c
+    } finally {
+        j(o)
+    }
+}
+
+function U0(e, n) {
+    let t = De + n;
+    if (t < e.length) return e[t]
+}
+
+function za(e, n) {
+    return !n || n.firstChild === null || ii(e)
+}
+
+function Nh(e, n, t, r = !0) {
+    let o = n[A];
+    if (Ky(o, n, e, t), r) {
+        let s = Ua(t, e),
+            a = n[Z],
+            c = fh(a, e[mt]);
+        c !== null && Qy(o, e[Xe], a, n, c, s)
+    }
+    let i = n[it];
+    i !== null && i.firstChild !== null && (i.firstChild = null)
+}
+
+function $0(e, n) {
+    let t = ci(e, n);
+    return t !== void 0 && Lc(t[A], t), t
+}
+
+function ui(e, n, t, r, o = !1) {
+    for (; t !== null;) {
+        if (t.type === 128) {
+            t = o ? t.projectionNext : t.next;
+            continue
+        }
+        let i = n[t.index];
+        i !== null && r.push(Ye(i)), ct(i) && H0(i, r);
+        let s = t.type;
+        if (s & 8) ui(e, n, t.child, r);
+        else if (s & 32) {
+            let a = Rc(t, n),
+                c;
+            for (; c = a();) r.push(c)
+        } else if (s & 16) {
+            let a = hh(n, t);
+            if (Array.isArray(a)) r.push(...a);
+            else {
+                let c = en(n[Be]);
+                ui(c[A], c, a, r, !0)
+            }
+        }
+        t = o ? t.projectionNext : t.next
+    }
+    return r
+}
+
+function H0(e, n) {
+    for (let t = De; t < e.length; t++) {
+        let r = e[t],
+            o = r[A].firstChild;
+        o !== null && ui(r[A], r, o, n)
+    }
+    e[mt] !== e[Te] && n.push(e[mt])
+}
+var Ah = [];
+
+function z0(e) {
+    return e[je] ?? G0(e)
+}
+
+function G0(e) {
+    let n = Ah.pop() ?? Object.create(q0);
+    return n.lView = e, n
+}
+
+function W0(e) {
+    e.lView[je] !== e && (e.lView = null, Ah.push(e))
+}
+var q0 = K(D({}, Ls), {
+    consumerIsAlwaysLive: !0,
+    consumerMarkedDirty: e => {
+        Si(e.lView)
+    },
+    consumerOnSignalRead() {
+        this.lView[je] = this
+    }
+});
+
+function Z0(e) {
+    let n = e[je] ?? Object.create(Q0);
+    return n.lView = e, n
+}
+var Q0 = K(D({}, Ls), {
+    consumerIsAlwaysLive: !0,
+    consumerMarkedDirty: e => {
+        let n = en(e.lView);
+        for (; n && !Ph(n[A]);) n = en(n);
+        n && df(n)
+    },
+    consumerOnSignalRead() {
+        this.lView[je] = this
+    }
+});
+
+function Ph(e) {
+    return e.type !== 2
+}
+var Y0 = 100;
+
+function Rh(e, n = !0, t = 0) {
+    let r = e[st],
+        o = r.rendererFactory,
+        i = !1;
+    i || o.begin?.();
+    try {
+        K0(e, t)
+    } catch (s) {
+        throw n && Th(e, s), s
+    } finally {
+        i || (o.end?.(), r.inlineEffectRunner?.flush())
+    }
+}
+
+function K0(e, n) {
+    let t = vf();
+    try {
+        nd(!0), Ga(e, n);
+        let r = 0;
+        for (; Mi(e);) {
+            if (r === Y0) throw new E(103, !1);
+            r++, Ga(e, 1)
+        }
+    } finally {
+        nd(t)
+    }
+}
+
+function J0(e, n, t, r) {
+    let o = n[M];
+    if ((o & 256) === 256) return;
+    let i = !1,
+        s = !1;
+    !i && n[st].inlineEffectRunner?.flush(), Cc(n);
+    let a = !0,
+        c = null,
+        l = null;
+    i || (Ph(e) ? (l = z0(n), c = js(l)) : hu() === null ? (a = !1, l = Z0(n), c = js(l)) : n[je] && (Bs(n[je]), n[je] = null));
+    try {
+        uf(n), Av(e.bindingStartIndex), t !== null && wh(e, n, t, 2, r);
+        let u = (o & 3) === 3;
+        if (!i)
+            if (u) {
+                let m = e.preOrderCheckHooks;
+                m !== null && $o(n, m, null)
+            } else {
+                let m = e.preOrderHooks;
+                m !== null && Ho(n, m, 0, null), ca(n, 0)
+            } if (s || X0(n), kh(n, 0), e.contentQueries !== null && xh(e, n), !i)
+            if (u) {
+                let m = e.contentCheckHooks;
+                m !== null && $o(n, m)
+            } else {
+                let m = e.contentHooks;
+                m !== null && Ho(n, m, 1), ca(n, 1)
+            } u0(e, n);
+        let d = e.components;
+        d !== null && Lh(n, d, 0);
+        let v = e.viewQuery;
+        if (v !== null && Ha(2, v, r), !i)
+            if (u) {
+                let m = e.viewCheckHooks;
+                m !== null && $o(n, m)
+            } else {
+                let m = e.viewHooks;
+                m !== null && Ho(n, m, 2), ca(n, 2)
+            } if (e.firstUpdatePass === !0 && (e.firstUpdatePass = !1), n[aa]) {
+            for (let m of n[aa]) m();
+            n[aa] = null
+        }
+        i || (n[M] &= -73)
+    } catch (u) {
+        throw i || Si(n), u
+    } finally {
+        l !== null && (pu(l, c), a && W0(l)), Dc()
+    }
+}
+
+function kh(e, n) {
+    for (let t = zf(e); t !== null; t = Gf(t))
+        for (let r = De; r < t.length; r++) {
+            let o = t[r];
+            Fh(o, n)
+        }
+}
+
+function X0(e) {
+    for (let n = zf(e); n !== null; n = Gf(n)) {
+        if (!(n[M] & Xo.HasTransplantedViews)) continue;
+        let t = n[Jo];
+        for (let r = 0; r < t.length; r++) {
+            let o = t[r];
+            df(o)
+        }
+    }
+}
+
+function eC(e, n, t) {
+    let r = Vt(n, e);
+    Fh(r, t)
+}
+
+function Fh(e, n) {
+    mc(e) && Ga(e, n)
+}
+
+function Ga(e, n) {
+    let r = e[A],
+        o = e[M],
+        i = e[je],
+        s = !!(n === 0 && o & 16);
+    if (s ||= !!(o & 64 && n === 0), s ||= !!(o & 1024), s ||= !!(i?.dirty && Vs(i)), s ||= !1, i && (i.dirty = !1), e[M] &= -9217, s) J0(r, e, r.template, e[Ve]);
+    else if (o & 8192) {
+        kh(e, 1);
+        let a = r.components;
+        a !== null && Lh(e, a, 1)
+    }
+}
+
+function Lh(e, n, t) {
+    for (let r = 0; r < n.length; r++) eC(e, n[r], t)
+}
+
+function qc(e, n) {
+    let t = vf() ? 64 : 1088;
+    for (e[st].changeDetectionScheduler?.notify(n); e;) {
+        e[M] |= t;
+        let r = en(e);
+        if (ei(e) && !r) return e;
+        e = r
+    }
+    return null
+}
+var nn = class {
+        get rootNodes() {
+            let n = this._lView,
+                t = n[A];
+            return ui(t, n, t.firstChild, [])
+        }
+        constructor(n, t, r = !0) {
+            this._lView = n, this._cdRefInjectingView = t, this.notifyErrorHandler = r, this._appRef = null, this._attachedToViewContainer = !1
+        }
+        get context() {
+            return this._lView[Ve]
+        }
+        set context(n) {
+            this._lView[Ve] = n
+        }
+        get destroyed() {
+            return (this._lView[M] & 256) === 256
+        }
+        destroy() {
+            if (this._appRef) this._appRef.detachView(this);
+            else if (this._attachedToViewContainer) {
+                let n = this._lView[pe];
+                if (ct(n)) {
+                    let t = n[Ko],
+                        r = t ? t.indexOf(this) : -1;
+                    r > -1 && (ci(n, r), Zo(t, r))
+                }
+                this._attachedToViewContainer = !1
+            }
+            Lc(this._lView[A], this._lView)
+        }
+        onDestroy(n) {
+            ff(this._lView, n)
+        }
+        markForCheck() {
+            qc(this._cdRefInjectingView || this._lView, 4)
+        }
+        detach() {
+            this._lView[M] &= -129
+        }
+        reattach() {
+            xa(this._lView), this._lView[M] |= 128
+        }
+        detectChanges() {
+            this._lView[M] |= 1024, Rh(this._lView, this.notifyErrorHandler)
+        }
+        checkNoChanges() {}
+        attachToViewContainerRef() {
+            if (this._appRef) throw new E(902, !1);
+            this._attachedToViewContainer = !0
+        }
+        detachFromAppRef() {
+            this._appRef = null;
+            let n = ei(this._lView),
+                t = this._lView[Rn];
+            t !== null && !n && Fc(t, this._lView), lh(this._lView[A], this._lView)
+        }
+        attachToAppRef(n) {
+            if (this._attachedToViewContainer) throw new E(902, !1);
+            this._appRef = n;
+            let t = ei(this._lView),
+                r = this._lView[Rn];
+            r !== null && !t && uh(r, this._lView), xa(this._lView)
+        }
+    },
+    Zc = (() => {
+        class e {
+            static {
+                this.__NG_ELEMENT_ID__ = rC
+            }
+        }
+        return e
+    })(),
+    tC = Zc,
+    nC = class extends tC {
+        constructor(n, t, r) {
+            super(), this._declarationLView = n, this._declarationTContainer = t, this.elementRef = r
+        }
+        get ssrId() {
+            return this._declarationTContainer.tView?.ssrId || null
+        }
+        createEmbeddedView(n, t) {
+            return this.createEmbeddedViewImpl(n, t)
+        }
+        createEmbeddedViewImpl(n, t, r) {
+            let o = Oh(this._declarationLView, this._declarationTContainer, n, {
+                embeddedViewInjector: t,
+                dehydratedView: r
+            });
+            return new nn(o)
+        }
+    };
+
+function rC() {
+    return jh(we(), H())
+}
+
+function jh(e, n) {
+    return e.type & 4 ? new nC(n, e, Ai(e, n)) : null
+}
+var oC = new RegExp(`^(\\d+)*(${Qf}|${Zf})*(.*)`);
+
+function iC(e) {
+    let n = e.match(oC),
+        [t, r, o, i] = n,
+        s = r ? parseInt(r, 10) : o,
+        a = [];
+    for (let [c, l, u] of i.matchAll(/(f|n)(\d*)/g)) {
+        let d = parseInt(u, 10) || 1;
+        a.push(l, d)
+    }
+    return [s, ...a]
+}
+
+function sC(e) {
+    return !e.prev && e.parent?.type === 8
+}
+
+function pa(e) {
+    return e.index - se
+}
+
+function aC(e, n) {
+    let t = e.i18nNodes;
+    if (t) return t.get(n)
+}
+
+function $i(e, n, t, r) {
+    let o = pa(r),
+        i = aC(e, o);
+    if (i === void 0) {
+        let s = e.data[My];
+        if (s?.[o]) i = lC(s[o], t);
+        else if (n.firstChild === r) i = e.firstChild;
+        else {
+            let a = r.prev === null,
+                c = r.prev ?? r.parent;
+            if (sC(r)) {
+                let l = pa(r.parent);
+                i = Ba(e, l)
+            } else {
+                let l = Oe(c, t);
+                if (a) i = l.firstChild;
+                else {
+                    let u = pa(c),
+                        d = Ba(e, u);
+                    if (c.type === 2 && d) {
+                        let m = Ac(e, u) + 1;
+                        i = Hi(m, d)
+                    } else i = l.nextSibling
+                }
+            }
+        }
+    }
+    return i
+}
+
+function Hi(e, n) {
+    let t = n;
+    for (let r = 0; r < e; r++) t = t.nextSibling;
+    return t
+}
+
+function cC(e, n) {
+    let t = e;
+    for (let r = 0; r < n.length; r += 2) {
+        let o = n[r],
+            i = n[r + 1];
+        for (let s = 0; s < i; s++) switch (o) {
+            case Va.FirstChild:
+                t = t.firstChild;
+                break;
+            case Va.NextSibling:
+                t = t.nextSibling;
+                break
+        }
+    }
+    return t
+}
+
+function lC(e, n) {
+    let [t, ...r] = iC(e), o;
+    if (t === Zf) o = n[Be][Te];
+    else if (t === Qf) o = Gy(n[Be][Te]);
+    else {
+        let i = Number(t);
+        o = Ye(n[i + se])
+    }
+    return cC(o, r)
+}
+var uC = !1;
+
+function dC(e) {
+    uC = e
+}
+
+function fC(e) {
+    let n = e[it];
+    if (n) {
+        let {
+            i18nNodes: t,
+            dehydratedIcuData: r
+        } = n;
+        if (t && r) {
+            let o = e[Z];
+            for (let i of r.values()) hC(o, t, i)
+        }
+        n.i18nNodes = void 0, n.dehydratedIcuData = void 0
+    }
+}
+
+function hC(e, n, t) {
+    for (let r of t.node.cases[t.case]) {
+        let o = n.get(r.index - se);
+        o && jc(e, o, !1)
+    }
+}
+
+function Vh(e) {
+    let n = e[Er] ?? [],
+        r = e[pe][Z];
+    for (let o of n) pC(o, r);
+    e[Er] = Le
+}
+
+function pC(e, n) {
+    let t = 0,
+        r = e.firstChild;
+    if (r) {
+        let o = e.data[si];
+        for (; t < o;) {
+            let i = r.nextSibling;
+            jc(n, r, !1), r = i, t++
+        }
+    }
+}
+
+function Bh(e) {
+    Vh(e);
+    let n = e[Te];
+    Qe(n) && di(n);
+    for (let t = De; t < e.length; t++) di(e[t])
+}
+
+function di(e) {
+    fC(e);
+    let n = e[A];
+    for (let t = se; t < n.bindingStartIndex; t++)
+        if (ct(e[t])) {
+            let r = e[t];
+            Bh(r)
+        } else Qe(e[t]) && di(e[t])
+}
+
+function gC(e) {
+    let n = e._views;
+    for (let t of n) {
+        let r = Ny(t);
+        r !== null && r[Te] !== null && (Qe(r) ? di(r) : Bh(r))
+    }
+}
+
+function mC(e, n) {
+    let t = [];
+    for (let r of n)
+        for (let o = 0; o < (r[Yf] ?? 1); o++) {
+            let i = {
+                data: r,
+                firstChild: null
+            };
+            r[si] > 0 && (i.firstChild = e, e = Hi(r[si], e)), t.push(i)
+        }
+    return [e, t]
+}
+var Uh = () => null;
+
+function vC(e, n) {
+    let t = e[Er];
+    return !n || t === null || t.length === 0 ? null : t[0].data[_y] === n ? t.shift() : (Vh(e), null)
+}
+
+function yC() {
+    Uh = vC
+}
+
+function Wa(e, n) {
+    return Uh(e, n)
+}
+var Ln = class {},
+    zi = new b("", {
+        providedIn: "root",
+        factory: () => !1
+    });
+var $h = new b(""),
+    Hh = new b(""),
+    qa = class {},
+    fi = class {};
+
+function CC(e) {
+    let n = Error(`No component factory found for ${ve(e)}.`);
+    return n[DC] = e, n
+}
+var DC = "ngComponent";
+var Za = class {
+        resolveComponentFactory(n) {
+            throw CC(n)
+        }
+    },
+    jn = class {
+        static {
+            this.NULL = new Za
+        }
+    },
+    Vn = class {},
+    Wn = (() => {
+        class e {
+            constructor() {
+                this.destroyNode = null
+            }
+            static {
+                this.__NG_ELEMENT_ID__ = () => wC()
+            }
+        }
+        return e
+    })();
+
+function wC() {
+    let e = H(),
+        n = we(),
+        t = Vt(n.index, e);
+    return (Qe(t) ? t : e)[Z]
+}
+var EC = (() => {
+    class e {
+        static {
+            this.\u0275prov = I({
+                token: e,
+                providedIn: "root",
+                factory: () => null
+            })
+        }
+    }
+    return e
+})();
+
+function hi(e, n, t) {
+    let r = t ? e.styles : null,
+        o = t ? e.classes : null,
+        i = 0;
+    if (n !== null)
+        for (let s = 0; s < n.length; s++) {
+            let a = n[s];
+            if (typeof a == "number") i = a;
+            else if (i == 1) o = zu(o, a);
+            else if (i == 2) {
+                let c = a,
+                    l = n[++s];
+                r = zu(r, c + ": " + l + ";")
+            }
+        }
+    t ? e.styles = r : e.stylesWithoutHost = r, t ? e.classes = o : e.classesWithoutHost = o
+}
+var pi = class extends jn {
+    constructor(n) {
+        super(), this.ngModule = n
+    }
+    resolveComponentFactory(n) {
+        let t = Rt(n);
+        return new Bn(t, this.ngModule)
+    }
+};
+
+function vd(e, n) {
+    let t = [];
+    for (let r in e) {
+        if (!e.hasOwnProperty(r)) continue;
+        let o = e[r];
+        if (o === void 0) continue;
+        let i = Array.isArray(o),
+            s = i ? o[0] : o,
+            a = i ? o[1] : Pt.None;
+        n ? t.push({
+            propName: s,
+            templateName: r,
+            isSignal: (a & Pt.SignalBased) !== 0
+        }) : t.push({
+            propName: s,
+            templateName: r
+        })
+    }
+    return t
+}
+
+function IC(e) {
+    let n = e.toLowerCase();
+    return n === "svg" ? cf : n === "math" ? Cv : null
+}
+var Bn = class extends fi {
+        get inputs() {
+            let n = this.componentDef,
+                t = n.inputTransforms,
+                r = vd(n.inputs, !0);
+            if (t !== null)
+                for (let o of r) t.hasOwnProperty(o.propName) && (o.transform = t[o.propName]);
+            return r
+        }
+        get outputs() {
+            return vd(this.componentDef.outputs, !1)
+        }
+        constructor(n, t) {
+            super(), this.componentDef = n, this.ngModule = t, this.componentType = n.type, this.selector = Jm(n.selectors), this.ngContentSelectors = n.ngContentSelectors ? n.ngContentSelectors : [], this.isBoundToModule = !!t
+        }
+        create(n, t, r, o) {
+            let i = j(null);
+            try {
+                o = o || this.ngModule;
+                let s = o instanceof xe ? o : o?.injector;
+                s && this.componentDef.getStandaloneInjector !== null && (s = this.componentDef.getStandaloneInjector(s) || s);
+                let a = s ? new Oa(n, s) : n,
+                    c = a.get(Vn, null);
+                if (c === null) throw new E(407, !1);
+                let l = a.get(EC, null),
+                    u = a.get(Ln, null),
+                    d = {
+                        rendererFactory: c,
+                        sanitizer: l,
+                        inlineEffectRunner: null,
+                        changeDetectionScheduler: u
+                    },
+                    v = c.createRenderer(null, this.componentDef),
+                    m = this.componentDef.selectors[0][0] || "div",
+                    C = r ? h0(v, r, this.componentDef.encapsulation, a) : kc(v, m, IC(m)),
+                    P = 512;
+                this.componentDef.signals ? P |= 4096 : this.componentDef.onPush || (P |= 16);
+                let $ = null;
+                C !== null && ($ = Nc(C, a, !0));
+                let z = Hc(0, null, null, 1, 0, null, null, null, null, null, null),
+                    de = Bi(null, z, null, P, null, null, d, v, a, null, $);
+                Cc(de);
+                let fe, ge, Mt = null;
+                try {
+                    let Ie = this.componentDef,
+                        hn, Rs = null;
+                    Ie.findHostDirectiveDefs ? (hn = [], Rs = new Map, Ie.findHostDirectiveDefs(Ie, hn, Rs), hn.push(Ie)) : hn = [Ie];
+                    let zg = bC(de, C);
+                    Mt = _C(zg, C, Ie, hn, de, d, v), ge = gc(z, se), C && xC(v, Ie, C, r), t !== void 0 && TC(ge, this.ngContentSelectors, t), fe = SC(Mt, Ie, hn, Rs, de, [OC]), Wc(z, de, null)
+                } catch (Ie) {
+                    throw Mt !== null && La(Mt), La(de), Ie
+                } finally {
+                    Dc()
+                }
+                return new Qa(this.componentType, fe, Ai(ge, de), de, ge)
+            } finally {
+                j(i)
+            }
+        }
+    },
+    Qa = class extends qa {
+        constructor(n, t, r, o, i) {
+            super(), this.location = r, this._rootLView = o, this._tNode = i, this.previousInputValues = null, this.instance = t, this.hostView = this.changeDetectorRef = new nn(o, void 0, !1), this.componentType = n
+        }
+        setInput(n, t) {
+            let r = this._tNode.inputs,
+                o;
+            if (r !== null && (o = r[n])) {
+                if (this.previousInputValues ??= new Map, this.previousInputValues.has(n) && Object.is(this.previousInputValues.get(n), t)) return;
+                let i = this._rootLView;
+                Gc(i[A], i, o, n, t), this.previousInputValues.set(n, t);
+                let s = Vt(this._tNode.index, i);
+                qc(s, 1)
+            }
+        }
+        get injector() {
+            return new Jt(this._tNode, this._rootLView)
+        }
+        destroy() {
+            this.hostView.destroy()
+        }
+        onDestroy(n) {
+            this.hostView.onDestroy(n)
+        }
+    };
+
+function bC(e, n) {
+    let t = e[A],
+        r = se;
+    return e[r] = n, Lr(t, r, 2, "#host", null)
+}
+
+function _C(e, n, t, r, o, i, s) {
+    let a = o[A];
+    MC(r, e, n, s);
+    let c = null;
+    n !== null && (c = Nc(n, o[Pn]));
+    let l = i.rendererFactory.createRenderer(n, t),
+        u = 16;
+    t.signals ? u = 4096 : t.onPush && (u = 64);
+    let d = Bi(o, Eh(t), null, u, o[e.index], e, i, l, null, null, c);
+    return a.firstCreatePass && $a(a, e, r.length - 1), Ui(o, d), o[e.index] = d
+}
+
+function MC(e, n, t, r) {
+    for (let o of e) n.mergedAttrs = uc(n.mergedAttrs, o.hostAttrs);
+    n.mergedAttrs !== null && (hi(n, n.mergedAttrs, !0), t !== null && mh(r, t, n))
+}
+
+function SC(e, n, t, r, o, i) {
+    let s = we(),
+        a = o[A],
+        c = Oe(s, o);
+    _h(a, o, s, t, null, r);
+    for (let u = 0; u < t.length; u++) {
+        let d = s.directiveStart + u,
+            v = br(o, a, d, s);
+        kt(v, o)
+    }
+    Mh(a, o, s), c && kt(c, o);
+    let l = br(o, a, s.directiveStart + s.componentOffset, s);
+    if (e[Ve] = o[Ve] = l, i !== null)
+        for (let u of i) u(l, n);
+    return Bc(a, s, o), l
+}
+
+function xC(e, n, t, r) {
+    if (r) Ea(e, t, ["ng-version", "18.2.8"]);
+    else {
+        let {
+            attrs: o,
+            classes: i
+        } = Xm(n.selectors[0]);
+        o && Ea(e, t, o), i && i.length > 0 && gh(e, t, i.join(" "))
+    }
+}
+
+function TC(e, n, t) {
+    let r = e.projection = [];
+    for (let o = 0; o < n.length; o++) {
+        let i = t[o];
+        r.push(i != null ? Array.from(i) : null)
+    }
+}
+
+function OC() {
+    let e = we();
+    Ni(H()[A], e)
+}
+var qn = (() => {
+    class e {
+        static {
+            this.__NG_ELEMENT_ID__ = NC
+        }
+    }
+    return e
+})();
+
+function NC() {
+    let e = we();
+    return PC(e, H())
+}
+var AC = qn,
+    zh = class extends AC {
+        constructor(n, t, r) {
+            super(), this._lContainer = n, this._hostTNode = t, this._hostLView = r
+        }
+        get element() {
+            return Ai(this._hostTNode, this._hostLView)
+        }
+        get injector() {
+            return new Jt(this._hostTNode, this._hostLView)
+        }
+        get parentInjector() {
+            let n = Ec(this._hostTNode, this._hostLView);
+            if (Sf(n)) {
+                let t = ni(n, this._hostLView),
+                    r = ti(n),
+                    o = t[A].data[r + 8];
+                return new Jt(o, t)
+            } else return new Jt(null, this._hostLView)
+        }
+        clear() {
+            for (; this.length > 0;) this.remove(this.length - 1)
+        }
+        get(n) {
+            let t = yd(this._lContainer);
+            return t !== null && t[n] || null
+        }
+        get length() {
+            return this._lContainer.length - De
+        }
+        createEmbeddedView(n, t, r) {
+            let o, i;
+            typeof r == "number" ? o = r : r != null && (o = r.index, i = r.injector);
+            let s = Wa(this._lContainer, n.ssrId),
+                a = n.createEmbeddedViewImpl(t || {}, i, s);
+            return this.insertImpl(a, o, za(this._hostTNode, s)), a
+        }
+        createComponent(n, t, r, o, i) {
+            let s = n && !gv(n),
+                a;
+            if (s) a = t;
+            else {
+                let C = t || {};
+                a = C.index, r = C.injector, o = C.projectableNodes, i = C.environmentInjector || C.ngModuleRef
+            }
+            let c = s ? n : new Bn(Rt(n)),
+                l = r || this.parentInjector;
+            if (!i && c.ngModule == null) {
+                let P = (s ? l : this.parentInjector).get(xe, null);
+                P && (i = P)
+            }
+            let u = Rt(c.componentType ?? {}),
+                d = Wa(this._lContainer, u?.id ?? null),
+                v = d?.firstChild ?? null,
+                m = c.create(l, o, v, i);
+            return this.insertImpl(m.hostView, a, za(this._hostTNode, d)), m
+        }
+        insert(n, t) {
+            return this.insertImpl(n, t, !0)
+        }
+        insertImpl(n, t, r) {
+            let o = n._lView;
+            if (wv(o)) {
+                let a = this.indexOf(n);
+                if (a !== -1) this.detach(a);
+                else {
+                    let c = o[pe],
+                        l = new zh(c, c[Xe], c[pe]);
+                    l.detach(l.indexOf(n))
+                }
+            }
+            let i = this._adjustIndex(t),
+                s = this._lContainer;
+            return Nh(s, o, i, r), n.attachToViewContainerRef(), Vd(ga(s), i, n), n
+        }
+        move(n, t) {
+            return this.insert(n, t)
+        }
+        indexOf(n) {
+            let t = yd(this._lContainer);
+            return t !== null ? t.indexOf(n) : -1
+        }
+        remove(n) {
+            let t = this._adjustIndex(n, -1),
+                r = ci(this._lContainer, t);
+            r && (Zo(ga(this._lContainer), t), Lc(r[A], r))
+        }
+        detach(n) {
+            let t = this._adjustIndex(n, -1),
+                r = ci(this._lContainer, t);
+            return r && Zo(ga(this._lContainer), t) != null ? new nn(r) : null
+        }
+        _adjustIndex(n, t = 0) {
+            return n ?? this.length + t
+        }
+    };
+
+function yd(e) {
+    return e[Ko]
+}
+
+function ga(e) {
+    return e[Ko] || (e[Ko] = [])
+}
+
+function PC(e, n) {
+    let t, r = n[e.index];
+    return ct(r) ? t = r : (t = Sh(r, n, null, e), n[e.index] = t, Ui(n, t)), Gh(t, n, e, r), new zh(t, e, n)
+}
+
+function RC(e, n) {
+    let t = e[Z],
+        r = t.createComment(""),
+        o = Oe(n, e),
+        i = fh(t, o);
+    return li(t, i, r, n0(t, o), !1), r
+}
+var Gh = Wh,
+    Qc = () => !1;
+
+function kC(e, n, t) {
+    return Qc(e, n, t)
+}
+
+function Wh(e, n, t, r) {
+    if (e[mt]) return;
+    let o;
+    t.type & 8 ? o = Ye(r) : o = RC(n, t), e[mt] = o
+}
+
+function FC(e, n, t) {
+    if (e[mt] && e[Er]) return !0;
+    let r = t[it],
+        o = n.index - se;
+    if (!r || my(n) || kr(r, o)) return !1;
+    let s = Ba(r, o),
+        a = r.data[Oc]?.[o],
+        [c, l] = mC(s, a);
+    return e[mt] = c, e[Er] = l, !0
+}
+
+function LC(e, n, t, r) {
+    Qc(e, t, n) || Wh(e, n, t, r)
+}
+
+function jC() {
+    Gh = LC, Qc = FC
+}
+var Cd = new Set;
+
+function Ut(e) {
+    Cd.has(e) || (Cd.add(e), performance?.mark?.("mark_feature_usage", {
+        detail: {
+            feature: e
+        }
+    }))
+}
+
+function Yc(e) {
+    let n = e.inputConfig,
+        t = {};
+    for (let r in n)
+        if (n.hasOwnProperty(r)) {
+            let o = n[r];
+            Array.isArray(o) && o[3] && (t[r] = o[3])
+        } e.inputTransforms = t
+}
+var Ft = class {},
+    _r = class {};
+var Ya = class extends Ft {
+        constructor(n, t, r, o = !0) {
+            super(), this.ngModuleType = n, this._parent = t, this._bootstrapComponents = [], this.destroyCbs = [], this.componentFactoryResolver = new pi(this);
+            let i = Zd(n);
+            this._bootstrapComponents = sh(i.bootstrap), this._r3Injector = Lf(n, t, [{
+                provide: Ft,
+                useValue: this
+            }, {
+                provide: jn,
+                useValue: this.componentFactoryResolver
+            }, ...r], ve(n), new Set(["environment"])), o && this.resolveInjectorInitializers()
+        }
+        resolveInjectorInitializers() {
+            this._r3Injector.resolveInjectorInitializers(), this.instance = this._r3Injector.get(this.ngModuleType)
+        }
+        get injector() {
+            return this._r3Injector
+        }
+        destroy() {
+            let n = this._r3Injector;
+            !n.destroyed && n.destroy(), this.destroyCbs.forEach(t => t()), this.destroyCbs = null
+        }
+        onDestroy(n) {
+            this.destroyCbs.push(n)
+        }
+    },
+    Ka = class extends _r {
+        constructor(n) {
+            super(), this.moduleType = n
+        }
+        create(n) {
+            return new Ya(this.moduleType, n, [])
+        }
+    };
+var gi = class extends Ft {
+    constructor(n) {
+        super(), this.componentFactoryResolver = new pi(this), this.instance = null;
+        let t = new Dr([...n.providers, {
+            provide: Ft,
+            useValue: this
+        }, {
+            provide: jn,
+            useValue: this.componentFactoryResolver
+        }], n.parent || hc(), n.debugName, new Set(["environment"]));
+        this.injector = t, n.runEnvironmentInitializers && t.resolveInjectorInitializers()
+    }
+    destroy() {
+        this.injector.destroy()
+    }
+    onDestroy(n) {
+        this.injector.onDestroy(n)
+    }
+};
+
+function Gi(e, n, t = null) {
+    return new gi({
+        providers: e,
+        parent: n,
+        debugName: t,
+        runEnvironmentInitializers: !0
+    }).injector
+}
+
+function qh(e) {
+    return e !== null && (typeof e == "function" || typeof e == "object")
+}
+
+function Kc(e, n, t) {
+    return e[n] = t
+}
+
+function VC(e, n) {
+    return e[n]
+}
+
+function Lt(e, n, t) {
+    let r = e[n];
+    return Object.is(r, t) ? !1 : (e[n] = t, !0)
+}
+
+function BC(e, n, t, r) {
+    let o = Lt(e, n, t);
+    return Lt(e, n + 1, r) || o
+}
+
+function jr(e) {
+    return (e.flags & 32) === 32
+}
+
+function UC(e, n, t, r, o, i, s, a, c) {
+    let l = n.consts,
+        u = Lr(n, e, 4, s || null, a || null);
+    zc(n, t, u, Fn(l, c)), Ni(n, u);
+    let d = u.tView = Hc(2, u, r, o, i, n.directiveRegistry, n.pipeRegistry, null, n.schemas, l, null);
+    return n.queries !== null && (n.queries.template(n, u), d.queries = n.queries.embeddedTView(u)), u
+}
+
+function $C(e, n, t, r, o, i, s, a, c, l) {
+    let u = t + se,
+        d = n.firstCreatePass ? UC(u, n, e, r, o, i, s, a, c) : n.data[u];
+    sn(d, !1);
+    let v = Zh(n, e, d, t);
+    Oi() && ji(n, e, v, d), kt(v, e);
+    let m = Sh(v, e, v, d);
+    return e[u] = m, Ui(e, m), kC(m, d, e), _i(d) && Uc(n, e, d), c != null && $c(e, d, l), d
+}
+
+function ne(e, n, t, r, o, i, s, a) {
+    let c = H(),
+        l = Ue(),
+        u = Fn(l.consts, i);
+    return $C(c, l, e, n, t, r, o, u, s, a), ne
+}
+var Zh = Qh;
+
+function Qh(e, n, t, r) {
+    return Bt(!0), n[Z].createComment("")
+}
+
+function HC(e, n, t, r) {
+    let o = n[it],
+        i = !o || Pr() || jr(t) || kr(o, r);
+    if (Bt(i), i) return Qh(e, n, t, r);
+    let s = o.data[by]?.[r] ?? null;
+    s !== null && t.tView !== null && t.tView.ssrId === null && (t.tView.ssrId = s);
+    let a = $i(o, e, n, t);
+    ki(o, r, a);
+    let c = Ac(o, r);
+    return Hi(c, a)
+}
+
+function zC() {
+    Zh = HC
+}
+var Tn = function(e) {
+        return e[e.EarlyRead = 0] = "EarlyRead", e[e.Write = 1] = "Write", e[e.MixedReadWrite = 2] = "MixedReadWrite", e[e.Read = 3] = "Read", e
+    }(Tn || {}),
+    Yh = (() => {
+        class e {
+            constructor() {
+                this.impl = null
+            }
+            execute() {
+                this.impl?.execute()
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    providedIn: "root",
+                    factory: () => new e
+                })
+            }
+        }
+        return e
+    })(),
+    Ja = class e {
+        constructor() {
+            this.ngZone = g(W), this.scheduler = g(Ln), this.errorHandler = g(vt, {
+                optional: !0
+            }), this.sequences = new Set, this.deferredRegistrations = new Set, this.executing = !1
+        }
+        static {
+            this.PHASES = [Tn.EarlyRead, Tn.Write, Tn.MixedReadWrite, Tn.Read]
+        }
+        execute() {
+            this.executing = !0;
+            for (let n of e.PHASES)
+                for (let t of this.sequences)
+                    if (!(t.erroredOrDestroyed || !t.hooks[n])) try {
+                        t.pipelinedValue = this.ngZone.runOutsideAngular(() => t.hooks[n](t.pipelinedValue))
+                    } catch (r) {
+                        t.erroredOrDestroyed = !0, this.errorHandler?.handleError(r)
+                    }
+            this.executing = !1;
+            for (let n of this.sequences) n.afterRun(), n.once && (this.sequences.delete(n), n.destroy());
+            for (let n of this.deferredRegistrations) this.sequences.add(n);
+            this.deferredRegistrations.size > 0 && this.scheduler.notify(7), this.deferredRegistrations.clear()
+        }
+        register(n) {
+            this.executing ? this.deferredRegistrations.add(n) : (this.sequences.add(n), this.scheduler.notify(6))
+        }
+        unregister(n) {
+            this.executing && this.sequences.has(n) ? (n.erroredOrDestroyed = !0, n.pipelinedValue = void 0, n.once = !0) : (this.sequences.delete(n), this.deferredRegistrations.delete(n))
+        }
+        static {
+            this.\u0275prov = I({
+                token: e,
+                providedIn: "root",
+                factory: () => new e
+            })
+        }
+    },
+    Xa = class {
+        constructor(n, t, r, o) {
+            this.impl = n, this.hooks = t, this.once = r, this.erroredOrDestroyed = !1, this.pipelinedValue = void 0, this.unregisterOnDestroy = o?.onDestroy(() => this.destroy())
+        }
+        afterRun() {
+            this.erroredOrDestroyed = !1, this.pipelinedValue = void 0
+        }
+        destroy() {
+            this.impl.unregister(this), this.unregisterOnDestroy?.()
+        }
+    };
+
+function Jc(e, n) {
+    !n?.injector && pv(Jc);
+    let t = n?.injector ?? g(Ke);
+    return gr(t) ? (Ut("NgAfterNextRender"), WC(e, t, n, !0)) : qC
+}
+
+function GC(e, n) {
+    if (e instanceof Function) {
+        let t = [void 0, void 0, void 0, void 0];
+        return t[n] = e, t
+    } else return [e.earlyRead, e.write, e.mixedReadWrite, e.read]
+}
+
+function WC(e, n, t, r) {
+    let o = n.get(Yh);
+    o.impl ??= n.get(Ja);
+    let i = t?.phase ?? Tn.MixedReadWrite,
+        s = t?.manualCleanup !== !0 ? n.get(_c) : null,
+        a = new Xa(o.impl, GC(e, i), r, s);
+    return o.impl.register(a), a
+}
+var qC = {
+    destroy() {}
+};
+
+function Xc(e, n, t, r) {
+    let o = H(),
+        i = xi();
+    if (Lt(o, i, n)) {
+        let s = Ue(),
+            a = wc();
+        N0(a, o, e, n, t, r)
+    }
+    return Xc
+}
+
+function Kh(e, n, t, r) {
+    return Lt(e, xi(), t) ? n + Di(t) + r : lt
+}
+
+function jo(e, n) {
+    return e << 17 | n << 2
+}
+
+function rn(e) {
+    return e >> 17 & 32767
+}
+
+function ZC(e) {
+    return (e & 2) == 2
+}
+
+function QC(e, n) {
+    return e & 131071 | n << 17
+}
+
+function ec(e) {
+    return e | 2
+}
+
+function Un(e) {
+    return (e & 131068) >> 2
+}
+
+function ma(e, n) {
+    return e & -131069 | n << 2
+}
+
+function YC(e) {
+    return (e & 1) === 1
+}
+
+function tc(e) {
+    return e | 1
+}
+
+function KC(e, n, t, r, o, i) {
+    let s = i ? n.classBindings : n.styleBindings,
+        a = rn(s),
+        c = Un(s);
+    e[r] = t;
+    let l = !1,
+        u;
+    if (Array.isArray(t)) {
+        let d = t;
+        u = d[1], (u === null || Tr(d, u) > 0) && (l = !0)
+    } else u = t;
+    if (o)
+        if (c !== 0) {
+            let v = rn(e[a + 1]);
+            e[r + 1] = jo(v, a), v !== 0 && (e[v + 1] = ma(e[v + 1], r)), e[a + 1] = QC(e[a + 1], r)
+        } else e[r + 1] = jo(a, 0), a !== 0 && (e[a + 1] = ma(e[a + 1], r)), a = r;
+    else e[r + 1] = jo(c, 0), a === 0 ? a = r : e[c + 1] = ma(e[c + 1], r), c = r;
+    l && (e[r + 1] = ec(e[r + 1])), Dd(e, u, r, !0), Dd(e, u, r, !1), JC(n, u, e, r, i), s = jo(a, c), i ? n.classBindings = s : n.styleBindings = s
+}
+
+function JC(e, n, t, r, o) {
+    let i = o ? e.residualClasses : e.residualStyles;
+    i != null && typeof n == "string" && Tr(i, n) >= 0 && (t[r + 1] = tc(t[r + 1]))
+}
+
+function Dd(e, n, t, r) {
+    let o = e[t + 1],
+        i = n === null,
+        s = r ? rn(o) : Un(o),
+        a = !1;
+    for (; s !== 0 && (a === !1 || i);) {
+        let c = e[s],
+            l = e[s + 1];
+        XC(c, n) && (a = !0, e[s + 1] = r ? tc(l) : ec(l)), s = r ? rn(l) : Un(l)
+    }
+    a && (e[t + 1] = r ? ec(o) : tc(o))
+}
+
+function XC(e, n) {
+    return e === null || n == null || (Array.isArray(e) ? e[1] : e) === n ? !0 : Array.isArray(e) && typeof n == "string" ? Tr(e, n) >= 0 : !1
+}
+
+function w(e, n, t) {
+    let r = H(),
+        o = xi();
+    if (Lt(r, o, n)) {
+        let i = Ue(),
+            s = wc();
+        bh(i, s, r, e, n, r[Z], t, !1)
+    }
+    return w
+}
+
+function wd(e, n, t, r, o) {
+    let i = n.inputs,
+        s = o ? "class" : "style";
+    Gc(e, t, i[s], s, r)
+}
+
+function et(e, n) {
+    return eD(e, n, null, !0), et
+}
+
+function eD(e, n, t, r) {
+    let o = H(),
+        i = Ue(),
+        s = Pv(2);
+    if (i.firstUpdatePass && nD(i, e, s, r), n !== lt && Lt(o, s, n)) {
+        let a = i.data[zn()];
+        aD(i, a, o, o[Z], e, o[s + 1] = cD(n, t), r, s)
+    }
+}
+
+function tD(e, n) {
+    return n >= e.expandoStartIndex
+}
+
+function nD(e, n, t, r) {
+    let o = e.data;
+    if (o[t + 1] === null) {
+        let i = o[zn()],
+            s = tD(e, t);
+        lD(i, r) && n === null && !s && (n = !1), n = rD(o, i, n, r), KC(o, i, n, t, s, r)
+    }
+}
+
+function rD(e, n, t, r) {
+    let o = Lv(e),
+        i = r ? n.residualClasses : n.residualStyles;
+    if (o === null)(r ? n.classBindings : n.styleBindings) === 0 && (t = va(null, e, n, t, r), t = Mr(t, n.attrs, r), i = null);
+    else {
+        let s = n.directiveStylingLast;
+        if (s === -1 || e[s] !== o)
+            if (t = va(o, e, n, t, r), i === null) {
+                let c = oD(e, n, r);
+                c !== void 0 && Array.isArray(c) && (c = va(null, e, n, c[1], r), c = Mr(c, n.attrs, r), iD(e, n, r, c))
+            } else i = sD(e, n, r)
+    }
+    return i !== void 0 && (r ? n.residualClasses = i : n.residualStyles = i), t
+}
+
+function oD(e, n, t) {
+    let r = t ? n.classBindings : n.styleBindings;
+    if (Un(r) !== 0) return e[rn(r)]
+}
+
+function iD(e, n, t, r) {
+    let o = t ? n.classBindings : n.styleBindings;
+    e[rn(o)] = r
+}
+
+function sD(e, n, t) {
+    let r, o = n.directiveEnd;
+    for (let i = 1 + n.directiveStylingLast; i < o; i++) {
+        let s = e[i].hostAttrs;
+        r = Mr(r, s, t)
+    }
+    return Mr(r, n.attrs, t)
+}
+
+function va(e, n, t, r, o) {
+    let i = null,
+        s = t.directiveEnd,
+        a = t.directiveStylingLast;
+    for (a === -1 ? a = t.directiveStart : a++; a < s && (i = n[a], r = Mr(r, i.hostAttrs, o), i !== e);) a++;
+    return e !== null && (t.directiveStylingLast = a), r
+}
+
+function Mr(e, n, t) {
+    let r = t ? 1 : 2,
+        o = -1;
+    if (n !== null)
+        for (let i = 0; i < n.length; i++) {
+            let s = n[i];
+            typeof s == "number" ? o = s : o === r && (Array.isArray(e) || (e = e === void 0 ? [] : ["", e]), Bm(e, s, t ? !0 : n[++i]))
+        }
+    return e === void 0 ? null : e
+}
+
+function aD(e, n, t, r, o, i, s, a) {
+    if (!(n.type & 3)) return;
+    let c = e.data,
+        l = c[a + 1],
+        u = YC(l) ? Ed(c, n, t, o, Un(l), s) : void 0;
+    if (!mi(u)) {
+        mi(i) || ZC(l) && (i = Ed(c, null, t, o, a, s));
+        let d = lf(zn(), t);
+        c0(r, s, d, o, i)
+    }
+}
+
+function Ed(e, n, t, r, o, i) {
+    let s = n === null,
+        a;
+    for (; o > 0;) {
+        let c = e[o],
+            l = Array.isArray(c),
+            u = l ? c[1] : c,
+            d = u === null,
+            v = t[o + 1];
+        v === lt && (v = d ? Le : void 0);
+        let m = d ? ia(v, r) : u === r ? v : void 0;
+        if (l && !mi(m) && (m = ia(c, r)), mi(m) && (a = m, s)) return a;
+        let C = e[o + 1];
+        o = s ? rn(C) : Un(C)
+    }
+    if (n !== null) {
+        let c = i ? n.residualClasses : n.residualStyles;
+        c != null && (a = ia(c, r))
+    }
+    return a
+}
+
+function mi(e) {
+    return e !== void 0
+}
+
+function cD(e, n) {
+    return e == null || e === "" || (typeof n == "string" ? e = e + n : typeof e == "object" && (e = ve(Fr(e)))), e
+}
+
+function lD(e, n) {
+    return (e.flags & (n ? 8 : 16)) !== 0
+}
+
+function Ee(e, n) {
+    Ut("NgControlFlow");
+    let t = H(),
+        r = xi(),
+        o = t[r] !== lt ? t[r] : -1,
+        i = o !== -1 ? Id(t, se + o) : void 0,
+        s = 0;
+    if (Lt(t, r, e)) {
+        let a = j(null);
+        try {
+            if (i !== void 0 && $0(i, s), e !== -1) {
+                let c = se + e,
+                    l = Id(t, c),
+                    u = uD(t[A], c),
+                    d = Wa(l, u.tView.ssrId),
+                    v = Oh(t, u, n, {
+                        dehydratedView: d
+                    });
+                Nh(l, v, s, za(u, d))
+            }
+        } finally {
+            j(a)
+        }
+    } else if (i !== void 0) {
+        let a = U0(i, s);
+        a !== void 0 && (a[Ve] = n)
+    }
+}
+
+function Id(e, n) {
+    return e[n]
+}
+
+function uD(e, n) {
+    return gc(e, n)
+}
+
+function dD(e, n, t, r, o, i) {
+    let s = n.consts,
+        a = Fn(s, o),
+        c = Lr(n, e, 2, r, a);
+    return zc(n, t, c, Fn(s, i)), c.attrs !== null && hi(c, c.attrs, !1), c.mergedAttrs !== null && hi(c, c.mergedAttrs, !0), n.queries !== null && n.queries.elementStart(n, c), c
+}
+
+function h(e, n, t, r) {
+    let o = H(),
+        i = Ue(),
+        s = se + e,
+        a = o[Z],
+        c = i.firstCreatePass ? dD(s, i, o, n, t, r) : i.data[s],
+        l = Jh(i, o, c, a, n, e);
+    o[s] = l;
+    let u = _i(c);
+    return sn(c, !0), mh(a, l, c), !jr(c) && Oi() && ji(i, o, l, c), bv() === 0 && kt(l, o), _v(), u && (Uc(i, o, c), Bc(i, c, o)), r !== null && $c(o, c), h
+}
+
+function f() {
+    let e = we();
+    vc() ? mf() : (e = e.parent, sn(e, !1));
+    let n = e;
+    Sv(n) && Tv(), Mv();
+    let t = Ue();
+    return t.firstCreatePass && (Ni(t, e), pc(e) && t.queries.elementEnd(e)), n.classesWithoutHost != null && zv(n) && wd(t, n, H(), n.classesWithoutHost, !0), n.stylesWithoutHost != null && Gv(n) && wd(t, n, H(), n.stylesWithoutHost, !1), f
+}
+
+function R(e, n, t, r) {
+    return h(e, n, t, r), f(), R
+}
+var Jh = (e, n, t, r, o, i) => (Bt(!0), kc(r, o, bf()));
+
+function fD(e, n, t, r, o, i) {
+    let s = n[it],
+        a = !s || Pr() || jr(t) || kr(s, i);
+    if (Bt(a), a) return kc(r, o, bf());
+    let c = $i(s, e, n, t);
+    return eh(s, i) && ki(s, i, c.nextSibling), s && (Uf(t) || $f(c)) && Nr(t) && (xv(t), ph(c)), c
+}
+
+function hD() {
+    Jh = fD
+}
+
+function pD(e, n, t, r, o) {
+    let i = n.consts,
+        s = Fn(i, r),
+        a = Lr(n, e, 8, "ng-container", s);
+    s !== null && hi(a, s, !0);
+    let c = Fn(i, o);
+    return zc(n, t, a, c), n.queries !== null && n.queries.elementStart(n, a), a
+}
+
+function Xh(e, n, t) {
+    let r = H(),
+        o = Ue(),
+        i = e + se,
+        s = o.firstCreatePass ? pD(i, o, r, n, t) : o.data[i];
+    sn(s, !0);
+    let a = tp(o, r, s, e);
+    return r[i] = a, Oi() && ji(o, r, a, s), kt(a, r), _i(s) && (Uc(o, r, s), Bc(o, s, r)), t != null && $c(r, s), Xh
+}
+
+function ep() {
+    let e = we(),
+        n = Ue();
+    return vc() ? mf() : (e = e.parent, sn(e, !1)), n.firstCreatePass && (Ni(n, e), pc(e) && n.queries.elementEnd(e)), ep
+}
+
+function Wi(e, n, t) {
+    return Xh(e, n, t), ep(), Wi
+}
+var tp = (e, n, t, r) => (Bt(!0), ch(n[Z], ""));
+
+function gD(e, n, t, r) {
+    let o, i = n[it],
+        s = !i || Pr() || kr(i, r) || jr(t);
+    if (Bt(s), s) return ch(n[Z], "");
+    let a = $i(i, e, n, t),
+        c = Ry(i, r);
+    return ki(i, r, a), o = Hi(c, a), o
+}
+
+function mD() {
+    tp = gD
+}
+
+function Ct() {
+    return H()
+}
+var vi = "en-US";
+var vD = vi;
+
+function yD(e) {
+    typeof e == "string" && (vD = e.toLowerCase().replace(/_/g, "-"))
+}
+var CD = (e, n, t) => {};
+
+function Q(e, n, t, r) {
+    let o = H(),
+        i = Ue(),
+        s = we();
+    return wD(i, o, o[Z], s, e, n, r), Q
+}
+
+function DD(e, n, t, r) {
+    let o = e.cleanup;
+    if (o != null)
+        for (let i = 0; i < o.length - 1; i += 2) {
+            let s = o[i];
+            if (s === t && o[i + 1] === r) {
+                let a = n[Yo],
+                    c = o[i + 2];
+                return a.length > c ? a[c] : null
+            }
+            typeof s == "string" && (i += 2)
+        }
+    return null
+}
+
+function wD(e, n, t, r, o, i, s) {
+    let a = _i(r),
+        l = e.firstCreatePass && F0(e),
+        u = n[Ve],
+        d = k0(n),
+        v = !0;
+    if (r.type & 3 || s) {
+        let P = Oe(r, n),
+            $ = s ? s(P) : P,
+            z = d.length,
+            de = s ? ge => s(Ye(ge[r.index])) : r.index,
+            fe = null;
+        if (!s && a && (fe = DD(e, n, o, r.index)), fe !== null) {
+            let ge = fe.__ngLastListenerFn__ || fe;
+            ge.__ngNextListenerFn__ = i, fe.__ngLastListenerFn__ = i, v = !1
+        } else {
+            i = _d(r, n, u, i), CD(P, o, i);
+            let ge = t.listen($, o, i);
+            d.push(i, ge), l && l.push(o, de, z, z + 1)
+        }
+    } else i = _d(r, n, u, i);
+    let m = r.outputs,
+        C;
+    if (v && m !== null && (C = m[o])) {
+        let P = C.length;
+        if (P)
+            for (let $ = 0; $ < P; $ += 2) {
+                let z = C[$],
+                    de = C[$ + 1],
+                    Mt = n[z][de].subscribe(i),
+                    Ie = d.length;
+                d.push(i, Mt), l && l.push(o, r.index, Ie, -(Ie + 1))
+            }
+    }
+}
+
+function bd(e, n, t, r) {
+    let o = j(null);
+    try {
+        return nt(6, n, t), t(r) !== !1
+    } catch (i) {
+        return Th(e, i), !1
+    } finally {
+        nt(7, n, t), j(o)
+    }
+}
+
+function _d(e, n, t, r) {
+    return function o(i) {
+        if (i === Function) return r;
+        let s = e.componentOffset > -1 ? Vt(e.index, n) : n;
+        qc(s, 5);
+        let a = bd(n, t, r, i),
+            c = o.__ngNextListenerFn__;
+        for (; c;) a = bd(n, t, c, i) && a, c = c.__ngNextListenerFn__;
+        return a
+    }
+}
+
+function V(e = 1) {
+    return Vv(e)
+}
+
+function Vr(e, n, t) {
+    return np(e, "", n, "", t), Vr
+}
+
+function np(e, n, t, r, o) {
+    let i = H(),
+        s = Kh(i, n, t, r);
+    if (s !== lt) {
+        let a = Ue(),
+            c = wc();
+        bh(a, c, i, e, s, i[Z], o, !1)
+    }
+    return np
+}
+
+function el(e) {
+    let n = Nv();
+    return Dv(n, se + e)
+}
+
+function p(e, n = "") {
+    let t = H(),
+        r = Ue(),
+        o = e + se,
+        i = r.firstCreatePass ? Lr(r, o, 1, n, null) : r.data[o],
+        s = rp(r, t, i, n, e);
+    t[o] = s, Oi() && ji(r, t, s, i), sn(i, !1)
+}
+var rp = (e, n, t, r, o) => (Bt(!0), ah(n[Z], r));
+
+function ED(e, n, t, r, o) {
+    let i = n[it],
+        s = !i || Pr() || jr(t) || kr(i, o);
+    return Bt(s), s ? ah(n[Z], r) : $i(i, e, n, t)
+}
+
+function ID() {
+    rp = ED
+}
+
+function $e(e) {
+    return op("", e, ""), $e
+}
+
+function op(e, n, t) {
+    let r = H(),
+        o = Kh(r, e, n, t);
+    return o !== lt && L0(r, zn(), o), op
+}
+var bD = (() => {
+    class e {
+        constructor(t) {
+            this._injector = t, this.cachedInjectors = new Map
+        }
+        getOrCreateStandaloneInjector(t) {
+            if (!t.standalone) return null;
+            if (!this.cachedInjectors.has(t)) {
+                let r = Kd(!1, t.type),
+                    o = r.length > 0 ? Gi([r], this._injector, `Standalone[${t.type.name}]`) : null;
+                this.cachedInjectors.set(t, o)
+            }
+            return this.cachedInjectors.get(t)
+        }
+        ngOnDestroy() {
+            try {
+                for (let t of this.cachedInjectors.values()) t !== null && t.destroy()
+            } finally {
+                this.cachedInjectors.clear()
+            }
+        }
+        static {
+            this.\u0275prov = I({
+                token: e,
+                providedIn: "environment",
+                factory: () => new e(x(xe))
+            })
+        }
+    }
+    return e
+})();
+
+function re(e) {
+    Ut("NgStandalone"), e.getStandaloneInjector = n => n.get(bD).getOrCreateStandaloneInjector(e)
+}
+
+function Ae(e, n, t) {
+    let r = yc() + e,
+        o = H();
+    return o[r] === lt ? Kc(o, r, t ? n.call(t) : n()) : VC(o, r)
+}
+
+function Y(e, n, t, r) {
+    return _D(H(), yc(), e, n, t, r)
+}
+
+function ip(e, n, t, r, o) {
+    return MD(H(), yc(), e, n, t, r, o)
+}
+
+function sp(e, n) {
+    let t = e[n];
+    return t === lt ? void 0 : t
+}
+
+function _D(e, n, t, r, o, i) {
+    let s = n + t;
+    return Lt(e, s, o) ? Kc(e, s + 1, i ? r.call(i, o) : r(o)) : sp(e, s + 1)
+}
+
+function MD(e, n, t, r, o, i, s) {
+    let a = n + t;
+    return BC(e, a, o, i) ? Kc(e, a + 2, s ? r.call(s, o, i) : r(o, i)) : sp(e, a + 2)
+}
+
+function ap(e, n) {
+    return jh(e, n)
+}
+var qi = (() => {
+    class e {
+        log(t) {
+            console.log(t)
+        }
+        warn(t) {
+            console.warn(t)
+        }
+        static {
+            this.\u0275fac = function(r) {
+                return new(r || e)
+            }
+        }
+        static {
+            this.\u0275prov = I({
+                token: e,
+                factory: e.\u0275fac,
+                providedIn: "platform"
+            })
+        }
+    }
+    return e
+})();
+var cp = new b("");
+
+function Br(e) {
+    return !!e && typeof e.then == "function"
+}
+
+function lp(e) {
+    return !!e && typeof e.subscribe == "function"
+}
+var Zi = new b(""),
+    up = (() => {
+        class e {
+            constructor() {
+                this.initialized = !1, this.done = !1, this.donePromise = new Promise((t, r) => {
+                    this.resolve = t, this.reject = r
+                }), this.appInits = g(Zi, {
+                    optional: !0
+                }) ?? []
+            }
+            runInitializers() {
+                if (this.initialized) return;
+                let t = [];
+                for (let o of this.appInits) {
+                    let i = o();
+                    if (Br(i)) t.push(i);
+                    else if (lp(i)) {
+                        let s = new Promise((a, c) => {
+                            i.subscribe({
+                                complete: a,
+                                error: c
+                            })
+                        });
+                        t.push(s)
+                    }
+                }
+                let r = () => {
+                    this.done = !0, this.resolve()
+                };
+                Promise.all(t).then(() => {
+                    r()
+                }).catch(o => {
+                    this.reject(o)
+                }), t.length === 0 && r(), this.initialized = !0
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac,
+                    providedIn: "root"
+                })
+            }
+        }
+        return e
+    })(),
+    ln = new b("");
+
+function SD() {
+    gu(() => {
+        throw new E(600, !1)
+    })
+}
+
+function xD(e) {
+    return e.isBoundToModule
+}
+var TD = 10;
+
+function OD(e, n, t) {
+    try {
+        let r = t();
+        return Br(r) ? r.catch(o => {
+            throw n.runOutsideAngular(() => e.handleError(o)), o
+        }) : r
+    } catch (r) {
+        throw n.runOutsideAngular(() => e.handleError(r)), r
+    }
+}
+var ut = (() => {
+    class e {
+        constructor() {
+            this._bootstrapListeners = [], this._runningTick = !1, this._destroyed = !1, this._destroyListeners = [], this._views = [], this.internalErrorHandler = g(fy), this.afterRenderManager = g(Yh), this.zonelessEnabled = g(zi), this.dirtyFlags = 0, this.deferredDirtyFlags = 0, this.externalTestViews = new Set, this.beforeRender = new he, this.afterTick = new he, this.componentTypes = [], this.components = [], this.isStable = g(an).hasPendingTasks.pipe(k(t => !t)), this._injector = g(xe)
+        }
+        get allViews() {
+            return [...this.externalTestViews.keys(), ...this._views]
+        }
+        get destroyed() {
+            return this._destroyed
+        }
+        whenStable() {
+            let t;
+            return new Promise(r => {
+                t = this.isStable.subscribe({
+                    next: o => {
+                        o && r()
+                    }
+                })
+            }).finally(() => {
+                t.unsubscribe()
+            })
+        }
+        get injector() {
+            return this._injector
+        }
+        bootstrap(t, r) {
+            let o = t instanceof fi;
+            if (!this._injector.get(up).done) {
+                let v = !o && qd(t),
+                    m = !1;
+                throw new E(405, m)
+            }
+            let s;
+            o ? s = t : s = this._injector.get(jn).resolveComponentFactory(t), this.componentTypes.push(s.componentType);
+            let a = xD(s) ? void 0 : this._injector.get(Ft),
+                c = r || s.selector,
+                l = s.create(Ke.NULL, [], c, a),
+                u = l.location.nativeElement,
+                d = l.injector.get(cp, null);
+            return d?.registerApplication(u), l.onDestroy(() => {
+                this.detachView(l.hostView), zo(this.components, l), d?.unregisterApplication(u)
+            }), this._loadComponent(l), l
+        }
+        tick() {
+            this.zonelessEnabled || (this.dirtyFlags |= 1), this._tick()
+        }
+        _tick() {
+            if (this._runningTick) throw new E(101, !1);
+            let t = j(null);
+            try {
+                this._runningTick = !0, this.synchronize()
+            } catch (r) {
+                this.internalErrorHandler(r)
+            } finally {
+                this._runningTick = !1, j(t), this.afterTick.next()
+            }
+        }
+        synchronize() {
+            let t = null;
+            this._injector.destroyed || (t = this._injector.get(Vn, null, {
+                optional: !0
+            })), this.dirtyFlags |= this.deferredDirtyFlags, this.deferredDirtyFlags = 0;
+            let r = 0;
+            for (; this.dirtyFlags !== 0 && r++ < TD;) this.synchronizeOnce(t)
+        }
+        synchronizeOnce(t) {
+            if (this.dirtyFlags |= this.deferredDirtyFlags, this.deferredDirtyFlags = 0, this.dirtyFlags & 7) {
+                let r = !!(this.dirtyFlags & 1);
+                this.dirtyFlags &= -8, this.dirtyFlags |= 8, this.beforeRender.next(r);
+                for (let {
+                        _lView: o,
+                        notifyErrorHandler: i
+                    }
+                    of this._views) ND(o, i, r, this.zonelessEnabled);
+                if (this.dirtyFlags &= -5, this.syncDirtyFlagsWithViews(), this.dirtyFlags & 7) return
+            } else t?.begin?.(), t?.end?.();
+            this.dirtyFlags & 8 && (this.dirtyFlags &= -9, this.afterRenderManager.execute()), this.syncDirtyFlagsWithViews()
+        }
+        syncDirtyFlagsWithViews() {
+            if (this.allViews.some(({
+                    _lView: t
+                }) => Mi(t))) {
+                this.dirtyFlags |= 2;
+                return
+            } else this.dirtyFlags &= -8
+        }
+        attachView(t) {
+            let r = t;
+            this._views.push(r), r.attachToAppRef(this)
+        }
+        detachView(t) {
+            let r = t;
+            zo(this._views, r), r.detachFromAppRef()
+        }
+        _loadComponent(t) {
+            this.attachView(t.hostView), this.tick(), this.components.push(t);
+            let r = this._injector.get(ln, []);
+            [...this._bootstrapListeners, ...r].forEach(o => o(t))
+        }
+        ngOnDestroy() {
+            if (!this._destroyed) try {
+                this._destroyListeners.forEach(t => t()), this._views.slice().forEach(t => t.destroy())
+            } finally {
+                this._destroyed = !0, this._views = [], this._bootstrapListeners = [], this._destroyListeners = []
+            }
+        }
+        onDestroy(t) {
+            return this._destroyListeners.push(t), () => zo(this._destroyListeners, t)
+        }
+        destroy() {
+            if (this._destroyed) throw new E(406, !1);
+            let t = this._injector;
+            t.destroy && !t.destroyed && t.destroy()
+        }
+        get viewCount() {
+            return this._views.length
+        }
+        warnIfDestroyed() {}
+        static {
+            this.\u0275fac = function(r) {
+                return new(r || e)
+            }
+        }
+        static {
+            this.\u0275prov = I({
+                token: e,
+                factory: e.\u0275fac,
+                providedIn: "root"
+            })
+        }
+    }
+    return e
+})();
+
+function zo(e, n) {
+    let t = e.indexOf(n);
+    t > -1 && e.splice(t, 1)
+}
+var Vo;
+
+function Qi(e) {
+    Vo ??= new WeakMap;
+    let n = Vo.get(e);
+    if (n) return n;
+    let t = e.isStable.pipe(We(r => r)).toPromise().then(() => {});
+    return Vo.set(e, t), e.onDestroy(() => Vo?.delete(e)), t
+}
+
+function ND(e, n, t, r) {
+    if (!t && !Mi(e)) return;
+    Rh(e, n, t && !r ? 0 : 1)
+}
+var nc = class {
+        constructor(n, t) {
+            this.ngModuleFactory = n, this.componentFactories = t
+        }
+    },
+    Yi = (() => {
+        class e {
+            compileModuleSync(t) {
+                return new Ka(t)
+            }
+            compileModuleAsync(t) {
+                return Promise.resolve(this.compileModuleSync(t))
+            }
+            compileModuleAndAllComponentsSync(t) {
+                let r = this.compileModuleSync(t),
+                    o = Zd(t),
+                    i = sh(o.declarations).reduce((s, a) => {
+                        let c = Rt(a);
+                        return c && s.push(new Bn(c)), s
+                    }, []);
+                return new nc(r, i)
+            }
+            compileModuleAndAllComponentsAsync(t) {
+                return Promise.resolve(this.compileModuleAndAllComponentsSync(t))
+            }
+            clearCache() {}
+            clearCacheFor(t) {}
+            getModuleId(t) {}
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac,
+                    providedIn: "root"
+                })
+            }
+        }
+        return e
+    })();
+var AD = (() => {
+        class e {
+            constructor() {
+                this.zone = g(W), this.changeDetectionScheduler = g(Ln), this.applicationRef = g(ut)
+            }
+            initialize() {
+                this._onMicrotaskEmptySubscription || (this._onMicrotaskEmptySubscription = this.zone.onMicrotaskEmpty.subscribe({
+                    next: () => {
+                        this.changeDetectionScheduler.runningTick || this.zone.run(() => {
+                            this.applicationRef.tick()
+                        })
+                    }
+                }))
+            }
+            ngOnDestroy() {
+                this._onMicrotaskEmptySubscription?.unsubscribe()
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac,
+                    providedIn: "root"
+                })
+            }
+        }
+        return e
+    })(),
+    PD = new b("", {
+        factory: () => !1
+    });
+
+function dp({
+    ngZoneFactory: e,
+    ignoreChangesOutsideZone: n,
+    scheduleInRootZone: t
+}) {
+    return e ??= () => new W(K(D({}, hp()), {
+        scheduleInRootZone: t
+    })), [{
+        provide: W,
+        useFactory: e
+    }, {
+        provide: Xt,
+        multi: !0,
+        useFactory: () => {
+            let r = g(AD, {
+                optional: !0
+            });
+            return () => r.initialize()
+        }
+    }, {
+        provide: Xt,
+        multi: !0,
+        useFactory: () => {
+            let r = g(RD);
+            return () => {
+                r.initialize()
+            }
+        }
+    }, n === !0 ? {
+        provide: $h,
+        useValue: !0
+    } : [], {
+        provide: Hh,
+        useValue: t ?? jf
+    }]
+}
+
+function fp(e) {
+    let n = e?.ignoreChangesOutsideZone,
+        t = e?.scheduleInRootZone,
+        r = dp({
+            ngZoneFactory: () => {
+                let o = hp(e);
+                return o.scheduleInRootZone = t, o.shouldCoalesceEventChangeDetection && Ut("NgZone_CoalesceEvent"), new W(o)
+            },
+            ignoreChangesOutsideZone: n,
+            scheduleInRootZone: t
+        });
+    return on([{
+        provide: PD,
+        useValue: !0
+    }, {
+        provide: zi,
+        useValue: !1
+    }, r])
+}
+
+function hp(e) {
+    return {
+        enableLongStackTrace: !1,
+        shouldCoalesceEventChangeDetection: e?.eventCoalescing ?? !1,
+        shouldCoalesceRunChangeDetection: e?.runCoalescing ?? !1
+    }
+}
+var RD = (() => {
+    class e {
+        constructor() {
+            this.subscription = new X, this.initialized = !1, this.zone = g(W), this.pendingTasks = g(an)
+        }
+        initialize() {
+            if (this.initialized) return;
+            this.initialized = !0;
+            let t = null;
+            !this.zone.isStable && !this.zone.hasPendingMacrotasks && !this.zone.hasPendingMicrotasks && (t = this.pendingTasks.add()), this.zone.runOutsideAngular(() => {
+                this.subscription.add(this.zone.onStable.subscribe(() => {
+                    W.assertNotInAngularZone(), queueMicrotask(() => {
+                        t !== null && !this.zone.hasPendingMacrotasks && !this.zone.hasPendingMicrotasks && (this.pendingTasks.remove(t), t = null)
+                    })
+                }))
+            }), this.subscription.add(this.zone.onUnstable.subscribe(() => {
+                W.assertInAngularZone(), t ??= this.pendingTasks.add()
+            }))
+        }
+        ngOnDestroy() {
+            this.subscription.unsubscribe()
+        }
+        static {
+            this.\u0275fac = function(r) {
+                return new(r || e)
+            }
+        }
+        static {
+            this.\u0275prov = I({
+                token: e,
+                factory: e.\u0275fac,
+                providedIn: "root"
+            })
+        }
+    }
+    return e
+})();
+var kD = (() => {
+    class e {
+        constructor() {
+            this.appRef = g(ut), this.taskService = g(an), this.ngZone = g(W), this.zonelessEnabled = g(zi), this.disableScheduling = g($h, {
+                optional: !0
+            }) ?? !1, this.zoneIsDefined = typeof Zone < "u" && !!Zone.root.run, this.schedulerTickApplyArgs = [{
+                data: {
+                    __scheduler_tick__: !0
+                }
+            }], this.subscriptions = new X, this.angularZoneId = this.zoneIsDefined ? this.ngZone._inner?.get(oi) : null, this.scheduleInRootZone = !this.zonelessEnabled && this.zoneIsDefined && (g(Hh, {
+                optional: !0
+            }) ?? !1), this.cancelScheduledCallback = null, this.useMicrotaskScheduler = !1, this.runningTick = !1, this.pendingRenderTaskId = null, this.subscriptions.add(this.appRef.afterTick.subscribe(() => {
+                this.runningTick || this.cleanup()
+            })), this.subscriptions.add(this.ngZone.onUnstable.subscribe(() => {
+                this.runningTick || this.cleanup()
+            })), this.disableScheduling ||= !this.zonelessEnabled && (this.ngZone instanceof Fa || !this.zoneIsDefined)
+        }
+        notify(t) {
+            if (!this.zonelessEnabled && t === 5) return;
+            switch (t) {
+                case 0: {
+                    this.appRef.dirtyFlags |= 2;
+                    break
+                }
+                case 3:
+                case 2:
+                case 4:
+                case 5:
+                case 1: {
+                    this.appRef.dirtyFlags |= 4;
+                    break
+                }
+                case 7: {
+                    this.appRef.deferredDirtyFlags |= 8;
+                    break
+                }
+                case 9:
+                case 8:
+                case 6:
+                case 10:
+                default:
+                    this.appRef.dirtyFlags |= 8
+            }
+            if (!this.shouldScheduleTick()) return;
+            let r = this.useMicrotaskScheduler ? cd : Vf;
+            this.pendingRenderTaskId = this.taskService.add(), this.scheduleInRootZone ? this.cancelScheduledCallback = Zone.root.run(() => r(() => this.tick())) : this.cancelScheduledCallback = this.ngZone.runOutsideAngular(() => r(() => this.tick()))
+        }
+        shouldScheduleTick() {
+            return !(this.disableScheduling || this.pendingRenderTaskId !== null || this.runningTick || this.appRef._runningTick || !this.zonelessEnabled && this.zoneIsDefined && Zone.current.get(oi + this.angularZoneId))
+        }
+        tick() {
+            if (this.runningTick || this.appRef.destroyed) return;
+            !this.zonelessEnabled && this.appRef.dirtyFlags & 7 && (this.appRef.dirtyFlags |= 1);
+            let t = this.taskService.add();
+            try {
+                this.ngZone.run(() => {
+                    this.runningTick = !0, this.appRef._tick()
+                }, void 0, this.schedulerTickApplyArgs)
+            } catch (r) {
+                throw this.taskService.remove(t), r
+            } finally {
+                this.cleanup()
+            }
+            this.useMicrotaskScheduler = !0, cd(() => {
+                this.useMicrotaskScheduler = !1, this.taskService.remove(t)
+            })
+        }
+        ngOnDestroy() {
+            this.subscriptions.unsubscribe(), this.cleanup()
+        }
+        cleanup() {
+            if (this.runningTick = !1, this.cancelScheduledCallback?.(), this.cancelScheduledCallback = null, this.pendingRenderTaskId !== null) {
+                let t = this.pendingRenderTaskId;
+                this.pendingRenderTaskId = null, this.taskService.remove(t)
+            }
+        }
+        static {
+            this.\u0275fac = function(r) {
+                return new(r || e)
+            }
+        }
+        static {
+            this.\u0275prov = I({
+                token: e,
+                factory: e.\u0275fac,
+                providedIn: "root"
+            })
+        }
+    }
+    return e
+})();
+
+function FD() {
+    return typeof $localize < "u" && $localize.locale || vi
+}
+var tl = new b("", {
+    providedIn: "root",
+    factory: () => g(tl, N.Optional | N.SkipSelf) || FD()
+});
+var rc = new b("");
+
+function Bo(e) {
+    return !e.moduleRef
+}
+
+function LD(e) {
+    let n = Bo(e) ? e.r3Injector : e.moduleRef.injector,
+        t = n.get(W);
+    return t.run(() => {
+        Bo(e) ? e.r3Injector.resolveInjectorInitializers() : e.moduleRef.resolveInjectorInitializers();
+        let r = n.get(vt, null),
+            o;
+        if (t.runOutsideAngular(() => {
+                o = t.onError.subscribe({
+                    next: i => {
+                        r.handleError(i)
+                    }
+                })
+            }), Bo(e)) {
+            let i = () => n.destroy(),
+                s = e.platformInjector.get(rc);
+            s.add(i), n.onDestroy(() => {
+                o.unsubscribe(), s.delete(i)
+            })
+        } else {
+            let i = () => e.moduleRef.destroy(),
+                s = e.platformInjector.get(rc);
+            s.add(i), e.moduleRef.onDestroy(() => {
+                zo(e.allPlatformModules, e.moduleRef), o.unsubscribe(), s.delete(i)
+            })
+        }
+        return OD(r, t, () => {
+            let i = n.get(up);
+            return i.runInitializers(), i.donePromise.then(() => {
+                let s = n.get(tl, vi);
+                if (yD(s || vi), Bo(e)) {
+                    let a = n.get(ut);
+                    return e.rootComponent !== void 0 && a.bootstrap(e.rootComponent), a
+                } else return jD(e.moduleRef, e.allPlatformModules), e.moduleRef
+            })
+        })
+    })
+}
+
+function jD(e, n) {
+    let t = e.injector.get(ut);
+    if (e._bootstrapComponents.length > 0) e._bootstrapComponents.forEach(r => t.bootstrap(r));
+    else if (e.instance.ngDoBootstrap) e.instance.ngDoBootstrap(t);
+    else throw new E(-403, !1);
+    n.push(e)
+}
+var Go = null;
+
+function VD(e = [], n) {
+    return Ke.create({
+        name: n,
+        providers: [{
+            provide: Ii,
+            useValue: "platform"
+        }, {
+            provide: rc,
+            useValue: new Set([() => Go = null])
+        }, ...e]
+    })
+}
+
+function BD(e = []) {
+    if (Go) return Go;
+    let n = VD(e);
+    return Go = n, SD(), UD(n), n
+}
+
+function UD(e) {
+    e.get(xc, null)?.forEach(t => t())
+}
+var Ur = (() => {
+    class e {
+        static {
+            this.__NG_ELEMENT_ID__ = $D
+        }
+    }
+    return e
+})();
+
+function $D(e) {
+    return HD(we(), H(), (e & 16) === 16)
+}
+
+function HD(e, n, t) {
+    if (Nr(e) && !t) {
+        let r = Vt(e.index, n);
+        return new nn(r, r)
+    } else if (e.type & 175) {
+        let r = n[Be];
+        return new nn(r, n)
+    }
+    return null
+}
+var oc = class {
+        constructor() {}
+        supports(n) {
+            return n instanceof Map || qh(n)
+        }
+        create() {
+            return new ic
+        }
+    },
+    ic = class {
+        constructor() {
+            this._records = new Map, this._mapHead = null, this._appendAfter = null, this._previousMapHead = null, this._changesHead = null, this._changesTail = null, this._additionsHead = null, this._additionsTail = null, this._removalsHead = null, this._removalsTail = null
+        }
+        get isDirty() {
+            return this._additionsHead !== null || this._changesHead !== null || this._removalsHead !== null
+        }
+        forEachItem(n) {
+            let t;
+            for (t = this._mapHead; t !== null; t = t._next) n(t)
+        }
+        forEachPreviousItem(n) {
+            let t;
+            for (t = this._previousMapHead; t !== null; t = t._nextPrevious) n(t)
+        }
+        forEachChangedItem(n) {
+            let t;
+            for (t = this._changesHead; t !== null; t = t._nextChanged) n(t)
+        }
+        forEachAddedItem(n) {
+            let t;
+            for (t = this._additionsHead; t !== null; t = t._nextAdded) n(t)
+        }
+        forEachRemovedItem(n) {
+            let t;
+            for (t = this._removalsHead; t !== null; t = t._nextRemoved) n(t)
+        }
+        diff(n) {
+            if (!n) n = new Map;
+            else if (!(n instanceof Map || qh(n))) throw new E(900, !1);
+            return this.check(n) ? this : null
+        }
+        onDestroy() {}
+        check(n) {
+            this._reset();
+            let t = this._mapHead;
+            if (this._appendAfter = null, this._forEach(n, (r, o) => {
+                    if (t && t.key === o) this._maybeAddToChanges(t, r), this._appendAfter = t, t = t._next;
+                    else {
+                        let i = this._getOrCreateRecordForKey(o, r);
+                        t = this._insertBeforeOrAppend(t, i)
+                    }
+                }), t) {
+                t._prev && (t._prev._next = null), this._removalsHead = t;
+                for (let r = t; r !== null; r = r._nextRemoved) r === this._mapHead && (this._mapHead = null), this._records.delete(r.key), r._nextRemoved = r._next, r.previousValue = r.currentValue, r.currentValue = null, r._prev = null, r._next = null
+            }
+            return this._changesTail && (this._changesTail._nextChanged = null), this._additionsTail && (this._additionsTail._nextAdded = null), this.isDirty
+        }
+        _insertBeforeOrAppend(n, t) {
+            if (n) {
+                let r = n._prev;
+                return t._next = n, t._prev = r, n._prev = t, r && (r._next = t), n === this._mapHead && (this._mapHead = t), this._appendAfter = n, n
+            }
+            return this._appendAfter ? (this._appendAfter._next = t, t._prev = this._appendAfter) : this._mapHead = t, this._appendAfter = t, null
+        }
+        _getOrCreateRecordForKey(n, t) {
+            if (this._records.has(n)) {
+                let o = this._records.get(n);
+                this._maybeAddToChanges(o, t);
+                let i = o._prev,
+                    s = o._next;
+                return i && (i._next = s), s && (s._prev = i), o._next = null, o._prev = null, o
+            }
+            let r = new sc(n);
+            return this._records.set(n, r), r.currentValue = t, this._addToAdditions(r), r
+        }
+        _reset() {
+            if (this.isDirty) {
+                let n;
+                for (this._previousMapHead = this._mapHead, n = this._previousMapHead; n !== null; n = n._next) n._nextPrevious = n._next;
+                for (n = this._changesHead; n !== null; n = n._nextChanged) n.previousValue = n.currentValue;
+                for (n = this._additionsHead; n != null; n = n._nextAdded) n.previousValue = n.currentValue;
+                this._changesHead = this._changesTail = null, this._additionsHead = this._additionsTail = null, this._removalsHead = null
+            }
+        }
+        _maybeAddToChanges(n, t) {
+            Object.is(t, n.currentValue) || (n.previousValue = n.currentValue, n.currentValue = t, this._addToChanges(n))
+        }
+        _addToAdditions(n) {
+            this._additionsHead === null ? this._additionsHead = this._additionsTail = n : (this._additionsTail._nextAdded = n, this._additionsTail = n)
+        }
+        _addToChanges(n) {
+            this._changesHead === null ? this._changesHead = this._changesTail = n : (this._changesTail._nextChanged = n, this._changesTail = n)
+        }
+        _forEach(n, t) {
+            n instanceof Map ? n.forEach(t) : Object.keys(n).forEach(r => t(n[r], r))
+        }
+    },
+    sc = class {
+        constructor(n) {
+            this.key = n, this.previousValue = null, this.currentValue = null, this._nextPrevious = null, this._next = null, this._prev = null, this._nextAdded = null, this._nextRemoved = null, this._nextChanged = null
+        }
+    };
+
+function Md() {
+    return new nl([new oc])
+}
+var nl = (() => {
+    class e {
+        static {
+            this.\u0275prov = I({
+                token: e,
+                providedIn: "root",
+                factory: Md
+            })
+        }
+        constructor(t) {
+            this.factories = t
+        }
+        static create(t, r) {
+            if (r) {
+                let o = r.factories.slice();
+                t = t.concat(o)
+            }
+            return new e(t)
+        }
+        static extend(t) {
+            return {
+                provide: e,
+                useFactory: r => e.create(t, r || Md()),
+                deps: [
+                    [e, new cc, new Ei]
+                ]
+            }
+        }
+        find(t) {
+            let r = this.factories.find(o => o.supports(t));
+            if (r) return r;
+            throw new E(901, !1)
+        }
+    }
+    return e
+})();
+
+function pp(e) {
+    try {
+        let {
+            rootComponent: n,
+            appProviders: t,
+            platformProviders: r
+        } = e, o = BD(r), i = [dp({}), {
+            provide: Ln,
+            useExisting: kD
+        }, ...t || []], s = new gi({
+            providers: i,
+            parent: o,
+            debugName: "",
+            runEnvironmentInitializers: !1
+        });
+        return LD({
+            r3Injector: s.injector,
+            platformInjector: o,
+            rootComponent: n
+        })
+    } catch (n) {
+        return Promise.reject(n)
+    }
+}
+var Sd = !1;
+
+function zD() {
+    Sd || (Sd = !0, Oy(), hD(), ID(), mD(), zC(), jC(), yC(), m0())
+}
+
+function GD(e, n) {
+    return Qi(e)
+}
+
+function gp() {
+    return on([{
+        provide: Fo,
+        useFactory: () => {
+            let e = !0;
+            return gr() && (e = !!g(Gn, {
+                optional: !0
+            })?.get(Jf, null)), e && Ut("NgHydration"), e
+        }
+    }, {
+        provide: Xt,
+        useValue: () => {
+            dC(!1), gr() && g(Fo) && (WD(), zD())
+        },
+        multi: !0
+    }, {
+        provide: nh,
+        useFactory: () => gr() && g(Fo)
+    }, {
+        provide: ln,
+        useFactory: () => {
+            if (gr() && g(Fo)) {
+                let e = g(ut),
+                    n = g(Ke);
+                return () => {
+                    GD(e, n).then(() => {
+                        gC(e)
+                    })
+                }
+            }
+            return () => {}
+        },
+        multi: !0
+    }])
+}
+
+function WD() {
+    let e = Pi(),
+        n;
+    for (let t of e.body.childNodes)
+        if (t.nodeType === Node.COMMENT_NODE && t.textContent?.trim() === xy) {
+            n = t;
+            break
+        } if (!n) throw new E(-507, !1)
+}
+
+function $r(e) {
+    return typeof e == "boolean" ? e : e != null && e !== "false"
+}
+
+function mp(e) {
+    let n = Rt(e);
+    if (!n) return null;
+    let t = new Bn(n);
+    return {
+        get selector() {
+            return t.selector
+        },
+        get type() {
+            return t.componentType
+        },
+        get inputs() {
+            return t.inputs
+        },
+        get outputs() {
+            return t.outputs
+        },
+        get ngContentSelectors() {
+            return t.ngContentSelectors
+        },
+        get isStandalone() {
+            return n.standalone
+        },
+        get isSignal() {
+            return n.signals
+        }
+    }
+}
+var Ep = null;
+
+function Zn() {
+    return Ep
+}
+
+function Ip(e) {
+    Ep ??= e
+}
+var Ki = class {};
+var ye = new b(""),
+    al = (() => {
+        class e {
+            historyGo(t) {
+                throw new Error("")
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: () => g(ZD),
+                    providedIn: "platform"
+                })
+            }
+        }
+        return e
+    })(),
+    bp = new b(""),
+    ZD = (() => {
+        class e extends al {
+            constructor() {
+                super(), this._doc = g(ye), this._location = window.location, this._history = window.history
+            }
+            getBaseHrefFromDOM() {
+                return Zn().getBaseHref(this._doc)
+            }
+            onPopState(t) {
+                let r = Zn().getGlobalEventTarget(this._doc, "window");
+                return r.addEventListener("popstate", t, !1), () => r.removeEventListener("popstate", t)
+            }
+            onHashChange(t) {
+                let r = Zn().getGlobalEventTarget(this._doc, "window");
+                return r.addEventListener("hashchange", t, !1), () => r.removeEventListener("hashchange", t)
+            }
+            get href() {
+                return this._location.href
+            }
+            get protocol() {
+                return this._location.protocol
+            }
+            get hostname() {
+                return this._location.hostname
+            }
+            get port() {
+                return this._location.port
+            }
+            get pathname() {
+                return this._location.pathname
+            }
+            get search() {
+                return this._location.search
+            }
+            get hash() {
+                return this._location.hash
+            }
+            set pathname(t) {
+                this._location.pathname = t
+            }
+            pushState(t, r, o) {
+                this._history.pushState(t, r, o)
+            }
+            replaceState(t, r, o) {
+                this._history.replaceState(t, r, o)
+            }
+            forward() {
+                this._history.forward()
+            }
+            back() {
+                this._history.back()
+            }
+            historyGo(t = 0) {
+                this._history.go(t)
+            }
+            getState() {
+                return this._history.state
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: () => new e,
+                    providedIn: "platform"
+                })
+            }
+        }
+        return e
+    })();
+
+function cl(e, n) {
+    if (e.length == 0) return n;
+    if (n.length == 0) return e;
+    let t = 0;
+    return e.endsWith("/") && t++, n.startsWith("/") && t++, t == 2 ? e + n.substring(1) : t == 1 ? e + n : e + "/" + n
+}
+
+function vp(e) {
+    let n = e.match(/#|\?|$/),
+        t = n && n.index || e.length,
+        r = t - (e[t - 1] === "/" ? 1 : 0);
+    return e.slice(0, r) + e.slice(t)
+}
+
+function Dt(e) {
+    return e && e[0] !== "?" ? "?" + e : e
+}
+var wt = (() => {
+        class e {
+            historyGo(t) {
+                throw new Error("")
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: () => g(ll),
+                    providedIn: "root"
+                })
+            }
+        }
+        return e
+    })(),
+    _p = new b(""),
+    ll = (() => {
+        class e extends wt {
+            constructor(t, r) {
+                super(), this._platformLocation = t, this._removeListenerFns = [], this._baseHref = r ?? this._platformLocation.getBaseHrefFromDOM() ?? g(ye).location?.origin ?? ""
+            }
+            ngOnDestroy() {
+                for (; this._removeListenerFns.length;) this._removeListenerFns.pop()()
+            }
+            onPopState(t) {
+                this._removeListenerFns.push(this._platformLocation.onPopState(t), this._platformLocation.onHashChange(t))
+            }
+            getBaseHref() {
+                return this._baseHref
+            }
+            prepareExternalUrl(t) {
+                return cl(this._baseHref, t)
+            }
+            path(t = !1) {
+                let r = this._platformLocation.pathname + Dt(this._platformLocation.search),
+                    o = this._platformLocation.hash;
+                return o && t ? `${r}${o}` : r
+            }
+            pushState(t, r, o, i) {
+                let s = this.prepareExternalUrl(o + Dt(i));
+                this._platformLocation.pushState(t, r, s)
+            }
+            replaceState(t, r, o, i) {
+                let s = this.prepareExternalUrl(o + Dt(i));
+                this._platformLocation.replaceState(t, r, s)
+            }
+            forward() {
+                this._platformLocation.forward()
+            }
+            back() {
+                this._platformLocation.back()
+            }
+            getState() {
+                return this._platformLocation.getState()
+            }
+            historyGo(t = 0) {
+                this._platformLocation.historyGo?.(t)
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)(x(al), x(_p, 8))
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac,
+                    providedIn: "root"
+                })
+            }
+        }
+        return e
+    })(),
+    Mp = (() => {
+        class e extends wt {
+            constructor(t, r) {
+                super(), this._platformLocation = t, this._baseHref = "", this._removeListenerFns = [], r != null && (this._baseHref = r)
+            }
+            ngOnDestroy() {
+                for (; this._removeListenerFns.length;) this._removeListenerFns.pop()()
+            }
+            onPopState(t) {
+                this._removeListenerFns.push(this._platformLocation.onPopState(t), this._platformLocation.onHashChange(t))
+            }
+            getBaseHref() {
+                return this._baseHref
+            }
+            path(t = !1) {
+                let r = this._platformLocation.hash ?? "#";
+                return r.length > 0 ? r.substring(1) : r
+            }
+            prepareExternalUrl(t) {
+                let r = cl(this._baseHref, t);
+                return r.length > 0 ? "#" + r : r
+            }
+            pushState(t, r, o, i) {
+                let s = this.prepareExternalUrl(o + Dt(i));
+                s.length == 0 && (s = this._platformLocation.pathname), this._platformLocation.pushState(t, r, s)
+            }
+            replaceState(t, r, o, i) {
+                let s = this.prepareExternalUrl(o + Dt(i));
+                s.length == 0 && (s = this._platformLocation.pathname), this._platformLocation.replaceState(t, r, s)
+            }
+            forward() {
+                this._platformLocation.forward()
+            }
+            back() {
+                this._platformLocation.back()
+            }
+            getState() {
+                return this._platformLocation.getState()
+            }
+            historyGo(t = 0) {
+                this._platformLocation.historyGo?.(t)
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)(x(al), x(_p, 8))
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac
+                })
+            }
+        }
+        return e
+    })(),
+    Qn = (() => {
+        class e {
+            constructor(t) {
+                this._subject = new me, this._urlChangeListeners = [], this._urlChangeSubscription = null, this._locationStrategy = t;
+                let r = this._locationStrategy.getBaseHref();
+                this._basePath = KD(vp(yp(r))), this._locationStrategy.onPopState(o => {
+                    this._subject.emit({
+                        url: this.path(!0),
+                        pop: !0,
+                        state: o.state,
+                        type: o.type
+                    })
+                })
+            }
+            ngOnDestroy() {
+                this._urlChangeSubscription?.unsubscribe(), this._urlChangeListeners = []
+            }
+            path(t = !1) {
+                return this.normalize(this._locationStrategy.path(t))
+            }
+            getState() {
+                return this._locationStrategy.getState()
+            }
+            isCurrentPathEqualTo(t, r = "") {
+                return this.path() == this.normalize(t + Dt(r))
+            }
+            normalize(t) {
+                return e.stripTrailingSlash(YD(this._basePath, yp(t)))
+            }
+            prepareExternalUrl(t) {
+                return t && t[0] !== "/" && (t = "/" + t), this._locationStrategy.prepareExternalUrl(t)
+            }
+            go(t, r = "", o = null) {
+                this._locationStrategy.pushState(o, "", t, r), this._notifyUrlChangeListeners(this.prepareExternalUrl(t + Dt(r)), o)
+            }
+            replaceState(t, r = "", o = null) {
+                this._locationStrategy.replaceState(o, "", t, r), this._notifyUrlChangeListeners(this.prepareExternalUrl(t + Dt(r)), o)
+            }
+            forward() {
+                this._locationStrategy.forward()
+            }
+            back() {
+                this._locationStrategy.back()
+            }
+            historyGo(t = 0) {
+                this._locationStrategy.historyGo?.(t)
+            }
+            onUrlChange(t) {
+                return this._urlChangeListeners.push(t), this._urlChangeSubscription ??= this.subscribe(r => {
+                    this._notifyUrlChangeListeners(r.url, r.state)
+                }), () => {
+                    let r = this._urlChangeListeners.indexOf(t);
+                    this._urlChangeListeners.splice(r, 1), this._urlChangeListeners.length === 0 && (this._urlChangeSubscription?.unsubscribe(), this._urlChangeSubscription = null)
+                }
+            }
+            _notifyUrlChangeListeners(t = "", r) {
+                this._urlChangeListeners.forEach(o => o(t, r))
+            }
+            subscribe(t, r, o) {
+                return this._subject.subscribe({
+                    next: t,
+                    error: r,
+                    complete: o
+                })
+            }
+            static {
+                this.normalizeQueryParams = Dt
+            }
+            static {
+                this.joinWithSlash = cl
+            }
+            static {
+                this.stripTrailingSlash = vp
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)(x(wt))
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: () => QD(),
+                    providedIn: "root"
+                })
+            }
+        }
+        return e
+    })();
+
+function QD() {
+    return new Qn(x(wt))
+}
+
+function YD(e, n) {
+    if (!e || !n.startsWith(e)) return n;
+    let t = n.substring(e.length);
+    return t === "" || ["/", ";", "?", "#"].includes(t[0]) ? t : n
+}
+
+function yp(e) {
+    return e.replace(/\/index.html$/, "")
+}
+
+function KD(e) {
+    if (new RegExp("^(https?:)?//").test(e)) {
+        let [, t] = e.split(/\/\/[^\/]+/);
+        return t
+    }
+    return e
+}
+
+function ul(e, n) {
+    n = encodeURIComponent(n);
+    for (let t of e.split(";")) {
+        let r = t.indexOf("="),
+            [o, i] = r == -1 ? [t, ""] : [t.slice(0, r), t.slice(r + 1)];
+        if (o.trim() === n) return decodeURIComponent(i)
+    }
+    return null
+}
+var rl = /\s+/,
+    Cp = [],
+    Yn = (() => {
+        class e {
+            constructor(t, r) {
+                this._ngEl = t, this._renderer = r, this.initialClasses = Cp, this.stateMap = new Map
+            }
+            set klass(t) {
+                this.initialClasses = t != null ? t.trim().split(rl) : Cp
+            }
+            set ngClass(t) {
+                this.rawClass = typeof t == "string" ? t.trim().split(rl) : t
+            }
+            ngDoCheck() {
+                for (let r of this.initialClasses) this._updateState(r, !0);
+                let t = this.rawClass;
+                if (Array.isArray(t) || t instanceof Set)
+                    for (let r of t) this._updateState(r, !0);
+                else if (t != null)
+                    for (let r of Object.keys(t)) this._updateState(r, !!t[r]);
+                this._applyStateDiff()
+            }
+            _updateState(t, r) {
+                let o = this.stateMap.get(t);
+                o !== void 0 ? (o.enabled !== r && (o.changed = !0, o.enabled = r), o.touched = !0) : this.stateMap.set(t, {
+                    enabled: r,
+                    changed: !0,
+                    touched: !0
+                })
+            }
+            _applyStateDiff() {
+                for (let t of this.stateMap) {
+                    let r = t[0],
+                        o = t[1];
+                    o.changed ? (this._toggleClass(r, o.enabled), o.changed = !1) : o.touched || (o.enabled && this._toggleClass(r, !1), this.stateMap.delete(r)), o.touched = !1
+                }
+            }
+            _toggleClass(t, r) {
+                t = t.trim(), t.length > 0 && t.split(rl).forEach(o => {
+                    r ? this._renderer.addClass(this._ngEl.nativeElement, o) : this._renderer.removeClass(this._ngEl.nativeElement, o)
+                })
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)(q(cn), q(Wn))
+                }
+            }
+            static {
+                this.\u0275dir = jt({
+                    type: e,
+                    selectors: [
+                        ["", "ngClass", ""]
+                    ],
+                    inputs: {
+                        klass: [0, "class", "klass"],
+                        ngClass: "ngClass"
+                    },
+                    standalone: !0
+                })
+            }
+        }
+        return e
+    })();
+var Sp = (() => {
+        class e {
+            constructor(t, r) {
+                this._viewContainer = t, this._context = new ol, this._thenTemplateRef = null, this._elseTemplateRef = null, this._thenViewRef = null, this._elseViewRef = null, this._thenTemplateRef = r
+            }
+            set ngIf(t) {
+                this._context.$implicit = this._context.ngIf = t, this._updateView()
+            }
+            set ngIfThen(t) {
+                Dp("ngIfThen", t), this._thenTemplateRef = t, this._thenViewRef = null, this._updateView()
+            }
+            set ngIfElse(t) {
+                Dp("ngIfElse", t), this._elseTemplateRef = t, this._elseViewRef = null, this._updateView()
+            }
+            _updateView() {
+                this._context.$implicit ? this._thenViewRef || (this._viewContainer.clear(), this._elseViewRef = null, this._thenTemplateRef && (this._thenViewRef = this._viewContainer.createEmbeddedView(this._thenTemplateRef, this._context))) : this._elseViewRef || (this._viewContainer.clear(), this._thenViewRef = null, this._elseTemplateRef && (this._elseViewRef = this._viewContainer.createEmbeddedView(this._elseTemplateRef, this._context)))
+            }
+            static ngTemplateContextGuard(t, r) {
+                return !0
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)(q(qn), q(Zc))
+                }
+            }
+            static {
+                this.\u0275dir = jt({
+                    type: e,
+                    selectors: [
+                        ["", "ngIf", ""]
+                    ],
+                    inputs: {
+                        ngIf: "ngIf",
+                        ngIfThen: "ngIfThen",
+                        ngIfElse: "ngIfElse"
+                    },
+                    standalone: !0
+                })
+            }
+        }
+        return e
+    })(),
+    ol = class {
+        constructor() {
+            this.$implicit = null, this.ngIf = null
+        }
+    };
+
+function Dp(e, n) {
+    if (!!!(!n || n.createEmbeddedView)) throw new Error(`${e} must be a TemplateRef, but received '${ve(n)}'.`)
+}
+var Xi = (() => {
+        class e {
+            constructor(t, r, o) {
+                this._ngEl = t, this._differs = r, this._renderer = o, this._ngStyle = null, this._differ = null
+            }
+            set ngStyle(t) {
+                this._ngStyle = t, !this._differ && t && (this._differ = this._differs.find(t).create())
+            }
+            ngDoCheck() {
+                if (this._differ) {
+                    let t = this._differ.diff(this._ngStyle);
+                    t && this._applyChanges(t)
+                }
+            }
+            _setStyle(t, r) {
+                let [o, i] = t.split("."), s = o.indexOf("-") === -1 ? void 0 : at.DashCase;
+                r != null ? this._renderer.setStyle(this._ngEl.nativeElement, o, i ? `${r}${i}` : r, s) : this._renderer.removeStyle(this._ngEl.nativeElement, o, s)
+            }
+            _applyChanges(t) {
+                t.forEachRemovedItem(r => this._setStyle(r.key, null)), t.forEachAddedItem(r => this._setStyle(r.key, r.currentValue)), t.forEachChangedItem(r => this._setStyle(r.key, r.currentValue))
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)(q(cn), q(nl), q(Wn))
+                }
+            }
+            static {
+                this.\u0275dir = jt({
+                    type: e,
+                    selectors: [
+                        ["", "ngStyle", ""]
+                    ],
+                    inputs: {
+                        ngStyle: "ngStyle"
+                    },
+                    standalone: !0
+                })
+            }
+        }
+        return e
+    })(),
+    xp = (() => {
+        class e {
+            constructor(t) {
+                this._viewContainerRef = t, this._viewRef = null, this.ngTemplateOutletContext = null, this.ngTemplateOutlet = null, this.ngTemplateOutletInjector = null
+            }
+            ngOnChanges(t) {
+                if (this._shouldRecreateView(t)) {
+                    let r = this._viewContainerRef;
+                    if (this._viewRef && r.remove(r.indexOf(this._viewRef)), !this.ngTemplateOutlet) {
+                        this._viewRef = null;
+                        return
+                    }
+                    let o = this._createContextForwardProxy();
+                    this._viewRef = r.createEmbeddedView(this.ngTemplateOutlet, o, {
+                        injector: this.ngTemplateOutletInjector ?? void 0
+                    })
+                }
+            }
+            _shouldRecreateView(t) {
+                return !!t.ngTemplateOutlet || !!t.ngTemplateOutletInjector
+            }
+            _createContextForwardProxy() {
+                return new Proxy({}, {
+                    set: (t, r, o) => this.ngTemplateOutletContext ? Reflect.set(this.ngTemplateOutletContext, r, o) : !1,
+                    get: (t, r, o) => {
+                        if (this.ngTemplateOutletContext) return Reflect.get(this.ngTemplateOutletContext, r, o)
+                    }
+                })
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)(q(qn))
+                }
+            }
+            static {
+                this.\u0275dir = jt({
+                    type: e,
+                    selectors: [
+                        ["", "ngTemplateOutlet", ""]
+                    ],
+                    inputs: {
+                        ngTemplateOutletContext: "ngTemplateOutletContext",
+                        ngTemplateOutlet: "ngTemplateOutlet",
+                        ngTemplateOutletInjector: "ngTemplateOutletInjector"
+                    },
+                    standalone: !0,
+                    features: [Hn]
+                })
+            }
+        }
+        return e
+    })();
+var Et = (() => {
+        class e {
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)
+                }
+            }
+            static {
+                this.\u0275mod = Or({
+                    type: e
+                })
+            }
+            static {
+                this.\u0275inj = xr({})
+            }
+        }
+        return e
+    })(),
+    dl = "browser",
+    JD = "server";
+
+function fl(e) {
+    return e === dl
+}
+
+function Hr(e) {
+    return e === JD
+}
+var hl = (() => {
+        class e {
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    providedIn: "root",
+                    factory: () => fl(g(Ne)) ? new il(g(ye), window) : new sl
+                })
+            }
+        }
+        return e
+    })(),
+    il = class {
+        constructor(n, t) {
+            this.document = n, this.window = t, this.offset = () => [0, 0]
+        }
+        setOffset(n) {
+            Array.isArray(n) ? this.offset = () => n : this.offset = n
+        }
+        getScrollPosition() {
+            return [this.window.scrollX, this.window.scrollY]
+        }
+        scrollToPosition(n) {
+            this.window.scrollTo(n[0], n[1])
+        }
+        scrollToAnchor(n) {
+            let t = XD(this.document, n);
+            t && (this.scrollToElement(t), t.focus())
+        }
+        setHistoryScrollRestoration(n) {
+            this.window.history.scrollRestoration = n
+        }
+        scrollToElement(n) {
+            let t = n.getBoundingClientRect(),
+                r = t.left + this.window.pageXOffset,
+                o = t.top + this.window.pageYOffset,
+                i = this.offset();
+            this.window.scrollTo(r - i[0], o - i[1])
+        }
+    };
+
+function XD(e, n) {
+    let t = e.getElementById(n) || e.getElementsByName(n)[0];
+    if (t) return t;
+    if (typeof e.createTreeWalker == "function" && e.body && typeof e.body.attachShadow == "function") {
+        let r = e.createTreeWalker(e.body, NodeFilter.SHOW_ELEMENT),
+            o = r.currentNode;
+        for (; o;) {
+            let i = o.shadowRoot;
+            if (i) {
+                let s = i.getElementById(n) || i.querySelector(`[name="${n}"]`);
+                if (s) return s
+            }
+            o = r.nextNode()
+        }
+    }
+    return null
+}
+var sl = class {
+        setOffset(n) {}
+        getScrollPosition() {
+            return [0, 0]
+        }
+        scrollToPosition(n) {}
+        scrollToAnchor(n) {}
+        setHistoryScrollRestoration(n) {}
+    },
+    Ji = class {};
+var ts = class e {
+    constructor(n) {
+        this.normalizedNames = new Map, this.lazyUpdate = null, n ? typeof n == "string" ? this.lazyInit = () => {
+            this.headers = new Map, n.split(`
+`).forEach(t => {
+                let r = t.indexOf(":");
+                if (r > 0) {
+                    let o = t.slice(0, r),
+                        i = o.toLowerCase(),
+                        s = t.slice(r + 1).trim();
+                    this.maybeSetNormalizedName(o, i), this.headers.has(i) ? this.headers.get(i).push(s) : this.headers.set(i, [s])
+                }
+            })
+        } : typeof Headers < "u" && n instanceof Headers ? (this.headers = new Map, n.forEach((t, r) => {
+            this.setHeaderEntries(r, t)
+        })) : this.lazyInit = () => {
+            this.headers = new Map, Object.entries(n).forEach(([t, r]) => {
+                this.setHeaderEntries(t, r)
+            })
+        } : this.headers = new Map
+    }
+    has(n) {
+        return this.init(), this.headers.has(n.toLowerCase())
+    }
+    get(n) {
+        this.init();
+        let t = this.headers.get(n.toLowerCase());
+        return t && t.length > 0 ? t[0] : null
+    }
+    keys() {
+        return this.init(), Array.from(this.normalizedNames.values())
+    }
+    getAll(n) {
+        return this.init(), this.headers.get(n.toLowerCase()) || null
+    }
+    append(n, t) {
+        return this.clone({
+            name: n,
+            value: t,
+            op: "a"
+        })
+    }
+    set(n, t) {
+        return this.clone({
+            name: n,
+            value: t,
+            op: "s"
+        })
+    }
+    delete(n, t) {
+        return this.clone({
+            name: n,
+            value: t,
+            op: "d"
+        })
+    }
+    maybeSetNormalizedName(n, t) {
+        this.normalizedNames.has(t) || this.normalizedNames.set(t, n)
+    }
+    init() {
+        this.lazyInit && (this.lazyInit instanceof e ? this.copyFrom(this.lazyInit) : this.lazyInit(), this.lazyInit = null, this.lazyUpdate && (this.lazyUpdate.forEach(n => this.applyUpdate(n)), this.lazyUpdate = null))
+    }
+    copyFrom(n) {
+        n.init(), Array.from(n.headers.keys()).forEach(t => {
+            this.headers.set(t, n.headers.get(t)), this.normalizedNames.set(t, n.normalizedNames.get(t))
+        })
+    }
+    clone(n) {
+        let t = new e;
+        return t.lazyInit = this.lazyInit && this.lazyInit instanceof e ? this.lazyInit : this, t.lazyUpdate = (this.lazyUpdate || []).concat([n]), t
+    }
+    applyUpdate(n) {
+        let t = n.name.toLowerCase();
+        switch (n.op) {
+            case "a":
+            case "s":
+                let r = n.value;
+                if (typeof r == "string" && (r = [r]), r.length === 0) return;
+                this.maybeSetNormalizedName(n.name, t);
+                let o = (n.op === "a" ? this.headers.get(t) : void 0) || [];
+                o.push(...r), this.headers.set(t, o);
+                break;
+            case "d":
+                let i = n.value;
+                if (!i) this.headers.delete(t), this.normalizedNames.delete(t);
+                else {
+                    let s = this.headers.get(t);
+                    if (!s) return;
+                    s = s.filter(a => i.indexOf(a) === -1), s.length === 0 ? (this.headers.delete(t), this.normalizedNames.delete(t)) : this.headers.set(t, s)
+                }
+                break
+        }
+    }
+    setHeaderEntries(n, t) {
+        let r = (Array.isArray(t) ? t : [t]).map(i => i.toString()),
+            o = n.toLowerCase();
+        this.headers.set(o, r), this.maybeSetNormalizedName(n, o)
+    }
+    forEach(n) {
+        this.init(), Array.from(this.normalizedNames.keys()).forEach(t => n(this.normalizedNames.get(t), this.headers.get(t)))
+    }
+};
+var Fp = function(e) {
+        return e[e.Sent = 0] = "Sent", e[e.UploadProgress = 1] = "UploadProgress", e[e.ResponseHeader = 2] = "ResponseHeader", e[e.DownloadProgress = 3] = "DownloadProgress", e[e.Response = 4] = "Response", e[e.User = 5] = "User", e
+    }(Fp || {}),
+    pl = class {
+        constructor(n, t = 200, r = "OK") {
+            this.headers = n.headers || new ts, this.status = n.status !== void 0 ? n.status : t, this.statusText = n.statusText || r, this.url = n.url || null, this.ok = this.status >= 200 && this.status < 300
+        }
+    };
+var ns = class e extends pl {
+    constructor(n = {}) {
+        super(n), this.type = Fp.Response, this.body = n.body !== void 0 ? n.body : null
+    }
+    clone(n = {}) {
+        return new e({
+            body: n.body !== void 0 ? n.body : this.body,
+            headers: n.headers || this.headers,
+            status: n.status !== void 0 ? n.status : this.status,
+            statusText: n.statusText || this.statusText,
+            url: n.url || this.url || void 0
+        })
+    }
+};
+var ew = new b("");
+var tw = new b(""),
+    Tp = "b",
+    Op = "h",
+    Np = "s",
+    Ap = "st",
+    Pp = "u",
+    Rp = "rt",
+    es = new b(""),
+    nw = ["GET", "HEAD"];
+
+function rw(e, n) {
+    let m = g(es),
+        {
+            isCacheActive: t
+        } = m,
+        r = du(m, ["isCacheActive"]),
+        {
+            transferCache: o,
+            method: i
+        } = e;
+    if (!t || o === !1 || i === "POST" && !r.includePostRequests && !o || i !== "POST" && !nw.includes(i) || !r.includeRequestsWithAuthHeaders && ow(e) || r.filter?.(e) === !1) return n(e);
+    let s = g(Gn),
+        a = g(tw, {
+            optional: !0
+        }),
+        c = Hr(g(Ne));
+    if (a && !c) throw new E(2803, !1);
+    let l = c && a ? cw(e.url, a) : e.url,
+        u = sw(e, l),
+        d = s.get(u, null),
+        v = r.includeHeaders;
+    if (typeof o == "object" && o.includeHeaders && (v = o.includeHeaders), d) {
+        let {
+            [Tp]: C, [Rp]: P, [Op]: $, [Np]: z, [Ap]: de, [Pp]: fe
+        } = d, ge = C;
+        switch (P) {
+            case "arraybuffer":
+                ge = new TextEncoder().encode(C).buffer;
+                break;
+            case "blob":
+                ge = new Blob([C]);
+                break
+        }
+        let Mt = new ts($);
+        return _(new ns({
+            body: ge,
+            headers: Mt,
+            status: z,
+            statusText: de,
+            url: fe
+        }))
+    }
+    return n(e).pipe(oe(C => {
+        C instanceof ns && c && s.set(u, {
+            [Tp]: C.body,
+            [Op]: iw(C.headers, v),
+            [Np]: C.status,
+            [Ap]: C.statusText,
+            [Pp]: l,
+            [Rp]: e.responseType
+        })
+    }))
+}
+
+function ow(e) {
+    return e.headers.has("authorization") || e.headers.has("proxy-authorization")
+}
+
+function iw(e, n) {
+    if (!n) return {};
+    let t = {};
+    for (let r of n) {
+        let o = e.getAll(r);
+        o !== null && (t[r] = o)
+    }
+    return t
+}
+
+function kp(e) {
+    return [...e.keys()].sort().map(n => `${n}=${e.getAll(n)}`).join("&")
+}
+
+function sw(e, n) {
+    let {
+        params: t,
+        method: r,
+        responseType: o
+    } = e, i = kp(t), s = e.serializeBody();
+    s instanceof URLSearchParams ? s = kp(s) : typeof s != "string" && (s = "");
+    let a = [r, o, n, s, i].join("|"),
+        c = aw(a);
+    return c
+}
+
+function aw(e) {
+    let n = 0;
+    for (let t of e) n = Math.imul(31, n) + t.charCodeAt(0) << 0;
+    return n += 2147483648, n.toString()
+}
+
+function Lp(e) {
+    return [{
+        provide: es,
+        useFactory: () => (Ut("NgHttpTransferCache"), D({
+            isCacheActive: !0
+        }, e))
+    }, {
+        provide: ew,
+        useValue: rw,
+        multi: !0,
+        deps: [Gn, es]
+    }, {
+        provide: ln,
+        multi: !0,
+        useFactory: () => {
+            let n = g(ut),
+                t = g(es);
+            return () => {
+                Qi(n).then(() => {
+                    t.isCacheActive = !1
+                })
+            }
+        }
+    }]
+}
+
+function cw(e, n) {
+    let t = new URL(e, "resolve://").origin,
+        r = n[t];
+    return r ? e.replace(t, r) : e
+}
+var vl = class extends Ki {
+        constructor() {
+            super(...arguments), this.supportsDOMEvents = !0
+        }
+    },
+    yl = class e extends vl {
+        static makeCurrent() {
+            Ip(new e)
+        }
+        onAndCancel(n, t, r) {
+            return n.addEventListener(t, r), () => {
+                n.removeEventListener(t, r)
+            }
+        }
+        dispatchEvent(n, t) {
+            n.dispatchEvent(t)
+        }
+        remove(n) {
+            n.remove()
+        }
+        createElement(n, t) {
+            return t = t || this.getDefaultDocument(), t.createElement(n)
+        }
+        createHtmlDocument() {
+            return document.implementation.createHTMLDocument("fakeTitle")
+        }
+        getDefaultDocument() {
+            return document
+        }
+        isElementNode(n) {
+            return n.nodeType === Node.ELEMENT_NODE
+        }
+        isShadowRoot(n) {
+            return n instanceof DocumentFragment
+        }
+        getGlobalEventTarget(n, t) {
+            return t === "window" ? window : t === "document" ? n : t === "body" ? n.body : null
+        }
+        getBaseHref(n) {
+            let t = lw();
+            return t == null ? null : uw(t)
+        }
+        resetBaseElement() {
+            Gr = null
+        }
+        getUserAgent() {
+            return window.navigator.userAgent
+        }
+        getCookie(n) {
+            return ul(document.cookie, n)
+        }
+    },
+    Gr = null;
+
+function lw() {
+    return Gr = Gr || document.querySelector("base"), Gr ? Gr.getAttribute("href") : null
+}
+
+function uw(e) {
+    return new URL(e, document.baseURI).pathname
+}
+var dw = (() => {
+        class e {
+            build() {
+                return new XMLHttpRequest
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac
+                })
+            }
+        }
+        return e
+    })(),
+    Cl = new b(""),
+    Up = (() => {
+        class e {
+            constructor(t, r) {
+                this._zone = r, this._eventNameToPlugin = new Map, t.forEach(o => {
+                    o.manager = this
+                }), this._plugins = t.slice().reverse()
+            }
+            addEventListener(t, r, o) {
+                return this._findPluginFor(r).addEventListener(t, r, o)
+            }
+            getZone() {
+                return this._zone
+            }
+            _findPluginFor(t) {
+                let r = this._eventNameToPlugin.get(t);
+                if (r) return r;
+                if (r = this._plugins.find(i => i.supports(t)), !r) throw new E(5101, !1);
+                return this._eventNameToPlugin.set(t, r), r
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)(x(Cl), x(W))
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac
+                })
+            }
+        }
+        return e
+    })(),
+    rs = class {
+        constructor(n) {
+            this._doc = n
+        }
+    },
+    gl = "ng-app-id",
+    $p = (() => {
+        class e {
+            constructor(t, r, o, i = {}) {
+                this.doc = t, this.appId = r, this.nonce = o, this.platformId = i, this.styleRef = new Map, this.hostNodes = new Set, this.styleNodesInDOM = this.collectServerRenderedStyles(), this.platformIsServer = Hr(i), this.resetHostNodes()
+            }
+            addStyles(t) {
+                for (let r of t) this.changeUsageCount(r, 1) === 1 && this.onStyleAdded(r)
+            }
+            removeStyles(t) {
+                for (let r of t) this.changeUsageCount(r, -1) <= 0 && this.onStyleRemoved(r)
+            }
+            ngOnDestroy() {
+                let t = this.styleNodesInDOM;
+                t && (t.forEach(r => r.remove()), t.clear());
+                for (let r of this.getAllStyles()) this.onStyleRemoved(r);
+                this.resetHostNodes()
+            }
+            addHost(t) {
+                this.hostNodes.add(t);
+                for (let r of this.getAllStyles()) this.addStyleToHost(t, r)
+            }
+            removeHost(t) {
+                this.hostNodes.delete(t)
+            }
+            getAllStyles() {
+                return this.styleRef.keys()
+            }
+            onStyleAdded(t) {
+                for (let r of this.hostNodes) this.addStyleToHost(r, t)
+            }
+            onStyleRemoved(t) {
+                let r = this.styleRef;
+                r.get(t)?.elements?.forEach(o => o.remove()), r.delete(t)
+            }
+            collectServerRenderedStyles() {
+                let t = this.doc.head?.querySelectorAll(`style[${gl}="${this.appId}"]`);
+                if (t?.length) {
+                    let r = new Map;
+                    return t.forEach(o => {
+                        o.textContent != null && r.set(o.textContent, o)
+                    }), r
+                }
+                return null
+            }
+            changeUsageCount(t, r) {
+                let o = this.styleRef;
+                if (o.has(t)) {
+                    let i = o.get(t);
+                    return i.usage += r, i.usage
+                }
+                return o.set(t, {
+                    usage: r,
+                    elements: []
+                }), r
+            }
+            getStyleElement(t, r) {
+                let o = this.styleNodesInDOM,
+                    i = o?.get(r);
+                if (i?.parentNode === t) return o.delete(r), i.removeAttribute(gl), i;
+                {
+                    let s = this.doc.createElement("style");
+                    return this.nonce && s.setAttribute("nonce", this.nonce), s.textContent = r, this.platformIsServer && s.setAttribute(gl, this.appId), t.appendChild(s), s
+                }
+            }
+            addStyleToHost(t, r) {
+                let o = this.getStyleElement(t, r),
+                    i = this.styleRef,
+                    s = i.get(r)?.elements;
+                s ? s.push(o) : i.set(r, {
+                    elements: [o],
+                    usage: 1
+                })
+            }
+            resetHostNodes() {
+                let t = this.hostNodes;
+                t.clear(), t.add(this.doc.head)
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)(x(ye), x(Ri), x(Tc, 8), x(Ne))
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac
+                })
+            }
+        }
+        return e
+    })(),
+    ml = {
+        svg: "http://www.w3.org/2000/svg",
+        xhtml: "http://www.w3.org/1999/xhtml",
+        xlink: "http://www.w3.org/1999/xlink",
+        xml: "http://www.w3.org/XML/1998/namespace",
+        xmlns: "http://www.w3.org/2000/xmlns/",
+        math: "http://www.w3.org/1998/Math/MathML"
+    },
+    El = /%COMP%/g,
+    Hp = "%COMP%",
+    fw = `_nghost-${Hp}`,
+    hw = `_ngcontent-${Hp}`,
+    pw = !0,
+    gw = new b("", {
+        providedIn: "root",
+        factory: () => pw
+    });
+
+function mw(e) {
+    return hw.replace(El, e)
+}
+
+function vw(e) {
+    return fw.replace(El, e)
+}
+
+function zp(e, n) {
+    return n.map(t => t.replace(El, e))
+}
+var jp = (() => {
+        class e {
+            constructor(t, r, o, i, s, a, c, l = null) {
+                this.eventManager = t, this.sharedStylesHost = r, this.appId = o, this.removeStylesOnCompDestroy = i, this.doc = s, this.platformId = a, this.ngZone = c, this.nonce = l, this.rendererByCompId = new Map, this.platformIsServer = Hr(a), this.defaultRenderer = new Wr(t, s, c, this.platformIsServer)
+            }
+            createRenderer(t, r) {
+                if (!t || !r) return this.defaultRenderer;
+                this.platformIsServer && r.encapsulation === ot.ShadowDom && (r = K(D({}, r), {
+                    encapsulation: ot.Emulated
+                }));
+                let o = this.getOrCreateRenderer(t, r);
+                return o instanceof os ? o.applyToHost(t) : o instanceof qr && o.applyStyles(), o
+            }
+            getOrCreateRenderer(t, r) {
+                let o = this.rendererByCompId,
+                    i = o.get(r.id);
+                if (!i) {
+                    let s = this.doc,
+                        a = this.ngZone,
+                        c = this.eventManager,
+                        l = this.sharedStylesHost,
+                        u = this.removeStylesOnCompDestroy,
+                        d = this.platformIsServer;
+                    switch (r.encapsulation) {
+                        case ot.Emulated:
+                            i = new os(c, l, r, this.appId, u, s, a, d);
+                            break;
+                        case ot.ShadowDom:
+                            return new Dl(c, l, t, r, s, a, this.nonce, d);
+                        default:
+                            i = new qr(c, l, r, u, s, a, d);
+                            break
+                    }
+                    o.set(r.id, i)
+                }
+                return i
+            }
+            ngOnDestroy() {
+                this.rendererByCompId.clear()
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)(x(Up), x($p), x(Ri), x(gw), x(ye), x(Ne), x(W), x(Tc))
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac
+                })
+            }
+        }
+        return e
+    })(),
+    Wr = class {
+        constructor(n, t, r, o) {
+            this.eventManager = n, this.doc = t, this.ngZone = r, this.platformIsServer = o, this.data = Object.create(null), this.throwOnSyntheticProps = !0, this.destroyNode = null
+        }
+        destroy() {}
+        createElement(n, t) {
+            return t ? this.doc.createElementNS(ml[t] || t, n) : this.doc.createElement(n)
+        }
+        createComment(n) {
+            return this.doc.createComment(n)
+        }
+        createText(n) {
+            return this.doc.createTextNode(n)
+        }
+        appendChild(n, t) {
+            (Vp(n) ? n.content : n).appendChild(t)
+        }
+        insertBefore(n, t, r) {
+            n && (Vp(n) ? n.content : n).insertBefore(t, r)
+        }
+        removeChild(n, t) {
+            t.remove()
+        }
+        selectRootElement(n, t) {
+            let r = typeof n == "string" ? this.doc.querySelector(n) : n;
+            if (!r) throw new E(-5104, !1);
+            return t || (r.textContent = ""), r
+        }
+        parentNode(n) {
+            return n.parentNode
+        }
+        nextSibling(n) {
+            return n.nextSibling
+        }
+        setAttribute(n, t, r, o) {
+            if (o) {
+                t = o + ":" + t;
+                let i = ml[o];
+                i ? n.setAttributeNS(i, t, r) : n.setAttribute(t, r)
+            } else n.setAttribute(t, r)
+        }
+        removeAttribute(n, t, r) {
+            if (r) {
+                let o = ml[r];
+                o ? n.removeAttributeNS(o, t) : n.removeAttribute(`${r}:${t}`)
+            } else n.removeAttribute(t)
+        }
+        addClass(n, t) {
+            n.classList.add(t)
+        }
+        removeClass(n, t) {
+            n.classList.remove(t)
+        }
+        setStyle(n, t, r, o) {
+            o & (at.DashCase | at.Important) ? n.style.setProperty(t, r, o & at.Important ? "important" : "") : n.style[t] = r
+        }
+        removeStyle(n, t, r) {
+            r & at.DashCase ? n.style.removeProperty(t) : n.style[t] = ""
+        }
+        setProperty(n, t, r) {
+            n != null && (n[t] = r)
+        }
+        setValue(n, t) {
+            n.nodeValue = t
+        }
+        listen(n, t, r) {
+            if (typeof n == "string" && (n = Zn().getGlobalEventTarget(this.doc, n), !n)) throw new Error(`Unsupported event target ${n} for event ${t}`);
+            return this.eventManager.addEventListener(n, t, this.decoratePreventDefault(r))
+        }
+        decoratePreventDefault(n) {
+            return t => {
+                if (t === "__ngUnwrap__") return n;
+                (this.platformIsServer ? this.ngZone.runGuarded(() => n(t)) : n(t)) === !1 && t.preventDefault()
+            }
+        }
+    };
+
+function Vp(e) {
+    return e.tagName === "TEMPLATE" && e.content !== void 0
+}
+var Dl = class extends Wr {
+        constructor(n, t, r, o, i, s, a, c) {
+            super(n, i, s, c), this.sharedStylesHost = t, this.hostEl = r, this.shadowRoot = r.attachShadow({
+                mode: "open"
+            }), this.sharedStylesHost.addHost(this.shadowRoot);
+            let l = zp(o.id, o.styles);
+            for (let u of l) {
+                let d = document.createElement("style");
+                a && d.setAttribute("nonce", a), d.textContent = u, this.shadowRoot.appendChild(d)
+            }
+        }
+        nodeOrShadowRoot(n) {
+            return n === this.hostEl ? this.shadowRoot : n
+        }
+        appendChild(n, t) {
+            return super.appendChild(this.nodeOrShadowRoot(n), t)
+        }
+        insertBefore(n, t, r) {
+            return super.insertBefore(this.nodeOrShadowRoot(n), t, r)
+        }
+        removeChild(n, t) {
+            return super.removeChild(null, t)
+        }
+        parentNode(n) {
+            return this.nodeOrShadowRoot(super.parentNode(this.nodeOrShadowRoot(n)))
+        }
+        destroy() {
+            this.sharedStylesHost.removeHost(this.shadowRoot)
+        }
+    },
+    qr = class extends Wr {
+        constructor(n, t, r, o, i, s, a, c) {
+            super(n, i, s, a), this.sharedStylesHost = t, this.removeStylesOnCompDestroy = o, this.styles = c ? zp(c, r.styles) : r.styles
+        }
+        applyStyles() {
+            this.sharedStylesHost.addStyles(this.styles)
+        }
+        destroy() {
+            this.removeStylesOnCompDestroy && this.sharedStylesHost.removeStyles(this.styles)
+        }
+    },
+    os = class extends qr {
+        constructor(n, t, r, o, i, s, a, c) {
+            let l = o + "-" + r.id;
+            super(n, t, r, i, s, a, c, l), this.contentAttr = mw(l), this.hostAttr = vw(l)
+        }
+        applyToHost(n) {
+            this.applyStyles(), this.setAttribute(n, this.hostAttr, "")
+        }
+        createElement(n, t) {
+            let r = super.createElement(n, t);
+            return super.setAttribute(r, this.contentAttr, ""), r
+        }
+    },
+    yw = (() => {
+        class e extends rs {
+            constructor(t) {
+                super(t)
+            }
+            supports(t) {
+                return !0
+            }
+            addEventListener(t, r, o) {
+                return t.addEventListener(r, o, !1), () => this.removeEventListener(t, r, o)
+            }
+            removeEventListener(t, r, o) {
+                return t.removeEventListener(r, o)
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)(x(ye))
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac
+                })
+            }
+        }
+        return e
+    })(),
+    Bp = ["alt", "control", "meta", "shift"],
+    Cw = {
+        "\b": "Backspace",
+        "	": "Tab",
+        "\x7F": "Delete",
+        "\x1B": "Escape",
+        Del: "Delete",
+        Esc: "Escape",
+        Left: "ArrowLeft",
+        Right: "ArrowRight",
+        Up: "ArrowUp",
+        Down: "ArrowDown",
+        Menu: "ContextMenu",
+        Scroll: "ScrollLock",
+        Win: "OS"
+    },
+    Dw = {
+        alt: e => e.altKey,
+        control: e => e.ctrlKey,
+        meta: e => e.metaKey,
+        shift: e => e.shiftKey
+    },
+    ww = (() => {
+        class e extends rs {
+            constructor(t) {
+                super(t)
+            }
+            supports(t) {
+                return e.parseEventName(t) != null
+            }
+            addEventListener(t, r, o) {
+                let i = e.parseEventName(r),
+                    s = e.eventCallback(i.fullKey, o, this.manager.getZone());
+                return this.manager.getZone().runOutsideAngular(() => Zn().onAndCancel(t, i.domEventName, s))
+            }
+            static parseEventName(t) {
+                let r = t.toLowerCase().split("."),
+                    o = r.shift();
+                if (r.length === 0 || !(o === "keydown" || o === "keyup")) return null;
+                let i = e._normalizeKey(r.pop()),
+                    s = "",
+                    a = r.indexOf("code");
+                if (a > -1 && (r.splice(a, 1), s = "code."), Bp.forEach(l => {
+                        let u = r.indexOf(l);
+                        u > -1 && (r.splice(u, 1), s += l + ".")
+                    }), s += i, r.length != 0 || i.length === 0) return null;
+                let c = {};
+                return c.domEventName = o, c.fullKey = s, c
+            }
+            static matchEventFullKeyCode(t, r) {
+                let o = Cw[t.key] || t.key,
+                    i = "";
+                return r.indexOf("code.") > -1 && (o = t.code, i = "code."), o == null || !o ? !1 : (o = o.toLowerCase(), o === " " ? o = "space" : o === "." && (o = "dot"), Bp.forEach(s => {
+                    if (s !== o) {
+                        let a = Dw[s];
+                        a(t) && (i += s + ".")
+                    }
+                }), i += o, i === r)
+            }
+            static eventCallback(t, r, o) {
+                return i => {
+                    e.matchEventFullKeyCode(i, t) && o.runGuarded(() => r(i))
+                }
+            }
+            static _normalizeKey(t) {
+                return t === "esc" ? "escape" : t
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)(x(ye))
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac
+                })
+            }
+        }
+        return e
+    })();
+
+function Gp(e, n) {
+    return pp(D({
+        rootComponent: e
+    }, Ew(n)))
+}
+
+function Ew(e) {
+    return {
+        appProviders: [...Sw, ...e?.providers ?? []],
+        platformProviders: Mw
+    }
+}
+
+function Iw() {
+    yl.makeCurrent()
+}
+
+function bw() {
+    return new vt
+}
+
+function _w() {
+    return qf(document), document
+}
+var Mw = [{
+    provide: Ne,
+    useValue: dl
+}, {
+    provide: xc,
+    useValue: Iw,
+    multi: !0
+}, {
+    provide: ye,
+    useFactory: _w,
+    deps: []
+}];
+var Sw = [{
+        provide: Ii,
+        useValue: "root"
+    }, {
+        provide: vt,
+        useFactory: bw,
+        deps: []
+    }, {
+        provide: Cl,
+        useClass: yw,
+        multi: !0,
+        deps: [ye, W, Ne]
+    }, {
+        provide: Cl,
+        useClass: ww,
+        multi: !0,
+        deps: [ye]
+    }, jp, $p, Up, {
+        provide: Vn,
+        useExisting: jp
+    }, {
+        provide: Ji,
+        useClass: dw,
+        deps: []
+    },
+    []
+];
+var $t = (() => {
+    class e {
+        constructor(t) {
+            this._doc = t
+        }
+        getTitle() {
+            return this._doc.title
+        }
+        setTitle(t) {
+            this._doc.title = t || ""
+        }
+        static {
+            this.\u0275fac = function(r) {
+                return new(r || e)(x(ye))
+            }
+        }
+        static {
+            this.\u0275prov = I({
+                token: e,
+                factory: e.\u0275fac,
+                providedIn: "root"
+            })
+        }
+    }
+    return e
+})();
+var wl = function(e) {
+    return e[e.NoHttpTransferCache = 0] = "NoHttpTransferCache", e[e.HttpTransferCacheOptions = 1] = "HttpTransferCacheOptions", e[e.I18nSupport = 2] = "I18nSupport", e[e.EventReplay = 3] = "EventReplay", e
+}(wl || {});
+
+function Wp(...e) {
+    let n = [],
+        t = new Set,
+        r = t.has(wl.HttpTransferCacheOptions);
+    for (let {
+            \u0275providers: o,
+            \u0275kind: i
+        }
+        of e) t.add(i), o.length && n.push(o);
+    return on([
+        [], gp(), t.has(wl.NoHttpTransferCache) || r ? [] : Lp({}), n
+    ])
+}
+var O = "primary",
+    co = Symbol("RouteTitle"),
+    Sl = class {
+        constructor(n) {
+            this.params = n || {}
+        }
+        has(n) {
+            return Object.prototype.hasOwnProperty.call(this.params, n)
+        }
+        get(n) {
+            if (this.has(n)) {
+                let t = this.params[n];
+                return Array.isArray(t) ? t[0] : t
+            }
+            return null
+        }
+        getAll(n) {
+            if (this.has(n)) {
+                let t = this.params[n];
+                return Array.isArray(t) ? t : [t]
+            }
+            return []
+        }
+        get keys() {
+            return Object.keys(this.params)
+        }
+    };
+
+function nr(e) {
+    return new Sl(e)
+}
+
+function xw(e, n, t) {
+    let r = t.path.split("/");
+    if (r.length > e.length || t.pathMatch === "full" && (n.hasChildren() || r.length < e.length)) return null;
+    let o = {};
+    for (let i = 0; i < r.length; i++) {
+        let s = r[i],
+            a = e[i];
+        if (s[0] === ":") o[s.substring(1)] = a;
+        else if (s !== a.path) return null
+    }
+    return {
+        consumed: e.slice(0, r.length),
+        posParams: o
+    }
+}
+
+function Tw(e, n) {
+    if (e.length !== n.length) return !1;
+    for (let t = 0; t < e.length; ++t)
+        if (!dt(e[t], n[t])) return !1;
+    return !0
+}
+
+function dt(e, n) {
+    let t = e ? xl(e) : void 0,
+        r = n ? xl(n) : void 0;
+    if (!t || !r || t.length != r.length) return !1;
+    let o;
+    for (let i = 0; i < t.length; i++)
+        if (o = t[i], !rg(e[o], n[o])) return !1;
+    return !0
+}
+
+function xl(e) {
+    return [...Object.keys(e), ...Object.getOwnPropertySymbols(e)]
+}
+
+function rg(e, n) {
+    if (Array.isArray(e) && Array.isArray(n)) {
+        if (e.length !== n.length) return !1;
+        let t = [...e].sort(),
+            r = [...n].sort();
+        return t.every((o, i) => r[i] === o)
+    } else return e === n
+}
+
+function og(e) {
+    return e.length > 0 ? e[e.length - 1] : null
+}
+
+function Gt(e) {
+    return Xs(e) ? e : Br(e) ? J(Promise.resolve(e)) : _(e)
+}
+var Ow = {
+        exact: sg,
+        subset: ag
+    },
+    ig = {
+        exact: Nw,
+        subset: Aw,
+        ignored: () => !0
+    };
+
+function qp(e, n, t) {
+    return Ow[t.paths](e.root, n.root, t.matrixParams) && ig[t.queryParams](e.queryParams, n.queryParams) && !(t.fragment === "exact" && e.fragment !== n.fragment)
+}
+
+function Nw(e, n) {
+    return dt(e, n)
+}
+
+function sg(e, n, t) {
+    if (!dn(e.segments, n.segments) || !cs(e.segments, n.segments, t) || e.numberOfChildren !== n.numberOfChildren) return !1;
+    for (let r in n.children)
+        if (!e.children[r] || !sg(e.children[r], n.children[r], t)) return !1;
+    return !0
+}
+
+function Aw(e, n) {
+    return Object.keys(n).length <= Object.keys(e).length && Object.keys(n).every(t => rg(e[t], n[t]))
+}
+
+function ag(e, n, t) {
+    return cg(e, n, n.segments, t)
+}
+
+function cg(e, n, t, r) {
+    if (e.segments.length > t.length) {
+        let o = e.segments.slice(0, t.length);
+        return !(!dn(o, t) || n.hasChildren() || !cs(o, t, r))
+    } else if (e.segments.length === t.length) {
+        if (!dn(e.segments, t) || !cs(e.segments, t, r)) return !1;
+        for (let o in n.children)
+            if (!e.children[o] || !ag(e.children[o], n.children[o], r)) return !1;
+        return !0
+    } else {
+        let o = t.slice(0, e.segments.length),
+            i = t.slice(e.segments.length);
+        return !dn(e.segments, o) || !cs(e.segments, o, r) || !e.children[O] ? !1 : cg(e.children[O], n, i, r)
+    }
+}
+
+function cs(e, n, t) {
+    return n.every((r, o) => ig[t](e[o].parameters, r.parameters))
+}
+var bt = class {
+        constructor(n = new B([], {}), t = {}, r = null) {
+            this.root = n, this.queryParams = t, this.fragment = r
+        }
+        get queryParamMap() {
+            return this._queryParamMap ??= nr(this.queryParams), this._queryParamMap
+        }
+        toString() {
+            return kw.serialize(this)
+        }
+    },
+    B = class {
+        constructor(n, t) {
+            this.segments = n, this.children = t, this.parent = null, Object.values(t).forEach(r => r.parent = this)
+        }
+        hasChildren() {
+            return this.numberOfChildren > 0
+        }
+        get numberOfChildren() {
+            return Object.keys(this.children).length
+        }
+        toString() {
+            return ls(this)
+        }
+    },
+    un = class {
+        constructor(n, t) {
+            this.path = n, this.parameters = t
+        }
+        get parameterMap() {
+            return this._parameterMap ??= nr(this.parameters), this._parameterMap
+        }
+        toString() {
+            return ug(this)
+        }
+    };
+
+function Pw(e, n) {
+    return dn(e, n) && e.every((t, r) => dt(t.parameters, n[r].parameters))
+}
+
+function dn(e, n) {
+    return e.length !== n.length ? !1 : e.every((t, r) => t.path === n[r].path)
+}
+
+function Rw(e, n) {
+    let t = [];
+    return Object.entries(e.children).forEach(([r, o]) => {
+        r === O && (t = t.concat(n(o, r)))
+    }), Object.entries(e.children).forEach(([r, o]) => {
+        r !== O && (t = t.concat(n(o, r)))
+    }), t
+}
+var ar = (() => {
+        class e {
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: () => new rr,
+                    providedIn: "root"
+                })
+            }
+        }
+        return e
+    })(),
+    rr = class {
+        parse(n) {
+            let t = new Ol(n);
+            return new bt(t.parseRootSegment(), t.parseQueryParams(), t.parseFragment())
+        }
+        serialize(n) {
+            let t = `/${Zr(n.root,!0)}`,
+                r = jw(n.queryParams),
+                o = typeof n.fragment == "string" ? `#${Fw(n.fragment)}` : "";
+            return `${t}${r}${o}`
+        }
+    },
+    kw = new rr;
+
+function ls(e) {
+    return e.segments.map(n => ug(n)).join("/")
+}
+
+function Zr(e, n) {
+    if (!e.hasChildren()) return ls(e);
+    if (n) {
+        let t = e.children[O] ? Zr(e.children[O], !1) : "",
+            r = [];
+        return Object.entries(e.children).forEach(([o, i]) => {
+            o !== O && r.push(`${o}:${Zr(i,!1)}`)
+        }), r.length > 0 ? `${t}(${r.join("//")})` : t
+    } else {
+        let t = Rw(e, (r, o) => o === O ? [Zr(e.children[O], !1)] : [`${o}:${Zr(r,!1)}`]);
+        return Object.keys(e.children).length === 1 && e.children[O] != null ? `${ls(e)}/${t[0]}` : `${ls(e)}/(${t.join("//")})`
+    }
+}
+
+function lg(e) {
+    return encodeURIComponent(e).replace(/%40/g, "@").replace(/%3A/gi, ":").replace(/%24/g, "$").replace(/%2C/gi, ",")
+}
+
+function ss(e) {
+    return lg(e).replace(/%3B/gi, ";")
+}
+
+function Fw(e) {
+    return encodeURI(e)
+}
+
+function Tl(e) {
+    return lg(e).replace(/\(/g, "%28").replace(/\)/g, "%29").replace(/%26/gi, "&")
+}
+
+function us(e) {
+    return decodeURIComponent(e)
+}
+
+function Zp(e) {
+    return us(e.replace(/\+/g, "%20"))
+}
+
+function ug(e) {
+    return `${Tl(e.path)}${Lw(e.parameters)}`
+}
+
+function Lw(e) {
+    return Object.entries(e).map(([n, t]) => `;${Tl(n)}=${Tl(t)}`).join("")
+}
+
+function jw(e) {
+    let n = Object.entries(e).map(([t, r]) => Array.isArray(r) ? r.map(o => `${ss(t)}=${ss(o)}`).join("&") : `${ss(t)}=${ss(r)}`).filter(t => t);
+    return n.length ? `?${n.join("&")}` : ""
+}
+var Vw = /^[^\/()?;#]+/;
+
+function Il(e) {
+    let n = e.match(Vw);
+    return n ? n[0] : ""
+}
+var Bw = /^[^\/()?;=#]+/;
+
+function Uw(e) {
+    let n = e.match(Bw);
+    return n ? n[0] : ""
+}
+var $w = /^[^=?&#]+/;
+
+function Hw(e) {
+    let n = e.match($w);
+    return n ? n[0] : ""
+}
+var zw = /^[^&#]+/;
+
+function Gw(e) {
+    let n = e.match(zw);
+    return n ? n[0] : ""
+}
+var Ol = class {
+    constructor(n) {
+        this.url = n, this.remaining = n
+    }
+    parseRootSegment() {
+        return this.consumeOptional("/"), this.remaining === "" || this.peekStartsWith("?") || this.peekStartsWith("#") ? new B([], {}) : new B([], this.parseChildren())
+    }
+    parseQueryParams() {
+        let n = {};
+        if (this.consumeOptional("?"))
+            do this.parseQueryParam(n); while (this.consumeOptional("&"));
+        return n
+    }
+    parseFragment() {
+        return this.consumeOptional("#") ? decodeURIComponent(this.remaining) : null
+    }
+    parseChildren() {
+        if (this.remaining === "") return {};
+        this.consumeOptional("/");
+        let n = [];
+        for (this.peekStartsWith("(") || n.push(this.parseSegment()); this.peekStartsWith("/") && !this.peekStartsWith("//") && !this.peekStartsWith("/(");) this.capture("/"), n.push(this.parseSegment());
+        let t = {};
+        this.peekStartsWith("/(") && (this.capture("/"), t = this.parseParens(!0));
+        let r = {};
+        return this.peekStartsWith("(") && (r = this.parseParens(!1)), (n.length > 0 || Object.keys(t).length > 0) && (r[O] = new B(n, t)), r
+    }
+    parseSegment() {
+        let n = Il(this.remaining);
+        if (n === "" && this.peekStartsWith(";")) throw new E(4009, !1);
+        return this.capture(n), new un(us(n), this.parseMatrixParams())
+    }
+    parseMatrixParams() {
+        let n = {};
+        for (; this.consumeOptional(";");) this.parseParam(n);
+        return n
+    }
+    parseParam(n) {
+        let t = Uw(this.remaining);
+        if (!t) return;
+        this.capture(t);
+        let r = "";
+        if (this.consumeOptional("=")) {
+            let o = Il(this.remaining);
+            o && (r = o, this.capture(r))
+        }
+        n[us(t)] = us(r)
+    }
+    parseQueryParam(n) {
+        let t = Hw(this.remaining);
+        if (!t) return;
+        this.capture(t);
+        let r = "";
+        if (this.consumeOptional("=")) {
+            let s = Gw(this.remaining);
+            s && (r = s, this.capture(r))
+        }
+        let o = Zp(t),
+            i = Zp(r);
+        if (n.hasOwnProperty(o)) {
+            let s = n[o];
+            Array.isArray(s) || (s = [s], n[o] = s), s.push(i)
+        } else n[o] = i
+    }
+    parseParens(n) {
+        let t = {};
+        for (this.capture("("); !this.consumeOptional(")") && this.remaining.length > 0;) {
+            let r = Il(this.remaining),
+                o = this.remaining[r.length];
+            if (o !== "/" && o !== ")" && o !== ";") throw new E(4010, !1);
+            let i;
+            r.indexOf(":") > -1 ? (i = r.slice(0, r.indexOf(":")), this.capture(i), this.capture(":")) : n && (i = O);
+            let s = this.parseChildren();
+            t[i] = Object.keys(s).length === 1 ? s[O] : new B([], s), this.consumeOptional("//")
+        }
+        return t
+    }
+    peekStartsWith(n) {
+        return this.remaining.startsWith(n)
+    }
+    consumeOptional(n) {
+        return this.peekStartsWith(n) ? (this.remaining = this.remaining.substring(n.length), !0) : !1
+    }
+    capture(n) {
+        if (!this.consumeOptional(n)) throw new E(4011, !1)
+    }
+};
+
+function dg(e) {
+    return e.segments.length > 0 ? new B([], {
+        [O]: e
+    }) : e
+}
+
+function fg(e) {
+    let n = {};
+    for (let [r, o] of Object.entries(e.children)) {
+        let i = fg(o);
+        if (r === O && i.segments.length === 0 && i.hasChildren())
+            for (let [s, a] of Object.entries(i.children)) n[s] = a;
+        else(i.segments.length > 0 || i.hasChildren()) && (n[r] = i)
+    }
+    let t = new B(e.segments, n);
+    return Ww(t)
+}
+
+function Ww(e) {
+    if (e.numberOfChildren === 1 && e.children[O]) {
+        let n = e.children[O];
+        return new B(e.segments.concat(n.segments), n.children)
+    }
+    return e
+}
+
+function fn(e) {
+    return e instanceof bt
+}
+
+function qw(e, n, t = null, r = null) {
+    let o = hg(e);
+    return pg(o, n, t, r)
+}
+
+function hg(e) {
+    let n;
+
+    function t(i) {
+        let s = {};
+        for (let c of i.children) {
+            let l = t(c);
+            s[c.outlet] = l
+        }
+        let a = new B(i.url, s);
+        return i === e && (n = a), a
+    }
+    let r = t(e.root),
+        o = dg(r);
+    return n ?? o
+}
+
+function pg(e, n, t, r) {
+    let o = e;
+    for (; o.parent;) o = o.parent;
+    if (n.length === 0) return bl(o, o, o, t, r);
+    let i = Zw(n);
+    if (i.toRoot()) return bl(o, o, new B([], {}), t, r);
+    let s = Qw(i, o, e),
+        a = s.processChildren ? Kr(s.segmentGroup, s.index, i.commands) : mg(s.segmentGroup, s.index, i.commands);
+    return bl(o, s.segmentGroup, a, t, r)
+}
+
+function ds(e) {
+    return typeof e == "object" && e != null && !e.outlets && !e.segmentPath
+}
+
+function eo(e) {
+    return typeof e == "object" && e != null && e.outlets
+}
+
+function bl(e, n, t, r, o) {
+    let i = {};
+    r && Object.entries(r).forEach(([c, l]) => {
+        i[c] = Array.isArray(l) ? l.map(u => `${u}`) : `${l}`
+    });
+    let s;
+    e === n ? s = t : s = gg(e, n, t);
+    let a = dg(fg(s));
+    return new bt(a, i, o)
+}
+
+function gg(e, n, t) {
+    let r = {};
+    return Object.entries(e.children).forEach(([o, i]) => {
+        i === n ? r[o] = t : r[o] = gg(i, n, t)
+    }), new B(e.segments, r)
+}
+var fs = class {
+    constructor(n, t, r) {
+        if (this.isAbsolute = n, this.numberOfDoubleDots = t, this.commands = r, n && r.length > 0 && ds(r[0])) throw new E(4003, !1);
+        let o = r.find(eo);
+        if (o && o !== og(r)) throw new E(4004, !1)
+    }
+    toRoot() {
+        return this.isAbsolute && this.commands.length === 1 && this.commands[0] == "/"
+    }
+};
+
+function Zw(e) {
+    if (typeof e[0] == "string" && e.length === 1 && e[0] === "/") return new fs(!0, 0, e);
+    let n = 0,
+        t = !1,
+        r = e.reduce((o, i, s) => {
+            if (typeof i == "object" && i != null) {
+                if (i.outlets) {
+                    let a = {};
+                    return Object.entries(i.outlets).forEach(([c, l]) => {
+                        a[c] = typeof l == "string" ? l.split("/") : l
+                    }), [...o, {
+                        outlets: a
+                    }]
+                }
+                if (i.segmentPath) return [...o, i.segmentPath]
+            }
+            return typeof i != "string" ? [...o, i] : s === 0 ? (i.split("/").forEach((a, c) => {
+                c == 0 && a === "." || (c == 0 && a === "" ? t = !0 : a === ".." ? n++ : a != "" && o.push(a))
+            }), o) : [...o, i]
+        }, []);
+    return new fs(t, n, r)
+}
+var Xn = class {
+    constructor(n, t, r) {
+        this.segmentGroup = n, this.processChildren = t, this.index = r
+    }
+};
+
+function Qw(e, n, t) {
+    if (e.isAbsolute) return new Xn(n, !0, 0);
+    if (!t) return new Xn(n, !1, NaN);
+    if (t.parent === null) return new Xn(t, !0, 0);
+    let r = ds(e.commands[0]) ? 0 : 1,
+        o = t.segments.length - 1 + r;
+    return Yw(t, o, e.numberOfDoubleDots)
+}
+
+function Yw(e, n, t) {
+    let r = e,
+        o = n,
+        i = t;
+    for (; i > o;) {
+        if (i -= o, r = r.parent, !r) throw new E(4005, !1);
+        o = r.segments.length
+    }
+    return new Xn(r, !1, o - i)
+}
+
+function Kw(e) {
+    return eo(e[0]) ? e[0].outlets : {
+        [O]: e
+    }
+}
+
+function mg(e, n, t) {
+    if (e ??= new B([], {}), e.segments.length === 0 && e.hasChildren()) return Kr(e, n, t);
+    let r = Jw(e, n, t),
+        o = t.slice(r.commandIndex);
+    if (r.match && r.pathIndex < e.segments.length) {
+        let i = new B(e.segments.slice(0, r.pathIndex), {});
+        return i.children[O] = new B(e.segments.slice(r.pathIndex), e.children), Kr(i, 0, o)
+    } else return r.match && o.length === 0 ? new B(e.segments, {}) : r.match && !e.hasChildren() ? Nl(e, n, t) : r.match ? Kr(e, 0, o) : Nl(e, n, t)
+}
+
+function Kr(e, n, t) {
+    if (t.length === 0) return new B(e.segments, {});
+    {
+        let r = Kw(t),
+            o = {};
+        if (Object.keys(r).some(i => i !== O) && e.children[O] && e.numberOfChildren === 1 && e.children[O].segments.length === 0) {
+            let i = Kr(e.children[O], n, t);
+            return new B(e.segments, i.children)
+        }
+        return Object.entries(r).forEach(([i, s]) => {
+            typeof s == "string" && (s = [s]), s !== null && (o[i] = mg(e.children[i], n, s))
+        }), Object.entries(e.children).forEach(([i, s]) => {
+            r[i] === void 0 && (o[i] = s)
+        }), new B(e.segments, o)
+    }
+}
+
+function Jw(e, n, t) {
+    let r = 0,
+        o = n,
+        i = {
+            match: !1,
+            pathIndex: 0,
+            commandIndex: 0
+        };
+    for (; o < e.segments.length;) {
+        if (r >= t.length) return i;
+        let s = e.segments[o],
+            a = t[r];
+        if (eo(a)) break;
+        let c = `${a}`,
+            l = r < t.length - 1 ? t[r + 1] : null;
+        if (o > 0 && c === void 0) break;
+        if (c && l && typeof l == "object" && l.outlets === void 0) {
+            if (!Yp(c, l, s)) return i;
+            r += 2
+        } else {
+            if (!Yp(c, {}, s)) return i;
+            r++
+        }
+        o++
+    }
+    return {
+        match: !0,
+        pathIndex: o,
+        commandIndex: r
+    }
+}
+
+function Nl(e, n, t) {
+    let r = e.segments.slice(0, n),
+        o = 0;
+    for (; o < t.length;) {
+        let i = t[o];
+        if (eo(i)) {
+            let c = Xw(i.outlets);
+            return new B(r, c)
+        }
+        if (o === 0 && ds(t[0])) {
+            let c = e.segments[n];
+            r.push(new un(c.path, Qp(t[0]))), o++;
+            continue
+        }
+        let s = eo(i) ? i.outlets[O] : `${i}`,
+            a = o < t.length - 1 ? t[o + 1] : null;
+        s && a && ds(a) ? (r.push(new un(s, Qp(a))), o += 2) : (r.push(new un(s, {})), o++)
+    }
+    return new B(r, {})
+}
+
+function Xw(e) {
+    let n = {};
+    return Object.entries(e).forEach(([t, r]) => {
+        typeof r == "string" && (r = [r]), r !== null && (n[t] = Nl(new B([], {}), 0, r))
+    }), n
+}
+
+function Qp(e) {
+    let n = {};
+    return Object.entries(e).forEach(([t, r]) => n[t] = `${r}`), n
+}
+
+function Yp(e, n, t) {
+    return e == t.path && dt(n, t.parameters)
+}
+var Jr = "imperative",
+    ae = function(e) {
+        return e[e.NavigationStart = 0] = "NavigationStart", e[e.NavigationEnd = 1] = "NavigationEnd", e[e.NavigationCancel = 2] = "NavigationCancel", e[e.NavigationError = 3] = "NavigationError", e[e.RoutesRecognized = 4] = "RoutesRecognized", e[e.ResolveStart = 5] = "ResolveStart", e[e.ResolveEnd = 6] = "ResolveEnd", e[e.GuardsCheckStart = 7] = "GuardsCheckStart", e[e.GuardsCheckEnd = 8] = "GuardsCheckEnd", e[e.RouteConfigLoadStart = 9] = "RouteConfigLoadStart", e[e.RouteConfigLoadEnd = 10] = "RouteConfigLoadEnd", e[e.ChildActivationStart = 11] = "ChildActivationStart", e[e.ChildActivationEnd = 12] = "ChildActivationEnd", e[e.ActivationStart = 13] = "ActivationStart", e[e.ActivationEnd = 14] = "ActivationEnd", e[e.Scroll = 15] = "Scroll", e[e.NavigationSkipped = 16] = "NavigationSkipped", e
+    }(ae || {}),
+    ze = class {
+        constructor(n, t) {
+            this.id = n, this.url = t
+        }
+    },
+    or = class extends ze {
+        constructor(n, t, r = "imperative", o = null) {
+            super(n, t), this.type = ae.NavigationStart, this.navigationTrigger = r, this.restoredState = o
+        }
+        toString() {
+            return `NavigationStart(id: ${this.id}, url: '${this.url}')`
+        }
+    },
+    ft = class extends ze {
+        constructor(n, t, r) {
+            super(n, t), this.urlAfterRedirects = r, this.type = ae.NavigationEnd
+        }
+        toString() {
+            return `NavigationEnd(id: ${this.id}, url: '${this.url}', urlAfterRedirects: '${this.urlAfterRedirects}')`
+        }
+    },
+    Re = function(e) {
+        return e[e.Redirect = 0] = "Redirect", e[e.SupersededByNewNavigation = 1] = "SupersededByNewNavigation", e[e.NoDataFromResolver = 2] = "NoDataFromResolver", e[e.GuardRejected = 3] = "GuardRejected", e
+    }(Re || {}),
+    hs = function(e) {
+        return e[e.IgnoredSameUrlNavigation = 0] = "IgnoredSameUrlNavigation", e[e.IgnoredByUrlHandlingStrategy = 1] = "IgnoredByUrlHandlingStrategy", e
+    }(hs || {}),
+    It = class extends ze {
+        constructor(n, t, r, o) {
+            super(n, t), this.reason = r, this.code = o, this.type = ae.NavigationCancel
+        }
+        toString() {
+            return `NavigationCancel(id: ${this.id}, url: '${this.url}')`
+        }
+    },
+    Ht = class extends ze {
+        constructor(n, t, r, o) {
+            super(n, t), this.reason = r, this.code = o, this.type = ae.NavigationSkipped
+        }
+    },
+    to = class extends ze {
+        constructor(n, t, r, o) {
+            super(n, t), this.error = r, this.target = o, this.type = ae.NavigationError
+        }
+        toString() {
+            return `NavigationError(id: ${this.id}, url: '${this.url}', error: ${this.error})`
+        }
+    },
+    ps = class extends ze {
+        constructor(n, t, r, o) {
+            super(n, t), this.urlAfterRedirects = r, this.state = o, this.type = ae.RoutesRecognized
+        }
+        toString() {
+            return `RoutesRecognized(id: ${this.id}, url: '${this.url}', urlAfterRedirects: '${this.urlAfterRedirects}', state: ${this.state})`
+        }
+    },
+    Al = class extends ze {
+        constructor(n, t, r, o) {
+            super(n, t), this.urlAfterRedirects = r, this.state = o, this.type = ae.GuardsCheckStart
+        }
+        toString() {
+            return `GuardsCheckStart(id: ${this.id}, url: '${this.url}', urlAfterRedirects: '${this.urlAfterRedirects}', state: ${this.state})`
+        }
+    },
+    Pl = class extends ze {
+        constructor(n, t, r, o, i) {
+            super(n, t), this.urlAfterRedirects = r, this.state = o, this.shouldActivate = i, this.type = ae.GuardsCheckEnd
+        }
+        toString() {
+            return `GuardsCheckEnd(id: ${this.id}, url: '${this.url}', urlAfterRedirects: '${this.urlAfterRedirects}', state: ${this.state}, shouldActivate: ${this.shouldActivate})`
+        }
+    },
+    Rl = class extends ze {
+        constructor(n, t, r, o) {
+            super(n, t), this.urlAfterRedirects = r, this.state = o, this.type = ae.ResolveStart
+        }
+        toString() {
+            return `ResolveStart(id: ${this.id}, url: '${this.url}', urlAfterRedirects: '${this.urlAfterRedirects}', state: ${this.state})`
+        }
+    },
+    kl = class extends ze {
+        constructor(n, t, r, o) {
+            super(n, t), this.urlAfterRedirects = r, this.state = o, this.type = ae.ResolveEnd
+        }
+        toString() {
+            return `ResolveEnd(id: ${this.id}, url: '${this.url}', urlAfterRedirects: '${this.urlAfterRedirects}', state: ${this.state})`
+        }
+    },
+    Fl = class {
+        constructor(n) {
+            this.route = n, this.type = ae.RouteConfigLoadStart
+        }
+        toString() {
+            return `RouteConfigLoadStart(path: ${this.route.path})`
+        }
+    },
+    Ll = class {
+        constructor(n) {
+            this.route = n, this.type = ae.RouteConfigLoadEnd
+        }
+        toString() {
+            return `RouteConfigLoadEnd(path: ${this.route.path})`
+        }
+    },
+    jl = class {
+        constructor(n) {
+            this.snapshot = n, this.type = ae.ChildActivationStart
+        }
+        toString() {
+            return `ChildActivationStart(path: '${this.snapshot.routeConfig&&this.snapshot.routeConfig.path||""}')`
+        }
+    },
+    Vl = class {
+        constructor(n) {
+            this.snapshot = n, this.type = ae.ChildActivationEnd
+        }
+        toString() {
+            return `ChildActivationEnd(path: '${this.snapshot.routeConfig&&this.snapshot.routeConfig.path||""}')`
+        }
+    },
+    Bl = class {
+        constructor(n) {
+            this.snapshot = n, this.type = ae.ActivationStart
+        }
+        toString() {
+            return `ActivationStart(path: '${this.snapshot.routeConfig&&this.snapshot.routeConfig.path||""}')`
+        }
+    },
+    Ul = class {
+        constructor(n) {
+            this.snapshot = n, this.type = ae.ActivationEnd
+        }
+        toString() {
+            return `ActivationEnd(path: '${this.snapshot.routeConfig&&this.snapshot.routeConfig.path||""}')`
+        }
+    },
+    gs = class {
+        constructor(n, t, r) {
+            this.routerEvent = n, this.position = t, this.anchor = r, this.type = ae.Scroll
+        }
+        toString() {
+            let n = this.position ? `${this.position[0]}, ${this.position[1]}` : null;
+            return `Scroll(anchor: '${this.anchor}', position: '${n}')`
+        }
+    },
+    no = class {},
+    ir = class {
+        constructor(n, t) {
+            this.url = n, this.navigationBehaviorOptions = t
+        }
+    };
+
+function eE(e, n) {
+    return e.providers && !e._injector && (e._injector = Gi(e.providers, n, `Route: ${e.path}`)), e._injector ?? n
+}
+
+function tt(e) {
+    return e.outlet || O
+}
+
+function tE(e, n) {
+    let t = e.filter(r => tt(r) === n);
+    return t.push(...e.filter(r => tt(r) !== n)), t
+}
+
+function lo(e) {
+    if (!e) return null;
+    if (e.routeConfig?._injector) return e.routeConfig._injector;
+    for (let n = e.parent; n; n = n.parent) {
+        let t = n.routeConfig;
+        if (t?._loadedInjector) return t._loadedInjector;
+        if (t?._injector) return t._injector
+    }
+    return null
+}
+var $l = class {
+        get injector() {
+            return lo(this.route?.snapshot) ?? this.rootInjector
+        }
+        set injector(n) {}
+        constructor(n) {
+            this.rootInjector = n, this.outlet = null, this.route = null, this.children = new uo(this.rootInjector), this.attachRef = null
+        }
+    },
+    uo = (() => {
+        class e {
+            constructor(t) {
+                this.rootInjector = t, this.contexts = new Map
+            }
+            onChildOutletCreated(t, r) {
+                let o = this.getOrCreateContext(t);
+                o.outlet = r, this.contexts.set(t, o)
+            }
+            onChildOutletDestroyed(t) {
+                let r = this.getContext(t);
+                r && (r.outlet = null, r.attachRef = null)
+            }
+            onOutletDeactivated() {
+                let t = this.contexts;
+                return this.contexts = new Map, t
+            }
+            onOutletReAttached(t) {
+                this.contexts = t
+            }
+            getOrCreateContext(t) {
+                let r = this.getContext(t);
+                return r || (r = new $l(this.rootInjector), this.contexts.set(t, r)), r
+            }
+            getContext(t) {
+                return this.contexts.get(t) || null
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)(x(xe))
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac,
+                    providedIn: "root"
+                })
+            }
+        }
+        return e
+    })(),
+    ms = class {
+        constructor(n) {
+            this._root = n
+        }
+        get root() {
+            return this._root.value
+        }
+        parent(n) {
+            let t = this.pathFromRoot(n);
+            return t.length > 1 ? t[t.length - 2] : null
+        }
+        children(n) {
+            let t = Hl(n, this._root);
+            return t ? t.children.map(r => r.value) : []
+        }
+        firstChild(n) {
+            let t = Hl(n, this._root);
+            return t && t.children.length > 0 ? t.children[0].value : null
+        }
+        siblings(n) {
+            let t = zl(n, this._root);
+            return t.length < 2 ? [] : t[t.length - 2].children.map(o => o.value).filter(o => o !== n)
+        }
+        pathFromRoot(n) {
+            return zl(n, this._root).map(t => t.value)
+        }
+    };
+
+function Hl(e, n) {
+    if (e === n.value) return n;
+    for (let t of n.children) {
+        let r = Hl(e, t);
+        if (r) return r
+    }
+    return null
+}
+
+function zl(e, n) {
+    if (e === n.value) return [n];
+    for (let t of n.children) {
+        let r = zl(e, t);
+        if (r.length) return r.unshift(n), r
+    }
+    return []
+}
+var Pe = class {
+    constructor(n, t) {
+        this.value = n, this.children = t
+    }
+    toString() {
+        return `TreeNode(${this.value})`
+    }
+};
+
+function Jn(e) {
+    let n = {};
+    return e && e.children.forEach(t => n[t.value.outlet] = t), n
+}
+var vs = class extends ms {
+    constructor(n, t) {
+        super(n), this.snapshot = t, Xl(this, n)
+    }
+    toString() {
+        return this.snapshot.toString()
+    }
+};
+
+function vg(e) {
+    let n = nE(e),
+        t = new ce([new un("", {})]),
+        r = new ce({}),
+        o = new ce({}),
+        i = new ce({}),
+        s = new ce(""),
+        a = new zt(t, r, i, s, o, O, e, n.root);
+    return a.snapshot = n.root, new vs(new Pe(a, []), n)
+}
+
+function nE(e) {
+    let n = {},
+        t = {},
+        r = {},
+        o = "",
+        i = new er([], n, r, o, t, O, e, null, {});
+    return new Cs("", new Pe(i, []))
+}
+var zt = class {
+    constructor(n, t, r, o, i, s, a, c) {
+        this.urlSubject = n, this.paramsSubject = t, this.queryParamsSubject = r, this.fragmentSubject = o, this.dataSubject = i, this.outlet = s, this.component = a, this._futureSnapshot = c, this.title = this.dataSubject?.pipe(k(l => l[co])) ?? _(void 0), this.url = n, this.params = t, this.queryParams = r, this.fragment = o, this.data = i
+    }
+    get routeConfig() {
+        return this._futureSnapshot.routeConfig
+    }
+    get root() {
+        return this._routerState.root
+    }
+    get parent() {
+        return this._routerState.parent(this)
+    }
+    get firstChild() {
+        return this._routerState.firstChild(this)
+    }
+    get children() {
+        return this._routerState.children(this)
+    }
+    get pathFromRoot() {
+        return this._routerState.pathFromRoot(this)
+    }
+    get paramMap() {
+        return this._paramMap ??= this.params.pipe(k(n => nr(n))), this._paramMap
+    }
+    get queryParamMap() {
+        return this._queryParamMap ??= this.queryParams.pipe(k(n => nr(n))), this._queryParamMap
+    }
+    toString() {
+        return this.snapshot ? this.snapshot.toString() : `Future(${this._futureSnapshot})`
+    }
+};
+
+function ys(e, n, t = "emptyOnly") {
+    let r, {
+        routeConfig: o
+    } = e;
+    return n !== null && (t === "always" || o?.path === "" || !n.component && !n.routeConfig?.loadComponent) ? r = {
+        params: D(D({}, n.params), e.params),
+        data: D(D({}, n.data), e.data),
+        resolve: D(D(D(D({}, e.data), n.data), o?.data), e._resolvedData)
+    } : r = {
+        params: D({}, e.params),
+        data: D({}, e.data),
+        resolve: D(D({}, e.data), e._resolvedData ?? {})
+    }, o && Cg(o) && (r.resolve[co] = o.title), r
+}
+var er = class {
+        get title() {
+            return this.data?.[co]
+        }
+        constructor(n, t, r, o, i, s, a, c, l) {
+            this.url = n, this.params = t, this.queryParams = r, this.fragment = o, this.data = i, this.outlet = s, this.component = a, this.routeConfig = c, this._resolve = l
+        }
+        get root() {
+            return this._routerState.root
+        }
+        get parent() {
+            return this._routerState.parent(this)
+        }
+        get firstChild() {
+            return this._routerState.firstChild(this)
+        }
+        get children() {
+            return this._routerState.children(this)
+        }
+        get pathFromRoot() {
+            return this._routerState.pathFromRoot(this)
+        }
+        get paramMap() {
+            return this._paramMap ??= nr(this.params), this._paramMap
+        }
+        get queryParamMap() {
+            return this._queryParamMap ??= nr(this.queryParams), this._queryParamMap
+        }
+        toString() {
+            let n = this.url.map(r => r.toString()).join("/"),
+                t = this.routeConfig ? this.routeConfig.path : "";
+            return `Route(url:'${n}', path:'${t}')`
+        }
+    },
+    Cs = class extends ms {
+        constructor(n, t) {
+            super(t), this.url = n, Xl(this, t)
+        }
+        toString() {
+            return yg(this._root)
+        }
+    };
+
+function Xl(e, n) {
+    n.value._routerState = e, n.children.forEach(t => Xl(e, t))
+}
+
+function yg(e) {
+    let n = e.children.length > 0 ? ` { ${e.children.map(yg).join(", ")} } ` : "";
+    return `${e.value}${n}`
+}
+
+function _l(e) {
+    if (e.snapshot) {
+        let n = e.snapshot,
+            t = e._futureSnapshot;
+        e.snapshot = t, dt(n.queryParams, t.queryParams) || e.queryParamsSubject.next(t.queryParams), n.fragment !== t.fragment && e.fragmentSubject.next(t.fragment), dt(n.params, t.params) || e.paramsSubject.next(t.params), Tw(n.url, t.url) || e.urlSubject.next(t.url), dt(n.data, t.data) || e.dataSubject.next(t.data)
+    } else e.snapshot = e._futureSnapshot, e.dataSubject.next(e._futureSnapshot.data)
+}
+
+function Gl(e, n) {
+    let t = dt(e.params, n.params) && Pw(e.url, n.url),
+        r = !e.parent != !n.parent;
+    return t && !r && (!e.parent || Gl(e.parent, n.parent))
+}
+
+function Cg(e) {
+    return typeof e.title == "string" || e.title === null
+}
+var eu = (() => {
+        class e {
+            constructor() {
+                this.activated = null, this._activatedRoute = null, this.name = O, this.activateEvents = new me, this.deactivateEvents = new me, this.attachEvents = new me, this.detachEvents = new me, this.parentContexts = g(uo), this.location = g(qn), this.changeDetector = g(Ur), this.inputBinder = g(Is, {
+                    optional: !0
+                }), this.supportsBindingToComponentInputs = !0
+            }
+            get activatedComponentRef() {
+                return this.activated
+            }
+            ngOnChanges(t) {
+                if (t.name) {
+                    let {
+                        firstChange: r,
+                        previousValue: o
+                    } = t.name;
+                    if (r) return;
+                    this.isTrackedInParentContexts(o) && (this.deactivate(), this.parentContexts.onChildOutletDestroyed(o)), this.initializeOutletWithName()
+                }
+            }
+            ngOnDestroy() {
+                this.isTrackedInParentContexts(this.name) && this.parentContexts.onChildOutletDestroyed(this.name), this.inputBinder?.unsubscribeFromRouteData(this)
+            }
+            isTrackedInParentContexts(t) {
+                return this.parentContexts.getContext(t)?.outlet === this
+            }
+            ngOnInit() {
+                this.initializeOutletWithName()
+            }
+            initializeOutletWithName() {
+                if (this.parentContexts.onChildOutletCreated(this.name, this), this.activated) return;
+                let t = this.parentContexts.getContext(this.name);
+                t?.route && (t.attachRef ? this.attach(t.attachRef, t.route) : this.activateWith(t.route, t.injector))
+            }
+            get isActivated() {
+                return !!this.activated
+            }
+            get component() {
+                if (!this.activated) throw new E(4012, !1);
+                return this.activated.instance
+            }
+            get activatedRoute() {
+                if (!this.activated) throw new E(4012, !1);
+                return this._activatedRoute
+            }
+            get activatedRouteData() {
+                return this._activatedRoute ? this._activatedRoute.snapshot.data : {}
+            }
+            detach() {
+                if (!this.activated) throw new E(4012, !1);
+                this.location.detach();
+                let t = this.activated;
+                return this.activated = null, this._activatedRoute = null, this.detachEvents.emit(t.instance), t
+            }
+            attach(t, r) {
+                this.activated = t, this._activatedRoute = r, this.location.insert(t.hostView), this.inputBinder?.bindActivatedRouteToOutletComponent(this), this.attachEvents.emit(t.instance)
+            }
+            deactivate() {
+                if (this.activated) {
+                    let t = this.component;
+                    this.activated.destroy(), this.activated = null, this._activatedRoute = null, this.deactivateEvents.emit(t)
+                }
+            }
+            activateWith(t, r) {
+                if (this.isActivated) throw new E(4013, !1);
+                this._activatedRoute = t;
+                let o = this.location,
+                    s = t.snapshot.component,
+                    a = this.parentContexts.getOrCreateContext(this.name).children,
+                    c = new Wl(t, a, o.injector);
+                this.activated = o.createComponent(s, {
+                    index: o.length,
+                    injector: c,
+                    environmentInjector: r
+                }), this.changeDetector.markForCheck(), this.inputBinder?.bindActivatedRouteToOutletComponent(this), this.activateEvents.emit(this.activated.instance)
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)
+                }
+            }
+            static {
+                this.\u0275dir = jt({
+                    type: e,
+                    selectors: [
+                        ["router-outlet"]
+                    ],
+                    inputs: {
+                        name: "name"
+                    },
+                    outputs: {
+                        activateEvents: "activate",
+                        deactivateEvents: "deactivate",
+                        attachEvents: "attach",
+                        detachEvents: "detach"
+                    },
+                    exportAs: ["outlet"],
+                    standalone: !0,
+                    features: [Hn]
+                })
+            }
+        }
+        return e
+    })(),
+    Wl = class e {
+        __ngOutletInjector(n) {
+            return new e(this.route, this.childContexts, n)
+        }
+        constructor(n, t, r) {
+            this.route = n, this.childContexts = t, this.parent = r
+        }
+        get(n, t) {
+            return n === zt ? this.route : n === uo ? this.childContexts : this.parent.get(n, t)
+        }
+    },
+    Is = new b(""),
+    Kp = (() => {
+        class e {
+            constructor() {
+                this.outletDataSubscriptions = new Map
+            }
+            bindActivatedRouteToOutletComponent(t) {
+                this.unsubscribeFromRouteData(t), this.subscribeToRouteData(t)
+            }
+            unsubscribeFromRouteData(t) {
+                this.outletDataSubscriptions.get(t)?.unsubscribe(), this.outletDataSubscriptions.delete(t)
+            }
+            subscribeToRouteData(t) {
+                let {
+                    activatedRoute: r
+                } = t, o = pr([r.queryParams, r.params, r.data]).pipe(Se(([i, s, a], c) => (a = D(D(D({}, i), s), a), c === 0 ? _(a) : Promise.resolve(a)))).subscribe(i => {
+                    if (!t.isActivated || !t.activatedComponentRef || t.activatedRoute !== r || r.component === null) {
+                        this.unsubscribeFromRouteData(t);
+                        return
+                    }
+                    let s = mp(r.component);
+                    if (!s) {
+                        this.unsubscribeFromRouteData(t);
+                        return
+                    }
+                    for (let {
+                            templateName: a
+                        }
+                        of s.inputs) t.activatedComponentRef.setInput(a, i[a])
+                });
+                this.outletDataSubscriptions.set(t, o)
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac
+                })
+            }
+        }
+        return e
+    })();
+
+function rE(e, n, t) {
+    let r = ro(e, n._root, t ? t._root : void 0);
+    return new vs(r, n)
+}
+
+function ro(e, n, t) {
+    if (t && e.shouldReuseRoute(n.value, t.value.snapshot)) {
+        let r = t.value;
+        r._futureSnapshot = n.value;
+        let o = oE(e, n, t);
+        return new Pe(r, o)
+    } else {
+        if (e.shouldAttach(n.value)) {
+            let i = e.retrieve(n.value);
+            if (i !== null) {
+                let s = i.route;
+                return s.value._futureSnapshot = n.value, s.children = n.children.map(a => ro(e, a)), s
+            }
+        }
+        let r = iE(n.value),
+            o = n.children.map(i => ro(e, i));
+        return new Pe(r, o)
+    }
+}
+
+function oE(e, n, t) {
+    return n.children.map(r => {
+        for (let o of t.children)
+            if (e.shouldReuseRoute(r.value, o.value.snapshot)) return ro(e, r, o);
+        return ro(e, r)
+    })
+}
+
+function iE(e) {
+    return new zt(new ce(e.url), new ce(e.params), new ce(e.queryParams), new ce(e.fragment), new ce(e.data), e.outlet, e.component, e)
+}
+var oo = class {
+        constructor(n, t) {
+            this.redirectTo = n, this.navigationBehaviorOptions = t
+        }
+    },
+    Dg = "ngNavigationCancelingError";
+
+function Ds(e, n) {
+    let {
+        redirectTo: t,
+        navigationBehaviorOptions: r
+    } = fn(n) ? {
+        redirectTo: n,
+        navigationBehaviorOptions: void 0
+    } : n, o = wg(!1, Re.Redirect);
+    return o.url = t, o.navigationBehaviorOptions = r, o
+}
+
+function wg(e, n) {
+    let t = new Error(`NavigationCancelingError: ${e||""}`);
+    return t[Dg] = !0, t.cancellationCode = n, t
+}
+
+function sE(e) {
+    return Eg(e) && fn(e.url)
+}
+
+function Eg(e) {
+    return !!e && e[Dg]
+}
+var aE = (e, n, t, r) => k(o => (new ql(n, o.targetRouterState, o.currentRouterState, t, r).activate(e), o)),
+    ql = class {
+        constructor(n, t, r, o, i) {
+            this.routeReuseStrategy = n, this.futureState = t, this.currState = r, this.forwardEvent = o, this.inputBindingEnabled = i
+        }
+        activate(n) {
+            let t = this.futureState._root,
+                r = this.currState ? this.currState._root : null;
+            this.deactivateChildRoutes(t, r, n), _l(this.futureState.root), this.activateChildRoutes(t, r, n)
+        }
+        deactivateChildRoutes(n, t, r) {
+            let o = Jn(t);
+            n.children.forEach(i => {
+                let s = i.value.outlet;
+                this.deactivateRoutes(i, o[s], r), delete o[s]
+            }), Object.values(o).forEach(i => {
+                this.deactivateRouteAndItsChildren(i, r)
+            })
+        }
+        deactivateRoutes(n, t, r) {
+            let o = n.value,
+                i = t ? t.value : null;
+            if (o === i)
+                if (o.component) {
+                    let s = r.getContext(o.outlet);
+                    s && this.deactivateChildRoutes(n, t, s.children)
+                } else this.deactivateChildRoutes(n, t, r);
+            else i && this.deactivateRouteAndItsChildren(t, r)
+        }
+        deactivateRouteAndItsChildren(n, t) {
+            n.value.component && this.routeReuseStrategy.shouldDetach(n.value.snapshot) ? this.detachAndStoreRouteSubtree(n, t) : this.deactivateRouteAndOutlet(n, t)
+        }
+        detachAndStoreRouteSubtree(n, t) {
+            let r = t.getContext(n.value.outlet),
+                o = r && n.value.component ? r.children : t,
+                i = Jn(n);
+            for (let s of Object.values(i)) this.deactivateRouteAndItsChildren(s, o);
+            if (r && r.outlet) {
+                let s = r.outlet.detach(),
+                    a = r.children.onOutletDeactivated();
+                this.routeReuseStrategy.store(n.value.snapshot, {
+                    componentRef: s,
+                    route: n,
+                    contexts: a
+                })
+            }
+        }
+        deactivateRouteAndOutlet(n, t) {
+            let r = t.getContext(n.value.outlet),
+                o = r && n.value.component ? r.children : t,
+                i = Jn(n);
+            for (let s of Object.values(i)) this.deactivateRouteAndItsChildren(s, o);
+            r && (r.outlet && (r.outlet.deactivate(), r.children.onOutletDeactivated()), r.attachRef = null, r.route = null)
+        }
+        activateChildRoutes(n, t, r) {
+            let o = Jn(t);
+            n.children.forEach(i => {
+                this.activateRoutes(i, o[i.value.outlet], r), this.forwardEvent(new Ul(i.value.snapshot))
+            }), n.children.length && this.forwardEvent(new Vl(n.value.snapshot))
+        }
+        activateRoutes(n, t, r) {
+            let o = n.value,
+                i = t ? t.value : null;
+            if (_l(o), o === i)
+                if (o.component) {
+                    let s = r.getOrCreateContext(o.outlet);
+                    this.activateChildRoutes(n, t, s.children)
+                } else this.activateChildRoutes(n, t, r);
+            else if (o.component) {
+                let s = r.getOrCreateContext(o.outlet);
+                if (this.routeReuseStrategy.shouldAttach(o.snapshot)) {
+                    let a = this.routeReuseStrategy.retrieve(o.snapshot);
+                    this.routeReuseStrategy.store(o.snapshot, null), s.children.onOutletReAttached(a.contexts), s.attachRef = a.componentRef, s.route = a.route.value, s.outlet && s.outlet.attach(a.componentRef, a.route.value), _l(a.route.value), this.activateChildRoutes(n, null, s.children)
+                } else s.attachRef = null, s.route = o, s.outlet && s.outlet.activateWith(o, s.injector), this.activateChildRoutes(n, null, s.children)
+            } else this.activateChildRoutes(n, null, r)
+        }
+    },
+    ws = class {
+        constructor(n) {
+            this.path = n, this.route = this.path[this.path.length - 1]
+        }
+    },
+    tr = class {
+        constructor(n, t) {
+            this.component = n, this.route = t
+        }
+    };
+
+function cE(e, n, t) {
+    let r = e._root,
+        o = n ? n._root : null;
+    return Qr(r, o, t, [r.value])
+}
+
+function lE(e) {
+    let n = e.routeConfig ? e.routeConfig.canActivateChild : null;
+    return !n || n.length === 0 ? null : {
+        node: e,
+        guards: n
+    }
+}
+
+function cr(e, n) {
+    let t = Symbol(),
+        r = n.get(e, t);
+    return r === t ? typeof e == "function" && !Ad(e) ? e : n.get(e) : r
+}
+
+function Qr(e, n, t, r, o = {
+    canDeactivateChecks: [],
+    canActivateChecks: []
+}) {
+    let i = Jn(n);
+    return e.children.forEach(s => {
+        uE(s, i[s.value.outlet], t, r.concat([s.value]), o), delete i[s.value.outlet]
+    }), Object.entries(i).forEach(([s, a]) => Xr(a, t.getContext(s), o)), o
+}
+
+function uE(e, n, t, r, o = {
+    canDeactivateChecks: [],
+    canActivateChecks: []
+}) {
+    let i = e.value,
+        s = n ? n.value : null,
+        a = t ? t.getContext(e.value.outlet) : null;
+    if (s && i.routeConfig === s.routeConfig) {
+        let c = dE(s, i, i.routeConfig.runGuardsAndResolvers);
+        c ? o.canActivateChecks.push(new ws(r)) : (i.data = s.data, i._resolvedData = s._resolvedData), i.component ? Qr(e, n, a ? a.children : null, r, o) : Qr(e, n, t, r, o), c && a && a.outlet && a.outlet.isActivated && o.canDeactivateChecks.push(new tr(a.outlet.component, s))
+    } else s && Xr(n, a, o), o.canActivateChecks.push(new ws(r)), i.component ? Qr(e, null, a ? a.children : null, r, o) : Qr(e, null, t, r, o);
+    return o
+}
+
+function dE(e, n, t) {
+    if (typeof t == "function") return t(e, n);
+    switch (t) {
+        case "pathParamsChange":
+            return !dn(e.url, n.url);
+        case "pathParamsOrQueryParamsChange":
+            return !dn(e.url, n.url) || !dt(e.queryParams, n.queryParams);
+        case "always":
+            return !0;
+        case "paramsOrQueryParamsChange":
+            return !Gl(e, n) || !dt(e.queryParams, n.queryParams);
+        case "paramsChange":
+        default:
+            return !Gl(e, n)
+    }
+}
+
+function Xr(e, n, t) {
+    let r = Jn(e),
+        o = e.value;
+    Object.entries(r).forEach(([i, s]) => {
+        o.component ? n ? Xr(s, n.children.getContext(i), t) : Xr(s, null, t) : Xr(s, n, t)
+    }), o.component ? n && n.outlet && n.outlet.isActivated ? t.canDeactivateChecks.push(new tr(n.outlet.component, o)) : t.canDeactivateChecks.push(new tr(null, o)) : t.canDeactivateChecks.push(new tr(null, o))
+}
+
+function fo(e) {
+    return typeof e == "function"
+}
+
+function fE(e) {
+    return typeof e == "boolean"
+}
+
+function hE(e) {
+    return e && fo(e.canLoad)
+}
+
+function pE(e) {
+    return e && fo(e.canActivate)
+}
+
+function gE(e) {
+    return e && fo(e.canActivateChild)
+}
+
+function mE(e) {
+    return e && fo(e.canDeactivate)
+}
+
+function vE(e) {
+    return e && fo(e.canMatch)
+}
+
+function Ig(e) {
+    return e instanceof pt || e?.name === "EmptyError"
+}
+var as = Symbol("INITIAL_VALUE");
+
+function sr() {
+    return Se(e => pr(e.map(n => n.pipe(gt(1), ra(as)))).pipe(k(n => {
+        for (let t of n)
+            if (t !== !0) {
+                if (t === as) return as;
+                if (t === !1 || yE(t)) return t
+            } return !0
+    }), Me(n => n !== as), gt(1)))
+}
+
+function yE(e) {
+    return fn(e) || e instanceof oo
+}
+
+function CE(e, n) {
+    return ee(t => {
+        let {
+            targetSnapshot: r,
+            currentSnapshot: o,
+            guards: {
+                canActivateChecks: i,
+                canDeactivateChecks: s
+            }
+        } = t;
+        return s.length === 0 && i.length === 0 ? _(K(D({}, t), {
+            guardsResult: !0
+        })) : DE(s, r, o, e).pipe(ee(a => a && fE(a) ? wE(r, i, e, n) : _(a)), k(a => K(D({}, t), {
+            guardsResult: a
+        })))
+    })
+}
+
+function DE(e, n, t, r) {
+    return J(e).pipe(ee(o => ME(o.component, o.route, t, n, r)), We(o => o !== !0, !0))
+}
+
+function wE(e, n, t, r) {
+    return J(n).pipe(Tt(o => In(IE(o.route.parent, r), EE(o.route, r), _E(e, o.path, t), bE(e, o.route, t))), We(o => o !== !0, !0))
+}
+
+function EE(e, n) {
+    return e !== null && n && n(new Bl(e)), _(!0)
+}
+
+function IE(e, n) {
+    return e !== null && n && n(new jl(e)), _(!0)
+}
+
+function bE(e, n, t) {
+    let r = n.routeConfig ? n.routeConfig.canActivate : null;
+    if (!r || r.length === 0) return _(!0);
+    let o = r.map(i => Po(() => {
+        let s = lo(n) ?? t,
+            a = cr(i, s),
+            c = pE(a) ? a.canActivate(n, e) : Je(s, () => a(n, e));
+        return Gt(c).pipe(We())
+    }));
+    return _(o).pipe(sr())
+}
+
+function _E(e, n, t) {
+    let r = n[n.length - 1],
+        i = n.slice(0, n.length - 1).reverse().map(s => lE(s)).filter(s => s !== null).map(s => Po(() => {
+            let a = s.guards.map(c => {
+                let l = lo(s.node) ?? t,
+                    u = cr(c, l),
+                    d = gE(u) ? u.canActivateChild(r, e) : Je(l, () => u(r, e));
+                return Gt(d).pipe(We())
+            });
+            return _(a).pipe(sr())
+        }));
+    return _(i).pipe(sr())
+}
+
+function ME(e, n, t, r, o) {
+    let i = n && n.routeConfig ? n.routeConfig.canDeactivate : null;
+    if (!i || i.length === 0) return _(!0);
+    let s = i.map(a => {
+        let c = lo(n) ?? o,
+            l = cr(a, c),
+            u = mE(l) ? l.canDeactivate(e, n, t, r) : Je(c, () => l(e, n, t, r));
+        return Gt(u).pipe(We())
+    });
+    return _(s).pipe(sr())
+}
+
+function SE(e, n, t, r) {
+    let o = n.canLoad;
+    if (o === void 0 || o.length === 0) return _(!0);
+    let i = o.map(s => {
+        let a = cr(s, e),
+            c = hE(a) ? a.canLoad(n, t) : Je(e, () => a(n, t));
+        return Gt(c)
+    });
+    return _(i).pipe(sr(), bg(r))
+}
+
+function bg(e) {
+    return Qs(oe(n => {
+        if (typeof n != "boolean") throw Ds(e, n)
+    }), k(n => n === !0))
+}
+
+function xE(e, n, t, r) {
+    let o = n.canMatch;
+    if (!o || o.length === 0) return _(!0);
+    let i = o.map(s => {
+        let a = cr(s, e),
+            c = vE(a) ? a.canMatch(n, t) : Je(e, () => a(n, t));
+        return Gt(c)
+    });
+    return _(i).pipe(sr(), bg(r))
+}
+var io = class {
+        constructor(n) {
+            this.segmentGroup = n || null
+        }
+    },
+    so = class extends Error {
+        constructor(n) {
+            super(), this.urlTree = n
+        }
+    };
+
+function Kn(e) {
+    return wn(new io(e))
+}
+
+function TE(e) {
+    return wn(new E(4e3, !1))
+}
+
+function OE(e) {
+    return wn(wg(!1, Re.GuardRejected))
+}
+var Zl = class {
+        constructor(n, t) {
+            this.urlSerializer = n, this.urlTree = t
+        }
+        lineralizeSegments(n, t) {
+            let r = [],
+                o = t.root;
+            for (;;) {
+                if (r = r.concat(o.segments), o.numberOfChildren === 0) return _(r);
+                if (o.numberOfChildren > 1 || !o.children[O]) return TE(`${n.redirectTo}`);
+                o = o.children[O]
+            }
+        }
+        applyRedirectCommands(n, t, r, o, i) {
+            if (typeof t != "string") {
+                let a = t,
+                    {
+                        queryParams: c,
+                        fragment: l,
+                        routeConfig: u,
+                        url: d,
+                        outlet: v,
+                        params: m,
+                        data: C,
+                        title: P
+                    } = o,
+                    $ = Je(i, () => a({
+                        params: m,
+                        data: C,
+                        queryParams: c,
+                        fragment: l,
+                        routeConfig: u,
+                        url: d,
+                        outlet: v,
+                        title: P
+                    }));
+                if ($ instanceof bt) throw new so($);
+                t = $
+            }
+            let s = this.applyRedirectCreateUrlTree(t, this.urlSerializer.parse(t), n, r);
+            if (t[0] === "/") throw new so(s);
+            return s
+        }
+        applyRedirectCreateUrlTree(n, t, r, o) {
+            let i = this.createSegmentGroup(n, t.root, r, o);
+            return new bt(i, this.createQueryParams(t.queryParams, this.urlTree.queryParams), t.fragment)
+        }
+        createQueryParams(n, t) {
+            let r = {};
+            return Object.entries(n).forEach(([o, i]) => {
+                if (typeof i == "string" && i[0] === ":") {
+                    let a = i.substring(1);
+                    r[o] = t[a]
+                } else r[o] = i
+            }), r
+        }
+        createSegmentGroup(n, t, r, o) {
+            let i = this.createSegments(n, t.segments, r, o),
+                s = {};
+            return Object.entries(t.children).forEach(([a, c]) => {
+                s[a] = this.createSegmentGroup(n, c, r, o)
+            }), new B(i, s)
+        }
+        createSegments(n, t, r, o) {
+            return t.map(i => i.path[0] === ":" ? this.findPosParam(n, i, o) : this.findOrReturn(i, r))
+        }
+        findPosParam(n, t, r) {
+            let o = r[t.path.substring(1)];
+            if (!o) throw new E(4001, !1);
+            return o
+        }
+        findOrReturn(n, t) {
+            let r = 0;
+            for (let o of t) {
+                if (o.path === n.path) return t.splice(r), o;
+                r++
+            }
+            return n
+        }
+    },
+    Ql = {
+        matched: !1,
+        consumedSegments: [],
+        remainingSegments: [],
+        parameters: {},
+        positionalParamSegments: {}
+    };
+
+function NE(e, n, t, r, o) {
+    let i = _g(e, n, t);
+    return i.matched ? (r = eE(n, r), xE(r, n, t, o).pipe(k(s => s === !0 ? i : D({}, Ql)))) : _(i)
+}
+
+function _g(e, n, t) {
+    if (n.path === "**") return AE(t);
+    if (n.path === "") return n.pathMatch === "full" && (e.hasChildren() || t.length > 0) ? D({}, Ql) : {
+        matched: !0,
+        consumedSegments: [],
+        remainingSegments: t,
+        parameters: {},
+        positionalParamSegments: {}
+    };
+    let o = (n.matcher || xw)(t, e, n);
+    if (!o) return D({}, Ql);
+    let i = {};
+    Object.entries(o.posParams ?? {}).forEach(([a, c]) => {
+        i[a] = c.path
+    });
+    let s = o.consumed.length > 0 ? D(D({}, i), o.consumed[o.consumed.length - 1].parameters) : i;
+    return {
+        matched: !0,
+        consumedSegments: o.consumed,
+        remainingSegments: t.slice(o.consumed.length),
+        parameters: s,
+        positionalParamSegments: o.posParams ?? {}
+    }
+}
+
+function AE(e) {
+    return {
+        matched: !0,
+        parameters: e.length > 0 ? og(e).parameters : {},
+        consumedSegments: e,
+        remainingSegments: [],
+        positionalParamSegments: {}
+    }
+}
+
+function Jp(e, n, t, r) {
+    return t.length > 0 && kE(e, t, r) ? {
+        segmentGroup: new B(n, RE(r, new B(t, e.children))),
+        slicedSegments: []
+    } : t.length === 0 && FE(e, t, r) ? {
+        segmentGroup: new B(e.segments, PE(e, t, r, e.children)),
+        slicedSegments: t
+    } : {
+        segmentGroup: new B(e.segments, e.children),
+        slicedSegments: t
+    }
+}
+
+function PE(e, n, t, r) {
+    let o = {};
+    for (let i of t)
+        if (bs(e, n, i) && !r[tt(i)]) {
+            let s = new B([], {});
+            o[tt(i)] = s
+        } return D(D({}, r), o)
+}
+
+function RE(e, n) {
+    let t = {};
+    t[O] = n;
+    for (let r of e)
+        if (r.path === "" && tt(r) !== O) {
+            let o = new B([], {});
+            t[tt(r)] = o
+        } return t
+}
+
+function kE(e, n, t) {
+    return t.some(r => bs(e, n, r) && tt(r) !== O)
+}
+
+function FE(e, n, t) {
+    return t.some(r => bs(e, n, r))
+}
+
+function bs(e, n, t) {
+    return (e.hasChildren() || n.length > 0) && t.pathMatch === "full" ? !1 : t.path === ""
+}
+
+function LE(e, n, t) {
+    return n.length === 0 && !e.children[t]
+}
+var Yl = class {};
+
+function jE(e, n, t, r, o, i, s = "emptyOnly") {
+    return new Kl(e, n, t, r, o, s, i).recognize()
+}
+var VE = 31,
+    Kl = class {
+        constructor(n, t, r, o, i, s, a) {
+            this.injector = n, this.configLoader = t, this.rootComponentType = r, this.config = o, this.urlTree = i, this.paramsInheritanceStrategy = s, this.urlSerializer = a, this.applyRedirects = new Zl(this.urlSerializer, this.urlTree), this.absoluteRedirectCount = 0, this.allowRedirects = !0
+        }
+        noMatchError(n) {
+            return new E(4002, `'${n.segmentGroup}'`)
+        }
+        recognize() {
+            let n = Jp(this.urlTree.root, [], [], this.config).segmentGroup;
+            return this.match(n).pipe(k(({
+                children: t,
+                rootSnapshot: r
+            }) => {
+                let o = new Pe(r, t),
+                    i = new Cs("", o),
+                    s = qw(r, [], this.urlTree.queryParams, this.urlTree.fragment);
+                return s.queryParams = this.urlTree.queryParams, i.url = this.urlSerializer.serialize(s), {
+                    state: i,
+                    tree: s
+                }
+            }))
+        }
+        match(n) {
+            let t = new er([], Object.freeze({}), Object.freeze(D({}, this.urlTree.queryParams)), this.urlTree.fragment, Object.freeze({}), O, this.rootComponentType, null, {});
+            return this.processSegmentGroup(this.injector, this.config, n, O, t).pipe(k(r => ({
+                children: r,
+                rootSnapshot: t
+            })), xt(r => {
+                if (r instanceof so) return this.urlTree = r.urlTree, this.match(r.urlTree.root);
+                throw r instanceof io ? this.noMatchError(r) : r
+            }))
+        }
+        processSegmentGroup(n, t, r, o, i) {
+            return r.segments.length === 0 && r.hasChildren() ? this.processChildren(n, t, r, i) : this.processSegment(n, t, r, r.segments, o, !0, i).pipe(k(s => s instanceof Pe ? [s] : []))
+        }
+        processChildren(n, t, r, o) {
+            let i = [];
+            for (let s of Object.keys(r.children)) s === "primary" ? i.unshift(s) : i.push(s);
+            return J(i).pipe(Tt(s => {
+                let a = r.children[s],
+                    c = tE(t, s);
+                return this.processSegmentGroup(n, c, a, s, o)
+            }), na((s, a) => (s.push(...a), s)), Ot(null), ta(), ee(s => {
+                if (s === null) return Kn(r);
+                let a = Mg(s);
+                return BE(a), _(a)
+            }))
+        }
+        processSegment(n, t, r, o, i, s, a) {
+            return J(t).pipe(Tt(c => this.processSegmentAgainstRoute(c._injector ?? n, t, c, r, o, i, s, a).pipe(xt(l => {
+                if (l instanceof io) return _(null);
+                throw l
+            }))), We(c => !!c), xt(c => {
+                if (Ig(c)) return LE(r, o, i) ? _(new Yl) : Kn(r);
+                throw c
+            }))
+        }
+        processSegmentAgainstRoute(n, t, r, o, i, s, a, c) {
+            return tt(r) !== s && (s === O || !bs(o, i, r)) ? Kn(o) : r.redirectTo === void 0 ? this.matchSegmentAgainstRoute(n, o, r, i, s, c) : this.allowRedirects && a ? this.expandSegmentAgainstRouteUsingRedirect(n, o, t, r, i, s, c) : Kn(o)
+        }
+        expandSegmentAgainstRouteUsingRedirect(n, t, r, o, i, s, a) {
+            let {
+                matched: c,
+                parameters: l,
+                consumedSegments: u,
+                positionalParamSegments: d,
+                remainingSegments: v
+            } = _g(t, o, i);
+            if (!c) return Kn(t);
+            typeof o.redirectTo == "string" && o.redirectTo[0] === "/" && (this.absoluteRedirectCount++, this.absoluteRedirectCount > VE && (this.allowRedirects = !1));
+            let m = new er(i, l, Object.freeze(D({}, this.urlTree.queryParams)), this.urlTree.fragment, Xp(o), tt(o), o.component ?? o._loadedComponent ?? null, o, eg(o)),
+                C = ys(m, a, this.paramsInheritanceStrategy);
+            m.params = Object.freeze(C.params), m.data = Object.freeze(C.data);
+            let P = this.applyRedirects.applyRedirectCommands(u, o.redirectTo, d, m, n);
+            return this.applyRedirects.lineralizeSegments(o, P).pipe(ee($ => this.processSegment(n, r, t, $.concat(v), s, !1, a)))
+        }
+        matchSegmentAgainstRoute(n, t, r, o, i, s) {
+            let a = NE(t, r, o, n, this.urlSerializer);
+            return r.path === "**" && (t.children = {}), a.pipe(Se(c => c.matched ? (n = r._injector ?? n, this.getChildConfig(n, r, o).pipe(Se(({
+                routes: l
+            }) => {
+                let u = r._loadedInjector ?? n,
+                    {
+                        parameters: d,
+                        consumedSegments: v,
+                        remainingSegments: m
+                    } = c,
+                    C = new er(v, d, Object.freeze(D({}, this.urlTree.queryParams)), this.urlTree.fragment, Xp(r), tt(r), r.component ?? r._loadedComponent ?? null, r, eg(r)),
+                    P = ys(C, s, this.paramsInheritanceStrategy);
+                C.params = Object.freeze(P.params), C.data = Object.freeze(P.data);
+                let {
+                    segmentGroup: $,
+                    slicedSegments: z
+                } = Jp(t, v, m, l);
+                if (z.length === 0 && $.hasChildren()) return this.processChildren(u, l, $, C).pipe(k(fe => new Pe(C, fe)));
+                if (l.length === 0 && z.length === 0) return _(new Pe(C, []));
+                let de = tt(r) === i;
+                return this.processSegment(u, l, $, z, de ? O : i, !0, C).pipe(k(fe => new Pe(C, fe instanceof Pe ? [fe] : [])))
+            }))) : Kn(t)))
+        }
+        getChildConfig(n, t, r) {
+            return t.children ? _({
+                routes: t.children,
+                injector: n
+            }) : t.loadChildren ? t._loadedRoutes !== void 0 ? _({
+                routes: t._loadedRoutes,
+                injector: t._loadedInjector
+            }) : SE(n, t, r, this.urlSerializer).pipe(ee(o => o ? this.configLoader.loadChildren(n, t).pipe(oe(i => {
+                t._loadedRoutes = i.routes, t._loadedInjector = i.injector
+            })) : OE(t))) : _({
+                routes: [],
+                injector: n
+            })
+        }
+    };
+
+function BE(e) {
+    e.sort((n, t) => n.value.outlet === O ? -1 : t.value.outlet === O ? 1 : n.value.outlet.localeCompare(t.value.outlet))
+}
+
+function UE(e) {
+    let n = e.value.routeConfig;
+    return n && n.path === ""
+}
+
+function Mg(e) {
+    let n = [],
+        t = new Set;
+    for (let r of e) {
+        if (!UE(r)) {
+            n.push(r);
+            continue
+        }
+        let o = n.find(i => r.value.routeConfig === i.value.routeConfig);
+        o !== void 0 ? (o.children.push(...r.children), t.add(o)) : n.push(r)
+    }
+    for (let r of t) {
+        let o = Mg(r.children);
+        n.push(new Pe(r.value, o))
+    }
+    return n.filter(r => !t.has(r))
+}
+
+function Xp(e) {
+    return e.data || {}
+}
+
+function eg(e) {
+    return e.resolve || {}
+}
+
+function $E(e, n, t, r, o, i) {
+    return ee(s => jE(e, n, t, r, s.extractedUrl, o, i).pipe(k(({
+        state: a,
+        tree: c
+    }) => K(D({}, s), {
+        targetSnapshot: a,
+        urlAfterRedirects: c
+    }))))
+}
+
+function HE(e, n) {
+    return ee(t => {
+        let {
+            targetSnapshot: r,
+            guards: {
+                canActivateChecks: o
+            }
+        } = t;
+        if (!o.length) return _(t);
+        let i = new Set(o.map(c => c.route)),
+            s = new Set;
+        for (let c of i)
+            if (!s.has(c))
+                for (let l of Sg(c)) s.add(l);
+        let a = 0;
+        return J(s).pipe(Tt(c => i.has(c) ? zE(c, r, e, n) : (c.data = ys(c, c.parent, e).resolve, _(void 0))), oe(() => a++), _n(1), ee(c => a === s.size ? _(t) : _e))
+    })
+}
+
+function Sg(e) {
+    let n = e.children.map(t => Sg(t)).flat();
+    return [e, ...n]
+}
+
+function zE(e, n, t, r) {
+    let o = e.routeConfig,
+        i = e._resolve;
+    return o?.title !== void 0 && !Cg(o) && (i[co] = o.title), GE(i, e, n, r).pipe(k(s => (e._resolvedData = s, e.data = ys(e, e.parent, t).resolve, null)))
+}
+
+function GE(e, n, t, r) {
+    let o = xl(e);
+    if (o.length === 0) return _({});
+    let i = {};
+    return J(o).pipe(ee(s => WE(e[s], n, t, r).pipe(We(), oe(a => {
+        if (a instanceof oo) throw Ds(new rr, a);
+        i[s] = a
+    }))), _n(1), ea(i), xt(s => Ig(s) ? _e : wn(s)))
+}
+
+function WE(e, n, t, r) {
+    let o = lo(n) ?? r,
+        i = cr(e, o),
+        s = i.resolve ? i.resolve(n, t) : Je(o, () => i(n, t));
+    return Gt(s)
+}
+
+function Ml(e) {
+    return Se(n => {
+        let t = e(n);
+        return t ? J(t).pipe(k(() => n)) : _(n)
+    })
+}
+var xg = (() => {
+        class e {
+            buildTitle(t) {
+                let r, o = t.root;
+                for (; o !== void 0;) r = this.getResolvedTitleForRoute(o) ?? r, o = o.children.find(i => i.outlet === O);
+                return r
+            }
+            getResolvedTitleForRoute(t) {
+                return t.data[co]
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: () => g(qE),
+                    providedIn: "root"
+                })
+            }
+        }
+        return e
+    })(),
+    qE = (() => {
+        class e extends xg {
+            constructor(t) {
+                super(), this.title = t
+            }
+            updateTitle(t) {
+                let r = this.buildTitle(t);
+                r !== void 0 && this.title.setTitle(r)
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)(x($t))
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac,
+                    providedIn: "root"
+                })
+            }
+        }
+        return e
+    })(),
+    ho = new b("", {
+        providedIn: "root",
+        factory: () => ({})
+    }),
+    ZE = (() => {
+        class e {
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)
+                }
+            }
+            static {
+                this.\u0275cmp = te({
+                    type: e,
+                    selectors: [
+                        ["ng-component"]
+                    ],
+                    standalone: !0,
+                    features: [re],
+                    decls: 1,
+                    vars: 0,
+                    template: function(r, o) {
+                        r & 1 && R(0, "router-outlet")
+                    },
+                    dependencies: [eu],
+                    encapsulation: 2
+                })
+            }
+        }
+        return e
+    })();
+
+function tu(e) {
+    let n = e.children && e.children.map(tu),
+        t = n ? K(D({}, e), {
+            children: n
+        }) : D({}, e);
+    return !t.component && !t.loadComponent && (n || t.loadChildren) && t.outlet && t.outlet !== O && (t.component = ZE), t
+}
+var ao = new b(""),
+    nu = (() => {
+        class e {
+            constructor() {
+                this.componentLoaders = new WeakMap, this.childrenLoaders = new WeakMap, this.compiler = g(Yi)
+            }
+            loadComponent(t) {
+                if (this.componentLoaders.get(t)) return this.componentLoaders.get(t);
+                if (t._loadedComponent) return _(t._loadedComponent);
+                this.onLoadStartListener && this.onLoadStartListener(t);
+                let r = Gt(t.loadComponent()).pipe(k(Tg), oe(i => {
+                        this.onLoadEndListener && this.onLoadEndListener(t), t._loadedComponent = i
+                    }), bn(() => {
+                        this.componentLoaders.delete(t)
+                    })),
+                    o = new Dn(r, () => new he).pipe(Cn());
+                return this.componentLoaders.set(t, o), o
+            }
+            loadChildren(t, r) {
+                if (this.childrenLoaders.get(r)) return this.childrenLoaders.get(r);
+                if (r._loadedRoutes) return _({
+                    routes: r._loadedRoutes,
+                    injector: r._loadedInjector
+                });
+                this.onLoadStartListener && this.onLoadStartListener(r);
+                let i = QE(r, this.compiler, t, this.onLoadEndListener).pipe(bn(() => {
+                        this.childrenLoaders.delete(r)
+                    })),
+                    s = new Dn(i, () => new he).pipe(Cn());
+                return this.childrenLoaders.set(r, s), s
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac,
+                    providedIn: "root"
+                })
+            }
+        }
+        return e
+    })();
+
+function QE(e, n, t, r) {
+    return Gt(e.loadChildren()).pipe(k(Tg), ee(o => o instanceof _r || Array.isArray(o) ? _(o) : J(n.compileModuleAsync(o))), k(o => {
+        r && r(e);
+        let i, s, a = !1;
+        return Array.isArray(o) ? (s = o, a = !0) : (i = o.create(t).injector, s = i.get(ao, [], {
+            optional: !0,
+            self: !0
+        }).flat()), {
+            routes: s.map(tu),
+            injector: i
+        }
+    }))
+}
+
+function YE(e) {
+    return e && typeof e == "object" && "default" in e
+}
+
+function Tg(e) {
+    return YE(e) ? e.default : e
+}
+var ru = (() => {
+        class e {
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: () => g(KE),
+                    providedIn: "root"
+                })
+            }
+        }
+        return e
+    })(),
+    KE = (() => {
+        class e {
+            shouldProcessUrl(t) {
+                return !0
+            }
+            extract(t) {
+                return t
+            }
+            merge(t, r) {
+                return t
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac,
+                    providedIn: "root"
+                })
+            }
+        }
+        return e
+    })(),
+    Og = new b(""),
+    Ng = new b("");
+
+function JE(e, n, t) {
+    let r = e.get(Ng),
+        o = e.get(ye);
+    return e.get(W).runOutsideAngular(() => {
+        if (!o.startViewTransition || r.skipNextTransition) return r.skipNextTransition = !1, new Promise(l => setTimeout(l));
+        let i, s = new Promise(l => {
+                i = l
+            }),
+            a = o.startViewTransition(() => (i(), XE(e))),
+            {
+                onViewTransitionCreated: c
+            } = r;
+        return c && Je(e, () => c({
+            transition: a,
+            from: n,
+            to: t
+        })), s
+    })
+}
+
+function XE(e) {
+    return new Promise(n => {
+        Jc({
+            read: () => setTimeout(n)
+        }, {
+            injector: e
+        })
+    })
+}
+var eI = new b(""),
+    _s = (() => {
+        class e {
+            get hasRequestedNavigation() {
+                return this.navigationId !== 0
+            }
+            constructor() {
+                this.currentNavigation = null, this.currentTransition = null, this.lastSuccessfulNavigation = null, this.events = new he, this.transitionAbortSubject = new he, this.configLoader = g(nu), this.environmentInjector = g(xe), this.urlSerializer = g(ar), this.rootContexts = g(uo), this.location = g(Qn), this.inputBindingEnabled = g(Is, {
+                    optional: !0
+                }) !== null, this.titleStrategy = g(xg), this.options = g(ho, {
+                    optional: !0
+                }) || {}, this.paramsInheritanceStrategy = this.options.paramsInheritanceStrategy || "emptyOnly", this.urlHandlingStrategy = g(ru), this.createViewTransition = g(Og, {
+                    optional: !0
+                }), this.navigationErrorHandler = g(eI, {
+                    optional: !0
+                }), this.navigationId = 0, this.afterPreactivation = () => _(void 0), this.rootComponentType = null;
+                let t = o => this.events.next(new Fl(o)),
+                    r = o => this.events.next(new Ll(o));
+                this.configLoader.onLoadEndListener = r, this.configLoader.onLoadStartListener = t
+            }
+            complete() {
+                this.transitions?.complete()
+            }
+            handleNavigationRequest(t) {
+                let r = ++this.navigationId;
+                this.transitions?.next(K(D(D({}, this.transitions.value), t), {
+                    id: r
+                }))
+            }
+            setupNavigations(t, r, o) {
+                return this.transitions = new ce({
+                    id: 0,
+                    currentUrlTree: r,
+                    currentRawUrl: r,
+                    extractedUrl: this.urlHandlingStrategy.extract(r),
+                    urlAfterRedirects: this.urlHandlingStrategy.extract(r),
+                    rawUrl: r,
+                    extras: {},
+                    resolve: () => {},
+                    reject: () => {},
+                    promise: Promise.resolve(!0),
+                    source: Jr,
+                    restoredState: null,
+                    currentSnapshot: o.snapshot,
+                    targetSnapshot: null,
+                    currentRouterState: o,
+                    targetRouterState: null,
+                    guards: {
+                        canActivateChecks: [],
+                        canDeactivateChecks: []
+                    },
+                    guardsResult: null
+                }), this.transitions.pipe(Me(i => i.id !== 0), k(i => K(D({}, i), {
+                    extractedUrl: this.urlHandlingStrategy.extract(i.rawUrl)
+                })), Se(i => {
+                    let s = !1,
+                        a = !1;
+                    return _(i).pipe(Se(c => {
+                        if (this.navigationId > i.id) return this.cancelNavigationTransition(i, "", Re.SupersededByNewNavigation), _e;
+                        this.currentTransition = i, this.currentNavigation = {
+                            id: c.id,
+                            initialUrl: c.rawUrl,
+                            extractedUrl: c.extractedUrl,
+                            targetBrowserUrl: typeof c.extras.browserUrl == "string" ? this.urlSerializer.parse(c.extras.browserUrl) : c.extras.browserUrl,
+                            trigger: c.source,
+                            extras: c.extras,
+                            previousNavigation: this.lastSuccessfulNavigation ? K(D({}, this.lastSuccessfulNavigation), {
+                                previousNavigation: null
+                            }) : null
+                        };
+                        let l = !t.navigated || this.isUpdatingInternalState() || this.isUpdatedBrowserUrl(),
+                            u = c.extras.onSameUrlNavigation ?? t.onSameUrlNavigation;
+                        if (!l && u !== "reload") {
+                            let d = "";
+                            return this.events.next(new Ht(c.id, this.urlSerializer.serialize(c.rawUrl), d, hs.IgnoredSameUrlNavigation)), c.resolve(!1), _e
+                        }
+                        if (this.urlHandlingStrategy.shouldProcessUrl(c.rawUrl)) return _(c).pipe(Se(d => {
+                            let v = this.transitions?.getValue();
+                            return this.events.next(new or(d.id, this.urlSerializer.serialize(d.extractedUrl), d.source, d.restoredState)), v !== this.transitions?.getValue() ? _e : Promise.resolve(d)
+                        }), $E(this.environmentInjector, this.configLoader, this.rootComponentType, t.config, this.urlSerializer, this.paramsInheritanceStrategy), oe(d => {
+                            i.targetSnapshot = d.targetSnapshot, i.urlAfterRedirects = d.urlAfterRedirects, this.currentNavigation = K(D({}, this.currentNavigation), {
+                                finalUrl: d.urlAfterRedirects
+                            });
+                            let v = new ps(d.id, this.urlSerializer.serialize(d.extractedUrl), this.urlSerializer.serialize(d.urlAfterRedirects), d.targetSnapshot);
+                            this.events.next(v)
+                        }));
+                        if (l && this.urlHandlingStrategy.shouldProcessUrl(c.currentRawUrl)) {
+                            let {
+                                id: d,
+                                extractedUrl: v,
+                                source: m,
+                                restoredState: C,
+                                extras: P
+                            } = c, $ = new or(d, this.urlSerializer.serialize(v), m, C);
+                            this.events.next($);
+                            let z = vg(this.rootComponentType).snapshot;
+                            return this.currentTransition = i = K(D({}, c), {
+                                targetSnapshot: z,
+                                urlAfterRedirects: v,
+                                extras: K(D({}, P), {
+                                    skipLocationChange: !1,
+                                    replaceUrl: !1
+                                })
+                            }), this.currentNavigation.finalUrl = v, _(i)
+                        } else {
+                            let d = "";
+                            return this.events.next(new Ht(c.id, this.urlSerializer.serialize(c.extractedUrl), d, hs.IgnoredByUrlHandlingStrategy)), c.resolve(!1), _e
+                        }
+                    }), oe(c => {
+                        let l = new Al(c.id, this.urlSerializer.serialize(c.extractedUrl), this.urlSerializer.serialize(c.urlAfterRedirects), c.targetSnapshot);
+                        this.events.next(l)
+                    }), k(c => (this.currentTransition = i = K(D({}, c), {
+                        guards: cE(c.targetSnapshot, c.currentSnapshot, this.rootContexts)
+                    }), i)), CE(this.environmentInjector, c => this.events.next(c)), oe(c => {
+                        if (i.guardsResult = c.guardsResult, c.guardsResult && typeof c.guardsResult != "boolean") throw Ds(this.urlSerializer, c.guardsResult);
+                        let l = new Pl(c.id, this.urlSerializer.serialize(c.extractedUrl), this.urlSerializer.serialize(c.urlAfterRedirects), c.targetSnapshot, !!c.guardsResult);
+                        this.events.next(l)
+                    }), Me(c => c.guardsResult ? !0 : (this.cancelNavigationTransition(c, "", Re.GuardRejected), !1)), Ml(c => {
+                        if (c.guards.canActivateChecks.length) return _(c).pipe(oe(l => {
+                            let u = new Rl(l.id, this.urlSerializer.serialize(l.extractedUrl), this.urlSerializer.serialize(l.urlAfterRedirects), l.targetSnapshot);
+                            this.events.next(u)
+                        }), Se(l => {
+                            let u = !1;
+                            return _(l).pipe(HE(this.paramsInheritanceStrategy, this.environmentInjector), oe({
+                                next: () => u = !0,
+                                complete: () => {
+                                    u || this.cancelNavigationTransition(l, "", Re.NoDataFromResolver)
+                                }
+                            }))
+                        }), oe(l => {
+                            let u = new kl(l.id, this.urlSerializer.serialize(l.extractedUrl), this.urlSerializer.serialize(l.urlAfterRedirects), l.targetSnapshot);
+                            this.events.next(u)
+                        }))
+                    }), Ml(c => {
+                        let l = u => {
+                            let d = [];
+                            u.routeConfig?.loadComponent && !u.routeConfig._loadedComponent && d.push(this.configLoader.loadComponent(u.routeConfig).pipe(oe(v => {
+                                u.component = v
+                            }), k(() => {})));
+                            for (let v of u.children) d.push(...l(v));
+                            return d
+                        };
+                        return pr(l(c.targetSnapshot.root)).pipe(Ot(null), gt(1))
+                    }), Ml(() => this.afterPreactivation()), Se(() => {
+                        let {
+                            currentSnapshot: c,
+                            targetSnapshot: l
+                        } = i, u = this.createViewTransition?.(this.environmentInjector, c.root, l.root);
+                        return u ? J(u).pipe(k(() => i)) : _(i)
+                    }), k(c => {
+                        let l = rE(t.routeReuseStrategy, c.targetSnapshot, c.currentRouterState);
+                        return this.currentTransition = i = K(D({}, c), {
+                            targetRouterState: l
+                        }), this.currentNavigation.targetRouterState = l, i
+                    }), oe(() => {
+                        this.events.next(new no)
+                    }), aE(this.rootContexts, t.routeReuseStrategy, c => this.events.next(c), this.inputBindingEnabled), gt(1), oe({
+                        next: c => {
+                            s = !0, this.lastSuccessfulNavigation = this.currentNavigation, this.events.next(new ft(c.id, this.urlSerializer.serialize(c.extractedUrl), this.urlSerializer.serialize(c.urlAfterRedirects))), this.titleStrategy?.updateTitle(c.targetRouterState.snapshot), c.resolve(!0)
+                        },
+                        complete: () => {
+                            s = !0
+                        }
+                    }), oa(this.transitionAbortSubject.pipe(oe(c => {
+                        throw c
+                    }))), bn(() => {
+                        !s && !a && this.cancelNavigationTransition(i, "", Re.SupersededByNewNavigation), this.currentTransition?.id === i.id && (this.currentNavigation = null, this.currentTransition = null)
+                    }), xt(c => {
+                        if (a = !0, Eg(c)) this.events.next(new It(i.id, this.urlSerializer.serialize(i.extractedUrl), c.message, c.cancellationCode)), sE(c) ? this.events.next(new ir(c.url, c.navigationBehaviorOptions)) : i.resolve(!1);
+                        else {
+                            let l = new to(i.id, this.urlSerializer.serialize(i.extractedUrl), c, i.targetSnapshot ?? void 0);
+                            try {
+                                let u = Je(this.environmentInjector, () => this.navigationErrorHandler?.(l));
+                                if (u instanceof oo) {
+                                    let {
+                                        message: d,
+                                        cancellationCode: v
+                                    } = Ds(this.urlSerializer, u);
+                                    this.events.next(new It(i.id, this.urlSerializer.serialize(i.extractedUrl), d, v)), this.events.next(new ir(u.redirectTo, u.navigationBehaviorOptions))
+                                } else {
+                                    this.events.next(l);
+                                    let d = t.errorHandler(c);
+                                    i.resolve(!!d)
+                                }
+                            } catch (u) {
+                                this.options.resolveNavigationPromiseOnError ? i.resolve(!1) : i.reject(u)
+                            }
+                        }
+                        return _e
+                    }))
+                }))
+            }
+            cancelNavigationTransition(t, r, o) {
+                let i = new It(t.id, this.urlSerializer.serialize(t.extractedUrl), r, o);
+                this.events.next(i), t.resolve(!1)
+            }
+            isUpdatingInternalState() {
+                return this.currentTransition?.extractedUrl.toString() !== this.currentTransition?.currentUrlTree.toString()
+            }
+            isUpdatedBrowserUrl() {
+                let t = this.urlHandlingStrategy.extract(this.urlSerializer.parse(this.location.path(!0))),
+                    r = this.currentNavigation?.targetBrowserUrl ?? this.currentNavigation?.extractedUrl;
+                return t.toString() !== r?.toString() && !this.currentNavigation?.extras.skipLocationChange
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac,
+                    providedIn: "root"
+                })
+            }
+        }
+        return e
+    })();
+
+function tI(e) {
+    return e !== Jr
+}
+var nI = (() => {
+        class e {
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: () => g(rI),
+                    providedIn: "root"
+                })
+            }
+        }
+        return e
+    })(),
+    Jl = class {
+        shouldDetach(n) {
+            return !1
+        }
+        store(n, t) {}
+        shouldAttach(n) {
+            return !1
+        }
+        retrieve(n) {
+            return null
+        }
+        shouldReuseRoute(n, t) {
+            return n.routeConfig === t.routeConfig
+        }
+    },
+    rI = (() => {
+        class e extends Jl {
+            static {
+                this.\u0275fac = (() => {
+                    let t;
+                    return function(o) {
+                        return (t || (t = Ic(e)))(o || e)
+                    }
+                })()
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac,
+                    providedIn: "root"
+                })
+            }
+        }
+        return e
+    })(),
+    Ag = (() => {
+        class e {
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: () => g(oI),
+                    providedIn: "root"
+                })
+            }
+        }
+        return e
+    })(),
+    oI = (() => {
+        class e extends Ag {
+            constructor() {
+                super(...arguments), this.location = g(Qn), this.urlSerializer = g(ar), this.options = g(ho, {
+                    optional: !0
+                }) || {}, this.canceledNavigationResolution = this.options.canceledNavigationResolution || "replace", this.urlHandlingStrategy = g(ru), this.urlUpdateStrategy = this.options.urlUpdateStrategy || "deferred", this.currentUrlTree = new bt, this.rawUrlTree = this.currentUrlTree, this.currentPageId = 0, this.lastSuccessfulId = -1, this.routerState = vg(null), this.stateMemento = this.createStateMemento()
+            }
+            getCurrentUrlTree() {
+                return this.currentUrlTree
+            }
+            getRawUrlTree() {
+                return this.rawUrlTree
+            }
+            restoredState() {
+                return this.location.getState()
+            }
+            get browserPageId() {
+                return this.canceledNavigationResolution !== "computed" ? this.currentPageId : this.restoredState()?.\u0275routerPageId ?? this.currentPageId
+            }
+            getRouterState() {
+                return this.routerState
+            }
+            createStateMemento() {
+                return {
+                    rawUrlTree: this.rawUrlTree,
+                    currentUrlTree: this.currentUrlTree,
+                    routerState: this.routerState
+                }
+            }
+            registerNonRouterCurrentEntryChangeListener(t) {
+                return this.location.subscribe(r => {
+                    r.type === "popstate" && t(r.url, r.state)
+                })
+            }
+            handleRouterEvent(t, r) {
+                if (t instanceof or) this.stateMemento = this.createStateMemento();
+                else if (t instanceof Ht) this.rawUrlTree = r.initialUrl;
+                else if (t instanceof ps) {
+                    if (this.urlUpdateStrategy === "eager" && !r.extras.skipLocationChange) {
+                        let o = this.urlHandlingStrategy.merge(r.finalUrl, r.initialUrl);
+                        this.setBrowserUrl(r.targetBrowserUrl ?? o, r)
+                    }
+                } else t instanceof no ? (this.currentUrlTree = r.finalUrl, this.rawUrlTree = this.urlHandlingStrategy.merge(r.finalUrl, r.initialUrl), this.routerState = r.targetRouterState, this.urlUpdateStrategy === "deferred" && !r.extras.skipLocationChange && this.setBrowserUrl(r.targetBrowserUrl ?? this.rawUrlTree, r)) : t instanceof It && (t.code === Re.GuardRejected || t.code === Re.NoDataFromResolver) ? this.restoreHistory(r) : t instanceof to ? this.restoreHistory(r, !0) : t instanceof ft && (this.lastSuccessfulId = t.id, this.currentPageId = this.browserPageId)
+            }
+            setBrowserUrl(t, r) {
+                let o = t instanceof bt ? this.urlSerializer.serialize(t) : t;
+                if (this.location.isCurrentPathEqualTo(o) || r.extras.replaceUrl) {
+                    let i = this.browserPageId,
+                        s = D(D({}, r.extras.state), this.generateNgRouterState(r.id, i));
+                    this.location.replaceState(o, "", s)
+                } else {
+                    let i = D(D({}, r.extras.state), this.generateNgRouterState(r.id, this.browserPageId + 1));
+                    this.location.go(o, "", i)
+                }
+            }
+            restoreHistory(t, r = !1) {
+                if (this.canceledNavigationResolution === "computed") {
+                    let o = this.browserPageId,
+                        i = this.currentPageId - o;
+                    i !== 0 ? this.location.historyGo(i) : this.currentUrlTree === t.finalUrl && i === 0 && (this.resetState(t), this.resetUrlToCurrentUrlTree())
+                } else this.canceledNavigationResolution === "replace" && (r && this.resetState(t), this.resetUrlToCurrentUrlTree())
+            }
+            resetState(t) {
+                this.routerState = this.stateMemento.routerState, this.currentUrlTree = this.stateMemento.currentUrlTree, this.rawUrlTree = this.urlHandlingStrategy.merge(this.currentUrlTree, t.finalUrl ?? this.rawUrlTree)
+            }
+            resetUrlToCurrentUrlTree() {
+                this.location.replaceState(this.urlSerializer.serialize(this.rawUrlTree), "", this.generateNgRouterState(this.lastSuccessfulId, this.currentPageId))
+            }
+            generateNgRouterState(t, r) {
+                return this.canceledNavigationResolution === "computed" ? {
+                    navigationId: t,
+                    \u0275routerPageId: r
+                } : {
+                    navigationId: t
+                }
+            }
+            static {
+                this.\u0275fac = (() => {
+                    let t;
+                    return function(o) {
+                        return (t || (t = Ic(e)))(o || e)
+                    }
+                })()
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac,
+                    providedIn: "root"
+                })
+            }
+        }
+        return e
+    })(),
+    Yr = function(e) {
+        return e[e.COMPLETE = 0] = "COMPLETE", e[e.FAILED = 1] = "FAILED", e[e.REDIRECTING = 2] = "REDIRECTING", e
+    }(Yr || {});
+
+function Pg(e, n) {
+    e.events.pipe(Me(t => t instanceof ft || t instanceof It || t instanceof to || t instanceof Ht), k(t => t instanceof ft || t instanceof Ht ? Yr.COMPLETE : (t instanceof It ? t.code === Re.Redirect || t.code === Re.SupersededByNewNavigation : !1) ? Yr.REDIRECTING : Yr.FAILED), Me(t => t !== Yr.REDIRECTING), gt(1)).subscribe(() => {
+        n()
+    })
+}
+
+function iI(e) {
+    throw e
+}
+var sI = {
+        paths: "exact",
+        fragment: "ignored",
+        matrixParams: "ignored",
+        queryParams: "exact"
+    },
+    aI = {
+        paths: "subset",
+        fragment: "ignored",
+        matrixParams: "ignored",
+        queryParams: "subset"
+    },
+    _t = (() => {
+        class e {
+            get currentUrlTree() {
+                return this.stateManager.getCurrentUrlTree()
+            }
+            get rawUrlTree() {
+                return this.stateManager.getRawUrlTree()
+            }
+            get events() {
+                return this._events
+            }
+            get routerState() {
+                return this.stateManager.getRouterState()
+            }
+            constructor() {
+                this.disposed = !1, this.console = g(qi), this.stateManager = g(Ag), this.options = g(ho, {
+                    optional: !0
+                }) || {}, this.pendingTasks = g(an), this.urlUpdateStrategy = this.options.urlUpdateStrategy || "deferred", this.navigationTransitions = g(_s), this.urlSerializer = g(ar), this.location = g(Qn), this.urlHandlingStrategy = g(ru), this._events = new he, this.errorHandler = this.options.errorHandler || iI, this.navigated = !1, this.routeReuseStrategy = g(nI), this.onSameUrlNavigation = this.options.onSameUrlNavigation || "ignore", this.config = g(ao, {
+                    optional: !0
+                })?.flat() ?? [], this.componentInputBindingEnabled = !!g(Is, {
+                    optional: !0
+                }), this.eventsSubscription = new X, this.resetConfig(this.config), this.navigationTransitions.setupNavigations(this, this.currentUrlTree, this.routerState).subscribe({
+                    error: t => {
+                        this.console.warn(t)
+                    }
+                }), this.subscribeToNavigationEvents()
+            }
+            subscribeToNavigationEvents() {
+                let t = this.navigationTransitions.events.subscribe(r => {
+                    try {
+                        let o = this.navigationTransitions.currentTransition,
+                            i = this.navigationTransitions.currentNavigation;
+                        if (o !== null && i !== null) {
+                            if (this.stateManager.handleRouterEvent(r, i), r instanceof It && r.code !== Re.Redirect && r.code !== Re.SupersededByNewNavigation) this.navigated = !0;
+                            else if (r instanceof ft) this.navigated = !0;
+                            else if (r instanceof ir) {
+                                let s = r.navigationBehaviorOptions,
+                                    a = this.urlHandlingStrategy.merge(r.url, o.currentRawUrl),
+                                    c = D({
+                                        browserUrl: o.extras.browserUrl,
+                                        info: o.extras.info,
+                                        skipLocationChange: o.extras.skipLocationChange,
+                                        replaceUrl: o.extras.replaceUrl || this.urlUpdateStrategy === "eager" || tI(o.source)
+                                    }, s);
+                                this.scheduleNavigation(a, Jr, null, c, {
+                                    resolve: o.resolve,
+                                    reject: o.reject,
+                                    promise: o.promise
+                                })
+                            }
+                        }
+                        lI(r) && this._events.next(r)
+                    } catch (o) {
+                        this.navigationTransitions.transitionAbortSubject.next(o)
+                    }
+                });
+                this.eventsSubscription.add(t)
+            }
+            resetRootComponentType(t) {
+                this.routerState.root.component = t, this.navigationTransitions.rootComponentType = t
+            }
+            initialNavigation() {
+                this.setUpLocationChangeListener(), this.navigationTransitions.hasRequestedNavigation || this.navigateToSyncWithBrowser(this.location.path(!0), Jr, this.stateManager.restoredState())
+            }
+            setUpLocationChangeListener() {
+                this.nonRouterCurrentEntryChangeSubscription ??= this.stateManager.registerNonRouterCurrentEntryChangeListener((t, r) => {
+                    setTimeout(() => {
+                        this.navigateToSyncWithBrowser(t, "popstate", r)
+                    }, 0)
+                })
+            }
+            navigateToSyncWithBrowser(t, r, o) {
+                let i = {
+                        replaceUrl: !0
+                    },
+                    s = o?.navigationId ? o : null;
+                if (o) {
+                    let c = D({}, o);
+                    delete c.navigationId, delete c.\u0275routerPageId, Object.keys(c).length !== 0 && (i.state = c)
+                }
+                let a = this.parseUrl(t);
+                this.scheduleNavigation(a, r, s, i)
+            }
+            get url() {
+                return this.serializeUrl(this.currentUrlTree)
+            }
+            getCurrentNavigation() {
+                return this.navigationTransitions.currentNavigation
+            }
+            get lastSuccessfulNavigation() {
+                return this.navigationTransitions.lastSuccessfulNavigation
+            }
+            resetConfig(t) {
+                this.config = t.map(tu), this.navigated = !1
+            }
+            ngOnDestroy() {
+                this.dispose()
+            }
+            dispose() {
+                this.navigationTransitions.complete(), this.nonRouterCurrentEntryChangeSubscription && (this.nonRouterCurrentEntryChangeSubscription.unsubscribe(), this.nonRouterCurrentEntryChangeSubscription = void 0), this.disposed = !0, this.eventsSubscription.unsubscribe()
+            }
+            createUrlTree(t, r = {}) {
+                let {
+                    relativeTo: o,
+                    queryParams: i,
+                    fragment: s,
+                    queryParamsHandling: a,
+                    preserveFragment: c
+                } = r, l = c ? this.currentUrlTree.fragment : s, u = null;
+                switch (a ?? this.options.defaultQueryParamsHandling) {
+                    case "merge":
+                        u = D(D({}, this.currentUrlTree.queryParams), i);
+                        break;
+                    case "preserve":
+                        u = this.currentUrlTree.queryParams;
+                        break;
+                    default:
+                        u = i || null
+                }
+                u !== null && (u = this.removeEmptyProps(u));
+                let d;
+                try {
+                    let v = o ? o.snapshot : this.routerState.snapshot.root;
+                    d = hg(v)
+                } catch {
+                    (typeof t[0] != "string" || t[0][0] !== "/") && (t = []), d = this.currentUrlTree.root
+                }
+                return pg(d, t, u, l ?? null)
+            }
+            navigateByUrl(t, r = {
+                skipLocationChange: !1
+            }) {
+                let o = fn(t) ? t : this.parseUrl(t),
+                    i = this.urlHandlingStrategy.merge(o, this.rawUrlTree);
+                return this.scheduleNavigation(i, Jr, null, r)
+            }
+            navigate(t, r = {
+                skipLocationChange: !1
+            }) {
+                return cI(t), this.navigateByUrl(this.createUrlTree(t, r), r)
+            }
+            serializeUrl(t) {
+                return this.urlSerializer.serialize(t)
+            }
+            parseUrl(t) {
+                try {
+                    return this.urlSerializer.parse(t)
+                } catch {
+                    return this.urlSerializer.parse("/")
+                }
+            }
+            isActive(t, r) {
+                let o;
+                if (r === !0 ? o = D({}, sI) : r === !1 ? o = D({}, aI) : o = r, fn(t)) return qp(this.currentUrlTree, t, o);
+                let i = this.parseUrl(t);
+                return qp(this.currentUrlTree, i, o)
+            }
+            removeEmptyProps(t) {
+                return Object.entries(t).reduce((r, [o, i]) => (i != null && (r[o] = i), r), {})
+            }
+            scheduleNavigation(t, r, o, i, s) {
+                if (this.disposed) return Promise.resolve(!1);
+                let a, c, l;
+                s ? (a = s.resolve, c = s.reject, l = s.promise) : l = new Promise((d, v) => {
+                    a = d, c = v
+                });
+                let u = this.pendingTasks.add();
+                return Pg(this, () => {
+                    queueMicrotask(() => this.pendingTasks.remove(u))
+                }), this.navigationTransitions.handleNavigationRequest({
+                    source: r,
+                    restoredState: o,
+                    currentUrlTree: this.currentUrlTree,
+                    currentRawUrl: this.currentUrlTree,
+                    rawUrl: t,
+                    extras: i,
+                    resolve: a,
+                    reject: c,
+                    promise: l,
+                    currentSnapshot: this.routerState.snapshot,
+                    currentRouterState: this.routerState
+                }), l.catch(d => Promise.reject(d))
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac,
+                    providedIn: "root"
+                })
+            }
+        }
+        return e
+    })();
+
+function cI(e) {
+    for (let n = 0; n < e.length; n++)
+        if (e[n] == null) throw new E(4008, !1)
+}
+
+function lI(e) {
+    return !(e instanceof no) && !(e instanceof ir)
+}
+var lr = (() => {
+    class e {
+        constructor(t, r, o, i, s, a) {
+            this.router = t, this.route = r, this.tabIndexAttribute = o, this.renderer = i, this.el = s, this.locationStrategy = a, this.href = null, this.onChanges = new he, this.preserveFragment = !1, this.skipLocationChange = !1, this.replaceUrl = !1, this.routerLinkInput = null;
+            let c = s.nativeElement.tagName?.toLowerCase();
+            this.isAnchorElement = c === "a" || c === "area", this.isAnchorElement ? this.subscription = t.events.subscribe(l => {
+                l instanceof ft && this.updateHref()
+            }) : this.setTabIndexIfNotOnNativeEl("0")
+        }
+        setTabIndexIfNotOnNativeEl(t) {
+            this.tabIndexAttribute != null || this.isAnchorElement || this.applyAttributeValue("tabindex", t)
+        }
+        ngOnChanges(t) {
+            this.isAnchorElement && this.updateHref(), this.onChanges.next(this)
+        }
+        set routerLink(t) {
+            t == null ? (this.routerLinkInput = null, this.setTabIndexIfNotOnNativeEl(null)) : (fn(t) ? this.routerLinkInput = t : this.routerLinkInput = Array.isArray(t) ? t : [t], this.setTabIndexIfNotOnNativeEl("0"))
+        }
+        onClick(t, r, o, i, s) {
+            let a = this.urlTree;
+            if (a === null || this.isAnchorElement && (t !== 0 || r || o || i || s || typeof this.target == "string" && this.target != "_self")) return !0;
+            let c = {
+                skipLocationChange: this.skipLocationChange,
+                replaceUrl: this.replaceUrl,
+                state: this.state,
+                info: this.info
+            };
+            return this.router.navigateByUrl(a, c), !this.isAnchorElement
+        }
+        ngOnDestroy() {
+            this.subscription?.unsubscribe()
+        }
+        updateHref() {
+            let t = this.urlTree;
+            this.href = t !== null && this.locationStrategy ? this.locationStrategy?.prepareExternalUrl(this.router.serializeUrl(t)) : null;
+            let r = this.href === null ? null : oh(this.href, this.el.nativeElement.tagName.toLowerCase(), "href");
+            this.applyAttributeValue("href", r)
+        }
+        applyAttributeValue(t, r) {
+            let o = this.renderer,
+                i = this.el.nativeElement;
+            r !== null ? o.setAttribute(i, t, r) : o.removeAttribute(i, t)
+        }
+        get urlTree() {
+            return this.routerLinkInput === null ? null : fn(this.routerLinkInput) ? this.routerLinkInput : this.router.createUrlTree(this.routerLinkInput, {
+                relativeTo: this.relativeTo !== void 0 ? this.relativeTo : this.route,
+                queryParams: this.queryParams,
+                fragment: this.fragment,
+                queryParamsHandling: this.queryParamsHandling,
+                preserveFragment: this.preserveFragment
+            })
+        }
+        static {
+            this.\u0275fac = function(r) {
+                return new(r || e)(q(_t), q(zt), bc("tabindex"), q(Wn), q(cn), q(wt))
+            }
+        }
+        static {
+            this.\u0275dir = jt({
+                type: e,
+                selectors: [
+                    ["", "routerLink", ""]
+                ],
+                hostVars: 1,
+                hostBindings: function(r, o) {
+                    r & 1 && Q("click", function(s) {
+                        return o.onClick(s.button, s.ctrlKey, s.shiftKey, s.altKey, s.metaKey)
+                    }), r & 2 && Xc("target", o.target)
+                },
+                inputs: {
+                    target: "target",
+                    queryParams: "queryParams",
+                    fragment: "fragment",
+                    queryParamsHandling: "queryParamsHandling",
+                    state: "state",
+                    info: "info",
+                    relativeTo: "relativeTo",
+                    preserveFragment: [2, "preserveFragment", "preserveFragment", $r],
+                    skipLocationChange: [2, "skipLocationChange", "skipLocationChange", $r],
+                    replaceUrl: [2, "replaceUrl", "replaceUrl", $r],
+                    routerLink: "routerLink"
+                },
+                standalone: !0,
+                features: [Yc, Hn]
+            })
+        }
+    }
+    return e
+})();
+var Es = class {};
+var uI = (() => {
+        class e {
+            constructor(t, r, o, i, s) {
+                this.router = t, this.injector = o, this.preloadingStrategy = i, this.loader = s
+            }
+            setUpPreloading() {
+                this.subscription = this.router.events.pipe(Me(t => t instanceof ft), Tt(() => this.preload())).subscribe(() => {})
+            }
+            preload() {
+                return this.processRoutes(this.injector, this.router.config)
+            }
+            ngOnDestroy() {
+                this.subscription && this.subscription.unsubscribe()
+            }
+            processRoutes(t, r) {
+                let o = [];
+                for (let i of r) {
+                    i.providers && !i._injector && (i._injector = Gi(i.providers, t, `Route: ${i.path}`));
+                    let s = i._injector ?? t,
+                        a = i._loadedInjector ?? s;
+                    (i.loadChildren && !i._loadedRoutes && i.canLoad === void 0 || i.loadComponent && !i._loadedComponent) && o.push(this.preloadConfig(s, i)), (i.children || i._loadedRoutes) && o.push(this.processRoutes(a, i.children ?? i._loadedRoutes))
+                }
+                return J(o).pipe(En())
+            }
+            preloadConfig(t, r) {
+                return this.preloadingStrategy.preload(r, () => {
+                    let o;
+                    r.loadChildren && r.canLoad === void 0 ? o = this.loader.loadChildren(t, r) : o = _(null);
+                    let i = o.pipe(ee(s => s === null ? _(void 0) : (r._loadedRoutes = s.routes, r._loadedInjector = s.injector, this.processRoutes(s.injector ?? t, s.routes))));
+                    if (r.loadComponent && !r._loadedComponent) {
+                        let s = this.loader.loadComponent(r);
+                        return J([i, s]).pipe(En())
+                    } else return i
+                })
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)(x(_t), x(Yi), x(xe), x(Es), x(nu))
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac,
+                    providedIn: "root"
+                })
+            }
+        }
+        return e
+    })(),
+    ou = new b(""),
+    Rg = (() => {
+        class e {
+            constructor(t, r, o, i, s = {}) {
+                this.urlSerializer = t, this.transitions = r, this.viewportScroller = o, this.zone = i, this.options = s, this.lastId = 0, this.lastSource = "imperative", this.restoredId = 0, this.store = {}, s.scrollPositionRestoration ||= "disabled", s.anchorScrolling ||= "disabled"
+            }
+            init() {
+                this.options.scrollPositionRestoration !== "disabled" && this.viewportScroller.setHistoryScrollRestoration("manual"), this.routerEventsSubscription = this.createScrollEvents(), this.scrollEventsSubscription = this.consumeScrollEvents()
+            }
+            createScrollEvents() {
+                return this.transitions.events.subscribe(t => {
+                    t instanceof or ? (this.store[this.lastId] = this.viewportScroller.getScrollPosition(), this.lastSource = t.navigationTrigger, this.restoredId = t.restoredState ? t.restoredState.navigationId : 0) : t instanceof ft ? (this.lastId = t.id, this.scheduleScrollEvent(t, this.urlSerializer.parse(t.urlAfterRedirects).fragment)) : t instanceof Ht && t.code === hs.IgnoredSameUrlNavigation && (this.lastSource = void 0, this.restoredId = 0, this.scheduleScrollEvent(t, this.urlSerializer.parse(t.url).fragment))
+                })
+            }
+            consumeScrollEvents() {
+                return this.transitions.events.subscribe(t => {
+                    t instanceof gs && (t.position ? this.options.scrollPositionRestoration === "top" ? this.viewportScroller.scrollToPosition([0, 0]) : this.options.scrollPositionRestoration === "enabled" && this.viewportScroller.scrollToPosition(t.position) : t.anchor && this.options.anchorScrolling === "enabled" ? this.viewportScroller.scrollToAnchor(t.anchor) : this.options.scrollPositionRestoration !== "disabled" && this.viewportScroller.scrollToPosition([0, 0]))
+                })
+            }
+            scheduleScrollEvent(t, r) {
+                this.zone.runOutsideAngular(() => {
+                    setTimeout(() => {
+                        this.zone.run(() => {
+                            this.transitions.events.next(new gs(t, this.lastSource === "popstate" ? this.store[this.restoredId] : null, r))
+                        })
+                    }, 0)
+                })
+            }
+            ngOnDestroy() {
+                this.routerEventsSubscription?.unsubscribe(), this.scrollEventsSubscription?.unsubscribe()
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    yh()
+                }
+            }
+            static {
+                this.\u0275prov = I({
+                    token: e,
+                    factory: e.\u0275fac
+                })
+            }
+        }
+        return e
+    })();
+
+function kg(e, ...n) {
+    return on([{
+            provide: ao,
+            multi: !0,
+            useValue: e
+        },
+        [], {
+            provide: zt,
+            useFactory: Fg,
+            deps: [_t]
+        }, {
+            provide: ln,
+            multi: !0,
+            useFactory: jg
+        },
+        n.map(t => t.\u0275providers)
+    ])
+}
+
+function Fg(e) {
+    return e.routerState.root
+}
+
+function ur(e, n) {
+    return {
+        \u0275kind: e,
+        \u0275providers: n
+    }
+}
+
+function Lg(e = {}) {
+    return ur(4, [{
+        provide: ou,
+        useFactory: () => {
+            let t = g(hl),
+                r = g(W),
+                o = g(_s),
+                i = g(ar);
+            return new Rg(i, o, t, r, e)
+        }
+    }])
+}
+
+function jg() {
+    let e = g(Ke);
+    return n => {
+        let t = e.get(ut);
+        if (n !== t.components[0]) return;
+        let r = e.get(_t),
+            o = e.get(Vg);
+        e.get(iu) === 1 && r.initialNavigation(), e.get(Bg, null, N.Optional)?.setUpPreloading(), e.get(ou, null, N.Optional)?.init(), r.resetRootComponentType(t.componentTypes[0]), o.closed || (o.next(), o.complete(), o.unsubscribe())
+    }
+}
+var Vg = new b("", {
+        factory: () => new he
+    }),
+    iu = new b("", {
+        providedIn: "root",
+        factory: () => 1
+    });
+
+function dI() {
+    return ur(2, [{
+        provide: iu,
+        useValue: 0
+    }, {
+        provide: Zi,
+        multi: !0,
+        deps: [Ke],
+        useFactory: n => {
+            let t = n.get(bp, Promise.resolve());
+            return () => t.then(() => new Promise(r => {
+                let o = n.get(_t),
+                    i = n.get(Vg);
+                Pg(o, () => {
+                    r(!0)
+                }), n.get(_s).afterPreactivation = () => (r(!0), i.closed ? _(void 0) : i), o.initialNavigation()
+            }))
+        }
+    }])
+}
+
+function fI() {
+    return ur(3, [{
+        provide: Zi,
+        multi: !0,
+        useFactory: () => {
+            let n = g(_t);
+            return () => {
+                n.setUpLocationChangeListener()
+            }
+        }
+    }, {
+        provide: iu,
+        useValue: 2
+    }])
+}
+var Bg = new b("");
+
+function hI(e) {
+    return ur(0, [{
+        provide: Bg,
+        useExisting: uI
+    }, {
+        provide: Es,
+        useExisting: e
+    }])
+}
+
+function pI() {
+    return ur(8, [Kp, {
+        provide: Is,
+        useExisting: Kp
+    }])
+}
+
+function gI(e) {
+    let n = [{
+        provide: Og,
+        useValue: JE
+    }, {
+        provide: Ng,
+        useValue: D({
+            skipNextTransition: !!e?.skipInitialTransition
+        }, e)
+    }];
+    return ur(9, n)
+}
+var tg = new b("ROUTER_FORROOT_GUARD"),
+    mI = [Qn, {
+        provide: ar,
+        useClass: rr
+    }, _t, uo, {
+        provide: zt,
+        useFactory: Fg,
+        deps: [_t]
+    }, nu, []],
+    dr = (() => {
+        class e {
+            constructor(t) {}
+            static forRoot(t, r) {
+                return {
+                    ngModule: e,
+                    providers: [mI, [], {
+                        provide: ao,
+                        multi: !0,
+                        useValue: t
+                    }, {
+                        provide: tg,
+                        useFactory: DI,
+                        deps: [
+                            [_t, new Ei, new cc]
+                        ]
+                    }, {
+                        provide: ho,
+                        useValue: r || {}
+                    }, r?.useHash ? yI() : CI(), vI(), r?.preloadingStrategy ? hI(r.preloadingStrategy).\u0275providers : [], r?.initialNavigation ? wI(r) : [], r?.bindToComponentInputs ? pI().\u0275providers : [], r?.enableViewTransitions ? gI().\u0275providers : [], EI()]
+                }
+            }
+            static forChild(t) {
+                return {
+                    ngModule: e,
+                    providers: [{
+                        provide: ao,
+                        multi: !0,
+                        useValue: t
+                    }]
+                }
+            }
+            static {
+                this.\u0275fac = function(r) {
+                    return new(r || e)(x(tg, 8))
+                }
+            }
+            static {
+                this.\u0275mod = Or({
+                    type: e
+                })
+            }
+            static {
+                this.\u0275inj = xr({})
+            }
+        }
+        return e
+    })();
+
+function vI() {
+    return {
+        provide: ou,
+        useFactory: () => {
+            let e = g(hl),
+                n = g(W),
+                t = g(ho),
+                r = g(_s),
+                o = g(ar);
+            return t.scrollOffset && e.setOffset(t.scrollOffset), new Rg(o, r, e, n, t)
+        }
+    }
+}
+
+function yI() {
+    return {
+        provide: wt,
+        useClass: Mp
+    }
+}
+
+function CI() {
+    return {
+        provide: wt,
+        useClass: ll
+    }
+}
+
+function DI(e) {
+    return "guarded"
+}
+
+function wI(e) {
+    return [e.initialNavigation === "disabled" ? fI().\u0275providers : [], e.initialNavigation === "enabledBlocking" ? dI().\u0275providers : []]
+}
+var ng = new b("");
+
+function EI() {
+    return [{
+        provide: ng,
+        useFactory: jg
+    }, {
+        provide: ln,
+        multi: !0,
+        useExisting: ng
+    }]
+}
+var II = e => ({
+    large: e
+});
+
+function bI(e, n) {
+    if (e & 1 && R(0, "img", 5), e & 2) {
+        let t = V();
+        Vr("alt", t.title), w("src", t.image, yt)
+    }
+}
+
+function _I(e, n) {
+    if (e & 1 && (h(0, "video", 6), R(1, "source", 7), f()), e & 2) {
+        let t = V();
+        w("poster", t.image, yt), y(), w("src", t.video, yt)
+    }
+}
+
+function MI(e, n) {
+    if (e & 1 && (h(0, "h2", 3), p(1), f()), e & 2) {
+        let t = V();
+        y(), $e(t.description)
+    }
+}
+var Wt = class e {
+    title = "";
+    description = null;
+    image = null;
+    video = null;
+    large = !1;
+    static \u0275fac = function(t) {
+        return new(t || e)
+    };
+    static \u0275cmp = te({
+        type: e,
+        selectors: [
+            ["app-intro"]
+        ],
+        inputs: {
+            title: "title",
+            description: "description",
+            image: "image",
+            video: "video",
+            large: "large"
+        },
+        standalone: !0,
+        features: [re],
+        decls: 9,
+        vars: 9,
+        consts: [
+            [3, "ngClass"],
+            ["loading", "lazy", 3, "src", "alt", 4, "ngIf"],
+            ["muted", "true", "loop", "", "autoplay", "", 3, "poster", 4, "ngIf"],
+            ["lang", "en"],
+            ["lang", "en", 4, "ngIf"],
+            ["loading", "lazy", 3, "src", "alt"],
+            ["muted", "true", "loop", "", "autoplay", "", 3, "poster"],
+            ["type", "video/mp4", 3, "src"]
+        ],
+        template: function(t, r) {
+            t & 1 && (h(0, "section", 0), ne(1, bI, 1, 2, "img", 1)(2, _I, 2, 2, "video", 2), h(3, "article")(4, "div")(5, "h1", 3), p(6), f(), ne(7, MI, 2, 1, "h2", 4), f()()(), R(8, "aside")), t & 2 && (w("ngClass", Y(7, II, r.large)), y(), w("ngIf", r.image && !r.video), y(), w("ngIf", r.image && r.video), y(3), et("compact", r.description === null), y(), $e(r.title), y(), w("ngIf", r.description))
+        },
+        dependencies: [Et, Yn, Sp],
+        styles: ["section[_ngcontent-%COMP%]{align-items:flex-end;flex-direction:row;position:relative;display:flex;height:50vh;width:100%}section.large[_ngcontent-%COMP%]{height:calc(100vh - 248px)}section[_ngcontent-%COMP%] > img[_ngcontent-%COMP%], section[_ngcontent-%COMP%] > video[_ngcontent-%COMP%]{position:absolute;object-fit:cover;height:100%;width:100%;z-index:-1;left:0;top:0}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%]{background:var(--foreground-color);width:calc(100% - 192px);padding:10px 0 10px 10px;position:absolute;min-width:320px;bottom:-100px;right:0}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]{background-color:var(--background-color);justify-content:center;flex-direction:column;padding:20px;display:flex;width:100%}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > h1[_ngcontent-%COMP%], section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > h2[_ngcontent-%COMP%]{border-top:1px solid var(--foreground-color-dark);padding:10px}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > h1[_ngcontent-%COMP%]{color:var(--foreground-color);text-transform:uppercase;hyphens:auto}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > h1.compact[_ngcontent-%COMP%]{border:none;width:75%}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > h2[_ngcontent-%COMP%]{color:var(--foreground-color-dark)}aside[_ngcontent-%COMP%]{background:linear-gradient(to right,var(--accent-color-dark),var(--accent-color-darker));height:120px;width:100%}@media only screen and (max-width: 1080px){section[_ngcontent-%COMP%]{height:30vh}section.large[_ngcontent-%COMP%]{height:50vh}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > h1[_ngcontent-%COMP%]{font-size:24px}}"]
+    })
+};
+var Ug = e => ({
+        "background-color": e
+    }),
+    SI = e => [e];
+
+function xI(e, n) {
+    if (e & 1 && (h(0, "a", 0), p(1), f()), e & 2) {
+        let t = V();
+        Vr("href", t.link, yt), w("ngStyle", Y(3, Ug, "var(" + t.color + ")")), y(), $e(t.title)
+    }
+}
+
+function TI(e, n) {
+    if (e & 1 && (h(0, "a", 1), p(1), f()), e & 2) {
+        let t = V();
+        w("routerLink", Y(3, SI, t.link))("ngStyle", Y(5, Ug, "var(" + t.color + ")")), y(), $e(t.title)
+    }
+}
+var Ms = class e {
+    title = "";
+    color = "--border-color";
+    link = "/";
+    isRemote = !1;
+    ngOnInit() {
+        this.isValidHttpUrl(this.link) && (this.isRemote = !0)
+    }
+    isValidHttpUrl(n) {
+        return /^https?:\/\//i.test(n)
+    }
+    static \u0275fac = function(t) {
+        return new(t || e)
+    };
+    static \u0275cmp = te({
+        type: e,
+        selectors: [
+            ["app-button"]
+        ],
+        inputs: {
+            title: "title",
+            color: "color",
+            link: "link"
+        },
+        standalone: !0,
+        features: [re],
+        decls: 2,
+        vars: 1,
+        consts: [
+            ["target", "_blank", 3, "href", "ngStyle"],
+            [3, "routerLink", "ngStyle"]
+        ],
+        template: function(t, r) {
+            t & 1 && ne(0, xI, 2, 5, "a", 0)(1, TI, 2, 7, "a", 1), t & 2 && Ee(r.isRemote ? 0 : 1)
+        },
+        dependencies: [Et, Xi, dr, lr],
+        styles: ["a[_ngcontent-%COMP%]{border-radius:10px 5px;display:inline-block;padding:12.5px 25px;transition:all .5s;margin:20px 0}a[_ngcontent-%COMP%]:hover{color:var(--text-color);filter:brightness(1.25)}"]
+    })
+};
+var OI = (e, n) => ({
+        reverse: e,
+        cinema: n
+    }),
+    NI = e => ({
+        "background-color": e
+    }),
+    AI = e => ({
+        underline: e
+    });
+
+function PI(e, n) {
+    if (e & 1 && (h(0, "p"), p(1), f()), e & 2) {
+        let t = V();
+        y(), $e(t.content)
+    }
+}
+
+function RI(e, n) {
+    if (e & 1 && R(0, "app-button", 3), e & 2) {
+        let t = V();
+        w("title", t.button)("link", t.action)
+    }
+}
+var Zt = class e {
+    title = "";
+    content = null;
+    image = null;
+    cinema = !1;
+    color = "--accent-color-darker";
+    reverse = !1;
+    action = null;
+    button = "Learn More";
+    static \u0275fac = function(t) {
+        return new(t || e)
+    };
+    static \u0275cmp = te({
+        type: e,
+        selectors: [
+            ["app-section"]
+        ],
+        inputs: {
+            title: "title",
+            content: "content",
+            image: "image",
+            cinema: "cinema",
+            color: "color",
+            reverse: "reverse",
+            action: "action",
+            button: "button"
+        },
+        standalone: !0,
+        features: [re],
+        decls: 9,
+        vars: 14,
+        consts: [
+            [3, "ngClass"],
+            ["loading", "lazy", 3, "src"],
+            [3, "ngStyle"],
+            [3, "title", "link"]
+        ],
+        template: function(t, r) {
+            t & 1 && (h(0, "section", 0)(1, "aside"), R(2, "img", 1), f(), h(3, "article", 2)(4, "div")(5, "h2", 0), p(6), f(), ne(7, PI, 2, 1, "p")(8, RI, 1, 2, "app-button", 3), f()()()), t & 2 && (w("ngClass", ip(7, OI, r.reverse, r.cinema)), y(2), w("src", r.image, yt), y(), w("ngStyle", Y(10, NI, "var(" + r.color + ")")), y(2), w("ngClass", Y(12, AI, r.content)), y(), $e(r.title), y(), Ee(r.content ? 7 : -1), y(), Ee(r.action ? 8 : -1))
+        },
+        dependencies: [Et, Yn, Xi, Ms],
+        styles: ["section[_ngcontent-%COMP%]{padding:0 0 20px;display:flex}section[_ngcontent-%COMP%] > aside[_ngcontent-%COMP%]{position:relative;min-width:50%}section.cinema[_ngcontent-%COMP%] > aside[_ngcontent-%COMP%]{min-width:60%}section.reverse[_ngcontent-%COMP%] > aside[_ngcontent-%COMP%]{order:2}section[_ngcontent-%COMP%] > aside[_ngcontent-%COMP%] > img[_ngcontent-%COMP%]{position:absolute;object-fit:cover;height:100%;width:100%;z-index:-1;left:0;top:0}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%]{padding:25px 192px 25px 25px;min-height:240px;flex:1}section.reverse[_ngcontent-%COMP%] > article[_ngcontent-%COMP%]{padding:25px 25px 25px 192px;order:1}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]{width:100%}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > h2[_ngcontent-%COMP%]{padding:0 0 20px}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > h2.underline[_ngcontent-%COMP%]{border-bottom:1px solid var(--text-color)}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > p[_ngcontent-%COMP%]{padding:20px 0;line-height:2}@media only screen and (max-width: 1080px){section[_ngcontent-%COMP%]{flex-direction:column}section[_ngcontent-%COMP%] > aside[_ngcontent-%COMP%]{min-height:200px}section.reverse[_ngcontent-%COMP%] > aside[_ngcontent-%COMP%]{order:1}section[_ngcontent-%COMP%] > article[_ngcontent-%COMP%]{padding:20px}section.reverse[_ngcontent-%COMP%] > article[_ngcontent-%COMP%]{padding:20px;order:2}}"]
+    })
+};
+var Ss = class e {
+    constructor(n) {
+        this.titleService = n
+    }
+    ngOnInit() {
+        this.titleService.setTitle("Blockchain built on Trust and Value | Bitcoin Silver")
+    }
+    static \u0275fac = function(t) {
+        return new(t || e)(q($t))
+    };
+    static \u0275cmp = te({
+        type: e,
+        selectors: [
+            ["app-home"]
+        ],
+        standalone: !0,
+        features: [re],
+        decls: 4,
+        vars: 5,
+        consts: [
+            ["title", "Bitcoin Silver: A Blockchain Built on Trust, Ethics, and Value", "image", "assets/images/blockchain.jpg", "video", "assets/videos/hero.mp4", 3, "large"],
+            ["image", "assets/images/office.jpg", "title", "Welcome to Bitcoin Silver", "content", "Our mission is to revolutionize the preservation and growth of value through blockchain technology. We are committed to creating a transparent, community-driven platform that provides a secure and sustainable store of value for the long term. By harnessing advanced technology and fostering collaboration, we empower individuals and organizations to achieve financial sovereignty and long-term stability.", "color", "--info-color", "action", "/learn", 3, "cinema", "reverse"],
+            ["image", "assets/images/technology.jpg", "title", "Checkout our innovative Blockchain Solutions", "color", "--accent-color-darker", "action", "/solutions", 3, "cinema", "reverse"]
+        ],
+        template: function(t, r) {
+            t & 1 && (h(0, "section"), R(1, "app-intro", 0)(2, "app-section", 1)(3, "app-section", 2), f()), t & 2 && (y(), w("large", !0), y(), w("cinema", !1)("reverse", !1), y(), w("cinema", !0)("reverse", !0))
+        },
+        dependencies: [Wt, Zt]
+    })
+};
+var xs = class e {
+    constructor(n) {
+        this.titleService = n
+    }
+    ngOnInit() {
+        this.titleService.setTitle("Learn | Bitcoin Silver")
+    }
+    static \u0275fac = function(t) {
+        return new(t || e)(q($t))
+    };
+    static \u0275cmp = te({
+        type: e,
+        selectors: [
+            ["app-learn"]
+        ],
+        standalone: !0,
+        features: [re],
+        decls: 88,
+        vars: 2,
+        consts: [
+            ["title", "Learn", "description", "Advancing technologies for better lives", "image", "assets/images/learn.jpg"],
+            ["id", "blockchain"],
+            ["image", "assets/images/community.jpg", "title", "Get Started Now!", "content", "Join us in revolutionizing the digital commodity asset concept and blockchain space. Start your journey with BTCS today and become a part of our community-driven project. Discover how you can contribute, participate, and benefit from a transparent and innovative digital asset ecosystem.", "color", "--info-color", "action", "https://bitstorage.finance/spot/trading/BTCSUSDT", "button", "Buy Bitcoin Silver", 3, "cinema", "reverse"],
+            [1, "odd"],
+            ["id", "faq", 1, "odd"],
+            ["id", "roadmap"],
+            [1, "uppercase"]
+        ],
+        template: function(t, r) {
+            t & 1 && (h(0, "section"), R(1, "app-intro", 0), h(2, "h2"), p(3, "Blockchain and Bitcoin Silver"), f(), h(4, "article", 1)(5, "div")(6, "h3"), p(7, "\u25B7 Mission"), f(), h(8, "p"), p(9, "Our mission is to transform the way value is preserved and enhanced through blockchain technology. We aim to build a transparent, community-driven platform that offers a secure and sustainable reserve of value for the long term. By leveraging advanced technology and fostering cooperation, we empower individuals and organizations to achieve financial sovereignty and stability."), f(), h(10, "h3"), p(11, "\u25B7 Vision"), f(), h(12, "p"), p(13, " We envision a world where financial security and growth are within reach for everyone. Our blockchain platform strives to set a new standard for value storage and appreciation, moving beyond traditional financial systems. We see a future where collaboration, innovation, and trust drive our community, creating a more equitable and prosperous global economy."), f(), h(14, "p"), p(15, "Together, through our mission, vision, and values, we are building a blockchain platform that redefines how value is preserved, leaving a legacy of trust, transparency, and community-driven innovation. Join us in creating a brighter, more secure future for all."), f()(), h(16, "div")(17, "h3"), p(18, "\u{1F5F9} Trustworthiness"), f(), h(19, "p"), p(20, "Trust is the foundation of our platform. We are committed to the highest standards of security and reliability, ensuring that our users can depend on us to protect their assets and data with unwavering integrity."), f(), h(21, "h3"), p(22, "\u{1F5F9} Transparency"), f(), h(23, "p"), p(24, "Transparency is central to everything we do. We believe openness and accountability are vital for building a strong, resilient community. Our platform is fully transparent, with all transactions and processes visible to users, fostering mutual trust and understanding."), f(), h(25, "h3"), p(26, "\u{1F5F9} Community-Driven"), f(), h(27, "p"), p(28, "We are driven by our community. Every decision and development is shaped by the input and participation of our users. We value the collective wisdom and creativity of our community, knowing that together, we can achieve far more than we ever could alone."), f(), h(29, "h3"), p(30, "\u{1F5F9} Innovation"), f(), h(31, "p"), p(32, "Innovation fuels our progress. We are dedicated to exploring new technologies and methodologies to continually improve our platform. Our commitment to innovation ensures we stay at the forefront of the blockchain industry, offering unparalleled value and opportunities."), f()()(), R(33, "app-section", 2), h(34, "h2", 3), p(35, "Frequently Asked Questions"), f(), h(36, "article", 4)(37, "div")(38, "h3"), p(39, "\u24D8 What are the main goals of the BTCS project?"), f(), h(40, "p"), p(41, "The BTCS project aims to restore credibility in the cryptocurrency space by ensuring a secure and transparent protocol. We focus on addressing previous issues, safeguarding data, and providing a robust platform for all stakeholders."), f(), h(42, "h3"), p(43, "\u24D8 How does BTCS ensure the protection of investor interests?"), f(), h(44, "p"), p(45, "We have implemented comprehensive data safeguarding measures and backup solutions to protect investor interests. Our proactive approach includes continuous monitoring and technical support to maintain the integrity and security of the project."), f(), h(46, "h3"), p(47, "\u24D8 What is the BTCS teams commitment to the community?"), f(), h(48, "p"), p(49, "The BTCS team is dedicated to fostering an open and transparent environment. We are committed to keeping all operations and updates open to community members, ensuring that our project is truly community-driven and aligned with the highest standards of integrity."), f()(), h(50, "div")(51, "h3"), p(52, "\u24D8 How can I get involved with BTCS?"), f(), h(53, "p"), p(54, "You can get involved by joining our community on Discord, exploring our GitHub repository, and participating in our discussions and development efforts. Additionally, you can start mining with our primary pools or track our progress using the Block Explorer."), f(), h(55, "h3"), p(56, "\u24D8 What are the benefits of participating in the BTCS project?"), f(), h(57, "p"), p(58, "By participating in the BTCS project, you benefit from being part of a fair and transparent cryptocurrency initiative. You'll have access to innovative features, the opportunity to contribute to a community-driven project, and the potential for valuable returns as the project grows and succeeds."), f()()(), h(59, "h2"), p(60, "Roadmap"), f(), h(61, "article", 5)(62, "div")(63, "h3"), p(64, "\u{1F5F9} [Q3 2024]"), f(), h(65, "p", 6), p(66, "Select tech stack, code blockchain, start mining"), f(), h(67, "h3"), p(68, "\u{1F5F9} [Q4 2024]"), f(), h(69, "p", 6), p(70, "Improve infrastructure, build community, list on Tier 3 exchange"), f(), h(71, "h3"), p(72, "\u{1F5F9} [Q1 2025]"), f(), h(73, "p", 6), p(74, "Maintain infrastructure, enhance sustainability, list on Tier 2 exchange"), f()(), h(75, "div")(76, "h3"), p(77, "\u25A1 [Q2 2025]"), f(), h(78, "p", 6), p(79, "Launch P2P mobile exchange"), f(), h(80, "h3"), p(81, "\u25A1 [Q3 2025]"), f(), h(82, "p", 6), p(83, "Meet compliance milestones, increase user engagement"), f(), h(84, "h3"), p(85, "\u25A1 [Q4 2025/Q1 2026]"), f(), h(86, "p", 6), p(87, "Establish foundation, secure partnerships, list on Tier 1 exchange"), f()()()()), t & 2 && (y(33), w("cinema", !1)("reverse", !1))
+        },
+        dependencies: [Wt, Zt],
+        styles: ["article[_ngcontent-%COMP%]{background:var(--background-color);padding:0 192px 50px;display:flex;width:100%}article.odd[_ngcontent-%COMP%]{background:var(--accent-color-darker)}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]{flex:1}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]:last-child{margin:0 0 0 50px}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > h3[_ngcontent-%COMP%]{margin:0 0 20px}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > p[_ngcontent-%COMP%]{margin:0 0 25px}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > p.uppercase[_ngcontent-%COMP%]{text-transform:uppercase}h2[_ngcontent-%COMP%]{padding:50px 192px 10px}h2.odd[_ngcontent-%COMP%]{background:var(--accent-color-darker)}@media only screen and (max-width: 1080px){article[_ngcontent-%COMP%]{padding:0 20px 50px;flex-direction:column}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]:last-child{margin:0}h2[_ngcontent-%COMP%]{padding:50px 20px 10px}}"]
+    })
+};
+var Ts = class e {
+    constructor(n) {
+        this.titleService = n
+    }
+    ngOnInit() {
+        this.titleService.setTitle("Solutions | Bitcoin Silver")
+    }
+    static \u0275fac = function(t) {
+        return new(t || e)(q($t))
+    };
+    static \u0275cmp = te({
+        type: e,
+        selectors: [
+            ["app-solutions"]
+        ],
+        standalone: !0,
+        features: [re],
+        decls: 34,
+        vars: 6,
+        consts: [
+            ["title", "Solutions", "description", "Innovative solutions for the future", "image", "assets/images/solutions.jpg"],
+            ["id", "blockchain", "image", "assets/images/blockchain.jpg", "title", "Blockchain", "content", "Bitcoin Silver is a cryptocurrency forked from Bitcoin, designed to enhance transaction speed, security, and user experience. It addresses Bitcoin's scalability issues by implementing a modified consensus mechanism for faster block generation and higher transaction capacity. The blockchain utilizes advanced cryptographic techniques, ensuring a secure environment for digital assets. Bitcoin Silver also emphasizes decentralization, allowing community participation in the validation process to foster trust and reduce central control. Overall, Bitcoin Silver aims to offer a more accessible and efficient alternative in the cryptocurrency space, appealing to both investors and everyday users.", "color", "--info-color", "action", "https://github.com/bitcoin-silver", 3, "cinema", "reverse"],
+            ["id", "wallet", "image", "assets/images/wallet.jpg", "title", "Wallet", "content", "Our mobile wallet prioritizes user security by generating private keys offline, ensuring maximum protection for your cryptocurrencies. This offline key generation significantly reduces the risk of exposure to online threats, keeping your digital assets safe. The wallet allows you to easily send and receive cryptocurrencies while maintaining full control over your private keys. With a user-friendly interface, you can quickly access your funds, check balances, and track transactions on the go. Designed for security and convenience, our mobile wallet provides a reliable solution for managing your cryptocurrencies safely and efficiently.", "color", "--accent-color-darker", "action", "https://github.com/bitcoin-silver/core/releases/download/v1.0.2/bitcoinsilver-android.apk", "button", "Download Wallet", 3, "cinema", "reverse"],
+            ["image", "assets/images/community.jpg", "title", "Get Started Now!", "content", "Join us in revolutionizing the digital commodity asset concept and blockchain space. Start your journey with BTCS today and become a part of our community-driven project. Discover how you can contribute, participate, and benefit from a transparent and innovative digital asset ecosystem.", "color", "--info-color", "action", "https://bitstorage.finance/spot/trading/BTCSUSDT", "button", "Buy Bitcoin Silver", 3, "cinema", "reverse"]
+        ],
+        template: function(t, r) {
+            t & 1 && (h(0, "section"), R(1, "app-intro", 0)(2, "app-section", 1), h(3, "article")(4, "div")(5, "h3"), p(6, "Algorithm:"), R(7, "br"), p(8, "SHA256"), f(), h(9, "p"), p(10, "Using the SHA256 algorithm to ensure secure and efficient hashing."), f()(), h(11, "div")(12, "h3"), p(13, "Block Time:"), R(14, "br"), p(15, "5 Minutes"), f(), h(16, "p"), p(17, "Fast block generation time for quicker transaction confirmations."), f()(), h(18, "div")(19, "h3"), p(20, "Coin Maturity:"), R(21, "br"), p(22, "200 Blocks"), f(), h(23, "p"), p(24, "Coins become spendable after 200 blocks to enhance network security."), f()(), h(25, "div")(26, "h3"), p(27, "Maximum Supply:"), R(28, "br"), p(29, "21,470,000 BTCS"), f(), h(30, "p"), p(31, "Capped supply to maintain value and avoid inflation."), f()()(), R(32, "app-section", 2)(33, "app-section", 3), f()), t & 2 && (y(2), w("cinema", !1)("reverse", !1), y(30), w("cinema", !1)("reverse", !0), y(), w("cinema", !1)("reverse", !1))
+        },
+        dependencies: [Wt, Zt],
+        styles: ["article[_ngcontent-%COMP%]{background:var(--accent-color-dark);padding:50px 192px;display:flex;width:100%}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]{background:var(--accent-color-darker);border:5px solid var(--foreground-color);border-radius:10px 5px;padding:25px;flex:1}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]:not(:first-child){margin:0 0 0 25px}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > h3[_ngcontent-%COMP%]{margin:0 0 10px}@media only screen and (max-width: 1080px){article[_ngcontent-%COMP%]{flex-direction:column;padding:50px 20px}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]{margin:0}article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]:not(:first-child){margin:25px 0 0}}"]
+    })
+};
+var $g = [{
+    path: "",
+    component: Ss
+}, {
+    path: "learn",
+    component: xs
+}, {
+    path: "solutions",
+    component: Ts
+}, {
+    path: "**",
+    redirectTo: "",
+    pathMatch: "full"
+}];
+var Hg = {
+    providers: [fp({
+        eventCoalescing: !0
+    }), kg($g, Lg({
+        scrollPositionRestoration: "enabled",
+        anchorScrolling: "enabled"
+    })), Wp()]
+};
+var au = e => ({
+        compact: e
+    }),
+    ht = e => ({
+        expanded: e
+    }),
+    po = () => ["/learn"],
+    Os = () => ["/solutions"];
+
+function kI(e, n) {
+    e & 1 && Wi(0)
+}
+
+function FI(e, n) {
+    if (e & 1) {
+        let t = Ct();
+        h(0, "a", 7), Q("click", function() {
+            le(t);
+            let o = V();
+            return ue(o.isMobileMenuOpen = !o.isMobileMenuOpen)
+        }), p(1), f(), h(2, "div", 9), ne(3, kI, 1, 0, "ng-container", 10), f()
+    }
+    if (e & 2) {
+        let t = V(),
+            r = el(13);
+        y(), $e(t.isMobileMenuOpen ? "\u2715" : "\u2630"), y(), et("visible", t.isMobileMenuOpen), y(), w("ngTemplateOutlet", r)
+    }
+}
+
+function LI(e, n) {
+    e & 1 && Wi(0)
+}
+
+function jI(e, n) {
+    if (e & 1 && ne(0, LI, 1, 0, "ng-container", 10), e & 2) {
+        V();
+        let t = el(13);
+        w("ngTemplateOutlet", t)
+    }
+}
+
+function VI(e, n) {
+    if (e & 1) {
+        let t = Ct();
+        h(0, "p", 7), Q("click", function() {
+            le(t);
+            let o = V(2);
+            return ue(o.expanded = o.isMobile ? 1 : null)
+        }), p(1, "\u25BC"), f()
+    }
+}
+
+function BI(e, n) {
+    if (e & 1) {
+        let t = Ct();
+        h(0, "p", 7), Q("click", function() {
+            le(t);
+            let o = V(2);
+            return ue(o.expanded = o.isMobile ? 2 : null)
+        }), p(1, "\u25BC"), f()
+    }
+}
+
+function UI(e, n) {
+    if (e & 1) {
+        let t = Ct();
+        h(0, "p", 7), Q("click", function() {
+            le(t);
+            let o = V(2);
+            return ue(o.expanded = o.isMobile ? 3 : null)
+        }), p(1, "\u25BC"), f()
+    }
+}
+
+function $I(e, n) {
+    if (e & 1) {
+        let t = Ct();
+        h(0, "p", 7), Q("click", function() {
+            le(t);
+            let o = V(2);
+            return ue(o.expanded = o.isMobile ? 4 : null)
+        }), p(1, "\u25BC"), f()
+    }
+}
+
+function HI(e, n) {
+    if (e & 1) {
+        let t = Ct();
+        h(0, "p", 7), Q("click", function() {
+            le(t);
+            let o = V(2);
+            return ue(o.expanded = o.isMobile ? 5 : null)
+        }), p(1, "\u25BC"), f()
+    }
+}
+
+function zI(e, n) {
+    if (e & 1) {
+        let t = Ct();
+        h(0, "nav", 1)(1, "ul")(2, "li")(3, "span")(4, "a", 11), Q("click", function() {
+            le(t);
+            let o = V();
+            return ue(o.isMobileMenuOpen = !1)
+        }), p(5, "Learn"), f(), ne(6, VI, 2, 0, "p"), f(), h(7, "div", 1)(8, "article")(9, "h1"), p(10, "Learn"), f(), h(11, "p"), p(12, "Advancing technologies for better lives"), f(), h(13, "div")(14, "a", 12), Q("click", function() {
+            le(t);
+            let o = V();
+            return ue(o.isMobileMenuOpen = !1)
+        }), p(15, "Learn more"), f()()(), h(16, "ul")(17, "li")(18, "a", 13), Q("click", function() {
+            le(t);
+            let o = V();
+            return ue(o.isMobileMenuOpen = !1)
+        }), p(19, "Blockchain and Bitcoin Silver"), f()(), h(20, "li")(21, "a", 14), Q("click", function() {
+            le(t);
+            let o = V();
+            return ue(o.isMobileMenuOpen = !1)
+        }), p(22, "Frequently Asked Questions"), f()(), h(23, "li")(24, "a", 15), Q("click", function() {
+            le(t);
+            let o = V();
+            return ue(o.isMobileMenuOpen = !1)
+        }), p(25, "Roadmap"), f()(), h(26, "li")(27, "a", 16), p(28, "Explorer"), f()()(), h(29, "aside"), R(30, "img", 17), f()()(), h(31, "li")(32, "span")(33, "a", 11), Q("click", function() {
+            le(t);
+            let o = V();
+            return ue(o.isMobileMenuOpen = !1)
+        }), p(34, "Solutions"), f(), ne(35, BI, 2, 0, "p"), f(), h(36, "div", 1)(37, "article")(38, "h1"), p(39, "Solutions"), f(), h(40, "p"), p(41, "Innovative solutions for the future"), f(), h(42, "div")(43, "a", 12), Q("click", function() {
+            le(t);
+            let o = V();
+            return ue(o.isMobileMenuOpen = !1)
+        }), p(44, "Learn more"), f()()(), h(45, "ul")(46, "li")(47, "a", 13), Q("click", function() {
+            le(t);
+            let o = V();
+            return ue(o.isMobileMenuOpen = !1)
+        }), p(48, "Blockchain"), f()(), h(49, "li")(50, "a", 18), Q("click", function() {
+            le(t);
+            let o = V();
+            return ue(o.isMobileMenuOpen = !1)
+        }), p(51, "Wallet"), f()()(), h(52, "aside"), R(53, "img", 19), f()()(), h(54, "li")(55, "span")(56, "a", 1), p(57, "Invest"), f(), ne(58, UI, 2, 0, "p"), f(), h(59, "div", 1)(60, "article")(61, "h1"), p(62, "Invest"), f(), h(63, "p"), p(64, "Financial security and growth for everyone"), f()(), h(65, "ul")(66, "li")(67, "a", 20), p(68, "Bitstorage"), f()(), h(69, "li")(70, "a", 21), p(71, "Exbitron"), f()()(), h(72, "aside"), R(73, "img", 22), f()()(), h(74, "li")(75, "span")(76, "a", 1), p(77, "Community"), f(), ne(78, $I, 2, 0, "p"), f(), h(79, "div", 1)(80, "article")(81, "h1"), p(82, "Community"), f(), h(83, "p"), p(84, "Connecting and engaging with the community"), f()(), h(85, "ul")(86, "li")(87, "a", 23), p(88, "Discord"), f()(), h(89, "li")(90, "a", 24), p(91, "X (Twitter)"), f()(), h(92, "li")(93, "a", 25), p(94, "Facebook"), f()(), h(95, "li")(96, "a", 26), p(97, "Youtube"), f()()(), h(98, "aside"), R(99, "img", 27), f()()(), h(100, "li")(101, "span")(102, "a", 1), p(103, "Downloads"), f(), ne(104, HI, 2, 0, "p"), f(), h(105, "div", 1)(106, "article")(107, "h1"), p(108, "Downloads"), f(), h(109, "p"), p(110, "Your gateway to Bitcoin Silver resources"), f()(), h(111, "ul")(112, "li")(113, "a", 28), p(114, "Mobile Wallet"), f()(), h(115, "li")(116, "a", 29), p(117, "Linux Wallet"), f()(), h(118, "li")(119, "a", 30), p(120, "Windows Wallet"), f()(), h(121, "li")(122, "a", 31), p(123, "Whitepaper"), f()(), h(124, "li")(125, "a", 32), p(126, "Whitepaper (Technical)"), f()()(), h(127, "aside"), R(128, "img", 33), f()()(), h(129, "li")(130, "a", 34), p(131, "Developers"), f()()()()
+    }
+    if (e & 2) {
+        let t = V();
+        w("ngClass", Y(35, au, t.isCompact)), y(4), w("ngClass", Y(37, ht, t.expanded === 1))("routerLink", Ae(39, po)), y(2), Ee(t.expanded !== 1 ? 6 : -1), y(), w("ngClass", Y(40, ht, t.expanded === 1)), y(7), w("routerLink", Ae(42, po)), y(2), et("expanded", t.expanded === 1), y(2), w("routerLink", Ae(43, po)), y(3), w("routerLink", Ae(44, po)), y(3), w("routerLink", Ae(45, po)), y(9), w("ngClass", Y(46, ht, t.expanded === 2))("routerLink", Ae(48, Os)), y(2), Ee(t.expanded !== 2 ? 35 : -1), y(), w("ngClass", Y(49, ht, t.expanded === 2)), y(7), w("routerLink", Ae(51, Os)), y(2), et("expanded", t.expanded === 2), y(2), w("routerLink", Ae(52, Os)), y(3), w("routerLink", Ae(53, Os)), y(6), w("ngClass", Y(54, ht, t.expanded === 3)), y(2), Ee(t.expanded !== 3 ? 58 : -1), y(), w("ngClass", Y(56, ht, t.expanded === 3)), y(6), et("expanded", t.expanded === 3), y(11), w("ngClass", Y(58, ht, t.expanded === 4)), y(2), Ee(t.expanded !== 4 ? 78 : -1), y(), w("ngClass", Y(60, ht, t.expanded === 4)), y(6), et("expanded", t.expanded === 4), y(17), w("ngClass", Y(62, ht, t.expanded === 5)), y(2), Ee(t.expanded !== 5 ? 104 : -1), y(), w("ngClass", Y(64, ht, t.expanded === 5)), y(6), et("expanded", t.expanded === 5)
+    }
+}
+var Ns = class e {
+    isMobile = !1;
+    language = "en";
+    isCompact = !1;
+    isMobileMenuOpen = !1;
+    expanded = null;
+    switchLanguage(n) {
+        this.language = n
+    }
+    onWindowScroll() {
+        (window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0) > 64 ? this.isCompact = !0 : this.isCompact = !1
+    }
+    static \u0275fac = function(t) {
+        return new(t || e)
+    };
+    static \u0275cmp = te({
+        type: e,
+        selectors: [
+            ["app-header"]
+        ],
+        hostBindings: function(t, r) {
+            t & 1 && Q("scroll", function() {
+                return r.onWindowScroll()
+            }, !1, Li)
+        },
+        inputs: {
+            isMobile: "isMobile"
+        },
+        standalone: !0,
+        features: [re],
+        decls: 14,
+        vars: 9,
+        consts: [
+            ["sharedLinks", ""],
+            [3, "ngClass"],
+            [1, "logo"],
+            ["href", "https://bitcoin-silver.github.io"],
+            ["src", "assets/images/logo.png"],
+            [1, "navigation"],
+            [1, "shortcuts"],
+            [3, "click"],
+            [1, "categories"],
+            [1, "mobile-navigation"],
+            [4, "ngTemplateOutlet"],
+            [3, "click", "ngClass", "routerLink"],
+            [3, "click", "routerLink"],
+            ["fragment", "blockchain", 3, "click", "routerLink"],
+            ["fragment", "faq", 3, "click", "routerLink"],
+            ["fragment", "roadmap", 3, "click", "routerLink"],
+            ["href", "http://explorer.btcs.pools4mining.com:3001/", "target", "_blank"],
+            ["src", "assets/images/learn.jpg"],
+            ["fragment", "wallet", 3, "click", "routerLink"],
+            ["src", "assets/images/solutions.jpg"],
+            ["href", "https://bitstorage.finance/spot/trading/BTCSUSDT", "target", "_blank"],
+            ["href", "https://app.exbitron.com/exchange/?market=BTCS-USDT", "target", "_blank"],
+            ["src", "assets/images/technology.jpg"],
+            ["href", "https://discord.com/invite/MCGn7dzvgd", "target", "_blank"],
+            ["href", "https://x.com/Bitcoin_Silver_", "target", "_blank"],
+            ["href", "https://www.facebook.com/BitcoinSilver.BTCS/", "target", "_blank"],
+            ["href", "https://youtube.com/@bitcoinsilver", "target", "_blank"],
+            ["src", "assets/images/community.jpg"],
+            ["href", "https://github.com/bitcoin-silver/core/releases/download/v1.0.2/bitcoinsilver-android.apk", "target", "_blank"],
+            ["href", "https://github.com/bitcoin-silver/core/releases/download/v1.0.2/bitcoinsilver-linux.tar.gz", "target", "_blank"],
+            ["href", "https://github.com/bitcoin-silver/core/releases/download/v1.0.2/bitcoinsilver-windows.zip", "target", "_blank"],
+            ["href", "https://bitcoin-silver.github.io/assets/documents/whitepaper.pdf", "target", "_blank"],
+            ["href", "https://bitcoin-silver.github.io/assets/documents/whitepaper_technical.pdf", "target", "_blank"],
+            ["src", "assets/images/downloads.jpg"],
+            ["href", "https://github.com/bitcoin-silver", "target", "_blank"]
+        ],
+        template: function(t, r) {
+            if (t & 1) {
+                let o = Ct();
+                R(0, "aside", 1), h(1, "header", 1)(2, "div", 2)(3, "a", 3), R(4, "img", 4), f()(), h(5, "div", 5)(6, "div", 6)(7, "a", 7), Q("click", function() {
+                    return le(o), ue(r.switchLanguage("en"))
+                }), p(8, "EN"), f()(), h(9, "div", 8), ne(10, FI, 4, 4)(11, jI, 1, 1, "ng-container"), f()()(), ne(12, zI, 132, 66, "ng-template", null, 0, ap)
+            }
+            t & 2 && (w("ngClass", Y(5, au, r.isCompact)), y(), w("ngClass", Y(7, au, r.isCompact)), y(6), et("active", r.language === "en"), y(3), Ee(r.isMobile ? 10 : 11))
+        },
+        dependencies: [Et, Yn, xp, dr, lr],
+        styles: ['aside[_ngcontent-%COMP%]{height:128px}aside.compact[_ngcontent-%COMP%]{height:64px}header[_ngcontent-%COMP%]{background:var(--background-color);transition:height .25s;flex-direction:row;padding:0 192px;position:fixed;display:flex;height:128px;width:100vw;z-index:98;top:0}header.compact[_ngcontent-%COMP%]{flex-direction:row-reverse;height:64px}header[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%]{align-items:flex-end;padding:0 0 35px;display:flex;height:100%;width:220px}header.compact[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%]{align-items:center;padding:0;order:1}header.compact[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%]{width:164px}header[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]{align-items:center;display:flex;width:100%}header[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%] > a[_ngcontent-%COMP%] > img[_ngcontent-%COMP%]{width:100%}header[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%]{flex-direction:column;display:flex;flex:1}header.compact[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%]{flex-direction:row}header[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%] > .shortcuts[_ngcontent-%COMP%]{justify-content:flex-end;align-items:center;padding:20px 0;display:flex}header[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%] > .shortcuts[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]{font-size:14px}header.compact[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%] > .shortcuts[_ngcontent-%COMP%]{order:3}header[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%] > .categories[_ngcontent-%COMP%]{justify-content:flex-end;display:flex;flex:1}header.compact[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%] > .categories[_ngcontent-%COMP%]{justify-content:center;align-items:center;order:2}header[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%]   .mobile-navigation[_ngcontent-%COMP%]{background-color:var(--background-color);height:calc(100vh - 100px);flex-direction:column;transition:right .5s;position:absolute;overflow-y:auto;display:flex;width:100%;top:100px;right:-100%}header[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%]   .mobile-navigation.visible[_ngcontent-%COMP%]{right:0}header.compact[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%]   .mobile-navigation[_ngcontent-%COMP%]{height:calc(100vh - 64px);top:64px}nav[_ngcontent-%COMP%]{height:100%}nav[_ngcontent-%COMP%]   a[_ngcontent-%COMP%]{font-size:20px}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%]{flex-direction:row;display:flex;height:100%}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%], nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%]{list-style:none}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > span[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]{display:block;height:100%}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > span[_ngcontent-%COMP%] > p[_ngcontent-%COMP%]{color:var(--accent-color-dark);text-align:right;cursor:pointer;padding:0 5px;display:none}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%]{margin:0 0 0 20px;position:relative;display:flex;height:100%}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%]:hover:after{background:var(--accent-color-dark);position:absolute;display:block;height:5px;width:50%;content:"";bottom:0;left:25%}nav.compact[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%]{align-items:center}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%]:hover > div[_ngcontent-%COMP%]{pointer-events:auto;opacity:1}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]{border-top:5px solid var(--accent-color-dark);background:var(--background-color);pointer-events:none;min-height:300px;position:fixed;display:flex;width:100%;opacity:0;z-index:2;top:128px;left:0}nav.compact[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]{top:64px}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > article[_ngcontent-%COMP%], nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%], nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > aside[_ngcontent-%COMP%]{flex-direction:column;display:flex;flex:1}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > article[_ngcontent-%COMP%]{background:var(--accent-color-darker);padding:50px 0 50px 192px;width:30%}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > h1[_ngcontent-%COMP%]{color:var(--accent-color)}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > p[_ngcontent-%COMP%]{padding:20px 0}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]{color:var(--accent-color)}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > article[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]:hover{color:var(--text-color)}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%]{padding:50px 25px;width:30%}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%]{padding:0 0 10px}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > aside[_ngcontent-%COMP%]{justify-content:right;padding:50px 192px 50px 0;width:40%}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > aside[_ngcontent-%COMP%] > img[_ngcontent-%COMP%]{object-fit:cover;height:150px;width:100%}@media only screen and (max-width: 1080px){aside[_ngcontent-%COMP%]{height:100px}header[_ngcontent-%COMP%]{height:100px}header[_ngcontent-%COMP%], header.compact[_ngcontent-%COMP%]{padding:0 20px}header[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%]{padding:0 0 15px;width:150px}header.compact[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%]{width:120px;padding:0}header[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%] > .shortcuts[_ngcontent-%COMP%]{padding:20px 0 10px}header.compact[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%] > .shortcuts[_ngcontent-%COMP%]{padding:0;order:2;flex:1}header.compact[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%] > .categories[_ngcontent-%COMP%]{flex:none;order:3}header[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%] > .categories[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]{font-size:28px}header.compact[_ngcontent-%COMP%] > .navigation[_ngcontent-%COMP%] > .categories[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]{margin:0 0 0 25px}nav[_ngcontent-%COMP%]{background:var(--accent-color-darker);overflow-y:auto;min-height:100%;padding:20px;height:auto}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%]{flex-direction:column;height:auto}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%]{border-bottom:1px solid var(--accent-color);flex-direction:column;padding:10px 0;display:flex;margin:0}nav.compact[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%]{align-items:flex-start}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > span[_ngcontent-%COMP%]{justify-content:space-between;display:flex;width:100%}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > span[_ngcontent-%COMP%] > a.expanded[_ngcontent-%COMP%]{color:var(--accent-color)}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > span[_ngcontent-%COMP%] > p[_ngcontent-%COMP%]{display:block}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]{pointer-events:auto;background:none;position:static;min-height:auto;display:none;border:none;width:100%;opacity:1}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div.expanded[_ngcontent-%COMP%]{display:block}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%]{overflow:hidden;width:100%;height:0}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > ul.expanded[_ngcontent-%COMP%]{padding:0 0 10px;height:auto}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > ul.expanded[_ngcontent-%COMP%] > li[_ngcontent-%COMP%]{padding:10px 0 0}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > article[_ngcontent-%COMP%]{display:none}nav[_ngcontent-%COMP%] > ul[_ngcontent-%COMP%] > li[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > aside[_ngcontent-%COMP%]{display:none}}']
+    })
+};
+var GI = () => ["/learn"],
+    WI = () => ["/solutions"],
+    As = class e {
+        static \u0275fac = function(t) {
+            return new(t || e)
+        };
+        static \u0275cmp = te({
+            type: e,
+            selectors: [
+                ["app-footer"]
+            ],
+            standalone: !0,
+            features: [re],
+            decls: 40,
+            vars: 4,
+            consts: [
+                [1, "logo"],
+                ["href", "http://bitcoin-silver.github.io"],
+                ["src", "assets/images/logo.png"],
+                [1, "links"],
+                [1, "internal"],
+                [3, "routerLink"],
+                ["href", "https://github.com/bitcoin-silver", "target", "_blank"],
+                [1, "external"],
+                ["href", "https://www.livecoinwatch.com/price/BitcoinSilverv2-____BTCS", "target", "_blank"],
+                ["href", "https://miningpoolstats.stream/bitcoinsilver", "target", "_blank"],
+                ["href", "https://bitstorage.finance/spot/trading/BTCSUSDT", "target", "_blank"],
+                ["href", "https://app.exbitron.com/exchange/?market=BTCS-USDT", "target", "_blank"],
+                ["href", "https://discord.com/invite/MCGn7dzvgd", "target", "_blank"],
+                ["xmlns", "http://www.w3.org/2000/svg", "viewBox", "0 0 640 512"],
+                ["fill", "currentColor", "d", "M524.5 69.8a1.5 1.5 0 0 0 -.8-.7A485.1 485.1 0 0 0 404.1 32a1.8 1.8 0 0 0 -1.9 .9 337.5 337.5 0 0 0 -14.9 30.6 447.8 447.8 0 0 0 -134.4 0 309.5 309.5 0 0 0 -15.1-30.6 1.9 1.9 0 0 0 -1.9-.9A483.7 483.7 0 0 0 116.1 69.1a1.7 1.7 0 0 0 -.8 .7C39.1 183.7 18.2 294.7 28.4 404.4a2 2 0 0 0 .8 1.4A487.7 487.7 0 0 0 176 479.9a1.9 1.9 0 0 0 2.1-.7A348.2 348.2 0 0 0 208.1 430.4a1.9 1.9 0 0 0 -1-2.6 321.2 321.2 0 0 1 -45.9-21.9 1.9 1.9 0 0 1 -.2-3.1c3.1-2.3 6.2-4.7 9.1-7.1a1.8 1.8 0 0 1 1.9-.3c96.2 43.9 200.4 43.9 295.5 0a1.8 1.8 0 0 1 1.9 .2c2.9 2.4 6 4.9 9.1 7.2a1.9 1.9 0 0 1 -.2 3.1 301.4 301.4 0 0 1 -45.9 21.8 1.9 1.9 0 0 0 -1 2.6 391.1 391.1 0 0 0 30 48.8 1.9 1.9 0 0 0 2.1 .7A486 486 0 0 0 610.7 405.7a1.9 1.9 0 0 0 .8-1.4C623.7 277.6 590.9 167.5 524.5 69.8z"],
+                ["href", "https://x.com/Bitcoin_Silver_", "target", "_blank"],
+                ["xmlns", "http://www.w3.org/2000/svg", "viewBox", "0 0 512 512"],
+                ["fill", "currentColor", "d", "M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z"],
+                ["href", "https://www.facebook.com/BitcoinSilver.BTCS/", "target", "_blank"],
+                ["xmlns", "http://www.w3.org/2000/svg", "viewBox", "0 0 320 512"],
+                ["fill", "currentColor", "d", "M80 299.3V512H196V299.3h86.5l18-97.8H196V166.9c0-51.7 20.3-71.5 72.7-71.5c16.3 0 29.4 .4 37 1.2V7.9C291.4 4 256.4 0 236.2 0C129.3 0 80 50.5 80 159.4v42.1H14v97.8H80z"],
+                ["href", "https://youtube.com/@bitcoinsilver", "target", "_blank"],
+                ["xmlns", "http://www.w3.org/2000/svg", "viewBox", "0 0 576 512"],
+                ["fill", "currentColor", "d", "M549.7 124.1c-6.3-23.7-24.8-42.3-48.3-48.6C458.8 64 288 64 288 64S117.2 64 74.6 75.5c-23.5 6.3-42 24.9-48.3 48.6-11.4 42.9-11.4 132.3-11.4 132.3s0 89.4 11.4 132.3c6.3 23.7 24.8 41.5 48.3 47.8C117.2 448 288 448 288 448s170.8 0 213.4-11.5c23.5-6.3 42-24.2 48.3-47.8 11.4-42.9 11.4-132.3 11.4-132.3s0-89.4-11.4-132.3zm-317.5 213.5V175.2l142.7 81.2-142.7 81.2z"]
+            ],
+            template: function(t, r) {
+                t & 1 && (h(0, "footer")(1, "div", 0)(2, "a", 1), R(3, "img", 2), f()(), h(4, "div", 3)(5, "div", 4)(6, "a", 5), p(7, "Learn"), f(), h(8, "a", 5), p(9, "Solutions"), f(), h(10, "a", 6), p(11, "Developers"), f()(), h(12, "p"), p(13, "Related Websites"), f(), h(14, "div", 7)(15, "a", 8), p(16, "Livecoinwatch"), f(), h(17, "a", 9), p(18, "Miningpoolstats"), f()(), h(19, "div", 7)(20, "a", 10), p(21, "Bitstorage"), f(), h(22, "a", 11), p(23, "Exbitron"), f()()()(), h(24, "aside")(25, "p"), p(26, "\xA9 2024 Bitcoin Silver. All rights reserved."), f(), h(27, "div")(28, "a", 12), Rr(), h(29, "svg", 13), R(30, "path", 14), f()(), Ti(), h(31, "a", 15), Rr(), h(32, "svg", 16), R(33, "path", 17), f()(), Ti(), h(34, "a", 18), Rr(), h(35, "svg", 19), R(36, "path", 20), f()(), Ti(), h(37, "a", 21), Rr(), h(38, "svg", 22), R(39, "path", 23), f()()()()), t & 2 && (y(6), w("routerLink", Ae(2, GI)), y(2), w("routerLink", Ae(3, WI)))
+            },
+            dependencies: [dr, lr],
+            styles: ["footer[_ngcontent-%COMP%]{background:var(--accent-color-dark);padding:50px 192px;flex-direction:row;display:flex;width:100%}footer[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%]{transition:width .25s;align-items:flex-end;margin:0 100px 0 0;display:flex;height:100%;width:164px}footer[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]{align-items:center;display:flex;width:100%}footer[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%] > a[_ngcontent-%COMP%] > img[_ngcontent-%COMP%]{width:100%}footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%]{flex-direction:column;height:100px;display:flex;flex:1}footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%] > .internal[_ngcontent-%COMP%], footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%] > .external[_ngcontent-%COMP%]{flex-direction:row;flex-wrap:wrap;display:flex}footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%] > .internal[_ngcontent-%COMP%]{margin:0 0 25px}footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%] > .internal[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]{font-size:20px}footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%] > .internal[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]:not(:first-child), footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%] > .external[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]:not(:first-child){margin:0 0 0 20px}footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%] > p[_ngcontent-%COMP%]{color:var(--foreground-color);font-size:14px}footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%] > .external[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]{color:var(--accent-color)}footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%] > .external[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]:hover{color:var(--text-color)}aside[_ngcontent-%COMP%]{background:var(--accent-color-darker);padding:10px 192px 50px;display:flex;width:100%}aside[_ngcontent-%COMP%] > p[_ngcontent-%COMP%]{color:var(--foreground-color);font-size:14px}aside[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]{justify-content:flex-end;display:flex;flex:1}aside[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > a[_ngcontent-%COMP%] > svg[_ngcontent-%COMP%]{color:var(--foreground-color);height:16px}aside[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > a[_ngcontent-%COMP%]{margin:0 0 0 10px}aside[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > a[_ngcontent-%COMP%] > svg[_ngcontent-%COMP%]:hover{color:var(--accent-color)}@media only screen and (max-width: 1080px){footer[_ngcontent-%COMP%]{flex-direction:column;padding:50px 20px}footer[_ngcontent-%COMP%] > .logo[_ngcontent-%COMP%]{padding:0 0 25px;width:150px}footer[_ngcontent-%COMP%] > .links[_ngcontent-%COMP%]{flex:none}aside[_ngcontent-%COMP%]{padding:10px 20px 50px}}"]
+        })
+    };
+
+function qI(e, n) {
+    e & 1 && (h(0, "aside")(1, "div")(2, "p"), p(3, "\u25E0"), f(), h(4, "p"), p(5, "\u25E1"), f()()())
+}
+
+function ZI(e, n) {
+    if (e & 1 && (h(0, "main"), R(1, "app-header", 0)(2, "router-outlet")(3, "app-footer"), f()), e & 2) {
+        let t = V();
+        y(), w("isMobile", t.isMobile)
+    }
+}
+var Ps = class e {
+    constructor(n) {
+        this.platformId = n
+    }
+    isMobile = !1;
+    isLoading = !0;
+    ngOnInit() {
+        this.checkIfMobile()
+    }
+    ngAfterViewInit() {
+        setTimeout(() => {
+            this.isLoading = !1
+        }, 1e3)
+    }
+    onWindowResize() {
+        this.checkIfMobile()
+    }
+    checkIfMobile() {
+        fl(this.platformId) && (this.isMobile = window.innerWidth <= 1080)
+    }
+    static \u0275fac = function(t) {
+        return new(t || e)(q(Ne))
+    };
+    static \u0275cmp = te({
+        type: e,
+        selectors: [
+            ["app-root"]
+        ],
+        hostBindings: function(t, r) {
+            t & 1 && Q("resize", function() {
+                return r.onWindowResize()
+            }, !1, Li)
+        },
+        standalone: !0,
+        features: [re],
+        decls: 2,
+        vars: 1,
+        consts: [
+            [3, "isMobile"]
+        ],
+        template: function(t, r) {
+            t & 1 && ne(0, qI, 6, 0, "aside")(1, ZI, 4, 1, "main"), t & 2 && Ee(r.isLoading ? 0 : 1)
+        },
+        dependencies: [eu, Ns, As],
+        styles: ["aside[_ngcontent-%COMP%]{background:var(--background-color);justify-content:center;align-items:center;position:fixed;display:flex;height:100%;width:100%;z-index:99;inset:0}aside[_ngcontent-%COMP%] > div[_ngcontent-%COMP%]{animation:_ngcontent-%COMP%_rotate .5s linear infinite;justify-content:center;flex-direction:column;align-items:center;display:flex}aside[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > p[_ngcontent-%COMP%]{font-size:96px;line-height:0;margin:0}aside[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > p[_ngcontent-%COMP%]:nth-child(1){color:var(--accent-color)}aside[_ngcontent-%COMP%] > div[_ngcontent-%COMP%] > p[_ngcontent-%COMP%]:nth-child(2){color:var(--accent-color-dark)}@keyframes _ngcontent-%COMP%_rotate{0%{transform:rotate(0)}to{transform:rotate(360deg)}}main[_ngcontent-%COMP%]{flex-direction:column;min-height:100vh;display:flex}section[_ngcontent-%COMP%]{flex:1}"]
+    })
+};
+Gp(Ps, Hg).catch(e => console.error(e));
