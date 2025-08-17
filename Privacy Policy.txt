@@ -2,14 +2,17 @@ Privacy Policy
 Effective Date: September 5, 2024
 Issued by: Bitcoin Silver Team
 Contact: info@bitcoinsilver.top
-We, the creators of the Bitcoin Silver (BTCS) Wallet, are committed to protecting your privacy. This Privacy Policy outlines the types of data we collect, how it is used, and your rights regarding that data. By using our app, you agree to the practices described below.
+
+We, the creators of the Bitcoin Silver (BTCS) Wallet, are committed to protecting your privacy. 
+    This Privacy Policy outlines the types of data we collect, how it is used, and your rights regarding that data. 
+    By using our app, you agree to the practices described below.
 
 1. Data Collection and Processing
 • 	We do not collect personal information unless you voluntarily provide it.
 • 	The BTCS Wallet operates without requiring registration and does not request sensitive data such as your name, address, or email.
 • 	However, certain data may be automatically collected during app usage:
-• Device Information: Includes device type, operating system, and app version.
-• Transaction Data: Public blockchain details such as sending/receiving addresses and transaction amounts.
+•   Device Information: Includes device type, operating system, and app version.
+•   Transaction Data: Public blockchain details such as sending/receiving addresses and transaction amounts.
 
 2. Use of Collected Data
 • 	Automatically collected data is used solely to ensure the wallet functions properly.
@@ -34,3 +37,4 @@ We, the creators of the Bitcoin Silver (BTCS) Wallet, are committed to protectin
 7. Contact
 If you have any questions or concerns about this Privacy Policy, feel free to reach out to us at:
 info@bitcoinsilver.top
+
