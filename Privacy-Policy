@@ -1,10 +1,10 @@
 Privacy Policy
-Effective Date: September 5, 2024
+Effective Date: November 7, 2025
 Issued by: Bitcoin Silver Team
 Contact: info@bitcoinsilver.top
 
-We, the creators of the Bitcoin Silver (BTCS) Wallet, are committed to protecting your privacy. 
-    This Privacy Policy outlines the types of data we collect, how it is used, and your rights regarding that data. 
+We, the creators of the Bitcoin Silver (BTCS) Wallet, are committed to protecting your privacy.
+    This Privacy Policy outlines the types of data we collect, how it is used, and your rights regarding that data.
     By using our app, you agree to the practices described below.
 
 1. Data Collection and Processing
@@ -13,20 +13,25 @@ We, the creators of the Bitcoin Silver (BTCS) Wallet, are committed to protectin
 • 	However, certain data may be automatically collected during app usage:
 •   Device Information: Includes device type, operating system, and app version.
 •   Transaction Data: Public blockchain details such as sending/receiving addresses and transaction amounts.
+•   Push Notifications: If enabled, we collect your wallet address and device notification token to send transaction alerts.
 
 2. Use of Collected Data
 • 	Automatically collected data is used solely to ensure the wallet functions properly.
-• 	We do not store personal data on our servers.
+• 	Wallet addresses and device tokens are used exclusively to deliver push notifications about incoming transactions.
+• 	Notification data is stored on our secure server and automatically deleted when tokens become invalid.
 
 3. Sharing Data with Third Parties
-• 	We do not share personal data with third parties.
-• 	While blockchain transactions are publicly visible, we do not store or track this information.
+• 	We do not share personal data with third parties for marketing or advertising.
+• 	Push notifications are delivered via Firebase Cloud Messaging (Google), which processes device tokens as a data processor.
+• 	While blockchain transactions are publicly visible, we do not store or track this information beyond what is necessary for notifications.
 
 4. Data Security
 • 	Your privacy is our top priority.
 • 	Private keys and sensitive data remain stored locally on your device and are never transmitted to us or any third party.
 
 5. User Rights
+• 	You may disable push notifications at any time in the app settings.
+• 	Disabling notifications will remove your device token from our server.
 • 	Since we do not retain personal data, you may delete the app at any time without leaving any trace.
 • 	If our policy changes, you will be notified and given the opportunity to access, modify, or delete your data.
 
@@ -37,4 +42,3 @@ We, the creators of the Bitcoin Silver (BTCS) Wallet, are committed to protectin
 7. Contact
 If you have any questions or concerns about this Privacy Policy, feel free to reach out to us at:
 info@bitcoinsilver.top
-
