@@ -1,31 +1,40 @@
-name: Deploy React App to GitHub Pages
+# .github/workflows/deploy.yml
+name: Build and Deploy to GitHub Pages
 
 on:
   push:
     branches:
-      - main  # Dein Branch
+      - main
+
+permissions:
+  contents: write
+  pages: write
+  id-token: write
 
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Checkout repository
+      - name: Checkout 🛎️
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
 
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: 24.10.0  # Deine Node-Version
+          node-version: '24'
 
       - name: Install dependencies
         run: npm install
 
-      - name: Build project
-        run: npm run build  # Sollte deinen dist-Ordner erstellen
+      - name: Build
+        run: npm run build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./dist   # oder build, je nach Setup
 
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v6
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./dist  # Dein Build-Ordner
+        uses: actions/deploy-pages@v4
