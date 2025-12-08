@@ -7,7 +7,6 @@ export const RoadmapSection = () => {
       year: '2025',
       title: 'Foundation & Launch Phase',
       items: [
-        { text: 'Bitcoin Silver Mainnet launched', status: 'completed', date: 'July 18, 2025' },
         { text: 'Core Wallet (Windows & Linux) released', status: 'completed', date: 'August 20, 2025' },
         { text: 'Mobile Wallet released (Android & iOS*)', status: 'completed', date: 'August 15, 2025' },
         { text: 'Community building & exchange listing preparation', status: 'completed', date: 'September 10, 2025' },
