@@ -1,5 +1,4 @@
-# .github/workflows/deploy.yml
-name: Build and Deploy to GitHub Pages
+name: Build and Deploy React + Vite to GitHub Pages
 
 on:
   push:
@@ -12,11 +11,12 @@ permissions:
   id-token: write
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
     environment: github-pages
+
     steps:
-      - name: Checkout 🛎️
+      - name: Checkout repository
         uses: actions/checkout@v3
         with:
           fetch-depth: 0
@@ -27,12 +27,12 @@ jobs:
           node-version: '24'
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      - name: Build
+      - name: Build project
         run: npm run build
 
-      - name: Upload artifact
+      - name: Upload artifact to GitHub Pages
         uses: actions/upload-pages-artifact@v3
         with:
           path: ./dist
