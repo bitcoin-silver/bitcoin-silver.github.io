@@ -1,55 +1,8 @@
-import { motion, useMotionValue, animate } from 'framer-motion';
-import { useEffect, useState } from 'react';
+import { motion } from 'framer-motion';
 import { Button } from './ui/button';
 import POWAnimation from './POWAnimation';
 
-interface PriceData {
-  price: number;
-  marketcap: number;
-}
-
 export const HeroSection = () => {
-  const [data, setData] = useState<PriceData | null>(null);
-
-  // Motion Values für animiertes Counting
-  const priceMotion = useMotionValue(0);
-  const marketcapMotion = useMotionValue(0);
-
-  const [priceDisplay, setPriceDisplay] = useState('0');
-  const [marketcapDisplay, setMarketcapDisplay] = useState('0');
-
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const res = await fetch('https://bitcoinsilver.top/api/price');
-        const json = await res.json();
-        console.log(json);
-        if (json.data) {
-          const newPrice = Number(json.data.price);
-          const newMarketcap = Number(json.data.total_cap);
-          console.log(newPrice, newMarketcap);
-          setData({ price: newPrice, marketcap: newMarketcap });
-
-          // Animiertes Counting
-          animate(priceMotion, newPrice, {
-            duration: 1.2,
-            onUpdate: (latest) => setPriceDisplay(latest.toLocaleString(undefined, { maximumFractionDigits: 4 })),
-          });
-          animate(marketcapMotion, newMarketcap, {
-            duration: 1.2,
-            onUpdate: (latest) => setMarketcapDisplay(latest.toLocaleString(undefined, { maximumFractionDigits: 0 })),
-          });
-        }
-      } catch (err) {
-        console.error('Failed to fetch price data', err);
-      }
-    };
-
-    fetchData();
-    const interval = setInterval(fetchData, 10000); // alle 10 Sekunden aktualisieren
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <section className="relative py-20 md:py-32 overflow-hidden">
       <div className="container relative z-10">
@@ -125,7 +78,7 @@ export const HeroSection = () => {
             </div>
           </motion.div>
 
-          {/* Right content - POW Animation + Live Price */}
+          {/* Right content - POW Animation */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
@@ -133,28 +86,6 @@ export const HeroSection = () => {
             className="relative flex justify-center"
           >
             <div className="relative rounded-2xl border border-gray-400/30 bg-card/50 backdrop-blur p-6 shadow-lg shadow-gray-500/10 overflow-hidden max-w-[375px] w-full flex flex-col items-center gap-6">
-              
-              {/* Price & Market Cap */}
-              {data && (
-                <div className="w-full flex justify-between items-center gap-6">
-                  {/* Current Price */}
-                  <div className="flex-1 text-center">
-                    <div className="text-sm text-muted-foreground">Current Price</div>
-                    <div className="text-3xl md:text-4xl font-bold bg-gradient-to-r from-[#bfbfbf] via-gray-200 to-white bg-clip-text text-transparent">
-                      ${priceDisplay}
-                    </div>
-                  </div>
-
-                  {/* Market Cap */}
-                  <div className="flex-1 text-center">
-                    <div className="text-sm text-muted-foreground">Market Cap</div>
-                    <div className="text-xl font-semibold bg-gradient-to-r from-[#bfbfbf] via-gray-200 to-white bg-clip-text text-transparent">
-                      ${marketcapDisplay}
-                    </div>
-                  </div>
-                </div>
-              )}
-
               <POWAnimation />
 
               <div className="mt-4 text-center">
