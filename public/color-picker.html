@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Logo Color Picker</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            background: #000;
+            color: #fff;
+            font-family: monospace;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        canvas {
+            border: 2px solid #333;
+            cursor: crosshair;
+            max-width: 100%;
+        }
+        .colors {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .color-box {
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            font-size: 12px;
+        }
+        .info {
+            margin-top: 20px;
+            padding: 20px;
+            background: #111;
+            border-radius: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Bitcoin Silver Logo Color Analyzer</h1>
+        <p>Click on the logo to pick colors</p>
+        
+        <canvas id="canvas"></canvas>
+        
+        <div class="info">
+            <h3>Selected Color:</h3>
+            <div id="selectedColor"></div>
+        </div>
+        
+        <div class="info">
+            <h3>Dominant Colors:</h3>
+            <div id="dominantColors" class="colors"></div>
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('canvas');
+        const ctx = canvas.getContext('2d');
+        const img = new Image();
+        
+        img.onload = function() {
+            canvas.width = img.width;
+            canvas.height = img.height;
+            ctx.drawImage(img, 0, 0);
+            
+            // Extract dominant colors
+            extractDominantColors();
+        };
+        
+        img.src = '/logo.png';
+        
+        canvas.addEventListener('click', function(e) {
+            const rect = canvas.getBoundingClientRect();
+            const x = Math.floor((e.clientX - rect.left) * (canvas.width / rect.width));
+            const y = Math.floor((e.clientY - rect.top) * (canvas.height / rect.height));
+            
+            const pixel = ctx.getImageData(x, y, 1, 1).data;
+            const hex = rgbToHex(pixel[0], pixel[1], pixel[2]);
+            const hsl = rgbToHsl(pixel[0], pixel[1], pixel[2]);
+            
+            document.getElementById('selectedColor').innerHTML = `
+                <div style="background: ${hex}; padding: 40px; border-radius: 8px; margin: 10px 0;"></div>
+                <p><strong>HEX:</strong> ${hex}</p>
+                <p><strong>RGB:</strong> rgb(${pixel[0]}, ${pixel[1]}, ${pixel[2]})</p>
+                <p><strong>HSL:</strong> hsl(${hsl.h}, ${hsl.s}%, ${hsl.l}%)</p>
+            `;
+        });
+        
+        function extractDominantColors() {
+            const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+            const pixels = imageData.data;
+            const colorMap = {};
+            
+            // Sample every 10th pixel for performance
+            for (let i = 0; i < pixels.length; i += 40) {
+                const r = pixels[i];
+                const g = pixels[i + 1];
+                const b = pixels[i + 2];
+                const a = pixels[i + 3];
+                
+                // Skip transparent pixels
+                if (a < 128) continue;
+                
+                // Round to nearest 10 to group similar colors
+                const key = `${Math.round(r/10)*10},${Math.round(g/10)*10},${Math.round(b/10)*10}`;
+                colorMap[key] = (colorMap[key] || 0) + 1;
+            }
+            
+            // Sort by frequency
+            const sortedColors = Object.entries(colorMap)
+                .sort((a, b) => b[1] - a[1])
+                .slice(0, 10);
+            
+            const dominantColorsDiv = document.getElementById('dominantColors');
+            dominantColorsDiv.innerHTML = sortedColors.map(([rgb, count]) => {
+                const [r, g, b] = rgb.split(',').map(Number);
+                const hex = rgbToHex(r, g, b);
+                const hsl = rgbToHsl(r, g, b);
+                return `
+                    <div class="color-box" style="background: ${hex};">
+                        <div><strong>${hex}</strong></div>
+                        <div>HSL: ${hsl.h}, ${hsl.s}%, ${hsl.l}%</div>
+                        <div style="font-size: 10px; margin-top: 5px;">Count: ${count}</div>
+                    </div>
+                `;
+            }).join('');
+        }
+        
+        function rgbToHex(r, g, b) {
+            return '#' + [r, g, b].map(x => {
+                const hex = x.toString(16);
+                return hex.length === 1 ? '0' + hex : hex;
+            }).join('');
+        }
+        
+        function rgbToHsl(r, g, b) {
+            r /= 255;
+            g /= 255;
+            b /= 255;
+            
+            const max = Math.max(r, g, b);
+            const min = Math.min(r, g, b);
+            let h, s, l = (max + min) / 2;
+            
+            if (max === min) {
+                h = s = 0;
+            } else {
+                const d = max - min;
+                s = l > 0.5 ? d / (2 - max - min) : d / (max + min);
+                
+                switch (max) {
+                    case r: h = ((g - b) / d + (g < b ? 6 : 0)) / 6; break;
+                    case g: h = ((b - r) / d + 2) / 6; break;
+                    case b: h = ((r - g) / d + 4) / 6; break;
+                }
+            }
+            
+            return {
+                h: Math.round(h * 360),
+                s: Math.round(s * 100),
+                l: Math.round(l * 100)
+            };
+        }
+    </script>
+</body>
+</html>
+

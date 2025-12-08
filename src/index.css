@@ -1,0 +1,67 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Dunkles professionelles Grautöne-Theme für Bitcoin Silver */
+    --background: 0 0% 8%;           /* Haupt-Hintergrund dunkelgrau */
+    --foreground: 0 0% 75%;          /* Font Farbe: BTCS-Grau #bfbfbf */
+    --card: 0 0% 15%;                 /* Card / Container leicht helleres Dunkelgrau */
+    --card-foreground: 0 0% 75%;      /* Schrift auf Card */
+    --popover: 0 0% 15%;              /* Popovers / Modals */
+    --popover-foreground: 0 0% 75%;
+    --primary: 0 0% 35%;              /* Haupt-Buttons / Links, dunkelgrau */
+    --primary-foreground: 0 0% 75%;   /* weiße/graue Schrift auf Buttons */
+    --secondary: 0 0% 25%;            /* Secondary Buttons / Menüs */
+    --secondary-foreground: 0 0% 75%;
+    --muted: 0 0% 20%;                /* Für weniger wichtige Elemente */
+    --muted-foreground: 0 0% 60%;     /* etwas helleres Grau für Kontraste */
+    --accent: 0 0% 35%;               /* Für kleine Akzente, z.B. Icons */
+    --accent-foreground: 0 0% 75%;
+    --destructive: 0 62% 30%;         /* Rot für Warnungen / Löschungen */
+    --destructive-foreground: 0 0% 75%;
+    --border: 0 0% 25%;               /* Border Farbe */
+    --input: 0 0% 20%;                /* Input-Felder dunkelgrau */
+    --ring: 0 0% 35%;                 /* Fokus-Ring dunkelgrau */
+    --radius: 0.5rem;                 /* Runde Ecken */
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: hsl(var(--background));
+}
+
+::-webkit-scrollbar-thumb {
+  background: hsl(var(--primary));
+  border-radius: 5px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: hsl(var(--primary) / 0.8);
+}
+
+/* Smooth scroll */
+html {
+  scroll-behavior: smooth;
+  overflow-x: hidden !important;
+}
+
+body {
+    overflow-x: hidden !important;
+}
