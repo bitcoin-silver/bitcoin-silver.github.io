@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useBlockchainData } from "../hooks/useBlockchainData"; // Pfad ggf. anpassen
 
 interface BlockData {
   index: number;
@@ -7,50 +8,45 @@ interface BlockData {
 }
 
 export default function POWAnimation() {
+  const { stats, loading, isLiveData } = useBlockchainData();
   const [blocks, setBlocks] = useState<BlockData[]>([]);
   const [latestIndex, setLatestIndex] = useState<number | null>(null);
   const [highlight, setHighlight] = useState(false);
 
+  // Hilfsfunktion: simuliert Hashes
+  const generateFakeHash = (index: number) =>
+    Array.from({ length: 16 }, () =>
+      Math.floor(Math.random() * 16).toString(16)
+    ).join("");
+
   useEffect(() => {
-    async function fetchBlocks() {
-      try {
-        const countRes = await fetch(
-          "https://explorer.bitcoinsilver.top/api/getblockcount"
-        );
-        const count = await countRes.json();
+    if (!stats) return;
 
-        setLatestIndex((prev) => {
-          if (prev && count > prev) {
-            setHighlight(true);
-            setTimeout(() => setHighlight(false), 1500);
-          }
-          return count;
-        });
+    const count = stats.blockCount;
 
-        // Letzte 16 Blöcke
-        const indices = Array.from({ length: 16 }, (_, i) => count - i);
-        const blockPromises = indices.map(async (index) => {
-          const hashRes = await fetch(
-            `https://explorer.bitcoinsilver.top/api/getblockhash?index=${index}`
-          );
-          const hash = await hashRes.json();
-          return { index, hash };
-        });
-
-        const resolvedBlocks = await Promise.all(blockPromises);
-        setBlocks(resolvedBlocks);
-      } catch (err) {
-        console.error(err);
+    setLatestIndex((prev) => {
+      if (prev && count > prev) {
+        setHighlight(true);
+        setTimeout(() => setHighlight(false), 1500);
       }
-    }
+      return count;
+    });
 
-    fetchBlocks();
-    const interval = setInterval(fetchBlocks, 10000);
-    return () => clearInterval(interval);
-  }, []);
+    // Simuliere die letzten 16 Blöcke
+    const simulatedBlocks: BlockData[] = Array.from({ length: 16 }, (_, i) => {
+      const index = count - i;
+      return { index, hash: generateFakeHash(index) };
+    });
+
+    setBlocks(simulatedBlocks);
+  }, [stats]);
+
+  if (loading) {
+    return <div className="text-white">Loading blockchain data...</div>;
+  }
 
   return (
-    <div className="w-full">
+    <div className="w-full relative">
       {/* Highlight für neuen Block */}
       {latestIndex && (
         <motion.div
