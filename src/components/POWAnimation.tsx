@@ -8,13 +8,13 @@ interface BlockData {
 }
 
 export default function POWAnimation() {
-  const { stats, loading, isLiveData } = useBlockchainData();
+  const { stats, loading } = useBlockchainData();
   const [blocks, setBlocks] = useState<BlockData[]>([]);
   const [latestIndex, setLatestIndex] = useState<number | null>(null);
   const [highlight, setHighlight] = useState(false);
 
-  // Hilfsfunktion: simuliert Hashes
-  const generateFakeHash = (index: number) =>
+  // Hilfsfunktion: generiert zufälligen Hash
+  const generateFakeHash = () =>
     Array.from({ length: 16 }, () =>
       Math.floor(Math.random() * 16).toString(16)
     ).join("");
@@ -24,6 +24,7 @@ export default function POWAnimation() {
 
     const count = stats.blockCount;
 
+    // Highlight für neuen Block
     setLatestIndex((prev) => {
       if (prev && count > prev) {
         setHighlight(true);
@@ -33,9 +34,9 @@ export default function POWAnimation() {
     });
 
     // Simuliere die letzten 16 Blöcke
-    const simulatedBlocks: BlockData[] = Array.from({ length: 16 }, (_, i) => {
-      const index = count - i;
-      return { index, hash: generateFakeHash(index) };
+    const simulatedBlocks: BlockData[] = Array.from({ length: 16 }).map((_, i) => {
+      const blockIndex = count - i;
+      return { index: blockIndex, hash: generateFakeHash() };
     });
 
     setBlocks(simulatedBlocks);
