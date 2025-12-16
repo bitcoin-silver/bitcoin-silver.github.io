@@ -86,6 +86,7 @@ export const HeroSection = () => {
             className="relative flex justify-center"
           >
             <div className="relative rounded-2xl border border-gray-400/30 bg-card/50 backdrop-blur p-6 shadow-lg shadow-gray-500/10 overflow-hidden max-w-[375px] w-full flex flex-col items-center gap-6">
+
               <POWAnimation />
 
               <div className="mt-4 text-center">
