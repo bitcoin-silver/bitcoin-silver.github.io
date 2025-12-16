@@ -66,7 +66,7 @@ export default function FundraisingBar() {
 
         {/* CTA – Desktop only */}
         <a
-          href="https://t.me/official_bitcoinsilver"
+          href="https://t.me/official_bitcoinsilver/20973"
           target="_blank"
           rel="noopener noreferrer"
           className="ml-auto hidden md:inline-flex items-center rounded-full border border-white/20 px-4 py-1 text-white hover:bg-white/10 transition"
