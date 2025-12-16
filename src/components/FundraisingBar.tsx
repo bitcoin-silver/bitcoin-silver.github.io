@@ -1,8 +1,9 @@
 import { motion } from "framer-motion";
 
 const contributors = [
-  { name: "CrazyFrogUK", amount: 425 },
   { name: "N0_N4m391", amount: 3 },
+  { name: "CrazyFrogUK", amount: 425 },
+  { name: "vis_tos", amount: 5 },
 ];
 
 const GOAL_USDT = 3000;
