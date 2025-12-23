@@ -1,91 +1,109 @@
 import { motion } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
-const contributors = [
+/* ------------------ DATA ------------------ */
+
+type Contributor = {
+  name: string;
+  amount: number;
+  type: "USDT" | "BTCS";
+};
+
+const CONTRIBUTORS: Contributor[] = [
   { name: "CrazyFrogUK", amount: 425, type: "USDT" },
   { name: "vis_tos", amount: 5, type: "USDT" },
   { name: "N0_N4m391", amount: 3, type: "USDT" },
   { name: "SatoshiCryptoPro", amount: 492.5, type: "BTCS" },
 ];
 
-const GOAL_USDT = 3000;
 
-const formatAmount = (value: number) =>
-  value.toLocaleString("en-US", {
+/* ------------------ HELPERS ------------------ */
+
+const formatAmount = (v: number) =>
+  v.toLocaleString("en-US", {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,
   });
 
+/* ------------------ COMPONENT ------------------ */
+
 export default function FundraisingBar() {
-  /* ------------------ SORT & SPLIT ------------------ */
-  const usdtContributors = contributors
-    .filter(c => c.type === "USDT")
-    .sort((a, b) => b.amount - a.amount);
+  const containerRef = useRef<HTMLDivElement>(null);
+  const [scrollWidth, setScrollWidth] = useState(0);
 
-  const btcsContributors = contributors
-    .filter(c => c.type === "BTCS")
-    .sort((a, b) => b.amount - a.amount);
+  /* SORT */
+  const usdt = CONTRIBUTORS.filter(c => c.type === "USDT").sort(
+    (a, b) => b.amount - a.amount
+  );
+  const btcs = CONTRIBUTORS.filter(c => c.type === "BTCS").sort(
+    (a, b) => b.amount - a.amount
+  );
+  const contributors = [...usdt, ...btcs];
 
-  const sortedContributors = [...usdtContributors, ...btcsContributors];
+  /* TOTALS */
+  const totalUSDT = usdt.reduce((s, c) => s + c.amount, 0);
+  const totalBTCS = btcs.reduce((s, c) => s + c.amount, 0);
 
-  /* ------------------ TOTALS ------------------ */
-  const totalUSDT = usdtContributors.reduce((sum, c) => sum + c.amount, 0);
-  const totalBTCS = btcsContributors.reduce((sum, c) => sum + c.amount, 0);
-
-  const progress = Math.min(totalUSDT / GOAL_USDT, 1);
-
-  /* ------------------ TOGGLE DISPLAY ------------------ */
-  const [showType, setShowType] = useState("USDT");
+  /* TOGGLE */
+  const [show, setShow] = useState<"USDT" | "BTCS">("USDT");
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setShowType(prev => (prev === "USDT" ? "BTCS" : "USDT"));
-    }, 5000);
-
-    return () => clearInterval(interval);
+    const id = setInterval(
+      () => setShow(v => (v === "USDT" ? "BTCS" : "USDT")),
+      5000
+    );
+    return () => clearInterval(id);
   }, []);
 
-  const formattedGoal = formatAmount(GOAL_USDT);
+  /* 👉 MESSE EXAKTE BREITE */
+  useEffect(() => {
+    if (!containerRef.current) return;
+    setScrollWidth(containerRef.current.scrollWidth / 2);
+  }, [contributors]);
+
+  /* SPEED: px pro Sekunde (mobile wirkt automatisch schneller) */
+  const SPEED = 80; // px / sec
+  const duration = scrollWidth / SPEED;
 
   return (
-    <div className="w-full border-b border-gray-400/20 bg-black/60 backdrop-blur-md">
-      {/* Main container */}
+    <div className="w-full border-b border-white/10 bg-black/60 backdrop-blur-md">
       <div className="container flex flex-col gap-2 py-2 text-sm text-gray-200 md:flex-row md:items-center md:gap-6">
 
-        {/* LEFT / TOP */}
-        <div className="flex-shrink-0 flex items-center gap-3">
+        {/* LEFT */}
+        <div className="flex items-center gap-3 flex-shrink-0">
           <span className="text-gray-400 whitespace-nowrap">
             💰 CoinEx Listing Fund
           </span>
 
           <motion.span
-            key={showType}
+            key={show}
             initial={{ opacity: 0, y: 6 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.4 }}
-            className="text-white font-semibold whitespace-nowrap"
+            transition={{ duration: 0.3 }}
+            className="font-semibold text-white whitespace-nowrap"
           >
-            {showType === "USDT"
+            {show === "USDT"
               ? `${formatAmount(totalUSDT)} USDT collected`
               : `${formatAmount(totalBTCS)} BTCS collected`}
           </motion.span>
         </div>
 
-        {/* RIGHT / SCROLLER */}
+        {/* SCROLLER */}
         <div className="relative overflow-hidden md:flex-1">
           <div className="pointer-events-none absolute inset-y-0 left-0 w-8 bg-gradient-to-r from-black/60 to-transparent z-10" />
           <div className="pointer-events-none absolute inset-y-0 right-0 w-8 bg-gradient-to-l from-black/60 to-transparent z-10" />
 
           <motion.div
-            className="flex gap-3 whitespace-nowrap"
-            animate={{ x: ["0%", "-100%"] }}
+            ref={containerRef}
+            className="flex gap-3 whitespace-nowrap will-change-transform"
+            animate={{ x: [0, -scrollWidth] }}
             transition={{
+              duration,
               repeat: Infinity,
-              duration: 22,
               ease: "linear",
             }}
           >
-            {[...sortedContributors, ...sortedContributors].map((c, i) => (
+            {[...contributors, ...contributors].map((c, i) => (
               <div
                 key={i}
                 className={`px-3 py-1 rounded-full border ${
@@ -101,43 +119,6 @@ export default function FundraisingBar() {
               </div>
             ))}
           </motion.div>
-        </div>
-
-        {/* CTA – Desktop */}
-        <a
-          href="https://t.me/official_bitcoinsilver/20973"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="ml-auto hidden md:inline-flex items-center rounded-full border border-white/20 px-4 py-1 text-white hover:bg-white/10 transition"
-        >
-          Contribute
-        </a>
-      </div>
-
-      {/* CTA – Mobile */}
-      <div className="container md:hidden pb-2">
-        <a
-          href="https://t.me/official_bitcoinsilver/20973"
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex w-full items-center justify-center rounded-full border border-white/20 py-2 text-white hover:bg-white/10 transition"
-        >
-          Contribute
-        </a>
-      </div>
-
-      {/* PROGRESS BAR */}
-      <div className="container pb-2">
-        <div className="h-1.5 w-full rounded-full bg-white/10 overflow-hidden">
-          <motion.div
-            className="h-full bg-gradient-to-r from-gray-300 to-white"
-            initial={{ width: 0 }}
-            animate={{ width: `${progress * 100}%` }}
-            transition={{ duration: 0.8, ease: "easeOut" }}
-          />
-        </div>
-        <div className="mt-1 text-xs text-gray-400 text-right">
-          Goal: {formattedGoal} USDT
         </div>
       </div>
     </div>
