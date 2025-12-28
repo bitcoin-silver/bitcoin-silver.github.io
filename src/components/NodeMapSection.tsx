@@ -41,6 +41,7 @@ const createSilverIcon = () => {
       border: 2px solid rgba(255, 255, 255, 0.5);
       border-radius: 50%;
       box-shadow: 0 0 10px rgba(192, 192, 192, 0.6), 0 0 20px rgba(255, 255, 255, 0.4);
+      animation: marker-pulse 2s infinite;
     "></div>`,
     iconSize: [12, 12],
     iconAnchor: [6, 6],
