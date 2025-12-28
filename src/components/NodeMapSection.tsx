@@ -110,31 +110,6 @@ export function NodeMapSection() {
           </p>
         </div>
 
-        <div className="grid md:grid-cols-3 gap-4 mb-8">
-          <div className="bg-card border border-border rounded-lg p-6 text-center">
-            <div className="text-3xl font-bold text-primary mb-2">
-              {loading ? '...' : peersData?.count || 0}
-            </div>
-            <div className="text-sm text-muted-foreground">Active Nodes</div>
-          </div>
-          <div className="bg-card border border-border rounded-lg p-6 text-center">
-            <div className="text-3xl font-bold text-primary mb-2">
-              {loading ? '...' : countries.size}
-            </div>
-            <div className="text-sm text-muted-foreground">Countries</div>
-          </div>
-          <div className="bg-card border border-border rounded-lg p-6 text-center">
-            <div className="text-3xl font-bold text-primary mb-2">
-              {loading ? '...' :
-                validPeers.length > 0
-                  ? Math.round(validPeers.reduce((sum, p) => sum + (p.pingtime || 0), 0) / validPeers.length * 1000)
-                  : 0
-              }ms
-            </div>
-            <div className="text-sm text-muted-foreground">Avg Ping</div>
-          </div>
-        </div>
-
         <div className="bg-card border border-border rounded-xl overflow-hidden shadow-xl">
           <div className="relative h-[500px] w-full">
             {loading && (
