@@ -8,6 +8,7 @@ import { Header } from './components/Header';
 import FundraisingBar from "./components/FundraisingBar";
 import { HeroSection } from './components/HeroSection';
 import PlayStorePopup from './components/PlayStorePopup';
+import { NodeMapSection } from './components/NodeMapSection';
 
 function App() {
   return (
@@ -18,6 +19,9 @@ function App() {
       <main className="relative">
         {/* Hero Section */}
         <HeroSection />
+
+        {/* Node Map Section */}
+        <NodeMapSection />
 
         {/* Stats Section */}
         <StatsSection />
