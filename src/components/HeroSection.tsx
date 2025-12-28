@@ -4,7 +4,7 @@ import POWAnimation from './POWAnimation';
 
 export const HeroSection = () => {
   return (
-    <section className="relative py-20 md:py-32 overflow-hidden">
+    <section className="relative pt-20 pb-12 md:pt-32 md:pb-16 overflow-hidden">
       <div className="container relative z-10">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Left content */}

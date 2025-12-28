@@ -13,7 +13,7 @@ export default function DeblockVotePopup() {
           animate={{ opacity: 1, y: 0 }}
           exit={{ opacity: 0, y: 50 }}
           transition={{ duration: 0.4 }}
-          className="fixed bottom-4 right-4 z-50 w-[90%] max-w-[320px]"
+          className="fixed bottom-4 right-4 z-[9999] w-[90%] max-w-[320px]"
         >
           <div
             className="rounded-2xl p-4 flex flex-col gap-3 shadow-xl border border-gray-700"

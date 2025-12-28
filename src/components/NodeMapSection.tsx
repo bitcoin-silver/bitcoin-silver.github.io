@@ -3,6 +3,7 @@ import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { Globe } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 // Fix for default marker icons in React-Leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl;
@@ -94,23 +95,28 @@ export function NodeMapSection() {
   const validPeers = peersData?.peers.filter(p => p.lat && p.lon) || [];
 
   return (
-    <section className="py-20 px-4 bg-gradient-to-b from-background to-muted/20">
+    <section className="py-12 px-4">
       <div className="container mx-auto max-w-7xl">
-        <div className="text-center mb-12">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary mb-4">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          className="text-center mb-8"
+        >
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary">
             <Globe className="h-4 w-4" />
             <span className="text-sm font-medium">Global Network</span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Live Node Map
-          </h2>
-          <p className="text-muted-foreground text-lg max-w-2xl mx-auto">
-            Real-time visualization of Bitcoin Silver nodes around the world
-          </p>
-        </div>
+        </motion.div>
 
-        <div className="bg-card border border-border rounded-xl overflow-hidden shadow-xl">
-          <div className="relative h-[500px] w-full">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.2 }}
+          className="bg-card border border-border rounded-xl overflow-hidden shadow-xl"
+        >
+          <div className="relative h-[575px] w-full">
             {loading && (
               <div className="absolute inset-0 flex items-center justify-center bg-background/80 z-10">
                 <div className="text-center">
@@ -131,9 +137,11 @@ export function NodeMapSection() {
               <MapContainer
                 center={[20, 0]}
                 zoom={2}
+                minZoom={2}
+                maxZoom={8}
                 style={{ height: '100%', width: '100%' }}
                 zoomControl={true}
-                scrollWheelZoom={false}
+                scrollWheelZoom={true}
               >
                 <TileLayer
                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
@@ -163,9 +171,15 @@ export function NodeMapSection() {
               </MapContainer>
             )}
           </div>
-        </div>
+        </motion.div>
 
-        <div className="text-center mt-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ delay: 0.3 }}
+          className="text-center mt-4"
+        >
           <a
             href="https://bitcoin-silver.github.io/node-map/"
             target="_blank"
@@ -175,7 +189,7 @@ export function NodeMapSection() {
             <Globe className="h-4 w-4" />
             View Full Node Map
           </a>
-        </div>
+        </motion.div>
       </div>
     </section>
   );
