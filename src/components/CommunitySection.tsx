@@ -136,7 +136,6 @@ export const CommunitySection = () => {
                 src="https://discord.com/widget?id=1260626093967413418&theme=dark"
                 width="100%"
                 height="500"
-                allowtransparency="true"
                 sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"
                 className="rounded-b-lg"
               ></iframe>
