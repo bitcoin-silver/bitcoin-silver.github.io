@@ -92,7 +92,6 @@ export function NodeMapSection() {
   }, []);
 
   const validPeers = peersData?.peers.filter(p => p.lat && p.lon) || [];
-  const countries = new Set(validPeers.map(p => p.countryCode).filter(Boolean));
 
   return (
     <section className="py-20 px-4 bg-gradient-to-b from-background to-muted/20">
