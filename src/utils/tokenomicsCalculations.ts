@@ -89,11 +89,10 @@ export function calculateHalvingEvents(): HalvingEvent[] {
  * Creates monthly data points from genesis to specified years ahead
  */
 export function generateEmissionSchedule(
-  currentBlockHeight: number = 0,
+  _currentBlockHeight: number = 0,
   yearsAhead: number = 120
 ): EmissionDataPoint[] {
   const dataPoints: EmissionDataPoint[] = [];
-  const halvingEvents = calculateHalvingEvents();
 
   // Generate data points monthly
   const monthsToGenerate = yearsAhead * 12;
