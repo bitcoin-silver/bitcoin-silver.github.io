@@ -9,6 +9,7 @@ import FundraisingBar from "./components/FundraisingBar";
 import { HeroSection } from './components/HeroSection';
 import PlayStorePopup from './components/PlayStorePopup';
 import { NodeMapSection } from './components/NodeMapSection';
+import TokenomicsSection from './components/TokenomicsSection';
 
 function App() {
   return (
@@ -31,6 +32,9 @@ function App() {
 
         {/* Features Section */}
         <FeaturesSection />
+
+        {/* Tokenomics Section */}
+        <TokenomicsSection />
 
         {/* Roadmap Section */}
         <RoadmapSection />

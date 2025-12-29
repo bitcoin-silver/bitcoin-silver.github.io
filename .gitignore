@@ -29,3 +29,6 @@ Thumbs.db
 
 # Debug
 debug/
+
+# Implementation docs
+TOKENOMICS_IMPLEMENTATION.md

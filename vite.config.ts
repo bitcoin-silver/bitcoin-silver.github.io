@@ -12,6 +12,10 @@ export default defineConfig({
     },
   },
   server: {
+    allowedHosts: [
+      'fighters-wants-cheaper-carroll.trycloudflare.com',
+      '.trycloudflare.com',
+    ],
     proxy: {
       '/api': {
         target: 'https://explorer.bitcoinsilver.top',
