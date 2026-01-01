@@ -14,8 +14,8 @@ const CONTRIBUTORS: Contributor[] = [
   { name: "vis_tos", amount: 5, type: "USDT" },
   { name: "N0_N4m391", amount: 3, type: "USDT" },
   { name: "SatoshiCryptoPro", amount: 492.5, type: "BTCS" },
+  { name: "BEASTxAUDIOPHILE", amount: 907.0, type: "BTCS" },
 ];
-
 
 /* ------------------ HELPERS ------------------ */
 
@@ -32,10 +32,10 @@ export default function FundraisingBar() {
   const [scrollWidth, setScrollWidth] = useState(0);
 
   /* SORT */
-  const usdt = CONTRIBUTORS.filter(c => c.type === "USDT").sort(
+  const usdt = CONTRIBUTORS.filter((c) => c.type === "USDT").sort(
     (a, b) => b.amount - a.amount
   );
-  const btcs = CONTRIBUTORS.filter(c => c.type === "BTCS").sort(
+  const btcs = CONTRIBUTORS.filter((c) => c.type === "BTCS").sort(
     (a, b) => b.amount - a.amount
   );
   const contributors = [...usdt, ...btcs];
@@ -49,7 +49,7 @@ export default function FundraisingBar() {
 
   useEffect(() => {
     const id = setInterval(
-      () => setShow(v => (v === "USDT" ? "BTCS" : "USDT")),
+      () => setShow((v) => (v === "USDT" ? "BTCS" : "USDT")),
       5000
     );
     return () => clearInterval(id);
@@ -68,7 +68,6 @@ export default function FundraisingBar() {
   return (
     <div className="w-full border-b border-white/10 bg-black/60 backdrop-blur-md">
       <div className="container flex flex-col gap-2 py-2 text-sm text-gray-200 md:flex-row md:items-center md:gap-6">
-
         {/* LEFT */}
         <div className="flex items-center gap-3 flex-shrink-0">
           <span className="text-gray-400 whitespace-nowrap">
@@ -107,7 +106,8 @@ export default function FundraisingBar() {
               <div
                 key={i}
                 className={`px-3 py-1 rounded-full border ${
-                  c.amount >= 100
+                  (c.type === "USDT" && c.amount >= 100) ||
+                  (c.type === "BTCS" && c.amount >= 500)
                     ? "bg-white/10 border-white/30"
                     : "bg-white/5 border-white/10"
                 }`}
