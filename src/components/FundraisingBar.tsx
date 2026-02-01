@@ -15,6 +15,7 @@ const CONTRIBUTORS: Contributor[] = [
   { name: "N0_N4m391", amount: 3, type: "USDT" },
   { name: "SatoshiCryptoPro", amount: 492.5, type: "BTCS" },
   { name: "BEASTxAUDIOPHILE", amount: 907.0, type: "BTCS" },
+  { name: "B1ll1am", amount: 111.0, type: "BTCS" },
 ];
 
 /* ------------------ HELPERS ------------------ */
@@ -33,10 +34,10 @@ export default function FundraisingBar() {
 
   /* SORT */
   const usdt = CONTRIBUTORS.filter((c) => c.type === "USDT").sort(
-    (a, b) => b.amount - a.amount
+    (a, b) => b.amount - a.amount,
   );
   const btcs = CONTRIBUTORS.filter((c) => c.type === "BTCS").sort(
-    (a, b) => b.amount - a.amount
+    (a, b) => b.amount - a.amount,
   );
   const contributors = [...usdt, ...btcs];
 
@@ -50,7 +51,7 @@ export default function FundraisingBar() {
   useEffect(() => {
     const id = setInterval(
       () => setShow((v) => (v === "USDT" ? "BTCS" : "USDT")),
-      5000
+      5000,
     );
     return () => clearInterval(id);
   }, []);
