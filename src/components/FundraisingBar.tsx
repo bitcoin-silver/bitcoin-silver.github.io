@@ -16,6 +16,7 @@ const CONTRIBUTORS: Contributor[] = [
   { name: "SatoshiCryptoPro", amount: 492.5, type: "BTCS" },
   { name: "BEASTxAUDIOPHILE", amount: 907.0, type: "BTCS" },
   { name: "B1ll1am", amount: 111.0, type: "BTCS" },
+  { name: "Redtimi", amount: 100.0, type: "BTCS" },
 ];
 
 /* ------------------ HELPERS ------------------ */
