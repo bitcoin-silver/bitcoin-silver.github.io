@@ -226,7 +226,7 @@ export function NodeMapSection() {
           className="text-center mt-4"
         >
           <a
-            href="https://bitcoin-silver.top/node-map/"
+            href="https://bitcoinsilver.top/node-map/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
