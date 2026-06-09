@@ -1,17 +1,58 @@
-import { useEffect, useState } from 'react';
-import { MapContainer, TileLayer, Marker, Popup, useMap } from 'react-leaflet';
-import L from 'leaflet';
-import 'leaflet/dist/leaflet.css';
-import { Globe } from 'lucide-react';
-import { motion } from 'framer-motion';
+import { useEffect, useState } from "react";
+import { MapContainer, TileLayer, Marker, Popup, useMap } from "react-leaflet";
+import L from "leaflet";
+import "leaflet/dist/leaflet.css";
+import { Globe } from "lucide-react";
+import { motion } from "framer-motion";
 
 // Fix for default marker icons in React-Leaflet
 delete (L.Icon.Default.prototype as any)._getIconUrl;
 L.Icon.Default.mergeOptions({
-  iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png',
-  iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png',
-  shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png',
+  iconRetinaUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon-2x.png",
+  iconUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-icon.png",
+  shadowUrl:
+    "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/images/marker-shadow.png",
 });
+
+// Inject marker styles once
+const MARKER_STYLE_ID = "btcs-node-marker-styles";
+if (
+  typeof document !== "undefined" &&
+  !document.getElementById(MARKER_STYLE_ID)
+) {
+  const style = document.createElement("style");
+  style.id = MARKER_STYLE_ID;
+  style.textContent = `
+    .btcs-node-marker {
+      width: 12px;
+      height: 12px;
+      background: radial-gradient(circle, #ffffff 0%, #c0c0c0 60%);
+      border: 2px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      box-shadow: 0 0 8px rgba(192, 192, 192, 0.4);
+      transition: box-shadow 0.2s ease, transform 0.2s ease;
+      pointer-events: auto;
+    }
+    .btcs-node-marker:hover {
+      box-shadow: 0 0 20px rgba(192, 192, 192, 0.8), 0 0 40px rgba(255, 255, 255, 0.5);
+      transform: scale(1.2);
+      animation: btcs-marker-pulse 1s infinite;
+    }
+    @keyframes btcs-marker-pulse {
+      0%, 100% {
+        box-shadow: 0 0 20px rgba(192, 192, 192, 0.8), 0 0 40px rgba(255, 255, 255, 0.5);
+        transform: scale(1.2);
+      }
+      50% {
+        box-shadow: 0 0 30px rgba(192, 192, 192, 1.0), 0 0 60px rgba(255, 255, 255, 0.7);
+        transform: scale(1.35);
+      }
+    }
+  `;
+  document.head.appendChild(style);
+}
 
 interface Peer {
   addr: string;
@@ -33,16 +74,8 @@ interface PeersData {
 // Custom silver marker icon
 const createSilverIcon = () => {
   return L.divIcon({
-    className: 'custom-marker',
-    html: `<div style="
-      width: 12px;
-      height: 12px;
-      background: linear-gradient(135deg, #c0c0c0 0%, #ffffff 100%);
-      border: 2px solid rgba(255, 255, 255, 0.5);
-      border-radius: 50%;
-      box-shadow: 0 0 10px rgba(192, 192, 192, 0.6), 0 0 20px rgba(255, 255, 255, 0.4);
-      animation: marker-pulse 2s infinite;
-    "></div>`,
+    className: "custom-marker-wrapper",
+    html: `<div class="btcs-node-marker"></div>`,
     iconSize: [12, 12],
     iconAnchor: [6, 6],
   });
@@ -55,9 +88,7 @@ function FitBounds({ peers }: { peers: Peer[] }) {
   useEffect(() => {
     if (peers.length > 0) {
       const bounds = L.latLngBounds(
-        peers
-          .filter(p => p.lat && p.lon)
-          .map(p => [p.lat!, p.lon!])
+        peers.filter((p) => p.lat && p.lon).map((p) => [p.lat!, p.lon!]),
       );
       if (bounds.isValid()) {
         map.fitBounds(bounds, { padding: [50, 50], maxZoom: 3 });
@@ -76,13 +107,17 @@ export function NodeMapSection() {
   useEffect(() => {
     const fetchPeers = async () => {
       try {
-        const response = await fetch('https://btcs-vps13.duckdns.org/api/peers');
-        if (!response.ok) throw new Error('Failed to fetch peers');
+        const response = await fetch(
+          "https://btcs-vps13.duckdns.org/api/peers",
+        );
+        if (!response.ok) throw new Error("Failed to fetch peers");
         const data = await response.json();
         setPeersData(data);
         setError(null);
       } catch (err) {
-        setError(err instanceof Error ? err.message : 'Failed to load node data');
+        setError(
+          err instanceof Error ? err.message : "Failed to load node data",
+        );
       } finally {
         setLoading(false);
       }
@@ -93,7 +128,7 @@ export function NodeMapSection() {
     return () => clearInterval(interval);
   }, []);
 
-  const validPeers = peersData?.peers.filter(p => p.lat && p.lon) || [];
+  const validPeers = peersData?.peers.filter((p) => p.lat && p.lon) || [];
 
   return (
     <section className="py-12 px-4">
@@ -140,7 +175,7 @@ export function NodeMapSection() {
                 zoom={2}
                 minZoom={2}
                 maxZoom={8}
-                style={{ height: '100%', width: '100%' }}
+                style={{ height: "100%", width: "100%" }}
                 zoomControl={true}
                 scrollWheelZoom={true}
               >
@@ -159,11 +194,20 @@ export function NodeMapSection() {
                       <div className="text-sm">
                         <div className="font-bold mb-1">{peer.addr}</div>
                         <div className="text-xs text-muted-foreground space-y-1">
-                          <div>Country: {peer.countryCode || 'Unknown'}</div>
-                          <div>Type: {peer.network === 'ipv6' ? 'IPv6' : 'IPv4'}</div>
-                          <div>Ping: {peer.pingtime ? `${(peer.pingtime * 1000).toFixed(0)}ms` : 'N/A'}</div>
-                          <div>Version: {peer.subver || 'N/A'}</div>
-                          <div>Direction: {peer.inbound ? 'Inbound' : 'Outbound'}</div>
+                          <div>Country: {peer.countryCode || "Unknown"}</div>
+                          <div>
+                            Type: {peer.network === "ipv6" ? "IPv6" : "IPv4"}
+                          </div>
+                          <div>
+                            Ping:{" "}
+                            {peer.pingtime
+                              ? `${(peer.pingtime * 1000).toFixed(0)}ms`
+                              : "N/A"}
+                          </div>
+                          <div>Version: {peer.subver || "N/A"}</div>
+                          <div>
+                            Direction: {peer.inbound ? "Inbound" : "Outbound"}
+                          </div>
                         </div>
                       </div>
                     </Popup>
@@ -182,7 +226,7 @@ export function NodeMapSection() {
           className="text-center mt-4"
         >
           <a
-            href="https://bitcoin-silver.github.io/node-map/"
+            href="https://bitcoin-silver.top/node-map/"
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors"
