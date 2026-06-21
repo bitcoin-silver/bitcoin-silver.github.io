@@ -108,7 +108,7 @@ export function NodeMapSection() {
     const fetchPeers = async () => {
       try {
         const response = await fetch(
-          "https://btcs-vps13.duckdns.org/api/peers",
+          "https://bitcoinsilver.eu/api/peers",
         );
         if (!response.ok) throw new Error("Failed to fetch peers");
         const data = await response.json();
