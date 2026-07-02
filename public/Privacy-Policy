@@ -1,6 +1,6 @@
 Privacy Policy
 Effective Date: November 7, 2025
-Last Updated: January 6, 2026
+Last Updated: Jun 24, 2026
 Issued by: Bitcoin Silver Team
 Contact: info@bitcoinsilver.top
 
@@ -13,9 +13,10 @@ We, the creators of the Bitcoin Silver (BTCS) Wallet, are committed to protectin
 • Wallet creation happens locally on your device.
 • We do not store or have access to your recovery phrase or private keys.
 • However, certain data may be automatically collected during app usage:
-    - Device Information: Includes device type, operating system, and app version for troubleshooting and compatibility purposes.
-    - Transaction Data: Public blockchain details such as sending/receiving addresses and transaction amounts (this is inherent to blockchain technology).
-    - Push Notifications: If enabled, we collect your wallet address and device notification token to send transaction alerts.
+
+- Device Information: Includes device type, operating system, and app version for troubleshooting and compatibility purposes.
+- Transaction Data: Only the final signed transaction (in hex format) is transmitted to our network node for broadcasting. No private keys, addresses, or amounts are sent separately to our servers. Transaction visibility on the public blockchain is inherent to how blockchain technology works.
+- Push Notifications: If enabled, we collect your wallet address and device notification token to send transaction alerts.
 
 2. Use of Collected Data
 
@@ -45,6 +46,7 @@ We, the creators of the Bitcoin Silver (BTCS) Wallet, are committed to protectin
 • Your privacy and security are our top priorities.
 • Private keys and recovery phrases are generated and stored exclusively on your device using industry-standard encryption.
 • Private keys are never transmitted to us, our servers, or any third party.
+• All transaction signing is performed entirely on your device. Only the resulting signed transaction hex is submitted to our network node for broadcasting.
 • Notification server data (wallet addresses and device tokens) is encrypted and protected with industry-standard security measures.
 • We implement appropriate technical and organizational measures to protect against unauthorized access, alteration, or destruction of data.
 
