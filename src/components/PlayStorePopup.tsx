@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { X, ThumbsUp } from "lucide-react";
 
 export default function DeblockVotePopup() {
-  const [visible, setVisible] = useState(true);
+  const [visible, setVisible] = useState(false);
 
   return (
     <AnimatePresence>
