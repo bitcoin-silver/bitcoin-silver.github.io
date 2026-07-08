@@ -56,7 +56,7 @@ export const HeroSection = () => {
               </Button>
               <Button size="lg" variant="outline" asChild>
                 <a href="https://trade.nestex.one/spot/BTCS_USDT?ref=FB4BBA1A84F3CD2B0E90536167A74353" target="_blank" rel="noopener noreferrer">
-                  Invest Now
+                  Market
                 </a>
               </Button>
             </div>

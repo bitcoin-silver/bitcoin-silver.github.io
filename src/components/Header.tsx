@@ -61,7 +61,7 @@ export const Header = () => {
             rel="noopener noreferrer"
           >
             <Button size="sm">
-              Invest
+              Market
             </Button>
           </a>
         </nav>
@@ -129,7 +129,7 @@ export const Header = () => {
               className="py-2"
               onClick={() => setMobileOpen(false)}
             >
-              <Button variant="outline" size="sm">Invest</Button>
+              <Button variant="outline" size="sm">Market</Button>
             </a>
           </div>
         </div>
