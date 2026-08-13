@@ -5,7 +5,7 @@ import { RoadmapSection } from "./components/RoadmapSection";
 import { CommunitySection } from "./components/CommunitySection";
 import { Footer } from "./components/Footer";
 import { Header } from "./components/Header";
-import FundraisingBar from "./components/FundraisingBar";
+{ /*import FundraisingBar from "./components/FundraisingBar"; */ }
 import { HeroSection } from "./components/HeroSection";
 import PlayStorePopup from "./components/PlayStorePopup";
 import { NodeMapSection } from "./components/NodeMapSection";
