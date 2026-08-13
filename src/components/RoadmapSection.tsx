@@ -10,19 +10,14 @@ export const RoadmapSection = () => {
         { text: 'Core Wallet (Windows & Linux) released', status: 'completed', date: 'August 20, 2025' },
         { text: 'Mobile Wallet released (Android & iOS*)', status: 'completed', date: 'August 15, 2025' },
         { text: 'Community building & exchange listing preparation', status: 'completed', date: 'September 10, 2025' },
-        { text: 'Strategic partnerships & ecosystem development', status: 'in-progress' },
-        { text: 'Marketing campaigns to increase awareness', status: 'in-progress' },
       ],
     },
     {
       year: '2026',
       title: 'Expansion & Ecosystem Growth',
       items: [
-        { text: 'Launch P2P Exchange* & Mobile Wallet enhancements', status: 'planned' },
-        { text: 'Integration of decentralized finance (DeFi) applications', status: 'planned' },
-        { text: 'Listing on Tier 1 exchanges', status: 'planned' },
-        { text: 'Enhanced security audits & protocol improvements', status: 'planned' },
-        { text: 'Community governance & improved mechanisms', status: 'planned' },
+        { text: 'Mobile and Web Wallet enhancements', status: 'completed', date: 'August 10, 2026' },
+        { text: 'NONKYC listing planned on August 31, 2026', status: 'in-progress', date: 'August 31, 2026' },
       ],
     },
   ];

@@ -1,22 +1,22 @@
-import { StatsSection } from './components/StatsSection';
-import { WalletsSection } from './components/WalletsSection';
-import { FeaturesSection } from './components/FeaturesSection';
-import { RoadmapSection } from './components/RoadmapSection';
-import { CommunitySection } from './components/CommunitySection';
-import { Footer } from './components/Footer';
-import { Header } from './components/Header';
+import { StatsSection } from "./components/StatsSection";
+import { WalletsSection } from "./components/WalletsSection";
+import { FeaturesSection } from "./components/FeaturesSection";
+import { RoadmapSection } from "./components/RoadmapSection";
+import { CommunitySection } from "./components/CommunitySection";
+import { Footer } from "./components/Footer";
+import { Header } from "./components/Header";
 import FundraisingBar from "./components/FundraisingBar";
-import { HeroSection } from './components/HeroSection';
-import PlayStorePopup from './components/PlayStorePopup';
-import { NodeMapSection } from './components/NodeMapSection';
-import TokenomicsSection from './components/TokenomicsSection';
+import { HeroSection } from "./components/HeroSection";
+import PlayStorePopup from "./components/PlayStorePopup";
+import { NodeMapSection } from "./components/NodeMapSection";
+import TokenomicsSection from "./components/TokenomicsSection";
 
 function App() {
   return (
     <div className="min-h-screen bg-gradient-to-b from-background via-background to-background/95">
-      <FundraisingBar />
+      {/* <FundraisingBar /> */}
       <Header />
-      
+
       <main className="relative">
         {/* Hero Section */}
         <HeroSection />
@@ -52,4 +52,3 @@ function App() {
 }
 
 export default App;
-
