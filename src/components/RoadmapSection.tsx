@@ -1,46 +1,103 @@
-import { motion } from 'framer-motion';
-import { Card, CardContent } from './ui/card';
+import { motion } from "framer-motion";
+import { Card, CardContent } from "./ui/card";
 
 export const RoadmapSection = () => {
   const roadmapItems = [
     {
-      year: '2025',
-      title: 'Foundation & Launch Phase',
+      year: "2025",
+      title: "Foundation & Launch Phase",
       items: [
-        { text: 'Core Wallet (Windows & Linux) released', status: 'completed', date: 'August 20, 2025' },
-        { text: 'Mobile Wallet released (Android & iOS*)', status: 'completed', date: 'August 15, 2025' },
-        { text: 'Community building & exchange listing preparation', status: 'completed', date: 'September 10, 2025' },
+        {
+          text: "Core Wallet (Windows & Linux) released",
+          status: "completed",
+          date: "August 20, 2025",
+        },
+        {
+          text: "Mobile Wallet released (Android & iOS*)",
+          status: "completed",
+          date: "August 15, 2025",
+        },
+        {
+          text: "Community building & exchange listing preparation",
+          status: "completed",
+          date: "September 10, 2025",
+        },
+        {
+          text: "NESTEX listing completed !",
+          status: "completed",
+        },
       ],
     },
     {
-      year: '2026',
-      title: 'Expansion & Ecosystem Growth',
+      year: "2026",
+      title: "Expansion & Ecosystem Growth",
       items: [
-        { text: 'Mobile and Web Wallet enhancements', status: 'completed', date: 'August 10, 2026' },
-        { text: 'NONKYC listing planned on August 31, 2026', status: 'in-progress', date: 'August 31, 2026' },
+        {
+          text: "Mobile and Web Wallet enhancements",
+          status: "completed",
+          date: "August 10, 2026",
+        },
+        {
+          text: "NONKYC listing planned on August 31, 2026",
+          status: "in-progress",
+          date: "August 31, 2026",
+        },
       ],
     },
   ];
 
   const getStatusIcon = (status: string) => {
     switch (status) {
-      case 'completed':
+      case "completed":
         return (
-          <svg className="w-5 h-5 text-green-500" fill="currentColor" viewBox="0 0 20 20">
-            <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+          <svg
+            className="w-5 h-5 text-green-500"
+            fill="currentColor"
+            viewBox="0 0 20 20"
+          >
+            <path
+              fillRule="evenodd"
+              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
+              clipRule="evenodd"
+            />
           </svg>
         );
-      case 'in-progress':
+      case "in-progress":
         return (
-          <svg className="w-5 h-5 text-yellow-500 animate-spin" fill="none" viewBox="0 0 24 24">
-            <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle>
-            <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+          <svg
+            className="w-5 h-5 text-yellow-500 animate-spin"
+            fill="none"
+            viewBox="0 0 24 24"
+          >
+            <circle
+              className="opacity-25"
+              cx="12"
+              cy="12"
+              r="10"
+              stroke="currentColor"
+              strokeWidth="4"
+            ></circle>
+            <path
+              className="opacity-75"
+              fill="currentColor"
+              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+            ></path>
           </svg>
         );
       default:
         return (
-          <svg className="w-5 h-5 text-muted-foreground" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+          <svg
+            className="w-5 h-5 text-muted-foreground"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+            />
           </svg>
         );
     }
@@ -59,7 +116,8 @@ export const RoadmapSection = () => {
             Development Roadmap
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Bitcoin Silver’s journey to building a secure, scalable, and community-driven blockchain ecosystem
+            Bitcoin Silver’s journey to building a secure, scalable, and
+            community-driven blockchain ecosystem
           </p>
         </motion.div>
 
@@ -75,7 +133,9 @@ export const RoadmapSection = () => {
               <Card className="overflow-hidden h-full">
                 <div className="bg-primary/10 border-b border-primary/20 p-6">
                   <div className="flex items-center gap-4">
-                    <div className="text-4xl font-bold text-primary">{phase.year}</div>
+                    <div className="text-4xl font-bold text-primary">
+                      {phase.year}
+                    </div>
                     <div>
                       <h3 className="text-2xl font-bold">{phase.title}</h3>
                     </div>
@@ -89,16 +149,24 @@ export const RoadmapSection = () => {
                         initial={{ opacity: 0, x: -20 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
-                        transition={{ delay: phaseIndex * 0.2 + itemIndex * 0.1 }}
+                        transition={{
+                          delay: phaseIndex * 0.2 + itemIndex * 0.1,
+                        }}
                         className="flex items-start gap-3 group"
                       >
-                        <div className="mt-0.5">{getStatusIcon(item.status)}</div>
+                        <div className="mt-0.5">
+                          {getStatusIcon(item.status)}
+                        </div>
                         <div className="flex-1">
-                          <p className={`${item.status === 'completed' ? 'text-foreground' : 'text-muted-foreground'}`}>
+                          <p
+                            className={`${item.status === "completed" ? "text-foreground" : "text-muted-foreground"}`}
+                          >
                             {item.text}
                           </p>
                           {item.date && (
-                            <p className="text-xs text-primary mt-1">{item.date}</p>
+                            <p className="text-xs text-primary mt-1">
+                              {item.date}
+                            </p>
                           )}
                         </div>
                       </motion.div>
