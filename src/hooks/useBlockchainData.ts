@@ -1,7 +1,9 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 
 // Use relative URLs in development (proxied by Vite), absolute in production
-const API_BASE = import.meta.env.DEV ? '' : 'https://explorer.bitcoinsilver.top';
+const API_BASE = import.meta.env.DEV
+  ? ""
+  : "https://explorer.bitcoinsilver.top";
 
 interface BlockchainStats {
   difficulty: number;
@@ -26,9 +28,9 @@ export const useBlockchainData = () => {
         const fetchWithFallback = async (url: string, fallback: any) => {
           try {
             const response = await fetch(url, {
-              mode: 'cors',
+              mode: "cors",
               headers: {
-                'Accept': 'application/json',
+                Accept: "application/json",
               },
             });
             if (!response.ok) {
@@ -43,18 +45,26 @@ export const useBlockchainData = () => {
           }
         };
 
-        const [difficulty, blockCount, hashrate, supply, connections] = await Promise.all([
-          fetchWithFallback(`${API_BASE}/api/getdifficulty`, 0),
-          fetchWithFallback(`${API_BASE}/api/getblockcount`, 0),
-          fetchWithFallback(`${API_BASE}/api/getnetworkhashps`, 0),
-          fetchWithFallback(`${API_BASE}/ext/getmoneysupply`, 0),
-          fetchWithFallback(`${API_BASE}/api/getconnectioncount`, 0),
-        ]);
+        const [difficulty, blockCount, hashrate, supply, connections] =
+          await Promise.all([
+            fetchWithFallback(`${API_BASE}/api/getdifficulty`, 0),
+            fetchWithFallback(`${API_BASE}/api/getblockcount`, 0),
+            fetchWithFallback(`${API_BASE}/api/getnetworkhashps`, 0),
+            fetchWithFallback(`${API_BASE}/ext/getmoneysupply`, 0),
+            fetchWithFallback(`${API_BASE}/api/getconnectioncount`, 0),
+          ]);
 
-        console.log('Fetched data:', { difficulty, blockCount, hashrate, supply, connections });
+        console.log("Fetched data:", {
+          difficulty,
+          blockCount,
+          hashrate,
+          supply,
+          connections,
+        });
 
         // Check if we got valid data
-        const hasValidData = difficulty || blockCount || hashrate || supply || connections;
+        const hasValidData =
+          difficulty || blockCount || hashrate || supply || connections;
 
         if (hasValidData) {
           setStats({
@@ -68,7 +78,7 @@ export const useBlockchainData = () => {
           setError(null);
         } else {
           // Use demo data if API fails (CORS or network issues)
-          console.warn('Using demo data - API may be blocked by CORS');
+          console.warn("Using demo data - API may be blocked by CORS");
           setStats({
             difficulty: 0.0234,
             blockCount: 145678,
@@ -80,8 +90,10 @@ export const useBlockchainData = () => {
           setError(null); // Don't show error, just use demo data
         }
       } catch (err) {
-        setError('Failed to fetch blockchain data. CORS may be blocking requests.');
-        console.error('Error fetching blockchain data:', err);
+        setError(
+          "Failed to fetch blockchain data. CORS may be blocking requests.",
+        );
+        console.error("Error fetching blockchain data:", err);
       } finally {
         setLoading(false);
       }
@@ -97,6 +109,7 @@ export const useBlockchainData = () => {
 };
 
 export const formatHashrate = (hashrate: number): string => {
+  if (hashrate >= 1e15) return `${(hashrate / 1e15).toFixed(2)} PH/s`;
   if (hashrate >= 1e12) return `${(hashrate / 1e12).toFixed(2)} TH/s`;
   if (hashrate >= 1e9) return `${(hashrate / 1e9).toFixed(2)} GH/s`;
   if (hashrate >= 1e6) return `${(hashrate / 1e6).toFixed(2)} MH/s`;
@@ -104,7 +117,15 @@ export const formatHashrate = (hashrate: number): string => {
   return `${hashrate.toFixed(2)} H/s`;
 };
 
-export const formatNumber = (num: number): string => {
-  return new Intl.NumberFormat('en-US').format(num);
+export const formatCompactUnits = (value: number): string => {
+  if (value >= 1e15) return `${(value / 1e15).toFixed(2)} P`;
+  if (value >= 1e12) return `${(value / 1e12).toFixed(2)} T`;
+  if (value >= 1e9) return `${(value / 1e9).toFixed(2)} G`;
+  if (value >= 1e6) return `${(value / 1e6).toFixed(2)} M`;
+  if (value >= 1e3) return `${(value / 1e3).toFixed(2)} K`;
+  return value.toFixed(4);
 };
 
+export const formatNumber = (num: number): string => {
+  return new Intl.NumberFormat("en-US").format(num);
+};

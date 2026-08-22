@@ -149,7 +149,7 @@ export const Footer = () => {
             <p className="text-center md:col-start-2">
               Built with ⚡ by the Bitcoin Silver community
             </p>
-            <p className="text-right">
+            <div className="flex justify-end gap-3">
               {legalLinks.map((link) => (
                 <a
                   key={link.name}
@@ -159,7 +159,7 @@ export const Footer = () => {
                   {link.name}
                 </a>
               ))}
-            </p>
+            </div>
           </div>
         </div>
       </div>
