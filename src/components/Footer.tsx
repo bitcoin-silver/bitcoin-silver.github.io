@@ -13,7 +13,7 @@ export const Footer = () => {
     },
     {
       name: "Discord",
-      url: "https://discord.com/invite/Pbt2R55XBt",
+      url: "https://discord.gg/wCmdJGXFr7",
       icon: (
         <svg className="w-5 h-5" fill="white" viewBox="0 0 24 24">
           <path d="M20.317 4.369a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.211.375-.445.864-.608 1.249a18.27 18.27 0 00-5.489 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037 19.736 19.736 0 00-4.885 1.515.07.07 0 00-.032.027C2.068 9.041 1.366 13.58 1.66 18.062a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.033.078.078 0 00.084-.027c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.104 13.107 13.107 0 01-1.882-.9.077.077 0 01-.008-.128c.126-.094.252-.192.373-.29a.074.074 0 01.078-.01c3.937 1.8 8.207 1.8 12.11 0a.074.074 0 01.079.009c.121.099.247.198.374.291a.077.077 0 01-.006.128 12.299 12.299 0 01-1.883.899.077.077 0 00-.04.105c.36.698.772 1.362 1.225 1.993a.078.078 0 00.084.028 19.876 19.876 0 005.995-3.034.079.079 0 00.03-.056c.5-7.19-1.2-11.69-3.63-13.666a.06.06 0 00-.031-.026zM8.02 15.331c-1.183 0-2.157-1.086-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.175 1.095 2.157 2.419 0 1.333-.956 2.419-2.157 2.419zm7.974 0c-1.183 0-2.157-1.086-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.175 1.095 2.157 2.419 0 1.333-.946 2.419-2.157 2.419z" />
@@ -32,7 +32,6 @@ export const Footer = () => {
   ];
 
   const exchanges = [
-    { name: "BitStorage", url: "https://bitstorage.finance/refcode/f2sv1i" },
     {
       name: "NestEx",
       url: "https://trade.nestex.one/spot/BTCS_USDT?ref=FB4BBA1A84F3CD2B0E90536167A74353",
@@ -142,20 +141,6 @@ export const Footer = () => {
           </div>
         </div>
 
-        <div className="mt-6 pt-3 border-t border-border/40">
-          <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1">
-            {legalLinks.map((link) => (
-              <a
-                key={link.name}
-                href={link.url}
-                className="text-xs text-muted-foreground hover:text-primary transition-colors"
-              >
-                {link.name}
-              </a>
-            ))}
-          </div>
-        </div>
-
         <div className="mt-6 pt-2 text-sm text-muted-foreground">
           <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-1">
             <p className="text-left">
@@ -163,6 +148,17 @@ export const Footer = () => {
             </p>
             <p className="text-center md:col-start-2">
               Built with ⚡ by the Bitcoin Silver community
+            </p>
+            <p className="text-right">
+              {legalLinks.map((link) => (
+                <a
+                  key={link.name}
+                  href={link.url}
+                  className="text-xs text-muted-foreground hover:text-primary transition-colors"
+                >
+                  {link.name}
+                </a>
+              ))}
             </p>
           </div>
         </div>
