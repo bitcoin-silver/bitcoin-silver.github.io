@@ -107,9 +107,7 @@ export function NodeMapSection() {
   useEffect(() => {
     const fetchPeers = async () => {
       try {
-        const response = await fetch(
-          "https://bitcoinsilver.eu/api/peers",
-        );
+        const response = await fetch("https://bitcoinsilver.eu/api/peers");
         if (!response.ok) throw new Error("Failed to fetch peers");
         const data = await response.json();
         setPeersData(data);
