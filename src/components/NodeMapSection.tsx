@@ -141,7 +141,9 @@ export function NodeMapSection() {
         >
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-primary/10 text-primary">
             <Globe className="h-4 w-4" />
-            <span className="text-sm font-medium">Global BTCS-Node Network</span>
+            <span className="text-sm font-medium">
+              Global BTCS-Node Network
+            </span>
           </div>
         </motion.div>
 
@@ -181,7 +183,7 @@ export function NodeMapSection() {
               >
                 <TileLayer
                   attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
-                  url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png"
+                  url="https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png?key=cb1_2a0z_1_e35470dadbd7d72d01f8721b"
                 />
                 <FitBounds peers={validPeers} />
                 {validPeers.map((peer, idx) => (
