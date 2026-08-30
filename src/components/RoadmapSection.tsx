@@ -51,13 +51,25 @@ export const RoadmapSection = () => {
     },
     {
       year: "2027",
-      title: "Coming Soon",
-      items: [],
+      title: "Planning & Future Developments",
+      items: [
+        {
+          text: "Coming Soon",
+          status: "in-progress",
+          date: "",
+        },
+      ],
     },
     {
       year: "2028",
-      title: "Coming Soon",
-      items: [],
+      title: "Progress & Long-term Vision",
+      items: [
+        {
+          text: "Coming Soon",
+          status: "in-progress",
+          date: "",
+        },
+      ],
     },
   ];
 
