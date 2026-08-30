@@ -48,7 +48,7 @@ export const MarketDropdown = ({ size, variant, className }: MarketDropdownProps
       {open && (
         <div
           role="menu"
-          className="absolute right-0 mt-2 w-56 rounded-md border border-border/40 bg-background/95 backdrop-blur shadow-lg z-50 overflow-hidden"
+          className="absolute left-0 right-auto md:left-auto md:right-0 mt-2 w-56 rounded-md border border-border/40 bg-background/95 backdrop-blur shadow-lg z-50 overflow-hidden"
         >
           {MARKETS.map((market) => (
             <a
