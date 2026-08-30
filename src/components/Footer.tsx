@@ -33,10 +33,17 @@ export const Footer = () => {
 
   const exchanges = [
     {
+      name: "NonKYC",
+      url: "https://nonkyc.io/market/BTCS_USDC?ref=65477593e577cfc144c45844",
+    },
+    {
       name: "NestEx",
       url: "https://trade.nestex.one/spot/BTCS_USDT?ref=FB4BBA1A84F3CD2B0E90536167A74353",
     },
-    { name: "Qutrade", url: "https://qutrade.io/en/?market=btcs_usdt" },
+    {
+      name: "Qutrade",
+      url: "https://qutrade.io/en/?market=btcs_usdt&ref=52336",
+    },
   ];
 
   const resources = [

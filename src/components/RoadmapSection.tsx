@@ -38,7 +38,7 @@ export const RoadmapSection = () => {
           date: "August 10, 2026",
         },
         {
-          text: "NONKYC listing planned on August 31, 2026",
+          text: "NONKYC listing completed on August 31, 2026",
           status: "completed",
           date: "August 31, 2026",
         },
