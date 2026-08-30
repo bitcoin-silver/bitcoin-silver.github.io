@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Button } from './ui/button';
+import { MarketDropdown } from './MarketDropdown';
 import POWAnimation from './POWAnimation';
 
 export const HeroSection = () => {
@@ -54,11 +55,7 @@ export const HeroSection = () => {
                   More Wallets
                 </a>
               </Button>
-              <Button size="lg" variant="outline" asChild>
-                <a href="https://trade.nestex.one/spot/BTCS_USDT?ref=FB4BBA1A84F3CD2B0E90536167A74353" target="_blank" rel="noopener noreferrer">
-                  Market
-                </a>
-              </Button>
+              <MarketDropdown size="lg" variant="outline" />
             </div>
 
             {/* Quick stats */}

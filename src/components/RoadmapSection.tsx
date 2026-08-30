@@ -39,10 +39,25 @@ export const RoadmapSection = () => {
         },
         {
           text: "NONKYC listing planned on August 31, 2026",
-          status: "in-progress",
+          status: "completed",
           date: "August 31, 2026",
         },
+        {
+          text: "CoinGecko listing planned",
+          status: "in-progress",
+          date: "",
+        },
       ],
+    },
+    {
+      year: "2027",
+      title: "Coming Soon",
+      items: [],
+    },
+    {
+      year: "2028",
+      title: "Coming Soon",
+      items: [],
     },
   ];
 

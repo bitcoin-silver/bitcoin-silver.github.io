@@ -1,6 +1,7 @@
 import { motion } from 'framer-motion';
 import { useState } from 'react';
 import { Button } from './ui/button';
+import { MarketDropdown } from './MarketDropdown';
 
 export const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
@@ -55,15 +56,7 @@ export const Header = () => {
           >
               Explorer
           </a>
-          <a
-            href="https://trade.nestex.one/spot/BTCS_USDT?ref=FB4BBA1A84F3CD2B0E90536167A74353"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Button size="sm">
-              Market
-            </Button>
-          </a>
+          <MarketDropdown size="sm" />
         </nav>
 
         {/* Mobile Hamburger */}
@@ -122,15 +115,7 @@ export const Header = () => {
             >
               <Button variant="outline" size="sm">Explorer</Button>
             </a>
-            <a
-              href="https://trade.nestex.one/spot/BTCS_USDT?ref=FB4BBA1A84F3CD2B0E90536167A74353"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="py-2"
-              onClick={() => setMobileOpen(false)}
-            >
-              <Button variant="outline" size="sm">Market</Button>
-            </a>
+            <MarketDropdown variant="outline" size="sm" className="w-fit" />
           </div>
         </div>
       )}
