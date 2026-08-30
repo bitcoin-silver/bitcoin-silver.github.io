@@ -4,8 +4,8 @@ import { Button } from './ui/button';
 import type { ButtonProps } from './ui/button';
 
 const MARKETS = [
-  { label: 'NONKYC', href: 'https://nonkyc.io/market/BTCS_USDC?ref=65477593e577cfc144c45844' },
-  { label: 'NESTEX', href: 'https://trade.nestex.one/spot/BTCS_USDT?ref=FB4BBA1A84F3CD2B0E90536167A74353' },
+  { label: 'NONKYC (BTCS/USDC)', href: 'https://nonkyc.io/market/BTCS_USDC?ref=65477593e577cfc144c45844' },
+  { label: 'NESTEX (BTCS/USDT)', href: 'https://trade.nestex.one/spot/BTCS_USDT?ref=FB4BBA1A84F3CD2B0E90536167A74353' },
   { label: 'QTRADE (BTCS/USDT)', href: 'https://qutrade.io/en/?market=btcs_usdt&ref=52336' },
   { label: 'QTRADE (BTCS/BTC)', href: 'https://qutrade.io/en/?market=btcs_btc&ref=52336' },
 ];
