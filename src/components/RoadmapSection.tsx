@@ -43,9 +43,9 @@ export const RoadmapSection = () => {
           date: "August 31, 2026",
         },
         {
-          text: "CoinGecko listing planned",
-          status: "in-progress",
-          date: "",
+          text: "CoinGecko listing completed",
+          status: "completed",
+          date: "September 2, 2026",
         },
       ],
     },
