@@ -1,22 +1,29 @@
-import { motion } from 'framer-motion';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from './ui/card';
-import { Button } from './ui/button';
+import { motion } from "framer-motion";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "./ui/card";
+import { Button } from "./ui/button";
 
 export const WalletsSection = () => {
   const iconStyle = {
-    backgroundColor: '#222222', // dunkler Hintergrund für Icon
-    color: 'white',              // Icon-Farbe
-    borderRadius: '0.5rem',      // Abgerundete Ecken
-    padding: '0.5rem',           // Abstand zum Rand
-    display: 'inline-flex',      // Damit padding sichtbar ist
-    alignItems: 'center',        // Zentriert vertikal
-    justifyContent: 'center',    // Zentriert horizontal
+    backgroundColor: "#222222", // dunkler Hintergrund für Icon
+    color: "white", // Icon-Farbe
+    borderRadius: "0.5rem", // Abgerundete Ecken
+    padding: "0.5rem", // Abstand zum Rand
+    display: "inline-flex", // Damit padding sichtbar ist
+    alignItems: "center", // Zentriert vertikal
+    justifyContent: "center", // Zentriert horizontal
   };
 
   const wallets = [
     {
-      name: 'Mobile Wallet (Google Play)',
-      description: 'Manage your BTCS anywhere with the official Android wallet from Google Play.',
+      name: "Mobile Wallet (Google Play)",
+      description:
+        "Manage your BTCS anywhere with the official Android wallet from Google Play.",
       icon: (
         <div style={iconStyle}>
           <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
@@ -24,13 +31,14 @@ export const WalletsSection = () => {
           </svg>
         </div>
       ),
-      url: 'https://play.google.com/store/apps/details?id=top.bitcoinsilver.wallet2025',
-      platform: 'Android',
-      type: 'Mobile',
+      url: "https://play.google.com/store/apps/details?id=top.bitcoinsilver.wallet2025",
+      platform: "Android",
+      type: "Mobile",
     },
     {
-      name: 'Windows Wallet',
-      description: 'Full-featured desktop wallet for Windows with graphical interface',
+      name: "Windows Wallet",
+      description:
+        "Full-featured desktop wallet for Windows with graphical interface",
       icon: (
         <div style={iconStyle}>
           <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
@@ -38,13 +46,28 @@ export const WalletsSection = () => {
           </svg>
         </div>
       ),
-      url: 'https://github.com/bitcoin-silver/core/releases/download/v1.0.2/bitcoinsilver-windows.zip',
-      platform: 'Windows',
-      type: 'Desktop',
+      url: "https://github.com/bitcoin-silver/core/releases/download/version31.1.3/bitcoinsilver-31.1.3-win64.zip",
+      platform: "Windows",
+      type: "Desktop",
     },
     {
-      name: 'Linux Wallet',
-      description: 'Full-featured desktop wallet for Linux distributions',
+      name: "macOS Wallet",
+      description:
+        "Full-featured desktop wallet for macOS with graphical interface",
+      icon: (
+        <div style={iconStyle}>
+          <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
+            <path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09l.01-.01zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z" />
+          </svg>
+        </div>
+      ),
+      url: "https://github.com/bitcoin-silver/core/releases/download/version31.1.3/bitcoinsilver-31.1.3-arm64-apple-darwin-Qt.zip",
+      platform: "macOS",
+      type: "Desktop",
+    },
+    {
+      name: "Linux Wallet",
+      description: "Full-featured desktop wallet for Linux distributions",
       icon: (
         <div style={iconStyle}>
           <svg className="w-8 h-8" fill="currentColor" viewBox="0 0 24 24">
@@ -52,39 +75,59 @@ export const WalletsSection = () => {
           </svg>
         </div>
       ),
-      url: 'https://github.com/bitcoin-silver/core/releases/download/v1.0.2/bitcoinsilver-linux.tar.gz',
-      platform: 'Linux',
-      type: 'Desktop',
+      url: "https://github.com/bitcoin-silver/core/releases/download/version31.1.3/bitcoinsilver-31.1.3-x86_64-linux-gnu.tar.gz",
+      platform: "Linux",
+      type: "Desktop",
     },
     {
-      name: 'Web Wallet',
-      description: 'Browser-based wallet - access your BTCS from anywhere',
+      name: "Web Wallet",
+      description: "Browser-based wallet - access your BTCS from anywhere",
       icon: (
         <div style={iconStyle}>
-          <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
+          <svg
+            className="w-8 h-8"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9"
+            />
           </svg>
         </div>
       ),
-      url: 'https://bitcoin-silver.github.io/web-wallet/',
-      platform: 'Web',
-      type: 'Browser',
-    }
+      url: "https://bitcoinsilver.top/web-wallet/",
+      platform: "Web",
+      type: "Browser",
+    },
   ];
 
   const node = {
-    name: 'Node',
-    description: 'Headless daemon for running a full node on the network',
+    name: "Node",
+    description: "Headless daemon for running a full node on the network",
     icon: (
       <div style={iconStyle}>
-        <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+        <svg
+          className="w-8 h-8"
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            strokeWidth={2}
+            d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01"
+          />
         </svg>
       </div>
     ),
-    url: 'https://github.com/bitcoin-silver/core/archive/refs/tags/v1.0.2.tar.gz',
-    platform: 'Linux/Unix',
-    type: 'Full Node',
+    url: "https://github.com/bitcoin-silver/core/releases/download/version31.1.3/bitcoinsilver-31.1.3-x86_64-linux-gnu.tar.gz",
+    platform: "Linux/Unix",
+    type: "Full Node",
   };
 
   return (
@@ -100,7 +143,8 @@ export const WalletsSection = () => {
             Download Wallets
           </h2>
           <p className="text-muted-foreground max-w-2xl mx-auto">
-            Choose the wallet that best fits your needs. All wallets support the full Bitcoin Silver blockchain.
+            Choose the wallet that best fits your needs. All wallets support the
+            full Bitcoin Silver blockchain.
           </p>
         </motion.div>
 
@@ -124,17 +168,33 @@ export const WalletsSection = () => {
                       {wallet.type}
                     </span>
                   </div>
-                  <CardTitle className="text-lg text-gray-100">{wallet.name}</CardTitle>
-                  <CardDescription className="text-gray-400">{wallet.description}</CardDescription>
+                  <CardTitle className="text-lg text-gray-100">
+                    {wallet.name}
+                  </CardTitle>
+                  <CardDescription className="text-gray-400">
+                    {wallet.description}
+                  </CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Button
-                    className="w-full"
-                    asChild
-                  >
-                    <a href={wallet.url} target="_blank" rel="noopener noreferrer" className="gap-2 text-gray-100">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                  <Button className="w-full" asChild>
+                    <a
+                      href={wallet.url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="gap-2 text-gray-100"
+                    >
+                      <svg
+                        className="w-4 h-4"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                        />
                       </svg>
                       {wallet.platform}
                     </a>
@@ -161,7 +221,9 @@ export const WalletsSection = () => {
                 </div>
                 <div className="flex-1">
                   <div className="flex items-center gap-3 mb-2">
-                    <CardTitle className="text-2xl text-gray-100">{node.name}</CardTitle>
+                    <CardTitle className="text-2xl text-gray-100">
+                      {node.name}
+                    </CardTitle>
                     <span className="px-3 py-1 text-xs rounded-full bg-gray-700/20 text-gray-300 border border-gray-600">
                       Advanced
                     </span>
@@ -174,23 +236,41 @@ export const WalletsSection = () => {
             </CardHeader>
             <CardContent>
               <div className="flex flex-col sm:flex-row gap-4">
-                <Button
-                  className="flex-1"
-                  asChild
-                >
-                  <a href={node.url} target="_blank" rel="noopener noreferrer" className="gap-2 text-gray-100">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                <Button className="flex-1" asChild>
+                  <a
+                    href={node.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="gap-2 text-gray-100"
+                  >
+                    <svg
+                      className="w-4 h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"
+                      />
                     </svg>
                     Download Node Daemon
                   </a>
                 </Button>
-                <Button
-                  variant="outline"
-                  asChild
-                >
-                  <a href="https://github.com/bitcoin-silver/core" target="_blank" rel="noopener noreferrer" className="gap-2 text-gray-100">
-                    <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+                <Button variant="outline" asChild>
+                  <a
+                    href="https://github.com/bitcoin-silver/core"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="gap-2 text-gray-100"
+                  >
+                    <svg
+                      className="w-4 h-4"
+                      fill="currentColor"
+                      viewBox="0 0 24 24"
+                    >
                       <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                     </svg>
                     View Source
@@ -198,7 +278,8 @@ export const WalletsSection = () => {
                 </Button>
               </div>
               <p className="text-sm text-gray-400 mt-4">
-                💡 Running a full node helps secure and decentralize the Bitcoin Silver network
+                💡 Running a full node helps secure and decentralize the Bitcoin
+                Silver network
               </p>
             </CardContent>
           </Card>
