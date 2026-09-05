@@ -99,7 +99,7 @@ export const WalletsSection = () => {
           </svg>
         </div>
       ),
-      url: "https://github.com/bitcoin-silver/core/releases/download/version31.1.3/bitcoinsilver-31.1.3-arm64-apple-darwin-Qt.zip",
+      url: "https://github.com/bitcoin-silver/core/releases/download/version31.1.3/bitcoinsilver-31.1.3-arm64-apple-darwin-Qt.dmg",
       platform: "macOS",
       type: "Desktop",
     },
@@ -114,7 +114,7 @@ export const WalletsSection = () => {
           </svg>
         </div>
       ),
-      url: "https://github.com/bitcoin-silver/core/releases/download/version31.1.3/bitcoinsilver-31.1.3-x86_64-apple-darwin-Qt.zip",
+      url: "https://github.com/bitcoin-silver/core/releases/download/version31.1.3/bitcoinsilver-31.1.3-x86_64-apple-darwin-Qt.dmg",
       platform: "macOS",
       type: "Desktop",
     },
