@@ -14,10 +14,7 @@ export const Header = () => {
     >
       <div className="container flex h-16 items-center justify-between">
         {/* Logo & Branding */}
-        <a
-          href="https://bitcoinsilver.top"
-          rel="noopener noreferrer"
-        >
+        <a href="https://bitcoinsilver.top" rel="noopener noreferrer">
           <div className="flex items-center gap-3">
             <img src="/logo.png" alt="Bitcoin Silver" className="h-10 w-10" />
             <span className="text-xl font-bold bg-gradient-to-r from-gray-300 via-gray-100 to-white bg-clip-text text-transparent">
@@ -28,16 +25,28 @@ export const Header = () => {
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex items-center gap-6">
-          <a href="#wallets" className="text-sm font-medium hover:text-primary transition-colors">
+          <a
+            href="#wallets"
+            className="text-sm font-medium hover:text-primary transition-colors"
+          >
             Wallets
           </a>
-          <a href="#features" className="text-sm font-medium hover:text-primary transition-colors">
+          <a
+            href="#features"
+            className="text-sm font-medium hover:text-primary transition-colors"
+          >
             Features
           </a>
-          <a href="#roadmap" className="text-sm font-medium hover:text-primary transition-colors">
+          <a
+            href="#roadmap"
+            className="text-sm font-medium hover:text-primary transition-colors"
+          >
             Roadmap
           </a>
-          <a href="#community" className="text-sm font-medium hover:text-primary transition-colors">
+          <a
+            href="#community"
+            className="text-sm font-medium hover:text-primary transition-colors"
+          >
             Community
           </a>
           <a
@@ -54,7 +63,15 @@ export const Header = () => {
             rel="noopener noreferrer"
             className="text-sm font-medium hover:text-primary transition-colors"
           >
-              Explorer
+            Explorer
+          </a>
+          <a
+            href="https://bitcoinsilver.eu/faucet"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm font-medium hover:text-primary transition-colors"
+          >
+            Faucet
           </a>
           <MarketDropdown size="sm" />
         </nav>
@@ -73,9 +90,19 @@ export const Header = () => {
             stroke="currentColor"
           >
             {mobileOpen ? (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M6 18L18 6M6 6l12 12"
+              />
             ) : (
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M4 6h16M4 12h16M4 18h16"
+              />
             )}
           </svg>
         </button>
@@ -85,16 +112,32 @@ export const Header = () => {
       {mobileOpen && (
         <div className="md:hidden border-t border-border/40 bg-background/95">
           <div className="container py-3 flex flex-col gap-2">
-            <a href="#wallets" className="py-2 text-sm font-medium hover:text-primary transition-colors" onClick={() => setMobileOpen(false)}>
+            <a
+              href="#wallets"
+              className="py-2 text-sm font-medium hover:text-primary transition-colors"
+              onClick={() => setMobileOpen(false)}
+            >
               Wallets
             </a>
-            <a href="#features" className="py-2 text-sm font-medium hover:text-primary transition-colors" onClick={() => setMobileOpen(false)}>
+            <a
+              href="#features"
+              className="py-2 text-sm font-medium hover:text-primary transition-colors"
+              onClick={() => setMobileOpen(false)}
+            >
               Features
             </a>
-            <a href="#roadmap" className="py-2 text-sm font-medium hover:text-primary transition-colors" onClick={() => setMobileOpen(false)}>
+            <a
+              href="#roadmap"
+              className="py-2 text-sm font-medium hover:text-primary transition-colors"
+              onClick={() => setMobileOpen(false)}
+            >
               Roadmap
             </a>
-            <a href="#community" className="py-2 text-sm font-medium hover:text-primary transition-colors" onClick={() => setMobileOpen(false)}>
+            <a
+              href="#community"
+              className="py-2 text-sm font-medium hover:text-primary transition-colors"
+              onClick={() => setMobileOpen(false)}
+            >
               Community
             </a>
             <a
@@ -113,7 +156,20 @@ export const Header = () => {
               className="py-2"
               onClick={() => setMobileOpen(false)}
             >
-              <Button variant="outline" size="sm">Explorer</Button>
+              <Button variant="outline" size="sm">
+                Explorer
+              </Button>
+            </a>
+            <a
+              href="https://bitcoinsilver.eu/faucet"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="py-2"
+              onClick={() => setMobileOpen(false)}
+            >
+              <Button variant="outline" size="sm">
+                Faucet
+              </Button>
             </a>
             <MarketDropdown variant="outline" size="sm" className="w-fit" />
           </div>
