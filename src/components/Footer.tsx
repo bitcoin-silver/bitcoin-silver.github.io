@@ -62,6 +62,10 @@ export const Footer = () => {
       url: "https://www.livecoinwatch.com/price/BitcoinSilverv2-____BTCS",
     },
     {
+      name: "CoinCodex",
+      url: "https://coincodex.com/crypto/bitcoin-silver-coin/",
+    },
+    {
       name: "CoinPaprika",
       url: "https://coinpaprika.com/coin/btcs-bitcoin-silver1/",
     },
