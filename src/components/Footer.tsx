@@ -48,13 +48,34 @@ export const Footer = () => {
 
   const resources = [
     { name: "Explorer", url: "https://explorer.bitcoinsilver.top" },
-    {
-      name: "Miningpoolstats",
-      url: "https://miningpoolstats.stream/bitcoinsilver",
-    },
     { name: "Whitepaper", url: "/whitepaper.pdf" },
     { name: "GitHub", url: "https://github.com/bitcoin-silver" },
   ];
+
+  const marketTracking = [
+    {
+      name: "CoinGecko",
+      url: "https://www.coingecko.com/en/coins/bitcoin-silver-2",
+    },
+    {
+      name: "LiveCoinWatch",
+      url: "https://www.livecoinwatch.com/price/BitcoinSilverv2-____BTCS",
+    },
+    {
+      name: "CoinPaprika",
+      url: "https://coinpaprika.com/coin/btcs-bitcoin-silver1/",
+    },
+    {
+      name: "CoinCarp",
+      url: "https://www.coincarp.com/currencies/bitcoinsilver-top/",
+    },
+    {
+      name: "MiningPoolStats",
+      url: "https://miningpoolstats.stream/bitcoinsilver",
+    },
+  ];
+
+  const faucetUrl = "https://bitcoinsilver.eu/faucet/";
 
   const legalLinks = [
     { name: "Privacy", url: "/privacy.html" },
@@ -65,7 +86,7 @@ export const Footer = () => {
   return (
     <footer className="border-t border-border/40 bg-background/95 mt-20">
       <div className="container py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
           {/* Brand */}
           <div className="space-y-4">
             <a href="https://bitcoinsilver.top" rel="noopener noreferrer">
@@ -103,6 +124,25 @@ export const Footer = () => {
             </ul>
           </div>
 
+          {/* Market Tracking */}
+          <div>
+            <h3 className="font-semibold mb-4">Market Tracking</h3>
+            <ul className="space-y-2">
+              {marketTracking.map((market) => (
+                <li key={market.name}>
+                  <a
+                    href={market.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
+                  >
+                    {market.name}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           {/* Resources */}
           <div>
             <h3 className="font-semibold mb-4">Resources</h3>
@@ -125,7 +165,7 @@ export const Footer = () => {
           {/* Social */}
           <div>
             <h3 className="font-semibold mb-4">Community</h3>
-            <div className="flex flex-wrap gap-3">
+            <div className="flex flex-wrap gap-3 mb-6">
               {socialLinks.map((link) => (
                 <motion.a
                   key={link.name}
@@ -145,23 +185,33 @@ export const Footer = () => {
                 </motion.a>
               ))}
             </div>
+            <motion.a
+              href={faucetUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              whileHover={{ scale: 1.03 }}
+              whileTap={{ scale: 0.97 }}
+              className="inline-flex items-center gap-2 rounded-lg bg-primary/10 border border-primary/30 px-3 py-2 text-sm font-medium text-primary hover:bg-primary/20 transition-colors"
+            >
+              💧 Claim Free BTCS
+            </motion.a>
           </div>
         </div>
 
-        <div className="mt-6 pt-2 text-sm text-muted-foreground">
-          <div className="grid grid-cols-1 md:grid-cols-3 items-center gap-1">
-            <p className="text-left">
+        <div className="mt-8 pt-6 border-t border-border/40 text-sm text-muted-foreground">
+          <div className="flex flex-col md:grid md:grid-cols-3 items-center gap-4 md:gap-1">
+            <p className="text-center md:text-left">
               © {new Date().getFullYear()} Bitcoin Silver. All rights reserved.
             </p>
-            <p className="text-center md:col-start-2">
+            <p className="text-center">
               Built with ⚡ by the Bitcoin Silver community
             </p>
-            <div className="flex justify-end gap-3">
+            <div className="flex justify-center md:justify-end gap-4">
               {legalLinks.map((link) => (
                 <a
                   key={link.name}
                   href={link.url}
-                  className="text-xs text-muted-foreground hover:text-primary transition-colors"
+                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
                 >
                   {link.name}
                 </a>

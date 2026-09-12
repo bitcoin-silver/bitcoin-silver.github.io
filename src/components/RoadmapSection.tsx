@@ -47,6 +47,11 @@ export const RoadmapSection = () => {
           status: "completed",
           date: "September 2, 2026",
         },
+        {
+          text: "CoinMarketCap listing planned",
+          status: "in-progress",
+          date: "September 12, 2026",
+        },
       ],
     },
     {
