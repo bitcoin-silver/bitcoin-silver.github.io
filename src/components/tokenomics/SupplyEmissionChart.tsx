@@ -1,5 +1,6 @@
 import { Area, AreaChart, CartesianGrid, ReferenceLine, ResponsiveContainer, Tooltip, XAxis, YAxis } from 'recharts';
-import { generateEmissionSchedule, formatNumber, GENESIS_DATE } from '@/utils/tokenomicsCalculations';
+import { generateEmissionSchedule, formatAbbreviated, GENESIS_DATE } from '@/utils/tokenomicsCalculations';
+import type { EmissionPoint, TooltipProps } from './chartTypes';
 
 interface SupplyEmissionChartProps {
   currentBlockHeight?: number;
@@ -11,15 +12,15 @@ export default function SupplyEmissionChart({ currentBlockHeight = 0 }: SupplyEm
   const currentYear = new Date().getFullYear();
 
   // Custom tooltip
-  const CustomTooltip = ({ active, payload }: any) => {
+  const CustomTooltip = ({ active, payload }: TooltipProps<EmissionPoint>) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-card border border-border rounded-lg p-3 shadow-lg">
+        <div className="rounded-lg border border-border bg-popover/95 p-3 shadow-lift backdrop-blur-md">
           <p className="text-sm font-semibold mb-1">
             Year: {payload[0].payload.year}
           </p>
           <p className="text-sm text-muted-foreground">
-            Supply: {formatNumber(payload[0].value)} BTCS
+            Supply: {formatAbbreviated(payload[0].value)} BTCS
           </p>
           <p className="text-xs text-muted-foreground mt-1">
             Block: {payload[0].payload.blockHeight.toLocaleString()}
@@ -33,13 +34,18 @@ export default function SupplyEmissionChart({ currentBlockHeight = 0 }: SupplyEm
   return (
     <div className="space-y-4">
       <div>
-        <h3 className="text-xl font-semibold mb-2">Supply Emission Schedule</h3>
+        <h3 className="mb-2 font-display text-display-sm text-foreground">Supply Emission Schedule</h3>
         <p className="text-sm text-muted-foreground">
           Total BTCS supply projected through 2055, showing early halvings and growth curve
         </p>
       </div>
 
-      <ResponsiveContainer width="100%" height={350}>
+      <ResponsiveContainer
+        width="100%"
+        height={350}
+        // Ohne Startmaß misst Recharts beim ersten Render -1 und warnt.
+        initialDimension={{ width: 720, height: 350 }}
+      >
         <AreaChart data={emissionData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
           <defs>
             <linearGradient id="colorSupply" x1="0" y1="0" x2="0" y2="1">
@@ -57,7 +63,7 @@ export default function SupplyEmissionChart({ currentBlockHeight = 0 }: SupplyEm
           <YAxis
             stroke="hsl(var(--muted-foreground))"
             style={{ fontSize: '12px' }}
-            tickFormatter={(value) => formatNumber(value)}
+            tickFormatter={(value) => formatAbbreviated(value)}
           />
           <Tooltip content={<CustomTooltip />} />
           <Area

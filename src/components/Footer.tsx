@@ -1,229 +1,119 @@
-import { motion } from "framer-motion";
+import { Droplet } from "lucide-react";
+import { SOCIAL_LINKS } from "@/lib/links";
+import { EXCHANGES, TRACKERS } from "@/lib/markets";
 
-export const Footer = () => {
-  const socialLinks = [
-    {
-      name: "Telegram",
-      url: "https://t.me/official_bitcoinsilver",
-      icon: (
-        <svg className="w-5 h-5" fill="white" viewBox="0 0 24 24">
-          <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z" />
-        </svg>
-      ),
-    },
-    {
-      name: "Discord",
-      url: "https://discord.gg/wCmdJGXFr7",
-      icon: (
-        <svg className="w-5 h-5" fill="white" viewBox="0 0 24 24">
-          <path d="M20.317 4.369a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.211.375-.445.864-.608 1.249a18.27 18.27 0 00-5.489 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037 19.736 19.736 0 00-4.885 1.515.07.07 0 00-.032.027C2.068 9.041 1.366 13.58 1.66 18.062a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.033.078.078 0 00.084-.027c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.104 13.107 13.107 0 01-1.882-.9.077.077 0 01-.008-.128c.126-.094.252-.192.373-.29a.074.074 0 01.078-.01c3.937 1.8 8.207 1.8 12.11 0a.074.074 0 01.079.009c.121.099.247.198.374.291a.077.077 0 01-.006.128 12.299 12.299 0 01-1.883.899.077.077 0 00-.04.105c.36.698.772 1.362 1.225 1.993a.078.078 0 00.084.028 19.876 19.876 0 005.995-3.034.079.079 0 00.03-.056c.5-7.19-1.2-11.69-3.63-13.666a.06.06 0 00-.031-.026zM8.02 15.331c-1.183 0-2.157-1.086-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.175 1.095 2.157 2.419 0 1.333-.956 2.419-2.157 2.419zm7.974 0c-1.183 0-2.157-1.086-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.175 1.095 2.157 2.419 0 1.333-.946 2.419-2.157 2.419z" />
-        </svg>
-      ),
-    },
-    {
-      name: "X (Twitter)",
-      url: "https://x.com/Official_BTCS",
-      icon: (
-        <svg className="w-5 h-5" fill="white" viewBox="0 0 24 24">
-          <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z" />
-        </svg>
-      ),
-    },
-  ];
+const RESOURCES = [
+  { name: "Block explorer", url: "https://explorer.bitcoinsilver.top" },
+  { name: "Whitepaper (PDF)", url: "/whitepaper.pdf" },
+  { name: "GitHub", url: "https://github.com/bitcoin-silver" },
+];
 
-  const exchanges = [
-    {
-      name: "NonKYC",
-      url: "https://nonkyc.io/market/BTCS_USDC?ref=65477593e577cfc144c45844",
-    },
-    {
-      name: "NestEx",
-      url: "https://trade.nestex.one/spot/BTCS_USDT?ref=FB4BBA1A84F3CD2B0E90536167A74353",
-    },
-    {
-      name: "Qutrade",
-      url: "https://qutrade.io/en/?market=btcs_usdt&ref=52336",
-    },
-  ];
+const LEGAL_LINKS = [
+  { name: "Privacy", url: "/privacy.html" },
+  { name: "Terms", url: "/terms.html" },
+  { name: "Risk disclosure", url: "/risk-disclosure.html" },
+];
 
-  const resources = [
-    { name: "Explorer", url: "https://explorer.bitcoinsilver.top" },
-    { name: "Whitepaper", url: "/whitepaper.pdf" },
-    { name: "GitHub", url: "https://github.com/bitcoin-silver" },
-  ];
+const FAUCET_URL = "https://bitcoinsilver.eu/faucet/";
 
-  const marketTracking = [
-    {
-      name: "CoinGecko",
-      url: "https://www.coingecko.com/en/coins/bitcoin-silver-2",
-    },
-    {
-      name: "LiveCoinWatch",
-      url: "https://www.livecoinwatch.com/price/BitcoinSilverv2-____BTCS",
-    },
-    {
-      name: "CoinCodex",
-      url: "https://coincodex.com/crypto/bitcoin-silver-coin/",
-    },
-    {
-      name: "CoinPaprika",
-      url: "https://coinpaprika.com/coin/btcs-bitcoin-silver1/",
-    },
-    {
-      name: "CoinCarp",
-      url: "https://www.coincarp.com/currencies/bitcoinsilver-top/",
-    },
-    {
-      name: "MiningPoolStats",
-      url: "https://miningpoolstats.stream/bitcoinsilver",
-    },
-  ];
+interface LinkColumnProps {
+  title: string;
+  links: ReadonlyArray<{ name: string; url: string }>;
+}
 
-  const faucetUrl = "https://bitcoinsilver.eu/faucet/";
+const LinkColumn = ({ title, links }: LinkColumnProps) => (
+  <div>
+    <h3 className="mb-4 text-xs font-semibold uppercase tracking-[0.14em] text-muted-foreground">
+      {title}
+    </h3>
+    <ul className="space-y-2.5">
+      {links.map((link) => (
+        <li key={link.name}>
+          <a
+            href={link.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-sm text-muted-foreground transition-colors hover:text-foreground"
+          >
+            {link.name}
+          </a>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
 
-  const legalLinks = [
-    { name: "Privacy", url: "/privacy.html" },
-    { name: "Terms", url: "/terms.html" },
-    { name: "Risk Disclosure", url: "/risk-disclosure.html" },
-  ];
+export const Footer = () => (
+  <footer className="border-t border-border bg-surface-1/40">
+    <div className="shell py-14 md:py-16">
+      <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-5">
+        <div className="lg:col-span-2">
+          <a href="/" className="inline-flex items-center gap-2.5">
+            <img src="/logo.png" alt="" width={36} height={36} className="h-9 w-9" />
+            <span className="font-display text-lg font-semibold text-foreground">
+              Bitcoin Silver
+            </span>
+          </a>
 
-  return (
-    <footer className="border-t border-border/40 bg-background/95 mt-20">
-      <div className="container py-12">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8">
-          {/* Brand */}
-          <div className="space-y-4">
-            <a href="https://bitcoinsilver.top" rel="noopener noreferrer">
-              <div className="flex items-center gap-3">
-                <img
-                  src="/logo.png"
-                  alt="Bitcoin Silver"
-                  className="h-10 w-10"
-                />
-                <span className="text-xl font-bold">Bitcoin Silver</span>
-              </div>
-            </a>
-            <p className="text-sm text-muted-foreground">
-              Advancing Bitcoin’s legacy with faster blocks, fixed supply, and
-              community-driven Proof-of-Work innovation.
-            </p>
-          </div>
+          <p className="mt-4 max-w-sm text-sm leading-relaxed text-muted-foreground">
+            Advancing Bitcoin&rsquo;s legacy with faster blocks, a fixed supply
+            and community-driven Proof-of-Work.
+          </p>
 
-          {/* Exchanges */}
-          <div>
-            <h3 className="font-semibold mb-4">Exchanges</h3>
-            <ul className="space-y-2">
-              {exchanges.map((exchange) => (
-                <li key={exchange.name}>
-                  <a
-                    href={exchange.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {exchange.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Market Tracking */}
-          <div>
-            <h3 className="font-semibold mb-4">Market Tracking</h3>
-            <ul className="space-y-2">
-              {marketTracking.map((market) => (
-                <li key={market.name}>
-                  <a
-                    href={market.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {market.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Resources */}
-          <div>
-            <h3 className="font-semibold mb-4">Resources</h3>
-            <ul className="space-y-2">
-              {resources.map((resource) => (
-                <li key={resource.name}>
-                  <a
-                    href={resource.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                  >
-                    {resource.name}
-                  </a>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Social */}
-          <div>
-            <h3 className="font-semibold mb-4">Community</h3>
-            <div className="flex flex-wrap gap-3 mb-6">
-              {socialLinks.map((link) => (
-                <motion.a
-                  key={link.name}
-                  href={link.url}
+          <div className="mt-6 flex flex-wrap gap-2.5">
+            {SOCIAL_LINKS.map((social) => {
+              const Icon = social.icon;
+              return (
+                <a
+                  key={social.name}
+                  href={social.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  whileHover={{ scale: 1.1 }}
-                  whileTap={{ scale: 0.95 }}
-                  className="p-2 rounded-lg transition-colors"
-                  style={{
-                    backgroundColor: "#222222",
-                    color: "white",
-                  }}
-                  aria-label={link.name}
+                  aria-label={social.name}
+                  className="icon-chip h-10 w-10 text-muted-foreground transition-colors duration-200 hover:border-brand/40 hover:text-brand"
                 >
-                  {link.icon}
-                </motion.a>
-              ))}
-            </div>
-            <motion.a
-              href={faucetUrl}
-              target="_blank"
-              rel="noopener noreferrer"
-              whileHover={{ scale: 1.03 }}
-              whileTap={{ scale: 0.97 }}
-              className="inline-flex items-center gap-2 rounded-lg bg-primary/10 border border-primary/30 px-3 py-2 text-sm font-medium text-primary hover:bg-primary/20 transition-colors"
-            >
-              💧 Claim Free BTCS
-            </motion.a>
+                  <Icon className="h-[1.125rem] w-[1.125rem]" />
+                </a>
+              );
+            })}
           </div>
+
+          <a
+            href={FAUCET_URL}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-6 inline-flex items-center gap-2 rounded-lg border border-brand/30 bg-brand/10 px-3.5 py-2 text-sm font-medium text-brand transition-colors hover:bg-brand/15"
+          >
+            <Droplet className="h-4 w-4" aria-hidden="true" />
+            Claim free BTCS
+          </a>
         </div>
 
-        <div className="mt-8 pt-6 border-t border-border/40 text-sm text-muted-foreground">
-          <div className="flex flex-col md:grid md:grid-cols-3 items-center gap-4 md:gap-1">
-            <p className="text-center md:text-left">
-              © {new Date().getFullYear()} Bitcoin Silver. All rights reserved.
-            </p>
-            <p className="text-center">
-              Built with ⚡ by the Bitcoin Silver community
-            </p>
-            <div className="flex justify-center md:justify-end gap-4">
-              {legalLinks.map((link) => (
-                <a
-                  key={link.name}
-                  href={link.url}
-                  className="text-sm text-muted-foreground hover:text-primary transition-colors"
-                >
-                  {link.name}
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
+        <LinkColumn
+          title="Exchanges"
+          links={EXCHANGES.map((e) => ({ name: `${e.name} · ${e.meta}`, url: e.url }))}
+        />
+        <LinkColumn title="Market tracking" links={TRACKERS} />
+        <LinkColumn title="Resources" links={RESOURCES} />
       </div>
-    </footer>
-  );
-};
+
+      <div className="mt-12 flex flex-col gap-4 border-t border-border pt-6 text-sm text-muted-foreground md:flex-row md:items-center md:justify-between">
+        <p>
+          © {new Date().getFullYear()} Bitcoin Silver. Built by the community.
+        </p>
+
+        <nav className="flex flex-wrap gap-x-5 gap-y-2" aria-label="Legal">
+          {LEGAL_LINKS.map((link) => (
+            <a
+              key={link.name}
+              href={link.url}
+              className="transition-colors hover:text-foreground"
+            >
+              {link.name}
+            </a>
+          ))}
+        </nav>
+      </div>
+    </div>
+  </footer>
+);

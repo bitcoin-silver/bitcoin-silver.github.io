@@ -1,180 +1,247 @@
-import { motion } from 'framer-motion';
-import { useState } from 'react';
-import { Button } from './ui/button';
-import { MarketDropdown } from './MarketDropdown';
+import { useEffect, useRef, useState } from "react";
+import { Menu, X } from "lucide-react";
+import { Button } from "./ui/button";
+import { Dropdown, type DropdownItem } from "./ui/dropdown";
+import { MarketDropdown } from "./MarketDropdown";
+import { cn } from "@/lib/utils";
+
+const NAV_SECTIONS = [
+  { id: "wallets", label: "Wallets" },
+  { id: "features", label: "Features" },
+  { id: "tokenomics", label: "Tokenomics" },
+  { id: "markets", label: "Markets" },
+  { id: "roadmap", label: "Roadmap" },
+  { id: "community", label: "Community" },
+] as const;
+
+const RESOURCES: DropdownItem[] = [
+  { label: "Whitepaper", meta: "PDF", href: "/whitepaper.pdf", external: true },
+  {
+    label: "Block Explorer",
+    href: "https://explorer.bitcoinsilver.top",
+    external: true,
+  },
+  {
+    label: "Testnet Faucet",
+    href: "https://bitcoinsilver.eu/faucet",
+    external: true,
+  },
+];
 
 export const Header = () => {
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [activeSection, setActiveSection] = useState<string | null>(null);
+
+  // Header wird erst beim Scrollen undurchsichtig — über dem Hero
+  // soll er nicht als Balken abschneiden. Der Fortschrittswert landet als
+  // CSS-Variable am Element, damit die Leiste ohne Re-Render mitläuft.
+  const progressRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    let ticking = false;
+
+    const update = () => {
+      ticking = false;
+      const scrollable =
+        document.documentElement.scrollHeight - window.innerHeight;
+      const ratio = scrollable > 0 ? window.scrollY / scrollable : 0;
+      progressRef.current?.style.setProperty(
+        "transform",
+        `scaleX(${Math.min(Math.max(ratio, 0), 1)})`,
+      );
+      setScrolled(window.scrollY > 12);
+
+      // Aktive Section: die, die eine gedachte Linie bei 40 % Fensterhöhe
+      // schneidet. Wird hier im Scroll-Handler bestimmt statt per
+      // IntersectionObserver, weil der seine Ziele einmalig beim Mount
+      // einsammelt — und #tokenomics kommt erst nach, sobald der lazy
+      // geladene Chunk da ist. Das Element wird deshalb jedes Mal frisch
+      // gesucht.
+      const line = window.innerHeight * 0.4;
+      let current: string | null = null;
+      for (const { id } of NAV_SECTIONS) {
+        const rect = document.getElementById(id)?.getBoundingClientRect();
+        if (rect && rect.top <= line && rect.bottom > line) {
+          current = id;
+          break;
+        }
+      }
+      setActiveSection((previous) => (previous === current ? previous : current));
+    };
+
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(update);
+    };
+
+    update();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, []);
+
+  // Hintergrund nicht mitscrollen lassen, solange das Mobilmenü offen ist.
+  useEffect(() => {
+    if (!mobileOpen) return;
+
+    const previous = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") setMobileOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+
+    return () => {
+      document.body.style.overflow = previous;
+      document.removeEventListener("keydown", onKeyDown);
+    };
+  }, [mobileOpen]);
 
   return (
-    <motion.header
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      className="sticky top-0 z-50 w-full border-b border-border/40 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+    <header
+      className={cn(
+        "sticky top-0 z-50 w-full transition-colors duration-300",
+        scrolled || mobileOpen
+          ? "border-b border-border bg-background/80 backdrop-blur-xl"
+          : "border-b border-transparent bg-transparent",
+      )}
     >
-      <div className="container flex h-16 items-center justify-between">
-        {/* Logo & Branding */}
-        <a href="https://bitcoinsilver.top" rel="noopener noreferrer">
-          <div className="flex items-center gap-3">
-            <img src="/logo.png" alt="Bitcoin Silver" className="h-10 w-10" />
-            <span className="text-xl font-bold bg-gradient-to-r from-gray-300 via-gray-100 to-white bg-clip-text text-transparent">
-              Bitcoin Silver
-            </span>
-          </div>
+      <div className="shell flex h-16 items-center justify-between gap-6 md:h-[4.5rem]">
+        <a
+          href="/"
+          className="flex shrink-0 items-center gap-2.5"
+          aria-label="Bitcoin Silver — home"
+        >
+          <img
+            src="/logo.png"
+            alt=""
+            width={36}
+            height={36}
+            className="h-9 w-9"
+          />
+          <span className="whitespace-nowrap font-display text-[1.0625rem] font-semibold tracking-tight text-foreground">
+            Bitcoin Silver
+          </span>
         </a>
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex items-center gap-6">
-          <a
-            href="#wallets"
-            className="text-sm font-medium hover:text-primary transition-colors"
-          >
-            Wallets
-          </a>
-          <a
-            href="#features"
-            className="text-sm font-medium hover:text-primary transition-colors"
-          >
-            Features
-          </a>
-          <a
-            href="#roadmap"
-            className="text-sm font-medium hover:text-primary transition-colors"
-          >
-            Roadmap
-          </a>
-          <a
-            href="#community"
-            className="text-sm font-medium hover:text-primary transition-colors"
-          >
-            Community
-          </a>
-          <a
-            href="/whitepaper.pdf"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-medium hover:text-primary transition-colors"
-          >
-            Whitepaper
-          </a>
-          <a
-            href="https://explorer.bitcoinsilver.top"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-medium hover:text-primary transition-colors"
-          >
-            Explorer
-          </a>
-          <a
-            href="https://bitcoinsilver.eu/faucet"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-sm font-medium hover:text-primary transition-colors"
-          >
-            Faucet
-          </a>
-          <MarketDropdown size="sm" />
+        <nav
+          className="hidden items-center gap-1 lg:flex"
+          aria-label="Main navigation"
+        >
+          {NAV_SECTIONS.map(({ id, label }) => (
+            <a
+              key={id}
+              href={`#${id}`}
+              aria-current={activeSection === id ? "true" : undefined}
+              className={cn(
+                "relative rounded-md px-3 py-2 text-sm font-medium transition-colors",
+                activeSection === id
+                  ? "text-foreground"
+                  : "text-muted-foreground hover:text-foreground",
+              )}
+            >
+              {label}
+              <span
+                className={cn(
+                  "absolute inset-x-3 -bottom-px h-px bg-brand transition-opacity duration-200",
+                  activeSection === id ? "opacity-100" : "opacity-0",
+                )}
+              />
+            </a>
+          ))}
         </nav>
 
-        {/* Mobile Hamburger */}
+        <div className="hidden items-center gap-2 lg:flex">
+          <Dropdown
+            label="Resources"
+            items={RESOURCES}
+            variant="ghost"
+            size="sm"
+          />
+          <MarketDropdown size="sm" variant="default" />
+        </div>
+
         <button
-          className="md:hidden inline-flex items-center justify-center p-2 rounded-md border border-border text-foreground hover:bg-accent focus:outline-none"
-          aria-label="Toggle menu"
-          onClick={() => setMobileOpen((v) => !v)}
+          type="button"
+          className="inline-flex h-10 w-10 items-center justify-center rounded-md border border-border text-foreground transition-colors hover:bg-accent lg:hidden"
+          aria-label={mobileOpen ? "Close menu" : "Open menu"}
+          aria-expanded={mobileOpen}
+          aria-controls="mobile-menu"
+          onClick={() => setMobileOpen((value) => !value)}
         >
-          <svg
-            className="h-5 w-5"
-            xmlns="http://www.w3.org/2000/svg"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            {mobileOpen ? (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
-            ) : (
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 6h16M4 12h16M4 18h16"
-              />
-            )}
-          </svg>
+          {mobileOpen ? (
+            <X className="h-5 w-5" aria-hidden="true" />
+          ) : (
+            <Menu className="h-5 w-5" aria-hidden="true" />
+          )}
         </button>
       </div>
 
-      {/* Mobile Menu Panel */}
       {mobileOpen && (
-        <div className="md:hidden border-t border-border/40 bg-background/95">
-          <div className="container py-3 flex flex-col gap-2">
-            <a
-              href="#wallets"
-              className="py-2 text-sm font-medium hover:text-primary transition-colors"
-              onClick={() => setMobileOpen(false)}
-            >
-              Wallets
-            </a>
-            <a
-              href="#features"
-              className="py-2 text-sm font-medium hover:text-primary transition-colors"
-              onClick={() => setMobileOpen(false)}
-            >
-              Features
-            </a>
-            <a
-              href="#roadmap"
-              className="py-2 text-sm font-medium hover:text-primary transition-colors"
-              onClick={() => setMobileOpen(false)}
-            >
-              Roadmap
-            </a>
-            <a
-              href="#community"
-              className="py-2 text-sm font-medium hover:text-primary transition-colors"
-              onClick={() => setMobileOpen(false)}
-            >
-              Community
-            </a>
-            <a
-              href="/whitepaper.pdf"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="py-2 text-sm font-medium hover:text-primary transition-colors"
-              onClick={() => setMobileOpen(false)}
-            >
-              Whitepaper
-            </a>
-            <a
-              href="https://explorer.bitcoinsilver.top"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="py-2"
-              onClick={() => setMobileOpen(false)}
-            >
-              <Button variant="outline" size="sm">
-                Explorer
+        <div
+          id="mobile-menu"
+          className="border-t border-border bg-background/95 backdrop-blur-xl lg:hidden"
+        >
+          <div className="shell flex max-h-[calc(100vh-4rem)] flex-col gap-1 overflow-y-auto py-4">
+            {NAV_SECTIONS.map(({ id, label }) => (
+              <a
+                key={id}
+                href={`#${id}`}
+                onClick={() => setMobileOpen(false)}
+                className="rounded-md px-3 py-2.5 text-base font-medium text-foreground transition-colors hover:bg-accent"
+              >
+                {label}
+              </a>
+            ))}
+
+            <hr className="my-2 border-border" />
+
+            {RESOURCES.map((item) => (
+              <a
+                key={item.href}
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                onClick={() => setMobileOpen(false)}
+                className="flex items-center justify-between rounded-md px-3 py-2.5 text-base font-medium text-muted-foreground transition-colors hover:bg-accent hover:text-foreground"
+              >
+                {item.label}
+                {item.meta && (
+                  <span className="text-xs font-normal">{item.meta}</span>
+                )}
+              </a>
+            ))}
+
+            <div className="mt-3 flex flex-col gap-2 px-3">
+              <MarketDropdown align="start" className="w-full [&>button]:w-full" />
+              <Button asChild variant="outline">
+                <a
+                  href="https://play.google.com/store/apps/details?id=top.bitcoinsilver.wallet2025"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={() => setMobileOpen(false)}
+                >
+                  Get the wallet
+                </a>
               </Button>
-            </a>
-            <a
-              href="https://bitcoinsilver.eu/faucet"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="py-2"
-              onClick={() => setMobileOpen(false)}
-            >
-              <Button variant="outline" size="sm">
-                Faucet
-              </Button>
-            </a>
-            <MarketDropdown variant="outline" size="sm" className="w-fit" />
+            </div>
           </div>
         </div>
       )}
-    </motion.header>
+
+      {/* Lesefortschritt — sitzt auf der unteren Headerkante */}
+      <div
+        ref={progressRef}
+        aria-hidden="true"
+        className="absolute inset-x-0 bottom-0 h-px origin-left bg-gradient-to-r from-brand/0 via-brand to-brand/0"
+        style={{ transform: "scaleX(0)" }}
+      />
+    </header>
   );
 };

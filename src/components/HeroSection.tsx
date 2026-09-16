@@ -1,96 +1,113 @@
-import { motion } from 'framer-motion';
-import { Button } from './ui/button';
-import { MarketDropdown } from './MarketDropdown';
-import POWAnimation from './POWAnimation';
+import { motion } from "framer-motion";
+import { ArrowRight, Download } from "lucide-react";
+import { Button } from "./ui/button";
+import { MarketDropdown } from "./MarketDropdown";
+import POWAnimation from "./POWAnimation";
+import { riseOnMount, transition } from "@/lib/motion";
+
+const HIGHLIGHTS = [
+  { value: "21.47M", label: "Max supply" },
+  { value: "5 min", label: "Block time" },
+  { value: "SHA-256", label: "Algorithm" },
+  { value: "210k", label: "Blocks per halving" },
+];
 
 export const HeroSection = () => {
   return (
-    <section className="relative pt-20 pb-12 md:pt-32 md:pb-16 overflow-hidden">
-      <div className="container relative z-10">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          {/* Left content */}
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8 }}
-            className="space-y-8"
-          >
-            <div className="space-y-4">
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.2 }}
-                className="inline-block"
-              >
-                <span className="px-4 py-1.5 rounded-full bg-gray-200/10 border border-gray-400/30 text-gray-300 text-sm font-medium shadow-sm shadow-gray-500/10">
-                  Proof-of-Work • SHA-256
-                </span>
-              </motion.div>
+    <section className="relative overflow-hidden pb-16 pt-12 md:pb-24 md:pt-20 xl:pb-28">
+      {/* Dekoration: driftende Lichtfelder und ein feines Raster, beides
+          randlos über die volle Breite. */}
+      <div aria-hidden="true" className="absolute inset-0">
+        <div className="aurora" />
+        <div className="grid-field" />
+      </div>
 
-              <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-                Advancing Bitcoin’s Legacy
-                <br />
-                <span className="bg-gradient-to-r from-[#bfbfbf] via-gray-200 to-white bg-clip-text text-transparent">
-                  The Silver Standard of Decentralization
-                </span>
-              </h1>
+      <div className="shell relative">
+        <div className="grid items-center gap-12 xl:grid-cols-12 xl:gap-16">
+          <motion.div {...riseOnMount} className="xl:col-span-7">
+            <span className="inline-flex items-center gap-2 rounded-full border border-border bg-surface-1/70 px-3.5 py-1.5 text-xs font-medium tracking-wide text-muted-foreground backdrop-blur">
+              <span className="relative flex h-1.5 w-1.5">
+                <span className="absolute inline-flex h-full w-full animate-pulse-soft rounded-full bg-brand" />
+                <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-brand" />
+              </span>
+              Proof-of-Work · SHA-256 · Fixed supply
+            </span>
 
-              <p className="text-lg text-muted-foreground max-w-xl">
-                Bitcoin Silver (BTCS) builds on Bitcoin’s proven foundation — faster blocks, fixed supply, and SHA-256 Proof-of-Work consensus. 
-                Secure. Transparent. Truly decentralized.
-              </p>
-            </div>
+            <h1 className="mt-7 text-display-2xl">
+              <span className="block text-foreground">
+                Advancing Bitcoin&rsquo;s legacy
+              </span>
+              <span className="mt-1 block text-silver">
+                The silver standard
+              </span>
+            </h1>
 
-            <div className="flex flex-wrap gap-4">
+            <p className="mt-7 max-w-2xl text-lead text-muted-foreground">
+              Bitcoin Silver (BTCS) builds on Bitcoin&rsquo;s proven
+              foundation — faster blocks, a fixed supply, and SHA-256
+              Proof-of-Work consensus. Secure, transparent and genuinely
+              decentralized.
+            </p>
+
+            <div className="mt-9 flex flex-wrap items-center gap-3">
               <Button size="lg" asChild>
-                <a href="https://play.google.com/store/apps/details?id=top.bitcoinsilver.wallet2025" className="gap-2 flex items-center" target="_blank" rel="noopener noreferrer">
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
-                  </svg>
-                  Mobile Wallet (Google Play)
+                <a
+                  href="https://play.google.com/store/apps/details?id=top.bitcoinsilver.wallet2025"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Download aria-hidden="true" />
+                  Get the mobile wallet
                 </a>
               </Button>
               <Button size="lg" variant="outline" asChild>
-                <a href="#wallets" className="gap-2 flex items-center">
-                  More Wallets
+                <a href="#wallets">
+                  All wallets
+                  <ArrowRight aria-hidden="true" />
                 </a>
               </Button>
-              <MarketDropdown size="lg" variant="outline" />
+              <MarketDropdown size="lg" variant="ghost" align="start" />
             </div>
 
-            {/* Quick stats */}
-            <div className="grid grid-cols-3 gap-4 pt-8 border-t border-border/40">
-              <div>
-                <div className="text-2xl font-bold bg-gradient-to-r from-[#bfbfbf] to-white bg-clip-text text-transparent">21.47M</div>
-                <div className="text-sm text-muted-foreground">Max Supply</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold bg-gradient-to-r from-[#bfbfbf] to-white bg-clip-text text-transparent">5 min</div>
-                <div className="text-sm text-muted-foreground">Block Time</div>
-              </div>
-              <div>
-                <div className="text-2xl font-bold bg-gradient-to-r from-[#bfbfbf] to-white bg-clip-text text-transparent">SHA-256</div>
-                <div className="text-sm text-muted-foreground">Algorithm</div>
-              </div>
-            </div>
+            <dl className="mt-12 grid grid-cols-2 gap-x-6 gap-y-7 border-t border-border pt-8 sm:grid-cols-4">
+              {HIGHLIGHTS.map((item) => (
+                <div key={item.label}>
+                  <dt className="sr-only">{item.label}</dt>
+                  <dd>
+                    <span className="block font-display text-xl font-semibold tabular text-foreground sm:text-2xl">
+                      {item.value}
+                    </span>
+                    <span className="mt-1 block text-sm text-muted-foreground">
+                      {item.label}
+                    </span>
+                  </dd>
+                </div>
+              ))}
+            </dl>
           </motion.div>
 
-          {/* Right content - POW Animation */}
           <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            animate={{ opacity: 1, x: 0 }}
-            transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative flex justify-center"
+            initial={{ y: 26 }}
+            animate={{ y: 0 }}
+            transition={{ ...transition, delay: 0.1 }}
+            className="mx-auto w-full max-w-md xl:col-span-5 xl:mx-0 xl:max-w-none"
           >
-            <div className="relative rounded-2xl border border-gray-400/30 bg-card/50 backdrop-blur p-6 shadow-lg shadow-gray-500/10 overflow-hidden max-w-[375px] w-full flex flex-col items-center gap-6">
+            <div className="rounded-2xl border border-border bg-surface-1/70 p-5 shadow-lift edge-light backdrop-blur-md md:p-6">
+              <div className="mb-5 flex items-center justify-between">
+                <span className="text-xs font-medium uppercase tracking-[0.14em] text-muted-foreground">
+                  Latest blocks
+                </span>
+                <span className="inline-flex items-center gap-1.5 text-xs text-muted-foreground">
+                  <span className="h-1.5 w-1.5 animate-pulse-soft rounded-full bg-success" />
+                  Live
+                </span>
+              </div>
 
               <POWAnimation />
 
-              <div className="mt-4 text-center">
-                <p className="text-sm text-muted-foreground">
-                  Live Proof-of-Work Mining Visualization
-                </p>
-              </div>
+              <p className="mt-5 text-center text-xs text-muted-foreground">
+                Every tile is a real block — open it in the explorer
+              </p>
             </div>
           </motion.div>
         </div>

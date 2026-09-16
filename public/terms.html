@@ -1,184 +1,112 @@
 <!doctype html>
-<html lang="en" class="dark">
-
-<head>
+<html lang="en">
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#121212" />
-    <meta name="description" content="Bitcoin Silver terms of use." />
-    <link rel="icon" type="image/png" href="/logo.png" />
-    <link rel="canonical" href="https://bitcoinsilver.top/terms.html" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0b0c0e" />
+
     <title>Terms of Use | Bitcoin Silver</title>
-    <style>
-        :root {
-            --bg: #121212;
-            --card: #242424;
-            --text: #bfbfbf;
-            --text-strong: #e5e5e5;
-            --border: #3a3a3a;
-            --link: #cfcfcf;
-            --link-hover: #ffffff;
-        }
+    <meta
+      name="description"
+      content="Terms of use for the Bitcoin Silver website and software. Informational purpose only, no investment advice, no warranties."
+    />
+    <link rel="canonical" href="https://bitcoinsilver.top/terms.html" />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+    <link rel="stylesheet" href="/legal.css" />
 
-        * {
-            box-sizing: border-box;
-        }
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Bitcoin Silver" />
+    <meta property="og:url" content="https://bitcoinsilver.top/terms.html" />
+    <meta property="og:title" content="Terms of Use | Bitcoin Silver" />
+    <meta
+      property="og:description"
+      content="Informational purpose only, no investment advice, no warranties."
+    />
+    <meta property="og:image" content="https://bitcoinsilver.top/logo.png" />
+  </head>
 
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            min-height: 100%;
-        }
+  <body>
+    <header class="site-header">
+      <div class="shell site-header__inner">
+        <a class="brand" href="/">
+          <img src="/logo.png" alt="" width="36" height="36" />
+          <span>Bitcoin Silver</span>
+        </a>
+        <a class="back-link" href="/">&larr; Back to the main page</a>
+      </div>
+    </header>
 
-        body {
-            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-            background:
-                radial-gradient(circle at 18% 8%, rgba(255, 255, 255, 0.07) 0, transparent 35%),
-                radial-gradient(circle at 82% 0%, rgba(255, 255, 255, 0.05) 0, transparent 28%),
-                linear-gradient(180deg, #161616 0%, #121212 45%, #0f0f0f 100%);
-            color: var(--text);
-        }
+    <main>
+      <div class="prose-shell">
+        <span class="eyebrow">Legal</span>
+        <h1>Terms of Use</h1>
+        <p class="meta"><strong>Effective date:</strong> June 2026</p>
 
-        .wrap {
-            width: min(960px, calc(100% - 2rem));
-            margin: 0 auto;
-            padding: 2rem 0 3rem;
-        }
+        <hr />
 
-        .topbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
+        <h2>Informational purpose only</h2>
+        <p>
+          This website is provided solely for technical and informational
+          purposes regarding Bitcoin Silver. Use of this website does not create
+          any contractual relationship between the user and the Bitcoin Silver
+          project.
+        </p>
 
-        .brand {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-            color: var(--text-strong);
-            text-decoration: none;
-            font-weight: 700;
-        }
+        <h2>No investment advice</h2>
+        <p>
+          Nothing on this website constitutes financial, legal, tax, accounting,
+          or investment advice. No content should be interpreted as a
+          recommendation to buy, sell, or hold any digital asset.
+        </p>
 
-        .brand img {
-            width: 32px;
-            height: 32px;
-        }
+        <h2>No guarantees</h2>
+        <p>
+          Bitcoin Silver software and network access are provided "as is" and
+          "as available" without warranties of any kind, express or implied,
+          including merchantability, fitness for a particular purpose, or
+          non-infringement. Use of the software is entirely at the user's own
+          risk.
+        </p>
 
-        .back {
-            color: var(--link);
-            text-decoration: none;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 0.45rem 0.75rem;
-            background: rgba(255, 255, 255, 0.02);
-        }
+        <h2>User responsibility</h2>
+        <p>
+          Users are solely responsible for wallet security, seed phrase backup,
+          private key custody, transaction verification, and compliance with
+          applicable laws and tax obligations in their jurisdiction.
+        </p>
 
-        .back:hover {
-            color: var(--link-hover);
-        }
+        <h2>Decentralized network</h2>
+        <p>
+          Bitcoin Silver is a decentralized, open-source Proof-of-Work protocol
+          with no controlling corporate entity or issuer. Availability and
+          behavior of third-party services (exchanges, explorers, wallets,
+          mining pools) are outside the control of this website.
+        </p>
 
-        .card {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 1.4rem;
-            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.28);
-        }
-
-        h1 {
-            margin: 0 0 0.45rem;
-            color: var(--text-strong);
-            font-size: clamp(1.4rem, 1.05rem + 1.8vw, 2rem);
-        }
-
-        .meta {
-            margin: 0 0 1.1rem;
-            color: #9a9a9a;
-            font-size: 0.92rem;
-        }
-
-        p {
-            margin: 0 0 0.95rem;
-            line-height: 1.75;
-        }
-
-        p:last-child {
-            margin-bottom: 0;
-        }
-
-        strong {
-            color: var(--text-strong);
-        }
-
-        .links {
-            margin-top: 1.1rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .links a {
-            color: var(--link);
-            text-decoration: none;
-            font-size: 0.95rem;
-        }
-
-        .links a:hover {
-            color: var(--link-hover);
-        }
-    </style>
-</head>
-
-<body>
-    <main class="wrap">
-        <div class="topbar">
-            <a class="brand" href="/">
-                <img src="/logo.png" alt="Bitcoin Silver" />
-                <span>Bitcoin Silver</span>
-            </a>
-            <a class="back" href="/">Back to main page</a>
+        <div class="callout">
+          <p>
+            <strong>Regulatory notice:</strong> Bitcoin Silver (BTCS) does not
+            constitute a crypto-asset service as defined under EU Regulation
+            2023/1114 (MiCA). No exchange, custody, advisory, or financial
+            services are offered through this website or its associated
+            software. Users are responsible for determining the legal status of
+            Bitcoin Silver in their own jurisdiction prior to use.
+          </p>
         </div>
-
-        <section class="card">
-            <h1>Terms of Use</h1>
-            <p class="meta">Effective date: June 2026</p>
-
-            <p><strong>Informational purpose only:</strong> This website is provided solely for technical and
-                informational purposes regarding Bitcoin Silver. Use of this website does not create any contractual
-                relationship between the user and the Bitcoin Silver project.</p>
-
-            <p><strong>No investment advice:</strong> Nothing on this website constitutes financial, legal, tax,
-                accounting, or investment advice. No content should be interpreted as a recommendation to buy, sell, or
-                hold any digital asset.</p>
-
-            <p><strong>No guarantees:</strong> Bitcoin Silver software and network access are provided "as is" and "as available"
-                without warranties of any kind, express or implied, including merchantability, fitness for a particular
-                purpose, or non-infringement. Use of the software is entirely at the user's own risk.</p>
-
-            <p><strong>User responsibility:</strong> Users are solely responsible for wallet security, seed phrase
-                backup, private key custody, transaction verification, and compliance with applicable laws and tax
-                obligations in their jurisdiction.</p>
-
-            <p><strong>Decentralized network:</strong> Bitcoin Silver is a decentralized, open-source Proof-of-Work protocol with
-                no controlling corporate entity or issuer. Availability and behavior of third-party services (exchanges,
-                explorers, wallets, mining pools) are outside the control of this website.</p>
-
-            <p><strong>Regulatory notice:</strong> Bitcoin Silver (BTCS) does not constitute a crypto-asset service as
-                defined under EU Regulation 2023/1114 (MiCA). No exchange, custody, advisory, or financial services are
-                offered through this website or its associated software. Users are responsible for determining the legal
-                status of Bitcoin Silver in their own jurisdiction prior to use.</p>
-
-            <div class="links">
-                <a href="/privacy.html">Privacy</a>
-                <a href="/terms.html">Terms</a>
-                <a href="/risk-disclosure.html">Risk Disclosure</a>
-            </div>
-        </section>
+      </div>
     </main>
-</body>
 
+    <footer class="site-footer">
+      <div class="shell site-footer__inner">
+        <p>&copy; 2026 Bitcoin Silver. Built by the community.</p>
+        <nav aria-label="Legal">
+          <a href="/privacy.html">Privacy</a>
+          <a href="/terms.html" aria-current="page">Terms</a>
+          <a href="/risk-disclosure.html">Risk disclosure</a>
+        </nav>
+      </div>
+    </footer>
+  </body>
 </html>

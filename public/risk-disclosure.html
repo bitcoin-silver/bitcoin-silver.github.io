@@ -1,185 +1,125 @@
 <!doctype html>
-<html lang="en" class="dark">
-
-<head>
+<html lang="en">
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#121212" />
-    <meta name="description" content="Bitcoin Silver risk disclosure." />
-    <link rel="icon" type="image/png" href="/logo.png" />
-    <link rel="canonical" href="https://bitcoinsilver.top/risk-disclosure.html" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="theme-color" content="#0b0c0e" />
+
     <title>Risk Disclosure | Bitcoin Silver</title>
-    <style>
-        :root {
-            --bg: #121212;
-            --card: #242424;
-            --text: #bfbfbf;
-            --text-strong: #e5e5e5;
-            --border: #3a3a3a;
-            --link: #cfcfcf;
-            --link-hover: #ffffff;
-        }
+    <meta
+      name="description"
+      content="Market, technology, custody, liquidity and regulatory risks of holding or using Bitcoin Silver (BTCS)."
+    />
+    <link
+      rel="canonical"
+      href="https://bitcoinsilver.top/risk-disclosure.html"
+    />
+    <link rel="icon" type="image/png" href="/logo.png" />
+    <link rel="apple-touch-icon" href="/logo.png" />
+    <link rel="stylesheet" href="/legal.css" />
 
-        * {
-            box-sizing: border-box;
-        }
+    <meta property="og:type" content="article" />
+    <meta property="og:site_name" content="Bitcoin Silver" />
+    <meta
+      property="og:url"
+      content="https://bitcoinsilver.top/risk-disclosure.html"
+    />
+    <meta property="og:title" content="Risk Disclosure | Bitcoin Silver" />
+    <meta
+      property="og:description"
+      content="Market, technology, custody, liquidity and regulatory risks of using BTCS."
+    />
+    <meta property="og:image" content="https://bitcoinsilver.top/logo.png" />
+  </head>
 
-        html,
-        body {
-            margin: 0;
-            padding: 0;
-            min-height: 100%;
-        }
+  <body>
+    <header class="site-header">
+      <div class="shell site-header__inner">
+        <a class="brand" href="/">
+          <img src="/logo.png" alt="" width="36" height="36" />
+          <span>Bitcoin Silver</span>
+        </a>
+        <a class="back-link" href="/">&larr; Back to the main page</a>
+      </div>
+    </header>
 
-        body {
-            font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, sans-serif;
-            background:
-                radial-gradient(circle at 18% 8%, rgba(255, 255, 255, 0.07) 0, transparent 35%),
-                radial-gradient(circle at 82% 0%, rgba(255, 255, 255, 0.05) 0, transparent 28%),
-                linear-gradient(180deg, #161616 0%, #121212 45%, #0f0f0f 100%);
-            color: var(--text);
-        }
+    <main>
+      <div class="prose-shell">
+        <span class="eyebrow">Legal</span>
+        <h1>Risk Disclosure</h1>
+        <p class="meta"><strong>Effective date:</strong> June 2026</p>
 
-        .wrap {
-            width: min(960px, calc(100% - 2rem));
-            margin: 0 auto;
-            padding: 2rem 0 3rem;
-        }
+        <hr />
 
-        .topbar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 1rem;
-            margin-bottom: 1.5rem;
-        }
+        <h2>Market risk</h2>
+        <p>
+          Digital assets are highly volatile and may lose value rapidly,
+          including a total loss of value. Past performance is not indicative of
+          future results.
+        </p>
 
-        .brand {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-            color: var(--text-strong);
-            text-decoration: none;
-            font-weight: 700;
-        }
+        <h2>Technology risk</h2>
+        <p>
+          Blockchain software can contain unknown bugs, vulnerabilities, or
+          consensus failures. Network attacks, chain splits, and service outages
+          may occur.
+        </p>
 
-        .brand img {
-            width: 32px;
-            height: 32px;
-        }
+        <h2>Custody risk</h2>
+        <p>
+          Loss or exposure of private keys or seed phrases can result in
+          permanent and irreversible loss of funds. Bitcoin Silver wallets are
+          fully noncustodial &mdash; the project cannot recover lost keys or
+          funds under any circumstances.
+        </p>
 
-        .back {
-            color: var(--link);
-            text-decoration: none;
-            border: 1px solid var(--border);
-            border-radius: 10px;
-            padding: 0.45rem 0.75rem;
-            background: rgba(255, 255, 255, 0.02);
-        }
+        <h2>Liquidity risk</h2>
+        <p>
+          Trading venues may have limited liquidity, delist assets, halt
+          withdrawals, or suspend trading at any time. Third-party exchange
+          availability is outside the control of this project.
+        </p>
 
-        .back:hover {
-            color: var(--link-hover);
-        }
+        <h2>Regulatory and tax risk</h2>
+        <p>
+          Legal and tax treatment of digital assets varies by jurisdiction and
+          may change without notice. Users are solely responsible for legal and
+          tax compliance in their respective jurisdictions.
+        </p>
 
-        .card {
-            background: linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(255, 255, 255, 0.02));
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 1.4rem;
-            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.28);
-        }
+        <h2>No recovery guarantees</h2>
+        <p>
+          Transactions on the Bitcoin Silver network are irreversible by design.
+          There is no support channel capable of recovering lost, misdirected,
+          or stolen funds.
+        </p>
 
-        h1 {
-            margin: 0 0 0.45rem;
-            color: var(--text-strong);
-            font-size: clamp(1.4rem, 1.05rem + 1.8vw, 2rem);
-        }
-
-        .meta {
-            margin: 0 0 1.1rem;
-            color: #9a9a9a;
-            font-size: 0.92rem;
-        }
-
-        p {
-            margin: 0 0 0.95rem;
-            line-height: 1.75;
-        }
-
-        p:last-child {
-            margin-bottom: 0;
-        }
-
-        strong {
-            color: var(--text-strong);
-        }
-
-        .links {
-            margin-top: 1.1rem;
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .links a {
-            color: var(--link);
-            text-decoration: none;
-            font-size: 0.95rem;
-        }
-
-        .links a:hover {
-            color: var(--link-hover);
-        }
-    </style>
-</head>
-
-<body>
-    <main class="wrap">
-        <div class="topbar">
-            <a class="brand" href="/">
-                <img src="/logo.png" alt="Bitcoin Silver" />
-                <span>Bitcoin Silver</span>
-            </a>
-            <a class="back" href="/">Back to main page</a>
+        <div class="callout">
+          <p>
+            <strong>Regulatory notice:</strong> Bitcoin Silver (BTCS) is a
+            decentralized, open-source Proof-of-Work cryptocurrency. This
+            project does not constitute a crypto-asset service as defined under
+            EU Regulation 2023/1114 (MiCA). No exchange, custody, advisory, or
+            financial services are offered. This disclosure is provided for
+            informational purposes only and does not constitute financial or
+            legal advice.
+          </p>
         </div>
-
-        <section class="card">
-            <h1>Risk Disclosure</h1>
-            <p class="meta">Effective date: June 2026</p>
-
-            <p><strong>Market risk:</strong> Digital assets are highly volatile and may lose value rapidly, including a
-                total loss of value. Past performance is not indicative of future results.</p>
-
-            <p><strong>Technology risk:</strong> Blockchain software can contain unknown bugs, vulnerabilities, or
-                consensus failures. Network attacks, chain splits, and service outages may occur.</p>
-
-            <p><strong>Custody risk:</strong> Loss or exposure of private keys or seed phrases can result in permanent
-                and irreversible loss of funds. Bitcoin Silver wallets are fully noncustodial - the project cannot recover lost
-                keys or funds under any circumstances.</p>
-
-            <p><strong>Liquidity risk:</strong> Trading venues may have limited liquidity, delist assets, halt
-                withdrawals, or suspend trading at any time. Third-party exchange availability is outside the control of
-                this project.</p>
-
-            <p><strong>Regulatory and tax risk:</strong> Legal and tax treatment of digital assets varies by
-                jurisdiction and may change without notice. Users are solely responsible for legal and tax compliance in
-                their respective jurisdictions.</p>
-
-            <p><strong>No recovery guarantees:</strong> Transactions on the Bitcoin Silver network are irreversible by design.
-                There is no support channel capable of recovering lost, misdirected, or stolen funds.</p>
-
-            <p><strong>Regulatory notice:</strong> Bitcoin Silver (BTCS) is a decentralized, open-source Proof-of-Work
-                cryptocurrency. This project does not constitute a crypto-asset service as defined under EU Regulation
-                2023/1114 (MiCA). No exchange, custody, advisory, or financial services are offered. This disclosure is
-                provided for informational purposes only and does not constitute financial or legal advice.</p>
-
-            <div class="links">
-                <a href="/privacy.html">Privacy</a>
-                <a href="/terms.html">Terms</a>
-                <a href="/risk-disclosure.html">Risk Disclosure</a>
-            </div>
-        </section>
+      </div>
     </main>
-</body>
 
+    <footer class="site-footer">
+      <div class="shell site-footer__inner">
+        <p>&copy; 2026 Bitcoin Silver. Built by the community.</p>
+        <nav aria-label="Legal">
+          <a href="/privacy.html">Privacy</a>
+          <a href="/terms.html">Terms</a>
+          <a href="/risk-disclosure.html" aria-current="page">
+            Risk disclosure
+          </a>
+        </nav>
+      </div>
+    </footer>
+  </body>
 </html>

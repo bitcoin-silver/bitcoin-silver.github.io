@@ -25,14 +25,14 @@ export default function BitcoinComparisonCard() {
   };
 
   return (
-    <Card className="h-full hover:border-primary/50 transition-all hover:shadow-lg hover:shadow-primary/10">
+    <Card className="h-full transition-colors duration-200 hover:border-line-strong">
       <CardHeader>
         <div className="flex items-start justify-between mb-2">
-          <div className="p-3 rounded-lg bg-[#222222] text-white">
+          <div className="icon-chip h-11 w-11 text-brand">
             <GitCompare className="w-6 h-6" />
           </div>
         </div>
-        <CardTitle className="text-xl">Bitcoin Comparison</CardTitle>
+        <CardTitle>Bitcoin Comparison</CardTitle>
         <CardDescription>How BTCS compares to BTC</CardDescription>
       </CardHeader>
       <CardContent>
@@ -40,7 +40,7 @@ export default function BitcoinComparisonCard() {
           {comparisonData.map((item, index) => (
             <div
               key={index}
-              className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0 p-3 rounded-lg bg-[#222222] hover:bg-[#2a2a2a] transition-colors"
+              className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0 rounded-lg bg-surface-2 p-3.5 hover:bg-surface-3 transition-colors"
             >
               <div className="flex items-center gap-2 flex-1 min-w-0">
                 <div className="text-muted-foreground flex-shrink-0">{getIcon(item.metric)}</div>
@@ -49,7 +49,7 @@ export default function BitcoinComparisonCard() {
               <div className="flex gap-3 sm:gap-6 items-center justify-end sm:justify-start">
                 <div
                   className={`font-semibold text-xs sm:text-sm w-[70px] sm:min-w-[80px] text-right ${
-                    item.advantage === 'btcs' ? 'text-green-500' : ''
+                    item.advantage === 'btcs' ? 'text-success' : ''
                   }`}
                 >
                   {item.btcs}
@@ -65,9 +65,9 @@ export default function BitcoinComparisonCard() {
           ))}
         </div>
 
-        <div className="mt-4 p-3 rounded-lg bg-primary/10 border border-primary/20">
+        <div className="mt-4 p-3 rounded-lg border border-brand/25 bg-brand/10">
           <p className="text-xs text-muted-foreground">
-            <span className="text-green-500 font-semibold">✓</span> Bitcoin Silver offers faster
+            <span className="text-success font-semibold">✓</span> Bitcoin Silver offers faster
             block times (5min vs 10min) while maintaining the same proven security model as Bitcoin.
           </p>
         </div>

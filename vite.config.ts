@@ -17,6 +17,16 @@ export default defineConfig({
       '.trycloudflare.com',
     ],
     proxy: {
+      // Die Peers-API erlaubt CORS nur für https://bitcoinsilver.top —
+      // localhost steht nicht auf der Allowlist. Ohne diesen Proxy ist die
+      // Node-Karte nur in Produktion sichtbar und lokal nicht testbar.
+      // Muss vor '/api' stehen: Vite prüft die Einträge der Reihe nach.
+      '/peers-api': {
+        target: 'https://bitcoinsilver.eu',
+        changeOrigin: true,
+        secure: false,
+        rewrite: (path) => path.replace(/^\/peers-api/, '/api'),
+      },
       '/api': {
         target: 'https://explorer.bitcoinsilver.top',
         changeOrigin: true,

@@ -1,53 +1,75 @@
+import { Suspense, lazy } from "react";
+import { BlockchainDataProvider } from "./hooks/useBlockchainData";
+import { Header } from "./components/Header";
+import { HeroSection } from "./components/HeroSection";
+import { NetworkTicker } from "./components/NetworkTicker";
 import { StatsSection } from "./components/StatsSection";
 import { WalletsSection } from "./components/WalletsSection";
 import { FeaturesSection } from "./components/FeaturesSection";
+import { MarketsSection } from "./components/MarketsSection";
 import { RoadmapSection } from "./components/RoadmapSection";
 import { CommunitySection } from "./components/CommunitySection";
 import { Footer } from "./components/Footer";
-import { Header } from "./components/Header";
-{ /*import FundraisingBar from "./components/FundraisingBar"; */ }
-import { HeroSection } from "./components/HeroSection";
-import PlayStorePopup from "./components/PlayStorePopup";
-import { NodeMapSection } from "./components/NodeMapSection";
-import TokenomicsSection from "./components/TokenomicsSection";
+
+// Leaflet und Recharts machten zusammen den Großteil des Hauptbundles aus,
+// obwohl beide Sections unter dem Fold liegen. Sie werden jetzt separat
+// geladen — der Hero ist dadurch deutlich früher interaktiv.
+const NodeMapSection = lazy(() =>
+  import("./components/NodeMapSection").then((m) => ({
+    default: m.NodeMapSection,
+  })),
+);
+const TokenomicsSection = lazy(() => import("./components/TokenomicsSection"));
+
+/** Platzhalter in der ungefähren Endhöhe, damit nichts nachspringt. */
+const SectionFallback = ({ height }: { height: string }) => (
+  <div className="section-tight" aria-hidden="true">
+    <div className="shell">
+      <div
+        className="animate-pulse-soft rounded-xl border border-border bg-surface-1"
+        style={{ height }}
+      />
+    </div>
+  </div>
+);
 
 function App() {
   return (
-    <div className="min-h-screen bg-gradient-to-b from-background via-background to-background/95">
-      {/* <FundraisingBar /> */}
-      <Header />
+    <BlockchainDataProvider>
+      <div className="min-h-screen bg-background">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-[100] focus:rounded-md focus:bg-brand focus:px-4 focus:py-2 focus:text-brand-foreground"
+        >
+          Skip to content
+        </a>
 
-      <main className="relative">
-        {/* Hero Section */}
-        <HeroSection />
+        <Header />
 
-        {/* Node Map Section */}
-        <NodeMapSection />
+        <main id="main" className="relative">
+          <HeroSection />
+          <NetworkTicker />
+          <StatsSection />
 
-        {/* Stats Section */}
-        <StatsSection />
+          <Suspense fallback={<SectionFallback height="30rem" />}>
+            <NodeMapSection />
+          </Suspense>
 
-        {/* Wallets Section */}
-        <WalletsSection />
+          <WalletsSection />
+          <FeaturesSection />
 
-        {/* Features Section */}
-        <FeaturesSection />
+          <Suspense fallback={<SectionFallback height="40rem" />}>
+            <TokenomicsSection />
+          </Suspense>
 
-        {/* Tokenomics Section */}
-        <TokenomicsSection />
+          <MarketsSection />
+          <RoadmapSection />
+          <CommunitySection />
+        </main>
 
-        {/* Roadmap Section */}
-        <RoadmapSection />
-
-        {/* Community Section */}
-        <CommunitySection />
-
-        {/* Footer */}
         <Footer />
-
-        <PlayStorePopup />
-      </main>
-    </div>
+      </div>
+    </BlockchainDataProvider>
   );
 }
 

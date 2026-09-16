@@ -1,0 +1,314 @@
+/* ------------------------------------------------------------------ */
+/* Bitcoin Silver — Stylesheet für die statischen Rechtstexte          */
+/* ------------------------------------------------------------------ */
+/* privacy.html, terms.html und risk-disclosure.html werden an der      */
+/* React-App vorbei ausgeliefert. Damit sie trotzdem wie die Hauptseite */
+/* aussehen, spiegelt diese Datei deren Design-Tokens (src/index.css).  */
+/* Ändert sich dort die Palette, muss sie hier nachgezogen werden.      */
+
+/* Dieselben Variable Fonts wie die Hauptseite, hier aus /fonts statt aus
+   dem gehashten Build-Ordner — eine statische Seite kann den nicht
+   auflösen. Nur der Latin-Subset: die Rechtstexte sind englisch. */
+@font-face {
+  font-family: "Inter Legal";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("/fonts/inter-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+2000-206F,
+    U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+@font-face {
+  font-family: "Sora Legal";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 800;
+  src: url("/fonts/sora-latin-wght-normal.woff2") format("woff2-variations");
+  unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+2000-206F,
+    U+2074, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD;
+}
+
+:root {
+  --surface-0: 220 12% 5%;
+  --surface-1: 220 10% 9%;
+  --surface-2: 220 9% 13%;
+  --surface-3: 220 9% 18%;
+
+  --fg: 210 12% 91%;
+  --fg-muted: 213 9% 63%;
+  --fg-subtle: 215 8% 45%;
+
+  --line: 220 8% 17%;
+  --line-strong: 220 8% 28%;
+
+  --brand: 189 64% 56%;
+
+  --radius: 0.75rem;
+
+  color-scheme: dark;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: hsl(var(--surface-0));
+  color: hsl(var(--fg));
+  font-family: "Inter Legal", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 1rem;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: hsl(var(--brand));
+  text-decoration: none;
+  text-underline-offset: 3px;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+:focus-visible {
+  outline: 2px solid hsl(var(--brand));
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::selection {
+  background: hsl(var(--brand) / 0.28);
+}
+
+/* ---------------------------------------------------------------- */
+/* Kopf                                                              */
+/* ---------------------------------------------------------------- */
+
+.site-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  border-bottom: 1px solid hsl(var(--line));
+  background: hsl(var(--surface-0) / 0.8);
+  backdrop-filter: blur(16px);
+}
+
+.site-header__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1.5rem;
+  height: 4rem;
+}
+
+.brand {
+  font-family: "Sora Legal", "Inter Legal", sans-serif;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.625rem;
+  color: hsl(var(--fg));
+  font-weight: 600;
+  font-size: 1.0625rem;
+  letter-spacing: -0.01em;
+}
+
+.brand:hover {
+  text-decoration: none;
+}
+
+.brand img {
+  width: 2.25rem;
+  height: 2.25rem;
+}
+
+.back-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 0.875rem;
+  border: 1px solid hsl(var(--line));
+  border-radius: calc(var(--radius) - 3px);
+  background: hsl(var(--surface-1));
+  color: hsl(var(--fg-muted));
+  font-size: 0.875rem;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.back-link:hover {
+  border-color: hsl(var(--line-strong));
+  color: hsl(var(--fg));
+  text-decoration: none;
+}
+
+/* ---------------------------------------------------------------- */
+/* Layout                                                            */
+/* ---------------------------------------------------------------- */
+
+.shell {
+  width: 100%;
+  max-width: 1760px;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 3.5vw, 4rem);
+}
+
+/* Fließtext bleibt schmal — lange Zeilen sind unlesbar, unabhängig
+   davon, wie breit der Bildschirm ist. */
+.prose-shell {
+  width: 100%;
+  max-width: 52rem;
+  margin-inline: auto;
+  padding-inline: clamp(1.25rem, 4vw, 4.5rem);
+}
+
+main {
+  padding-block: clamp(3rem, 6vw, 5.5rem) clamp(4rem, 8vw, 7rem);
+}
+
+/* ---------------------------------------------------------------- */
+/* Typografie                                                        */
+/* ---------------------------------------------------------------- */
+
+.eyebrow {
+  display: block;
+  margin-bottom: 0.75rem;
+  color: hsl(var(--brand));
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+h1 {
+  font-family: "Sora Legal", "Inter Legal", sans-serif;
+  margin: 0;
+  font-size: clamp(2rem, 1.4rem + 2.4vw, 3rem);
+  line-height: 1.1;
+  letter-spacing: -0.028em;
+  font-weight: 700;
+  text-wrap: balance;
+}
+
+.meta {
+  margin: 1.25rem 0 0;
+  color: hsl(var(--fg-subtle));
+  font-size: 0.875rem;
+}
+
+.meta strong {
+  color: hsl(var(--fg-muted));
+  font-weight: 500;
+}
+
+hr {
+  margin: 2.5rem 0;
+  border: 0;
+  border-top: 1px solid hsl(var(--line));
+}
+
+h2 {
+  font-family: "Sora Legal", "Inter Legal", sans-serif;
+  margin: 3rem 0 0.875rem;
+  font-size: 1.375rem;
+  line-height: 1.3;
+  letter-spacing: -0.015em;
+  font-weight: 650;
+  text-wrap: balance;
+}
+
+h3 {
+  font-family: "Sora Legal", "Inter Legal", sans-serif;
+  margin: 2rem 0 0.625rem;
+  font-size: 1.0625rem;
+  font-weight: 600;
+}
+
+p {
+  margin: 0 0 1.125rem;
+  color: hsl(var(--fg-muted));
+  text-wrap: pretty;
+}
+
+strong {
+  color: hsl(var(--fg));
+  font-weight: 600;
+}
+
+ul,
+ol {
+  margin: 0 0 1.25rem;
+  padding-left: 1.25rem;
+  color: hsl(var(--fg-muted));
+}
+
+li {
+  margin-bottom: 0.5rem;
+}
+
+li::marker {
+  color: hsl(var(--brand) / 0.7);
+}
+
+/* Hervorgehobener Hinweiskasten */
+.callout {
+  margin: 2rem 0;
+  padding: 1.25rem 1.375rem;
+  border: 1px solid hsl(var(--line));
+  border-left: 3px solid hsl(var(--brand));
+  border-radius: calc(var(--radius) - 3px);
+  background: hsl(var(--surface-1));
+}
+
+.callout > :last-child {
+  margin-bottom: 0;
+}
+
+/* ---------------------------------------------------------------- */
+/* Fuß                                                               */
+/* ---------------------------------------------------------------- */
+
+.site-footer {
+  border-top: 1px solid hsl(var(--line));
+  background: hsl(var(--surface-1) / 0.4);
+  padding-block: 2.5rem;
+}
+
+.site-footer__inner {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  color: hsl(var(--fg-subtle));
+  font-size: 0.875rem;
+}
+
+.site-footer nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.25rem;
+}
+
+.site-footer nav a {
+  color: hsl(var(--fg-muted));
+}
+
+.site-footer nav a[aria-current="page"] {
+  color: hsl(var(--fg));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}

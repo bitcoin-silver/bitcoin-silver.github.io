@@ -111,7 +111,6 @@ export function generateEmissionSchedule(
     // Calculate total supply up to this block height
     let remainingBlocks = blockHeight;
     let blockReward = INITIAL_REWARD;
-    let halvingCount = 0;
 
     while (remainingBlocks > 0 && blockReward > 0.00000001) {
       const blocksInThisPeriod = Math.min(remainingBlocks, HALVING_INTERVAL);
@@ -120,7 +119,6 @@ export function generateEmissionSchedule(
       remainingBlocks -= blocksInThisPeriod;
       if (remainingBlocks > 0) {
         blockReward = blockReward / 2;
-        halvingCount++;
       } else {
         currentReward = blockReward;
       }
@@ -272,9 +270,14 @@ export function calculateDailyEmission(
 }
 
 /**
- * Format large numbers with abbreviations (K, M, B)
+ * Kürzt große Zahlen ab (1.23M, 4.56K).
+ *
+ * Hieß früher `formatNumber` — genauso wie die Funktion in `@/lib/format`,
+ * die stattdessen Tausendertrennzeichen setzt. Zwei gleichnamige Exporte
+ * mit unterschiedlichem Ergebnis sind eine Fehlerquelle, daher der
+ * eindeutige Name.
  */
-export function formatNumber(num: number): string {
+export function formatAbbreviated(num: number): string {
   if (num >= 1000000) {
     return (num / 1000000).toFixed(2) + 'M';
   }

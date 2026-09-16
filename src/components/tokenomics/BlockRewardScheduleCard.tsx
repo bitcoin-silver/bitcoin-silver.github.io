@@ -1,6 +1,7 @@
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis, CartesianGrid, Dot } from 'recharts';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { calculateHalvingEvents, formatDate } from '@/utils/tokenomicsCalculations';
+import type { DotRenderProps, HalvingPoint, TooltipProps } from './chartTypes';
 import { Calendar } from 'lucide-react';
 
 interface BlockRewardScheduleCardProps {
@@ -25,10 +26,10 @@ export default function BlockRewardScheduleCard({
     isPast: currentBlockHeight >= event.blockHeight,
   }));
 
-  const CustomTooltip = ({ active, payload }: any) => {
+  const CustomTooltip = ({ active, payload }: TooltipProps<HalvingPoint>) => {
     if (active && payload && payload.length) {
       return (
-        <div className="bg-card border border-border rounded-lg p-3 shadow-lg">
+        <div className="rounded-lg border border-border bg-popover/95 p-3 shadow-lift backdrop-blur-md">
           <p className="text-sm font-semibold mb-1">Halving {payload[0].payload.halving}</p>
           <p className="text-sm text-muted-foreground">
             Reward: {payload[0].value} BTCS
@@ -44,18 +45,22 @@ export default function BlockRewardScheduleCard({
   };
 
   return (
-    <Card className="h-full hover:border-primary/50 transition-all hover:shadow-lg hover:shadow-primary/10">
+    <Card className="h-full transition-colors duration-200 hover:border-line-strong">
       <CardHeader>
         <div className="flex items-start justify-between mb-2">
-          <div className="p-3 rounded-lg bg-[#222222] text-white">
+          <div className="icon-chip h-11 w-11 text-brand">
             <Calendar className="w-6 h-6" />
           </div>
         </div>
-        <CardTitle className="text-xl">Block Reward Schedule</CardTitle>
+        <CardTitle>Block Reward Schedule</CardTitle>
         <CardDescription>Halvings occur every 210,000 blocks</CardDescription>
       </CardHeader>
       <CardContent>
-        <ResponsiveContainer width="100%" height={200}>
+        <ResponsiveContainer
+          width="100%"
+          height={200}
+          initialDimension={{ width: 560, height: 200 }}
+        >
           <LineChart data={chartData} margin={{ top: 5, right: 10, left: -20, bottom: 5 }}>
             <CartesianGrid strokeDasharray="3 3" stroke="hsl(var(--border))" opacity={0.3} />
             <XAxis
@@ -74,7 +79,7 @@ export default function BlockRewardScheduleCard({
               dataKey="reward"
               stroke="hsl(var(--primary))"
               strokeWidth={2}
-              dot={(props: any) => {
+              dot={(props: DotRenderProps<HalvingPoint>) => {
                 const { cx, cy, payload } = props;
                 return (
                   <Dot
@@ -92,10 +97,10 @@ export default function BlockRewardScheduleCard({
           </LineChart>
         </ResponsiveContainer>
 
-        <div className="mt-6 p-4 rounded-lg bg-[#222222] space-y-2">
+        <div className="mt-6 rounded-lg bg-surface-2 p-4 space-y-2">
           <div className="flex justify-between items-center text-sm">
             <span className="text-muted-foreground">Next Halving:</span>
-            <span className="font-semibold text-yellow-500">
+            <span className="font-semibold text-warning">
               {blocksUntilHalving.toLocaleString()} blocks
             </span>
           </div>

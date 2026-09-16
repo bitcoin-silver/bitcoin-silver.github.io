@@ -1,213 +1,189 @@
 import { motion } from "framer-motion";
-import { Card, CardContent } from "./ui/card";
+import { Check, CircleDashed, Loader } from "lucide-react";
+import { SectionHeading } from "./SectionHeading";
+import { fadeUpStagger } from "@/lib/motion";
+import { cn } from "@/lib/utils";
+
+type Status = "completed" | "in-progress" | "planned";
+
+interface Milestone {
+  text: string;
+  status: Status;
+  date?: string;
+}
+
+interface Phase {
+  year: string;
+  title: string;
+  items: Milestone[];
+}
+
+const PHASES: Phase[] = [
+  {
+    year: "2025",
+    title: "Foundation & launch",
+    items: [
+      {
+        text: "Core wallet for Windows and Linux released",
+        status: "completed",
+        date: "August 20, 2025",
+      },
+      {
+        text: "Mobile wallet released for Android",
+        status: "completed",
+        date: "August 15, 2025",
+      },
+      {
+        text: "Community building and exchange listing preparation",
+        status: "completed",
+        date: "September 10, 2025",
+      },
+      { text: "NESTEX listing completed", status: "completed" },
+    ],
+  },
+  {
+    year: "2026",
+    title: "Expansion & ecosystem growth",
+    items: [
+      {
+        text: "Mobile and web wallet enhancements",
+        status: "completed",
+        date: "August 10, 2026",
+      },
+      {
+        text: "NONKYC listing completed",
+        status: "completed",
+        date: "August 31, 2026",
+      },
+      {
+        text: "CoinGecko listing completed",
+        status: "completed",
+        date: "September 2, 2026",
+      },
+      {
+        text: "CoinMarketCap listing",
+        status: "in-progress",
+        date: "September 12, 2026",
+      },
+    ],
+  },
+  {
+    year: "2027",
+    title: "Planning & future development",
+    items: [{ text: "To be announced", status: "planned" }],
+  },
+  {
+    year: "2028",
+    title: "Long-term vision",
+    items: [{ text: "To be announced", status: "planned" }],
+  },
+];
+
+const STATUS_META: Record<
+  Status,
+  { icon: typeof Check; className: string; label: string }
+> = {
+  completed: {
+    icon: Check,
+    className: "border-success/30 bg-success/10 text-success",
+    label: "Completed",
+  },
+  "in-progress": {
+    icon: Loader,
+    className: "border-warning/30 bg-warning/10 text-warning",
+    label: "In progress",
+  },
+  planned: {
+    icon: CircleDashed,
+    className: "border-border bg-surface-2 text-muted-foreground",
+    label: "Planned",
+  },
+};
 
 export const RoadmapSection = () => {
-  const roadmapItems = [
-    {
-      year: "2025",
-      title: "Foundation & Launch Phase",
-      items: [
-        {
-          text: "Core Wallet (Windows & Linux) released",
-          status: "completed",
-          date: "August 20, 2025",
-        },
-        {
-          text: "Mobile Wallet released (Android & iOS*)",
-          status: "completed",
-          date: "August 15, 2025",
-        },
-        {
-          text: "Community building & exchange listing preparation",
-          status: "completed",
-          date: "September 10, 2025",
-        },
-        {
-          text: "NESTEX listing completed !",
-          status: "completed",
-        },
-      ],
-    },
-    {
-      year: "2026",
-      title: "Expansion & Ecosystem Growth",
-      items: [
-        {
-          text: "Mobile and Web Wallet enhancements",
-          status: "completed",
-          date: "August 10, 2026",
-        },
-        {
-          text: "NONKYC listing completed on August 31, 2026",
-          status: "completed",
-          date: "August 31, 2026",
-        },
-        {
-          text: "CoinGecko listing completed",
-          status: "completed",
-          date: "September 2, 2026",
-        },
-        {
-          text: "CoinMarketCap listing planned",
-          status: "in-progress",
-          date: "September 12, 2026",
-        },
-      ],
-    },
-    {
-      year: "2027",
-      title: "Planning & Future Developments",
-      items: [
-        {
-          text: "Coming Soon",
-          status: "in-progress",
-          date: "",
-        },
-      ],
-    },
-    {
-      year: "2028",
-      title: "Progress & Long-term Vision",
-      items: [
-        {
-          text: "Coming Soon",
-          status: "in-progress",
-          date: "",
-        },
-      ],
-    },
-  ];
-
-  const getStatusIcon = (status: string) => {
-    switch (status) {
-      case "completed":
-        return (
-          <svg
-            className="w-5 h-5 text-green-500"
-            fill="currentColor"
-            viewBox="0 0 20 20"
-          >
-            <path
-              fillRule="evenodd"
-              d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z"
-              clipRule="evenodd"
-            />
-          </svg>
-        );
-      case "in-progress":
-        return (
-          <svg
-            className="w-5 h-5 text-yellow-500 animate-spin"
-            fill="none"
-            viewBox="0 0 24 24"
-          >
-            <circle
-              className="opacity-25"
-              cx="12"
-              cy="12"
-              r="10"
-              stroke="currentColor"
-              strokeWidth="4"
-            ></circle>
-            <path
-              className="opacity-75"
-              fill="currentColor"
-              d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
-            ></path>
-          </svg>
-        );
-      default:
-        return (
-          <svg
-            className="w-5 h-5 text-muted-foreground"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
-            />
-          </svg>
-        );
-    }
-  };
-
   return (
-    <section id="roadmap" className="py-20">
-      <div className="container">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-3xl md:text-4xl font-bold mb-4">
-            Development Roadmap
-          </h2>
-          <p className="text-muted-foreground max-w-2xl mx-auto">
-            Bitcoin Silver’s journey to building a secure, scalable, and
-            community-driven blockchain ecosystem
-          </p>
-        </motion.div>
+    <section id="roadmap" className="section hairline-top">
+      <div className="shell">
+        <SectionHeading
+          eyebrow="Roadmap"
+          title="Where Bitcoin Silver is heading"
+          description="What already shipped, what is in flight, and what comes next — updated as milestones land."
+        />
 
-        <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {roadmapItems.map((phase, phaseIndex) => (
-            <motion.div
-              key={phase.year}
-              initial={{ opacity: 0, x: -50 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: phaseIndex * 0.2 }}
-            >
-              <Card className="overflow-hidden h-full">
-                <div className="bg-primary/10 border-b border-primary/20 p-6">
-                  <div className="flex items-center gap-4">
-                    <div className="text-4xl font-bold text-primary">
-                      {phase.year}
+        <div className="grid gap-4 lg:grid-cols-2 2xl:grid-cols-4">
+          {PHASES.map((phase, phaseIndex) => {
+            const done = phase.items.filter(
+              (item) => item.status === "completed",
+            ).length;
+
+            return (
+              <motion.div key={phase.year} {...fadeUpStagger(phaseIndex)}>
+                <article className="flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card shadow-card edge-light">
+                  {/* Jahr steht über dem Titel, nicht daneben — bei vier
+                      Spalten nebeneinander wird es sonst zu eng. */}
+                  <header className="border-b border-border bg-surface-2/60 px-6 py-5">
+                    <div className="flex items-center justify-between gap-3">
+                      <span className="font-display text-2xl font-semibold tabular text-brand">
+                        {phase.year}
+                      </span>
+                      <span className="rounded-full border border-border bg-surface-3 px-2 py-0.5 text-xs tabular text-muted-foreground">
+                        {done}/{phase.items.length}
+                      </span>
                     </div>
-                    <div>
-                      <h3 className="text-2xl font-bold">{phase.title}</h3>
-                    </div>
-                  </div>
-                </div>
-                <CardContent className="p-6">
-                  <div className="space-y-4">
-                    {phase.items.map((item, itemIndex) => (
-                      <motion.div
-                        key={itemIndex}
-                        initial={{ opacity: 0, x: -20 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        viewport={{ once: true }}
-                        transition={{
-                          delay: phaseIndex * 0.2 + itemIndex * 0.1,
-                        }}
-                        className="flex items-start gap-3 group"
-                      >
-                        <div className="mt-0.5">
-                          {getStatusIcon(item.status)}
-                        </div>
-                        <div className="flex-1">
-                          <p
-                            className={`${item.status === "completed" ? "text-foreground" : "text-muted-foreground"}`}
+                    <h3 className="mt-1.5 font-display text-lg font-semibold text-foreground">
+                      {phase.title}
+                    </h3>
+                  </header>
+
+                  <ul className="flex-1 space-y-4 px-6 py-6">
+                    {phase.items.map((item) => {
+                      const meta = STATUS_META[item.status];
+                      const Icon = meta.icon;
+
+                      return (
+                        <li key={item.text} className="flex items-start gap-3">
+                          <span
+                            className={cn(
+                              "mt-0.5 flex h-6 w-6 shrink-0 items-center justify-center rounded-full border",
+                              meta.className,
+                            )}
+                            title={meta.label}
                           >
-                            {item.text}
-                          </p>
-                          {item.date && (
-                            <p className="text-xs text-primary mt-1">
-                              {item.date}
+                            <Icon
+                              className={cn(
+                                "h-3.5 w-3.5",
+                                item.status === "in-progress" && "animate-spin",
+                              )}
+                              aria-hidden="true"
+                            />
+                            <span className="sr-only">{meta.label}</span>
+                          </span>
+
+                          <div className="min-w-0">
+                            <p
+                              className={cn(
+                                "text-sm leading-relaxed",
+                                item.status === "completed"
+                                  ? "text-foreground"
+                                  : "text-muted-foreground",
+                              )}
+                            >
+                              {item.text}
                             </p>
-                          )}
-                        </div>
-                      </motion.div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+                            {item.date && (
+                              <p className="mt-0.5 text-xs text-muted-foreground/70">
+                                {item.date}
+                              </p>
+                            )}
+                          </div>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </article>
+              </motion.div>
+            );
+          })}
         </div>
       </div>
     </section>

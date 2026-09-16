@@ -2,78 +2,473 @@
 @tailwind components;
 @tailwind utilities;
 
+/* ------------------------------------------------------------------ */
+/* Design tokens                                                       */
+/* ------------------------------------------------------------------ */
+/* Bitcoin Silver: kühle, metallische Silber-Identität auf tiefem       */
+/* Anthrazit. Genau ein Akzentton (Platin-Cyan) — reserviert für CTAs,  */
+/* Live-Zustände und Fokus. Alles andere lebt von Helligkeitsstufen.    */
+
 @layer base {
   :root {
-    /* Dunkles professionelles Grautöne-Theme für Bitcoin Silver */
-    --background: 0 0% 8%;           /* Haupt-Hintergrund dunkelgrau */
-    --foreground: 0 0% 75%;          /* Font Farbe: BTCS-Grau #bfbfbf */
-    --card: 0 0% 15%;                 /* Card / Container leicht helleres Dunkelgrau */
-    --card-foreground: 0 0% 75%;      /* Schrift auf Card */
-    --popover: 0 0% 15%;              /* Popovers / Modals */
-    --popover-foreground: 0 0% 75%;
-    --primary: 0 0% 35%;              /* Haupt-Buttons / Links, dunkelgrau */
-    --primary-foreground: 0 0% 75%;   /* weiße/graue Schrift auf Buttons */
-    --secondary: 0 0% 25%;            /* Secondary Buttons / Menüs */
-    --secondary-foreground: 0 0% 75%;
-    --muted: 0 0% 20%;                /* Für weniger wichtige Elemente */
-    --muted-foreground: 0 0% 60%;     /* etwas helleres Grau für Kontraste */
-    --accent: 0 0% 35%;               /* Für kleine Akzente, z.B. Icons */
-    --accent-foreground: 0 0% 75%;
-    --destructive: 0 62% 30%;         /* Rot für Warnungen / Löschungen */
-    --destructive-foreground: 0 0% 75%;
-    --border: 0 0% 25%;               /* Border Farbe */
-    --input: 0 0% 20%;                /* Input-Felder dunkelgrau */
-    --ring: 0 0% 35%;                 /* Fokus-Ring dunkelgrau */
-    --radius: 0.5rem;                 /* Runde Ecken */
+    /* Flächen — drei klar getrennte Stufen statt beliebiger Graustufen */
+    --surface-0: 220 12% 5%; /* Seitengrund */
+    --surface-1: 220 10% 9%; /* Cards, Panels */
+    --surface-2: 220 9% 13%; /* erhöhte Flächen, Icon-Chips */
+    --surface-3: 220 9% 18%; /* Hover, Inputs */
+
+    /* Schrift */
+    --fg: 210 12% 91%; /* Fließtext, Überschriften */
+    --fg-muted: 213 9% 63%; /* Sekundärtext */
+    --fg-subtle: 215 8% 45%; /* Labels, Meta */
+
+    /* Linien */
+    --line: 220 8% 17%;
+    --line-strong: 220 8% 28%;
+
+    /* Akzent — Platin-Cyan */
+    --brand: 189 64% 56%;
+    --brand-fg: 197 45% 8%;
+
+    /* Zweiter Ton, ausschließlich für Hintergrund-Lichtfelder. Nie für
+       Text, Rahmen oder Flächen — sonst wird aus dem Akzent ein Farbpaar. */
+    --glow-2: 232 58% 58%;
+
+    /* Status */
+    --success: 152 52% 48%;
+    --warning: 38 86% 58%;
+    --danger: 2 68% 56%;
+
+    /* ---- shadcn/ui Aliase (bestehende Komponenten erwarten diese) ---- */
+    --background: var(--surface-0);
+    --foreground: var(--fg);
+    --card: var(--surface-1);
+    --card-foreground: var(--fg);
+    --popover: var(--surface-2);
+    --popover-foreground: var(--fg);
+    --primary: var(--brand);
+    --primary-foreground: var(--brand-fg);
+    --secondary: var(--surface-3);
+    --secondary-foreground: var(--fg);
+    --muted: var(--surface-2);
+    --muted-foreground: var(--fg-muted);
+    --accent: var(--surface-3); /* shadcn nutzt `accent` als Hover-Fläche */
+    --accent-foreground: var(--fg);
+    --destructive: var(--danger);
+    --destructive-foreground: var(--fg);
+    --border: var(--line);
+    --input: var(--surface-3);
+    --ring: var(--brand);
+
+    --radius: 0.75rem;
   }
 }
+
+/* ------------------------------------------------------------------ */
+/* Basis                                                               */
+/* ------------------------------------------------------------------ */
 
 @layer base {
   * {
     @apply border-border;
   }
+
+  html {
+    scroll-behavior: smooth;
+    /* `clip` statt `hidden`: verhindert horizontales Scrollen, ohne einen
+       eigenen Scroll-Container zu erzeugen (das bricht sticky/anchor). */
+    overflow-x: clip;
+    -webkit-text-size-adjust: 100%;
+  }
+
   body {
-    @apply bg-background text-foreground;
-    font-feature-settings: "rlig" 1, "calt" 1;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1, "ss01" 1;
+    overflow-x: clip;
+  }
+
+  /* Überschriften: Display-Schnitt, enger Satz, ruhige Laufweite */
+  h1,
+  h2,
+  h3 {
+    @apply font-display tracking-tight;
+    text-wrap: balance;
+  }
+
+  p {
+    text-wrap: pretty;
+  }
+
+  /* Zahlenkolonnen (Stats, Tokenomics) sollen nicht springen */
+  .tabular,
+  [data-numeric] {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum" 1;
+  }
+
+  /* Sichtbarer, markenkonformer Fokus statt Browser-Default */
+  :focus-visible {
+    outline: 2px solid hsl(var(--brand));
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: hsl(var(--brand) / 0.28);
+    color: hsl(var(--fg));
   }
 }
 
-/* Custom scrollbar */
+/* ------------------------------------------------------------------ */
+/* Komponenten-Utilities                                               */
+/* ------------------------------------------------------------------ */
+
+@layer components {
+  /* ---------------------------------------------------------------- */
+  /* Layout-Wrapper                                                    */
+  /* ---------------------------------------------------------------- */
+  /* Der Rand wächst fließend mit dem Viewport statt in Breakpoint-      */
+  /* Stufen zu springen. Auf großen Schirmen bleibt dadurch echte        */
+  /* Breite übrig, ohne dass Text auf kleinen Geräten am Rand klebt.     */
+
+  .shell {
+    width: 100%;
+    margin-inline: auto;
+    max-width: 1920px;
+    padding-inline: clamp(1.25rem, 3.5vw, 4.5rem);
+  }
+
+  /* Für Sektionen, die bis fast an den Rand gehen sollen */
+  .shell-wide {
+    width: 100%;
+    margin-inline: auto;
+    max-width: 2240px;
+    padding-inline: clamp(1rem, 2vw, 2.5rem);
+  }
+
+  /* Randlos: nutzt die komplette Fensterbreite, ohne dass ein Kind
+     horizontales Scrollen auslöst. */
+  .shell-bleed {
+    width: 100%;
+  }
+
+  /* Für reine Lesetexte — lange Zeilen sind über 75 Zeichen unlesbar */
+  .shell-tight {
+    width: 100%;
+    margin-inline: auto;
+    max-width: 1120px;
+    padding-inline: clamp(1.25rem, 4vw, 4.5rem);
+  }
+
+  /* Gebürstetes Silber für Display-Headlines. Fallback-Farbe zuerst,
+     damit ohne background-clip-Support nichts unsichtbar wird. */
+  .text-silver {
+    color: hsl(var(--fg));
+    background: linear-gradient(
+      104deg,
+      hsl(210 16% 97%) 0%,
+      hsl(211 12% 88%) 34%,
+      hsl(213 9% 74%) 58%,
+      hsl(210 14% 92%) 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+
+  /* Haarfeine Lichtkante oben — lässt Cards wie gefrästes Metall wirken */
+  .edge-light {
+    box-shadow:
+      inset 0 1px 0 0 hsl(0 0% 100% / 0.06),
+      0 1px 2px 0 hsl(220 20% 2% / 0.5);
+  }
+
+  .surface-1 {
+    background-color: hsl(var(--surface-1));
+  }
+  .surface-2 {
+    background-color: hsl(var(--surface-2));
+  }
+  .surface-3 {
+    background-color: hsl(var(--surface-3));
+  }
+
+  /* Einheitlicher Icon-Chip — ersetzt die verstreuten #222222-Kästen */
+  .icon-chip {
+    @apply inline-flex items-center justify-center rounded-lg border border-border/80 surface-2 text-foreground edge-light;
+  }
+
+  /* Abschnittsrhythmus: eine Klasse statt überall py-20 */
+  .section {
+    @apply py-20 md:py-28 xl:py-32;
+  }
+  .section-tight {
+    @apply py-14 md:py-20;
+  }
+
+  /* Trennt Sektionen ohne harte Kante */
+  .hairline-top {
+    border-top: 1px solid hsl(var(--line) / 0.7);
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* Spotlight-Karten                                                  */
+  /* ---------------------------------------------------------------- */
+  /* Ein weicher Lichtfleck folgt dem Zeiger über die Karte. Position   */
+  /* kommt über --mx/--my aus dem JS; ohne Zeiger (Touch, Tastatur)     */
+  /* bleibt die Karte einfach unverändert.                             */
+
+  .spotlight {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .spotlight::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: radial-gradient(
+      16rem 16rem at var(--mx, 50%) var(--my, 0%),
+      hsl(var(--brand) / 0.55),
+      transparent 70%
+    );
+    -webkit-mask:
+      linear-gradient(#000 0 0) content-box,
+      linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 1;
+  }
+
+  .spotlight::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      18rem 18rem at var(--mx, 50%) var(--my, 0%),
+      hsl(var(--brand) / 0.08),
+      transparent 65%
+    );
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .spotlight:hover::before,
+  .spotlight:focus-within::before,
+  .spotlight:hover::after,
+  .spotlight:focus-within::after {
+    opacity: 1;
+  }
+
+  .spotlight > * {
+    position: relative;
+    z-index: 2;
+  }
+
+  /* ---------------------------------------------------------------- */
+  /* Hintergrund-Lichtfelder                                           */
+  /* ---------------------------------------------------------------- */
+
+  .aurora {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+    pointer-events: none;
+  }
+
+  .aurora::before,
+  .aurora::after {
+    content: "";
+    position: absolute;
+    border-radius: 9999px;
+    filter: blur(80px);
+    will-change: transform;
+  }
+
+  .aurora::before {
+    width: 55vw;
+    height: 38vw;
+    top: -16vw;
+    left: 8vw;
+    background: radial-gradient(
+      circle,
+      hsl(var(--brand) / 0.16),
+      transparent 68%
+    );
+    animation: drift 26s ease-in-out infinite;
+  }
+
+  .aurora::after {
+    width: 45vw;
+    height: 32vw;
+    top: -8vw;
+    right: 4vw;
+    background: radial-gradient(
+      circle,
+      hsl(var(--glow-2) / 0.12),
+      transparent 68%
+    );
+    animation: drift 34s ease-in-out infinite reverse;
+  }
+
+  /* Feines Raster, das zu den Rändern hin ausblendet */
+  .grid-field {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    background-image:
+      linear-gradient(to right, hsl(var(--line) / 0.55) 1px, transparent 1px),
+      linear-gradient(to bottom, hsl(var(--line) / 0.55) 1px, transparent 1px);
+    background-size: 76px 76px;
+    mask-image: radial-gradient(
+      ellipse 75% 60% at 50% 0%,
+      #000 10%,
+      transparent 75%
+    );
+    -webkit-mask-image: radial-gradient(
+      ellipse 75% 60% at 50% 0%,
+      #000 10%,
+      transparent 75%
+    );
+  }
+
+  /* Blendet die Enden eines laufenden Bandes weich aus */
+  .fade-edges {
+    mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 6rem,
+      #000 calc(100% - 6rem),
+      transparent
+    );
+    -webkit-mask-image: linear-gradient(
+      to right,
+      transparent,
+      #000 6rem,
+      #000 calc(100% - 6rem),
+      transparent
+    );
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/* Scrollbar                                                           */
+/* ------------------------------------------------------------------ */
+
 ::-webkit-scrollbar {
   width: 10px;
+  height: 10px;
 }
 
 ::-webkit-scrollbar-track {
-  background: hsl(var(--background));
+  background: hsl(var(--surface-0));
 }
 
 ::-webkit-scrollbar-thumb {
-  background: hsl(var(--primary));
-  border-radius: 5px;
+  background: hsl(var(--surface-3));
+  border-radius: 999px;
+  border: 2px solid hsl(var(--surface-0));
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: hsl(var(--primary) / 0.8);
+  background: hsl(var(--line-strong));
 }
 
-/* Smooth scroll */
-html {
-  scroll-behavior: smooth;
-  overflow-x: hidden !important;
+/* Firefox */
+* {
+  scrollbar-color: hsl(var(--surface-3)) hsl(var(--surface-0));
+  scrollbar-width: thin;
 }
 
-body {
-    overflow-x: hidden !important;
+/* ------------------------------------------------------------------ */
+/* Leaflet / Node-Map                                                  */
+/* ------------------------------------------------------------------ */
+/* Lag vorher als <style>-Tag, das NodeMapSection beim Import in den    */
+/* <head> schrieb. Gehört hierher, damit es mitgebaut und getreeshaked  */
+/* wird wie jedes andere Stylesheet.                                    */
+
+.btcs-node-marker {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle, hsl(0 0% 100%) 0%, hsl(var(--brand)) 65%);
+  border: 2px solid hsl(0 0% 100% / 0.25);
+  box-shadow: 0 0 8px hsl(var(--brand) / 0.5);
+  transition:
+    box-shadow 0.2s ease,
+    transform 0.2s ease;
 }
 
-/* Node map marker pulse animation */
-@keyframes marker-pulse {
-  0%, 100% {
-    box-shadow: 0 0 10px rgba(192, 192, 192, 0.6), 0 0 20px rgba(255, 255, 255, 0.4);
-    transform: scale(1);
+.btcs-node-marker:hover {
+  transform: scale(1.25);
+  box-shadow:
+    0 0 18px hsl(var(--brand) / 0.8),
+    0 0 36px hsl(0 0% 100% / 0.35);
+}
+
+/* Leaflet bringt eigene helle Defaults mit — hier auf das Theme ziehen. */
+.leaflet-container {
+  background: hsl(var(--surface-1));
+  font-family: inherit;
+}
+
+.leaflet-control-zoom a {
+  background: hsl(var(--surface-2));
+  color: hsl(var(--fg));
+  border-color: hsl(var(--line));
+}
+
+.leaflet-control-zoom a:hover {
+  background: hsl(var(--surface-3));
+  color: hsl(var(--fg));
+}
+
+.leaflet-popup-content-wrapper,
+.leaflet-popup-tip {
+  background: hsl(var(--surface-2));
+  color: hsl(var(--fg));
+  border-radius: calc(var(--radius) - 3px);
+  box-shadow: 0 8px 28px -12px hsl(220 20% 2% / 0.8);
+}
+
+.leaflet-container a.leaflet-popup-close-button {
+  color: hsl(var(--fg-muted));
+}
+
+.leaflet-control-attribution {
+  background: hsl(var(--surface-1) / 0.85) !important;
+  color: hsl(var(--fg-subtle));
+}
+
+.leaflet-control-attribution a {
+  color: hsl(var(--fg-muted));
+}
+
+/* ------------------------------------------------------------------ */
+/* Reduced Motion                                                      */
+/* ------------------------------------------------------------------ */
+/* Die Seite animiert viel. Wer Bewegung abgestellt hat, bekommt den   */
+/* Endzustand sofort — Inhalt bleibt vollständig sichtbar.             */
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
-  50% {
-    box-shadow: 0 0 20px rgba(192, 192, 192, 0.8), 0 0 40px rgba(255, 255, 255, 0.6);
-    transform: scale(1.15);
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
   }
 }

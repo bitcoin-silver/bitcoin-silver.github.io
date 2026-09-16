@@ -4,31 +4,41 @@ on:
   push:
     branches:
       - main
+  workflow_dispatch:
 
 permissions:
-  contents: write
+  contents: read
   pages: write
   id-token: write
+
+# Ein laufender Deploy wird von einem neueren Push abgelöst, statt sich
+# zu überholen.
+concurrency:
+  group: pages
+  cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: github-pages
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v3
-        with:
-          fetch-depth: 0
+        uses: actions/checkout@v4
 
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: '24'
+          cache: npm
 
       - name: Install dependencies
         run: npm ci
 
+      # `npm run build` führt tsc vor vite build aus — Typfehler brechen
+      # den Deploy ab, statt still durchzurutschen.
       - name: Build project
         run: npm run build
 
@@ -38,4 +48,5 @@ jobs:
           path: ./dist
 
       - name: Deploy to GitHub Pages
+        id: deployment
         uses: actions/deploy-pages@v4
