@@ -10,6 +10,7 @@ interface Milestone {
   text: string;
   status: Status;
   date?: string;
+  link?: string;
 }
 
 interface Phase {
@@ -64,6 +65,13 @@ const PHASES: Phase[] = [
         text: "CoinMarketCap listing",
         status: "in-progress",
         date: "September 12, 2026",
+        link: "https://coinmarketcap.com/",
+      },
+      {
+        text: "Tokpie Exchange listing",
+        status: "in-progress",
+        date: "October 1, 2026",
+        link: "https://tokpie.io/",
       },
     ],
   },
@@ -168,7 +176,18 @@ export const RoadmapSection = () => {
                                   : "text-muted-foreground",
                               )}
                             >
-                              {item.text}
+                              {item.link ? (
+                                <a
+                                  href={item.link}
+                                  target="_blank"
+                                  rel="noopener noreferrer"
+                                  className="underline-offset-4 hover:text-brand hover:underline"
+                                >
+                                  {item.text}
+                                </a>
+                              ) : (
+                                item.text
+                              )}
                             </p>
                             {item.date && (
                               <p className="mt-0.5 text-xs text-muted-foreground/70">

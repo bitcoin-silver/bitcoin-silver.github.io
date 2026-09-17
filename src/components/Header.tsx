@@ -22,7 +22,7 @@ const RESOURCES: DropdownItem[] = [
     external: true,
   },
   {
-    label: "Testnet Faucet",
+    label: "Faucet",
     href: "https://bitcoinsilver.eu/faucet",
     external: true,
   },
